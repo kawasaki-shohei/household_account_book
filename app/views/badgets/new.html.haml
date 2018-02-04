@@ -1,0 +1,8 @@
+%div.whole_page.container
+  %h3 予算を入力
+  = form_with(model: @badget, local: true) do |f|
+    - @categories.each do |category|
+      %ul
+        %li #{category.kind}
+        %li #{f.number_field :amount}
+        %li #{f.submit '入力', class: "btn btn-default"}

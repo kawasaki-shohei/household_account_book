@@ -1,18 +1,18 @@
 class BadgetsController < ApplicationController
-  before_action :all_categories, only:[:index, :new]
+  before_action :set_all_categories, only:[:index, :new]
   def index
     @categories = Category.all
   end
 
   def new
-    @badget = current_user.badget.new
+    @badget = current_user.badgets.new
   end
 
   def edit
   end
 
 private
-  def set all_categories
+  def set_all_categories
     @categories = Category.all
   end
 end
