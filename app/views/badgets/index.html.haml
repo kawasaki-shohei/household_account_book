@@ -17,6 +17,7 @@
           %td
           -# table.table
   - if current_user.badgets.present?
-    = link_to '予算の編集', edit_badget_path(current_user.id)
+    = link_to '予算の編集', edit_badget_path(current_user.id), class: "btn btn-default"
+    = link_to '予算の追加', new_badget_path, class: "btn btn-default"
   - else
-    = link_to '予算の入力', new_badget_path, class: "btn btn-default"
+    = link_to '予算の追加', new_badget_path, class: "btn btn-default"
