@@ -1,0 +1,16 @@
+<div class="whole_page container">
+  <p>全てのカテゴリ</p>
+  <% @categories.each do |category| %>
+    <ul>
+      <li><%= category.kind %></li>
+    </ul>
+  <% end %>
+
+  <h3>カテゴリを追加</h3>
+  <%= form_with(model: @category, local: true) do |form| %>
+    <%= form.text_field :kind %>
+    <%= form.submit %>
+  <% end %>
+
+
+</div>

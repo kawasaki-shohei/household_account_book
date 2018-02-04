@@ -1,0 +1,8 @@
+{
+  "name": "household_account_book",
+  "private": true,
+  "dependencies": {
+    "bootstrap": "^4.0.0",
+    "jquery": "^3.3.1"
+  }
+}

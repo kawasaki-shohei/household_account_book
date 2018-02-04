@@ -1,0 +1,17 @@
+%div.whole_page.container
+  %div.panel.panel-default
+    %div.panel-heading
+      #{current_user.name}の予算
+  %table.table
+    %tr
+      %th カテゴリー
+      %th 予算
+    - @categories.each do |category|
+      - unless category.badget.nil?
+        - badget = category.badget.amount
+      %tr
+        %td #{category.kind}
+        - if badget.present?
+          %td #{badget}
+        - else
+          %td

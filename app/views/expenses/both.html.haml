@@ -1,0 +1,39 @@
+%div.whole_page.container
+  %p 全てのカテゴリ
+  - @categories.each do |category|
+    %ul
+      %li #{category.kind}
+
+
+  %h3 二人の出費を入力
+  = form_with(model: @expense, local: true) do |form|
+    - if @expense.errors.any?
+      = render 'layouts/error', var: @expense
+
+    %div
+      = form.number_field :amount, required: true
+    %div
+      = form.date_field :date, required: true
+    %div
+      = form.text_field :note
+    %div
+      = form.collection_select(:category_id, @categories, :id, :kind)
+
+    = form.hidden_field :user_id, value: current_user.id
+    = form.hidden_field :both_flg, value: true
+    %div
+      = form.submit
+
+
+  -# 出費フォーム
+
+  %hr
+
+  %h3 #{current_user.name}の出費
+  - @current_user_expenses.each do |expense|
+    = render 'expenses/display_expenses', expense: expense
+
+
+  %h3 #{@opponent_user.name}の出費
+  - @opponent_user_expenses.each do |expense|
+    = render 'expenses/display_expenses', expense: expense

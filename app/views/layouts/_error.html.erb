@@ -1,0 +1,9 @@
+<!-- 変数 var -->
+<div id="error_explanation">
+  <h2><%= var.errors.count %> 件のエラーがあります。</h2>
+  <ul>
+  <% var.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+  <% end %>
+  </ul>
+</div>

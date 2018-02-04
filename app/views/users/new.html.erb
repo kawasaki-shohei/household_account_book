@@ -1,0 +1,36 @@
+<div class="whole_page container">
+  <div class="form-wrapper">
+    <h1>Sign up</h1>
+
+    <%= form_with(model: @user, local: true) do |f| %>
+      <% if @user.errors.any? %>
+        <%= render 'layouts/error', var: @user %>
+      <% end %>
+      <div class="form-item">
+        <%= f.text_field :name, placeholder: "Name", required: true %>
+      </div>
+
+      <div class="form-item">
+        <%= f.email_field :email, placeholder: "Email Address", required: true %>
+      </div>
+
+      <div class="form-item">
+        <%= f.password_field :password, placeholder: "Password 6文字以上", required: true, autocomplete: "off" %><br />
+      </div>
+
+      <div class="form-item">
+        <%= f.password_field :password_confirmation, placeholder: "Password confirmation", required: true, autocomplete: "off" %>
+      </div>
+
+      <div class="button-panel">
+        <%= f.submit "Sign up", class:"button", title: "Sign In" %>
+      </div>
+
+      <div class="form-footer">
+        <%= link_to 'Log in', new_session_path %>
+      </div>
+
+    <% end %>
+
+  </div>
+</div>
