@@ -1,6 +1,10 @@
 %div.whole_page.container
   %h3 予算を入力
   = form_with(model: @badget, local: true) do |f|
+    - if @badget.errors.any?
+      =render 'layouts/error', var: @badget
+      
     = f.collection_select(:category_id, @categories, :id, :kind)
     = f.number_field :amount, required: true
+    円
     = f.submit '入力', class: "btn btn-default"
