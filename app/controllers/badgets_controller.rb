@@ -1,5 +1,5 @@
 class BadgetsController < ApplicationController
-  before_action :set_all_categories, only:[:index, :new]
+  before_action :set_all_categories, only:[:index, :new, :edit]
 
   def index
   end
@@ -20,6 +20,7 @@ class BadgetsController < ApplicationController
   end
 
   def edit
+    @badget = Badget.find(params[:id])
   end
 
 private
