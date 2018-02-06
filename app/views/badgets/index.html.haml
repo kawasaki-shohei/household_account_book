@@ -12,7 +12,7 @@
       %tr
         %td #{category.kind}
         - if badget.present?
-          %td #{badget.round}
+          %td #{number_with_delimiter(badget, delimiter: ",")}円
         - else
           %td
           -# table.table
