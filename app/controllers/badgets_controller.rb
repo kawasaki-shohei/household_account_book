@@ -11,9 +11,15 @@ class BadgetsController < ApplicationController
 
   def create
     @badget = current_user.badgets.new(badget_params)
+    check = Badget.find_by(user_id: params[:user_id], category_id: params[:category_id])
+    if check.present?
+      @badget.errors[:base] << "同じカテゴリーに２つの予算を設定できません。予算を編集してください。"
+      render 'new'
+    end
+
     if @badget.save
-      category = Category.find(@badget.category_id)
-      redirect_to badgets_path, notice: "#{category.kind}の予算を#{@badget.amount}円に設定しました"
+      find_badget_category
+      redirect_to badgets_path, notice: "#{@category.kind}の予算を#{@badget.amount}円に設定しました"
     else
       set_all_categories
       render 'new'
@@ -26,7 +32,8 @@ class BadgetsController < ApplicationController
 
   def update
     if @badget.update(badget_params)
-      redirect_to badgets_path
+      find_badget_category
+      redirect_to badgets_path, notice: "#{@category.kind}の予算を#{@badget.amount}円に設定しました"
     else
       set_all_categories
       render 'edit'
@@ -44,5 +51,9 @@ private
 
   def set_badget
     @badget = Badget.find(params[:id])
+  end
+
+  def find_badget_category
+    @category = Category.find(@badget.category_id)
   end
 end
