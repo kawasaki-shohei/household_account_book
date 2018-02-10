@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 20180204103100) do
   enable_extension "plpgsql"
 
   create_table "badgets", force: :cascade do |t|
-    t.money "amount", scale: 2
+    t.integer "amount"
     t.bigint "user_id"
     t.bigint "category_id"
     t.datetime "created_at", null: false
@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(version: 20180204103100) do
   end
 
   create_table "expenses", force: :cascade do |t|
-    t.money "amount", scale: 2
+    t.integer "amount"
     t.date "date"
     t.string "note"
     t.datetime "created_at", null: false
