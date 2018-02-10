@@ -1,8 +1,10 @@
 = form_with(model: badget, local: true) do |f|
   - if badget.errors.any?
     =render 'layouts/error', var: badget
-
-  = f.collection_select(:category_id, categories, :id, :kind)
+  - if action_name == 'edit'
+    = badget.category.kind
+  - elsif action_name == 'new'
+    = f.select :category_id, make_left_categories
   = f.number_field :amount, required: true
   円
   = f.submit '入力', class: "btn btn-default"
