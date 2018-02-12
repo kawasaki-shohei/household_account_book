@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(version: 20180212105552) do
     t.integer "category_id"
     t.integer "user_id"
     t.boolean "both_flg", default: false
-    t.float "percent"
+    t.float "percent", default: 1.0
   end
 
   create_table "users", force: :cascade do |t|
