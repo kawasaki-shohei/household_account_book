@@ -10,6 +10,7 @@ class ExpensesController < ApplicationController
   def both
     @expense = Expense.new
     @categories = Category.all
+    @expense.devide.new
     if current_user.email == "shoheimoment@gmail.com"
       @opponent_user = User.find_by(email: "ikky629@gmail.com")
     elsif current_user.email == "ikky629@gmail.com"
@@ -37,6 +38,10 @@ class ExpensesController < ApplicationController
   private
     def expense_params
       params.require(:expense).permit(:amount, :date, :note, :category_id, :user_id, :both_flg)
+    end
+
+    def both_params
+      params.require(:expense).permit(:amount, :date, :note, :category_id, :user_id, :both_flg, devide_attributes: [:percent])
     end
 
     def set_expenses_categories
