@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180204103100) do
+ActiveRecord::Schema.define(version: 20180212105552) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,16 +40,7 @@ ActiveRecord::Schema.define(version: 20180204103100) do
     t.integer "category_id"
     t.integer "user_id"
     t.boolean "both_flg", default: false
-  end
-
-  create_table "how_muches", force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "category_id"
-    t.float "percent"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["category_id"], name: "index_how_muches_on_category_id"
-    t.index ["user_id"], name: "index_how_muches_on_user_id"
+    t.float "percent", default: 1.0
   end
 
   create_table "users", force: :cascade do |t|
@@ -63,6 +54,4 @@ ActiveRecord::Schema.define(version: 20180204103100) do
 
   add_foreign_key "badgets", "categories"
   add_foreign_key "badgets", "users"
-  add_foreign_key "how_muches", "categories"
-  add_foreign_key "how_muches", "users"
 end

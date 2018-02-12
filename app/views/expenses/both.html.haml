@@ -1,5 +1,5 @@
 %div.whole_page.container
-  %p 全てのカテゴリ
+  %p 全てのカテゴリー
   - @categories.each do |category|
     %ul
       %li #{category.kind}
@@ -11,13 +11,26 @@
       = render 'layouts/error', var: @expense
 
     %div
+      %div
+        金額
       = form.number_field :amount, required: true
     %div
+      %div
+        日付
       = form.date_field :date, required: true
     %div
+      %div
+        メモ
       = form.text_field :note
     %div
+      %div
+        カテゴリー
       = form.collection_select(:category_id, @categories, :id, :kind)
+    %div
+      %div
+        自分の割合
+      = form.select :percent, { '半分' => 0.5, '3分の1' => 0.33, '3分の2' => 0.66, '相手100%' => 0.0 }
+
 
     = form.hidden_field :user_id, value: current_user.id
     = form.hidden_field :both_flg, value: true
