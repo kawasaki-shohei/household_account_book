@@ -3,7 +3,10 @@
     = expense.date.strftime("%Y/%m/%d(%a)")
   %div.panel-body
     %strong ¥#{number_with_delimiter(expense.amount, delimiter: ",")}
-    %span #{Category.find(expense.category_id).kind}
+    - if action_name == "index"
+      %span #{Category.find(expense.category_id).kind}
+    - elsif action_name == "both"
+      %span #{Category.find(expense.category_id).kind} (#{which_percent(expense.percent)})
     %br
     = expense.note
   %hr
