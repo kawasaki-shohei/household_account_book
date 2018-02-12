@@ -27,6 +27,7 @@
         カテゴリー
       = form.collection_select(:category_id, @categories, :id, :kind)
 
+
     = form.hidden_field :user_id, value: current_user.id
     = form.hidden_field :both_flg, value: true
     %div
