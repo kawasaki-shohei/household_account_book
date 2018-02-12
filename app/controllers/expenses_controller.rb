@@ -4,6 +4,12 @@ class ExpensesController < ApplicationController
 
   def index
     @expense = Expense.new
+    end_of_month = Date.today.end_of_month
+    beginning_of_month = Date.today.beginning_of_month
+    @expenses = Expense.where('date >= ? AND date <= ?', beginning_of_month, end_of_month)
+    @expenses.where!(both_flg: false)
+    @expenses.order!(date: :desc)
+    @sum = @expenses.sum(:amount)
     set_expenses_categories
   end
 
@@ -41,6 +47,6 @@ class ExpensesController < ApplicationController
 
     def set_expenses_categories
       @categories = Category.all
-      @expenses = current_user.expenses.order(date: :desc)
+      # @expenses = current_user.expenses.order(date: :desc)
     end
 end

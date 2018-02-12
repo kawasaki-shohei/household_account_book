@@ -28,5 +28,11 @@
   %hr
 
   %h3 #{current_user.name}の出費
+  %strong 合計 ¥#{number_with_delimiter(@sum, delimiter: ",")}
   - @expenses.each do |expense|
     = render 'expenses/display_expenses', expense: expense
+
+  %hr
+
+  = Date.today.end_of_month.strftime("%Y/%m/%d")
+  = Date.today.strftime("%Y/%m/%d")

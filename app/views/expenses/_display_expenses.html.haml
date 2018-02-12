@@ -1,6 +1,6 @@
 %div.panel.panel-default
   %div.panel-heading
-    = expense.date.strftime("%Y/%m/%d/%a")
+    = expense.date.strftime("%Y/%m/%d(%a)")
   %div.panel-body
     %strong ¥#{number_with_delimiter(expense.amount, delimiter: ",")}
     %span #{Category.find(expense.category_id).kind}
