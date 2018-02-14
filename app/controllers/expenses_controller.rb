@@ -22,8 +22,14 @@ class ExpensesController < ApplicationController
     elsif current_user.email == "ikky629@gmail.com"
       @partner = User.find_by(email: "shoheimoment@gmail.com")
     end
-    @current_user_expenses = current_user.expenses.where(both_flg: true).order(date: :desc)
+    end_of_month = Date.today.end_of_month
+    beginning_of_month = Date.today.beginning_of_month
+    @current_user_expenses = current_user.expenses.where!('date >= ? AND date <= ?', beginning_of_month, end_of_month)
+    @current_user_expenses.where!(both_flg: true).order!(date: :desc)
+
     @partner_expenses = @partner.expenses.where(both_flg: true).order(date: :desc)
+
+    @sum = @current_user_expenses.sum(:amount) + @partner_expenses.sum(:amount)
     # 自分 → 払った金額 * percent
     #
     # 相手 → 払った金額 - (払った金額 * percent)
@@ -31,8 +37,12 @@ class ExpensesController < ApplicationController
   end
 
   def create
-    @expense = Expense.new(expense_params)
     category = Category.find(params[:expense][:category_id])
+    @expense = Expense.new(expense_params)
+    if params[:both_flg] == true
+      @expense.mypay = params[:amount] * params[:percent]
+      @expense.partnerpay = params[:amount] - @expense.mypay
+    end
     if @expense.save
       redirect_to root_path, notice: "出費を保存しました。#{category.kind}: #{@expense.amount}"
     else
