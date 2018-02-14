@@ -1,5 +1,6 @@
 class ExpensesController < ApplicationController
   before_action :check_logging_in
+  before_action :set_what_month, only: [:index, :both]
   # before_action :set_expenses_categories, only:[:index, :both]
 
   def index
@@ -17,12 +18,15 @@ class ExpensesController < ApplicationController
     @expense = Expense.new
     @categories = Category.all
     if current_user.email == "shoheimoment@gmail.com"
-      @opponent_user = User.find_by(email: "ikky629@gmail.com")
+      @partner = User.find_by(email: "ikky629@gmail.com")
     elsif current_user.email == "ikky629@gmail.com"
-      @opponent_user = User.find_by(email: "shoheimoment@gmail.com")
+      @partner = User.find_by(email: "shoheimoment@gmail.com")
     end
     @current_user_expenses = current_user.expenses.where(both_flg: true).order(date: :desc)
-    @opponent_user_expenses = @opponent_user.expenses.where(both_flg: true).order(date: :desc)
+    @partner_expenses = @partner.expenses.where(both_flg: true).order(date: :desc)
+    # 自分 → 払った金額 * percent
+    #
+    # 相手 → 払った金額 - (払った金額 * percent)
 
   end
 
@@ -48,5 +52,10 @@ class ExpensesController < ApplicationController
     def set_expenses_categories
       @categories = Category.all
       # @expenses = current_user.expenses.order(date: :desc)
+    end
+
+    def set_what_month
+      end_of_month = Date.today.end_of_month
+      beginning_of_month = Date.today.beginning_of_month
     end
 end

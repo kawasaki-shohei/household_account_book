@@ -42,6 +42,6 @@
     = render 'expenses/display_expenses', expense: expense
 
 
-  %h3 #{@opponent_user.name}の出費
-  - @opponent_user_expenses.each do |expense|
+  %h3 #{@partner.name}の出費
+  - @partner_expenses.each do |expense|
     = render 'expenses/display_expenses', expense: expense
