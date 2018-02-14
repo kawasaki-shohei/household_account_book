@@ -7,6 +7,8 @@
       %span #{Category.find(expense.category_id).kind}
     - elsif action_name == "both"
       %span #{Category.find(expense.category_id).kind} (#{which_percent(expense.percent)})
+      %br
+      自分の支払い → #{expense.mypay}  相手の支払い → #{expense.partnerpay}
     %br
     = expense.note
   %hr

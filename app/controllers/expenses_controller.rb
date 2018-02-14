@@ -27,7 +27,8 @@ class ExpensesController < ApplicationController
     @current_user_expenses = current_user.expenses.where!('date >= ? AND date <= ?', beginning_of_month, end_of_month)
     @current_user_expenses.where!(both_flg: true).order!(date: :desc)
 
-    @partner_expenses = @partner.expenses.where(both_flg: true).order(date: :desc)
+    @partner_expenses = @partner.expenses.where!('date >= ? AND date <= ?', beginning_of_month, end_of_month)
+    @partner_expenses.where!(both_flg: true).order!(date: :desc)
 
     @sum = @current_user_expenses.sum(:amount) + @partner_expenses.sum(:amount)
     # 自分 → 払った金額 * percent
@@ -39,9 +40,10 @@ class ExpensesController < ApplicationController
   def create
     category = Category.find(params[:expense][:category_id])
     @expense = Expense.new(expense_params)
-    if params[:both_flg] == true
-      @expense.mypay = params[:amount] * params[:percent]
-      @expense.partnerpay = params[:amount] - @expense.mypay
+    if params[:expense][:both_flg] == true
+      @expense.mypay = (params[:expense][:amount].to_i * params[:expense][:percent].to_f).round
+      @expense.save
+      @expense.partnerpay = params[:expense][:amount].to_i - @expense.mypay
     end
     if @expense.save
       redirect_to root_path, notice: "出費を保存しました。#{category.kind}: #{@expense.amount}"
