@@ -58,7 +58,13 @@ class ExpensesController < ApplicationController
 
   private
     def expense_params
-      params.require(:expense).permit(:amount, :date, :note, :category_id, :user_id, :both_flg, :percent)
+      if params[:expense][:both_flg] == false
+        params.require(:expense).permit(:amount, :date, :note, :category_id, :both_flg, :percent).merge!(user_id: current_user.id)
+      else
+        mypay = (params[:expense][:amount].to_i * params[:expense][:percent].to_f).round
+        partnerpay = params[:expense][:amount].to_i - mypay
+        params.require(:expense).permit(:amount, :date, :note, :category_id, :both_flg, :percent).merge!(user_id: current_user.id, mypay: mypay, partnerpay: partnerpay )
+      end
     end
 
     def set_expenses_categories
