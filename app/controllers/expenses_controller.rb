@@ -1,6 +1,6 @@
 class ExpensesController < ApplicationController
   before_action :check_logging_in
-  before_action :set_what_month, only: [:index, :both]
+
   # before_action :set_expenses_categories, only:[:index, :both]
 
   def index
@@ -40,11 +40,6 @@ class ExpensesController < ApplicationController
   def create
     category = Category.find(params[:expense][:category_id])
     @expense = Expense.new(expense_params)
-    if params[:expense][:both_flg] == true
-      @expense.mypay = (params[:expense][:amount].to_i * params[:expense][:percent].to_f).round
-      @expense.save
-      @expense.partnerpay = params[:expense][:amount].to_i - @expense.mypay
-    end
     if @expense.save
       redirect_to root_path, notice: "出費を保存しました。#{category.kind}: #{@expense.amount}"
     else
@@ -57,23 +52,32 @@ class ExpensesController < ApplicationController
   end
 
   private
+    def mypay_amount
+      whole_payment = params[:expense][:amount].to_i
+      case params[:expense][:percent].to_i
+      when 1
+        mypay = (whole_payment / 2).round
+      when 2
+        mypay = (whole_payment / 3).round
+      when 3
+        mypay = (whole_payment * 2 / 3).round
+      when 4
+        mypay = 0
+      end
+      return mypay
+    end
+
     def expense_params
       if params[:expense][:both_flg] == false
         params.require(:expense).permit(:amount, :date, :note, :category_id, :both_flg, :percent).merge!(user_id: current_user.id)
       else
-        mypay = (params[:expense][:amount].to_i * params[:expense][:percent].to_f).round
-        partnerpay = params[:expense][:amount].to_i - mypay
-        params.require(:expense).permit(:amount, :date, :note, :category_id, :both_flg, :percent).merge!(user_id: current_user.id, mypay: mypay, partnerpay: partnerpay )
+        partnerpay = params[:expense][:amount].to_i - mypay_amount
+        params.require(:expense).permit(:amount, :date, :note, :category_id, :both_flg, :percent).merge!(user_id: current_user.id, mypay: mypay_amount, partnerpay: partnerpay )
       end
     end
 
     def set_expenses_categories
       @categories = Category.all
       # @expenses = current_user.expenses.order(date: :desc)
-    end
-
-    def set_what_month
-      end_of_month = Date.today.end_of_month
-      beginning_of_month = Date.today.beginning_of_month
     end
 end

@@ -1,6 +1,6 @@
 module ExpensesHelper
   def percent_selection
-    selection = { '半分' => 0.5, '3分の1' => 0.33, '3分の2' => 0.66, '相手100%' => 0.0 }
+    selection = { '半分' => 1, '3分の1' => 2, '3分の2' => 3, '相手100%' => 4 }
     return selection
   end
 
