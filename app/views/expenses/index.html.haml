@@ -1,50 +1,38 @@
 %div.whole_page.container
-  %p 全てのカテゴリー
+  %p 全てのカテゴリ
   - @categories.each do |category|
     %ul
       %li #{category.kind}
 
-
-  %h3 二人の出費を入力
+  %h3 出費を入力
   = form_with(model: @expense, local: true) do |form|
     - if @expense.errors.any?
       = render 'layouts/error', var: @expense
-
     %div
       %div 金額
       = form.number_field :amount, required: true
     %div
       %div 日付
-      = form.date_field :date, required: true, value: Date.today
+      = form.date_field :date, required: true
     %div
       %div メモ
       = form.text_field :note
     %div
       %div カテゴリー
       = form.collection_select(:category_id, @categories, :id, :kind)
-    %div
-      %div 自分の割合
-      = form.select :percent, percent_selection
 
-
-    = form.hidden_field :both_flg, value: true
-    %div
-      = form.submit
-
-
+    = form.hidden_field :user_id, value: current_user.id
+    = form.submit
   -# 出費フォーム
 
   %hr
 
-  %strong 二人の出費の合計 ¥#{number_with_delimiter(@sum, delimiter: ",")}
+  %h3 #{current_user.name}の出費
+  %strong 合計 ¥#{number_with_delimiter(@sum, delimiter: ",")}
+  - @expenses.each do |expense|
+    = render 'expenses/display_expenses', expense: expense
 
   %hr
 
-  %h3 #{current_user.name}の出費
-  - @current_user_expenses.each do |expense|
-    = render 'expenses/display_expenses', expense: expense
-
-
-  %h3 #{@partner.name}の出費
-  - @partner_expenses.each do |expense|
-    = render 'expenses/display_expenses', expense: expense
+  = Date.today.end_of_month.strftime("%Y/%m/%d")
+  = Date.today.strftime("%Y/%m/%d")
