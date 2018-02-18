@@ -9,5 +9,5 @@ Rails.application.routes.draw do
   end
   resources :categories
   resources :badgets
-  root to: "expenses#index"
+  root to: "expenses#both"
 end
