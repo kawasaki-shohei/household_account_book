@@ -1,5 +1,6 @@
 class ExpensesController < ApplicationController
   before_action :check_logging_in
+  include ExpensesHelper
 
   # before_action :set_expenses_categories, only:[:index, :both]
 
@@ -17,23 +18,18 @@ class ExpensesController < ApplicationController
   def both
     @expense = Expense.new
     @categories = Category.all
-    if current_user.email == "shoheimoment@gmail.com"
-      @partner = User.find_by(email: "ikky629@gmail.com")
-    elsif current_user.email == "ikky629@gmail.com"
-      @partner = User.find_by(email: "shoheimoment@gmail.com")
-    end
+    who_is_partner(current_user)
+
     end_of_month = Date.today.end_of_month
     beginning_of_month = Date.today.beginning_of_month
+
     @current_user_expenses = current_user.expenses.where!('date >= ? AND date <= ?', beginning_of_month, end_of_month)
     @current_user_expenses.where!(both_flg: true).order!(date: :desc)
 
     @partner_expenses = @partner.expenses.where!('date >= ? AND date <= ?', beginning_of_month, end_of_month)
     @partner_expenses.where!(both_flg: true).order!(date: :desc)
 
-    @sum = @current_user_expenses.sum(:amount) + @partner_expenses.sum(:amount)
-    # 自分 → 払った金額 * percent
-    #
-    # 相手 → 払った金額 - (払った金額 * percent)
+    @sum = @current_user_expenses.sum(:mypay) + @partner_expenses.sum(:partnerpay)
 
   end
 

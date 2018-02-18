@@ -8,4 +8,13 @@ module ExpensesHelper
     percent_selection.key(val)
   end
 
+  def who_is_partner(current_user)
+    if current_user.email == "shoheimoment@gmail.com"
+      @partner = User.find_by(email: "ikky629@gmail.com")
+    elsif current_user.email == "ikky629@gmail.com"
+      @partner = User.find_by(email: "shoheimoment@gmail.com")
+    end
+    return @partner
+  end
+
 end

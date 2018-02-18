@@ -15,7 +15,7 @@
       = form.number_field :amount, required: true
     %div
       %div 日付
-      = form.date_field :date, required: true
+      = form.date_field :date, required: true, value: Date.today
     %div
       %div メモ
       = form.text_field :note
@@ -33,6 +33,10 @@
 
 
   -# 出費フォーム
+
+  %hr
+
+  %strong 二人の出費の合計 ¥#{number_with_delimiter(@sum, delimiter: ",")}
 
   %hr
 
