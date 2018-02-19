@@ -1,8 +1,4 @@
 %div.whole_page.container
-  %p 全てのカテゴリ
-  - @categories.each do |category|
-    %ul
-      %li #{category.kind}
 
   %h3 出費を入力
   = form_with(model: @expense, local: true) do |form|
@@ -34,5 +30,15 @@
 
   %hr
 
-  = Date.today.end_of_month.strftime("%Y/%m/%d")
-  = Date.today.strftime("%Y/%m/%d")
+  %strong 二人の出費の合計 ¥#{number_with_delimiter(@sum, delimiter: ",")}
+
+  %hr
+
+  %h3 #{current_user.name}の出費
+  - @current_user_expenses.each do |expense|
+    = render 'expenses/display_expenses', expense: expense
+
+
+  %h3 #{@partner.name}の出費
+  - @partner_expenses.each do |expense|
+    = render 'expenses/display_expenses', expense: expense

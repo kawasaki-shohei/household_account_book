@@ -12,24 +12,22 @@ class ExpensesController < ApplicationController
     @expenses.where!(both_flg: false)
     @expenses.order!(date: :desc)
     @sum = @expenses.sum(:amount)
-    set_expenses_categories
-  end
 
-  def both
-    @expense = Expense.new
-    @categories = Category.all
     who_is_partner(current_user)
-
-    end_of_month = Date.today.end_of_month
-    beginning_of_month = Date.today.beginning_of_month
-
     @current_user_expenses = current_user.expenses.where!('date >= ? AND date <= ?', beginning_of_month, end_of_month)
     @current_user_expenses.where!(both_flg: true).order!(date: :desc)
 
     @partner_expenses = @partner.expenses.where!('date >= ? AND date <= ?', beginning_of_month, end_of_month)
     @partner_expenses.where!(both_flg: true).order!(date: :desc)
 
-    @sum = @current_user_expenses.sum(:mypay) + @partner_expenses.sum(:partnerpay)
+    @both_sum = @current_user_expenses.sum(:mypay) + @partner_expenses.sum(:partnerpay)
+
+    set_expenses_categories
+  end
+
+  def both
+    @expense = Expense.new
+    @categories = Category.all
 
   end
 

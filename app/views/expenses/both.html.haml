@@ -6,7 +6,7 @@
 
     %div
       %div 金額
-      = form.number_field :amount, required: true
+      = form.number_field :amount, required: true, placeholder: 1000
     %div
       %div 日付
       = form.date_field :date, required: true, value: Date.today
@@ -28,17 +28,4 @@
 
   -# 出費フォーム
 
-  %hr
-
-  %strong 二人の出費の合計 ¥#{number_with_delimiter(@sum, delimiter: ",")}
-
-  %hr
-
-  %h3 #{current_user.name}の出費
-  - @current_user_expenses.each do |expense|
-    = render 'expenses/display_expenses', expense: expense
-
-
-  %h3 #{@partner.name}の出費
-  - @partner_expenses.each do |expense|
-    = render 'expenses/display_expenses', expense: expense
+  
