@@ -1,10 +1,4 @@
 %div.whole_page.container
-  %p 全てのカテゴリー
-  - @categories.each do |category|
-    %ul
-      %li #{category.kind}
-
-
   %h3 二人の出費を入力
   = form_with(model: @expense, local: true) do |form|
     - if @expense.errors.any?
