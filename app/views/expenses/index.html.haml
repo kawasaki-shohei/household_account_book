@@ -1,6 +1,9 @@
 %div.whole_page.container
   %div 支出合計 ¥#{number_with_delimiter(@sum + @both_sum, delimiter: ",")}
-  %div カテゴリー予算残金
+  %div カテゴリー予算残金　合計
+  - @category_badgets.each do |badget|
+    - category = Category.find(badget.category_id).kind
+    %div #{category}  ¥#{number_with_delimiter(category_balance(badget), delimiter: ",")}
 
   / Nav tabs
   %ul#myTab.nav.nav-tabs{:role => "tablist"}

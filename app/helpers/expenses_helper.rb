@@ -17,4 +17,10 @@ module ExpensesHelper
     return @partner
   end
 
+  def category_balance(badget)
+    sum_expense = Expense.where(user_id: current_userid, category_id: badget.category_id).sum(:amount)
+    balance = badget.amount.to_i - sum_expense
+    return balance
+  end
+
 end

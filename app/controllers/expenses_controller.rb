@@ -20,8 +20,7 @@ class ExpensesController < ApplicationController
 
     @both_sum = @current_user_expenses.sum(:mypay) + @partner_expenses.sum(:partnerpay)
 
-    set_expenses_categories
-
+    @category_badgets = current_user.badgets
   end
 
   def both
