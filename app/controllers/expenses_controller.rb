@@ -6,19 +6,23 @@ class ExpensesController < ApplicationController
   def index
     end_of_month = Date.today.end_of_month
     beginning_of_month = Date.today.beginning_of_month
-    @expenses = Expense.where('date >= ? AND date <= ?', beginning_of_month, end_of_month)
-    @expenses.where!(both_flg: false)
-    @expenses.order!(date: :desc)
-    @sum = @expenses.sum(:amount)
 
+    # 自分一人の出費
+    @current_user_expenses = current_user.expenses.where('date >= ? AND date <= ?', beginning_of_month, end_of_month)
+    @current_user_expenses.where!(both_flg: false).order!(date: :desc)
+    @sum = @current_user_expenses.sum(:amount)
+
+    # 二人の出費の内、自分が払うもの、上記との違いはboth_flgのみ
     who_is_partner(current_user)
-    @current_user_expenses = current_user.expenses.where!('date >= ? AND date <= ?', beginning_of_month, end_of_month)
-    @current_user_expenses.where!(both_flg: true).order!(date: :desc)
+    @current_user_expenses_of_both = current_user.expenses.where!('date >= ? AND date <= ?', beginning_of_month, end_of_month)
+    @current_user_expenses_of_both.where!(both_flg: true).order!(date: :desc)
 
-    @partner_expenses = @partner.expenses.where!('date >= ? AND date <= ?', beginning_of_month, end_of_month)
-    @partner_expenses.where!(both_flg: true).order!(date: :desc)
+    # 相手が記入した二人の出費の内、自分が払うもの
+    @partner_expenses_of_both = @partner.expenses.where!('date >= ? AND date <= ?', beginning_of_month, end_of_month)
+    @partner_expenses_of_both.where!(both_flg: true).order!(date: :desc)
 
-    @both_sum = @current_user_expenses.sum(:mypay) + @partner_expenses.sum(:partnerpay)
+    # 二人の出費の内、自分が払う金額の合計
+    @both_sum = @current_user_expenses_of_both.sum(:mypay) + @partner_expenses_of_both.sum(:partnerpay)
 
     @category_badgets = current_user.badgets
   end
