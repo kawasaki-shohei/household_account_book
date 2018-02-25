@@ -1,6 +1,6 @@
 %div.whole_page.container
   %h3 出費を入力
-  = form_with(model: @expense, local: true) do |form|
+  = form_with(model: @expense, local: true, url: choose_new_or_edit) do |form|
     - if @expense.errors.any?
       = render 'layouts/error', var: @expense
     %div
@@ -16,6 +16,5 @@
       %div カテゴリー
       = form.collection_select(:category_id, @categories, :id, :kind)
 
-    = form.hidden_field :user_id, value: current_user.id
     = form.submit
   -# 出費フォーム

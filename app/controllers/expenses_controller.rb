@@ -27,7 +27,16 @@ class ExpensesController < ApplicationController
   end
 
   def new
-    @expense = Expense.new
+    if params[:back]
+      @expense = Expense.new(expense_params)
+    else
+      @expense = Expense.new
+    end
+  end
+
+  def confirm
+    @expense = Expense.new(expense_params)
+    render :new if @expense.invalid?
   end
 
   def create

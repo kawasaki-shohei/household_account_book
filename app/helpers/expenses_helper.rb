@@ -17,6 +17,14 @@ module ExpensesHelper
     return @partner
   end
 
+  def choose_new_or_edit
+    if action_name == 'new' || action_name == 'both' || action_name == 'confirm'
+      confirm_expenses_path
+    elsif action_name == 'edit'
+      expense_path
+    end
+  end
+
   def category_balance(badget, category, current_user_expenses, current_user_expenses_of_both, partner_expenses_of_both)
     # そのカテゴリーの自分の出費の合計
     current_user_category_expenses_sum = current_user_expenses.where(category_id: category.id).sum(:amount)
