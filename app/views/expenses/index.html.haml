@@ -1,6 +1,7 @@
 %div.whole_page.container
   %div 支出合計 ¥#{number_with_delimiter(@sum + @both_sum, delimiter: ",")}
   - if Badget.where(user_id: current_user.id).exists?
+    %div カテゴリー別予算残金
     - @category_badgets.each do |badget|
       - category = Category.find(badget.category_id)
       %div #{category.kind}  ¥#{number_with_delimiter(category_balance(badget, category, @current_user_expenses, @current_user_expenses_of_both, @partner_expenses_of_both), delimiter: ",")}
@@ -26,6 +27,7 @@
         - flg = "both"
         = render 'expenses/display_expenses', expense: expense, flg: flg
     #mine.tab-pane{"aria-labelledby" => "mine-tab", :role => "tabpanel"}
+      %br
       %h3 #{current_user.name}の出費
       %strong 合計 ¥#{number_with_delimiter(@sum, delimiter: ",")}
       %hr
