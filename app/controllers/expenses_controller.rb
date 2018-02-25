@@ -21,6 +21,7 @@ class ExpensesController < ApplicationController
     @both_sum = @current_user_expenses.sum(:mypay) + @partner_expenses.sum(:partnerpay)
 
     set_expenses_categories
+
   end
 
   def both
@@ -63,16 +64,15 @@ class ExpensesController < ApplicationController
     end
 
     def expense_params
-      if params[:expense][:both_flg] == false
-        params.require(:expense).permit(:amount, :date, :note, :category_id, :both_flg, :percent).merge!(user_id: current_user.id)
-      else
+      if params[:expense][:both_flg] == true
         partnerpay = params[:expense][:amount].to_i - mypay_amount
-        params.require(:expense).permit(:amount, :date, :note, :category_id, :both_flg, :percent).merge!(user_id: current_user.id, mypay: mypay_amount, partnerpay: partnerpay )
+        params.require(:expense).permit(:amount, :date, :note, :category_id, :both_flg, :percent).merge(user_id: current_user.id, mypay: mypay_amount, partnerpay: partnerpay )
+      else
+        params.require(:expense).permit(:amount, :date, :note, :category_id, :both_flg, :percent).merge(user_id: current_user.id)
       end
     end
 
     def set_expenses_categories
       @categories = Category.all
-      # @expenses = current_user.expenses.order(date: :desc)
     end
 end

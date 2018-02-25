@@ -1,21 +1,18 @@
 %div.whole_page.container
+  %div 支出合計 ¥#{number_with_delimiter(@sum + @both_sum, delimiter: ",")}
+  %div カテゴリー予算残金
+
   / Nav tabs
   %ul#myTab.nav.nav-tabs{:role => "tablist"}
     %li.nav-item
-      %a#mine-tab.nav-link.active{"aria-controls" => "mine", "aria-selected" => "true", "data-toggle" => "tab", :href => "#mine", :role => "tab"} mine
+      %a#both-tab.nav-link.active{"aria-controls" => "both", "aria-selected" => "false", "data-toggle" => "tab", :href => "#both", :role => "tab"} Both
     %li.nav-item
-      %a#both-tab.nav-link{"aria-controls" => "both", "aria-selected" => "false", "data-toggle" => "tab", :href => "#both", :role => "tab"} both
+      %a#mine-tab.nav-link{"aria-controls" => "mine", "aria-selected" => "true", "data-toggle" => "tab", :href => "#mine", :role => "tab"} Mine
   / Tab panes
   .tab-content
-    #mine.tab-pane.active{"aria-labelledby" => "mine-tab", :role => "tabpanel"}
-      %h3 #{current_user.name}の出費
-      %strong 合計 ¥#{number_with_delimiter(@sum, delimiter: ",")}
-      - @expenses.each do |expense|
-        - flg = "mine"
-        = render 'expenses/display_expenses', expense: expense, flg: flg
-      %hr
-    #both.tab-pane{"aria-labelledby" => "both-tab", :role => "tabpanel"}
-      %strong 二人の出費の合計 ¥#{number_with_delimiter(@sum, delimiter: ",")}
+    #both.tab-pane.active{"aria-labelledby" => "both-tab", :role => "tabpanel"}
+      %br
+      %strong 二人の出費の内、#{current_user.name}の支払い合計 ¥#{number_with_delimiter(@both_sum, delimiter: ",")}
       %hr
       %h3 #{current_user.name}の出費
       - @current_user_expenses.each do |expense|
@@ -24,4 +21,11 @@
       %h3 #{@partner.name}の出費
       - @partner_expenses.each do |expense|
         - flg = "both"
+        = render 'expenses/display_expenses', expense: expense, flg: flg
+    #mine.tab-pane{"aria-labelledby" => "mine-tab", :role => "tabpanel"}
+      %h3 #{current_user.name}の出費
+      %strong 合計 ¥#{number_with_delimiter(@sum, delimiter: ",")}
+      %hr
+      - @expenses.each do |expense|
+        - flg = "mine"
         = render 'expenses/display_expenses', expense: expense, flg: flg
