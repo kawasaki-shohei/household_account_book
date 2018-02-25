@@ -1,44 +1,27 @@
 %div.whole_page.container
-
-  %h3 出費を入力
-  = form_with(model: @expense, local: true) do |form|
-    - if @expense.errors.any?
-      = render 'layouts/error', var: @expense
-    %div
-      %div 金額
-      = form.number_field :amount, required: true
-    %div
-      %div 日付
-      = form.date_field :date, required: true
-    %div
-      %div メモ
-      = form.text_field :note
-    %div
-      %div カテゴリー
-      = form.collection_select(:category_id, @categories, :id, :kind)
-
-    = form.hidden_field :user_id, value: current_user.id
-    = form.submit
-  -# 出費フォーム
-
-  %hr
-
-  %h3 #{current_user.name}の出費
-  %strong 合計 ¥#{number_with_delimiter(@sum, delimiter: ",")}
-  - @expenses.each do |expense|
-    = render 'expenses/display_expenses', expense: expense
-
-  %hr
-
-  %strong 二人の出費の合計 ¥#{number_with_delimiter(@sum, delimiter: ",")}
-
-  %hr
-
-  %h3 #{current_user.name}の出費
-  - @current_user_expenses.each do |expense|
-    = render 'expenses/display_expenses', expense: expense
-
-
-  %h3 #{@partner.name}の出費
-  - @partner_expenses.each do |expense|
-    = render 'expenses/display_expenses', expense: expense
+  / Nav tabs
+  %ul#myTab.nav.nav-tabs{:role => "tablist"}
+    %li.nav-item
+      %a#mine-tab.nav-link.active{"aria-controls" => "mine", "aria-selected" => "true", "data-toggle" => "tab", :href => "#mine", :role => "tab"} mine
+    %li.nav-item
+      %a#both-tab.nav-link{"aria-controls" => "both", "aria-selected" => "false", "data-toggle" => "tab", :href => "#both", :role => "tab"} both
+  / Tab panes
+  .tab-content
+    #mine.tab-pane.active{"aria-labelledby" => "mine-tab", :role => "tabpanel"}
+      %h3 #{current_user.name}の出費
+      %strong 合計 ¥#{number_with_delimiter(@sum, delimiter: ",")}
+      - @expenses.each do |expense|
+        - flg = "mine"
+        = render 'expenses/display_expenses', expense: expense, flg: flg
+      %hr
+    #both.tab-pane{"aria-labelledby" => "both-tab", :role => "tabpanel"}
+      %strong 二人の出費の合計 ¥#{number_with_delimiter(@sum, delimiter: ",")}
+      %hr
+      %h3 #{current_user.name}の出費
+      - @current_user_expenses.each do |expense|
+        - flg = "both"
+        = render 'expenses/display_expenses', expense: expense, flg: flg
+      %h3 #{@partner.name}の出費
+      - @partner_expenses.each do |expense|
+        - flg = "both"
+        = render 'expenses/display_expenses', expense: expense, flg: flg

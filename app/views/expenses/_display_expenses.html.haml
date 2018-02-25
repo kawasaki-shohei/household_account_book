@@ -3,9 +3,9 @@
     = expense.date.strftime("%Y/%m/%d(%a)")
   %div.panel-body
     %strong ¥#{number_with_delimiter(expense.amount, delimiter: ",")}
-    - if action_name == "index"
+    - if flg == "mine"
       %span #{Category.find(expense.category_id).kind}
-    - elsif action_name == "both"
+    - elsif flg == "both"
       %span #{Category.find(expense.category_id).kind} (#{which_percent(expense.percent)})
       %br
       #{expense.user.name}の支払い → ¥#{number_with_delimiter(expense.mypay, delimiter: ",")}  #{who_is_partner(expense.user).name}の支払い → ¥#{number_with_delimiter(expense.partnerpay, delimiter: ",")}

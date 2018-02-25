@@ -1,11 +1,9 @@
 class ExpensesController < ApplicationController
   before_action :check_logging_in
+  before_action :set_expenses_categories, only:[:new, :both]
   include ExpensesHelper
 
-  # before_action :set_expenses_categories, only:[:index, :both]
-
   def index
-    @expense = Expense.new
     end_of_month = Date.today.end_of_month
     beginning_of_month = Date.today.beginning_of_month
     @expenses = Expense.where('date >= ? AND date <= ?', beginning_of_month, end_of_month)
@@ -28,7 +26,10 @@ class ExpensesController < ApplicationController
   def both
     @expense = Expense.new
     @categories = Category.all
+  end
 
+  def new
+    @expense = Expense.new
   end
 
   def create
