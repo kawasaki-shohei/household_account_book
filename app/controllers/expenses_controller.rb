@@ -1,6 +1,7 @@
 class ExpensesController < ApplicationController
   before_action :check_logging_in
   before_action :set_expenses_categories, only:[:new, :both]
+  before_action :back_or_new, only:[:new, :both]
   include ExpensesHelper
 
   def index
@@ -22,17 +23,9 @@ class ExpensesController < ApplicationController
   end
 
   def both
-    @expense = Expense.new
-    @categories = Category.all
   end
 
   def new
-    if params[:back]
-      @expense = Expense.new(expense_params)
-    binding.pry
-    else
-      @expense = Expense.new
-    end
   end
 
   def confirm
@@ -81,5 +74,13 @@ class ExpensesController < ApplicationController
 
     def set_expenses_categories
       @categories = Category.all
+    end
+
+    def back_or_new
+      if params[:back]
+        @expense = Expense.new(expense_params)
+      else
+        @expense = Expense.new
+      end
     end
 end

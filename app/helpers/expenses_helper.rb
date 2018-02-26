@@ -25,6 +25,14 @@ module ExpensesHelper
     end
   end
 
+  def back_new_or_both(expense)
+    if expense.both_flg == true
+      both_expenses_path
+    else
+      new_expense_path
+    end
+  end
+
   def category_balance(badget, category, current_user_expenses, current_user_expenses_of_both, partner_expenses_of_both)
     # そのカテゴリーの自分の出費の合計
     current_user_category_expenses_sum = current_user_expenses.where(category_id: category.id).sum(:amount)
