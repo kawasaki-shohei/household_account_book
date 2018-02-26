@@ -29,6 +29,7 @@ class ExpensesController < ApplicationController
   def new
     if params[:back]
       @expense = Expense.new(expense_params)
+    binding.pry
     else
       @expense = Expense.new
     end
