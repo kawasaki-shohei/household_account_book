@@ -20,7 +20,7 @@
 
     = form.submit
 
-  = form_with(model: @expense, local: true, url: new_expense_path) do |form|
+  = form_with(model: @expense, local: true, url: new_expense_path, method: :get) do |form|
     = form.hidden_field :amount
     = form.hidden_field :date
     = form.hidden_field :note
