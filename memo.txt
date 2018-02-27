@@ -1,2 +1,9 @@
 bothからconfirmに飛んでも、confirmからのback buttonがnewに飛んでしまっているから
 それを変更する必要がある
+→done
+
+expenseの並び順はdateの次にcreated_atでも並び変えられるように
+→同じ日だと順番が違ってくる
+→done
+
+出費を編集・削除できるように
