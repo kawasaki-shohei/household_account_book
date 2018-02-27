@@ -1,0 +1,2 @@
+bothからconfirmに飛んでも、confirmからのback buttonがnewに飛んでしまっているから
+それを変更する必要がある

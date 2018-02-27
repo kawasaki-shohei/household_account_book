@@ -6,7 +6,7 @@ class BadgetsController < ApplicationController
   end
 
   def new
-    @badget = current_user.badgets.new
+    @badget = Badget.new
   end
 
   def create

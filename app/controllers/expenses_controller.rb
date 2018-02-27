@@ -1,36 +1,36 @@
 class ExpensesController < ApplicationController
   before_action :check_logging_in
+  before_action :set_expenses_categories, only:[:new, :both]
+  before_action :back_or_new, only:[:new, :both]
   include ExpensesHelper
 
-  # before_action :set_expenses_categories, only:[:index, :both]
-
   def index
-    @expense = Expense.new
-    end_of_month = Date.today.end_of_month
-    beginning_of_month = Date.today.beginning_of_month
-    @expenses = Expense.where('date >= ? AND date <= ?', beginning_of_month, end_of_month)
-    @expenses.where!(both_flg: false)
-    @expenses.order!(date: :desc)
-    @sum = @expenses.sum(:amount)
-    set_expenses_categories
+    # 自分一人の出費
+    @current_user_expenses = current_user.expenses.this_month.both_f.newer
+    @sum = @current_user_expenses.sum(:amount)
+
+    # 二人の出費の内、自分が払うもの、上記との違いはboth_flgのみ
+    who_is_partner(current_user)
+    @current_user_expenses_of_both = current_user.expenses.this_month.both_t.newer
+
+    # 相手が記入した二人の出費の内、自分が払うもの
+    @partner_expenses_of_both = @partner.expenses.this_month.both_t.newer
+
+    # 二人の出費の内、自分が払う金額の合計
+    @both_sum = @current_user_expenses_of_both.sum(:mypay) + @partner_expenses_of_both.sum(:partnerpay)
+
+    @category_badgets = current_user.badgets
   end
 
   def both
-    @expense = Expense.new
-    @categories = Category.all
-    who_is_partner(current_user)
+  end
 
-    end_of_month = Date.today.end_of_month
-    beginning_of_month = Date.today.beginning_of_month
+  def new
+  end
 
-    @current_user_expenses = current_user.expenses.where!('date >= ? AND date <= ?', beginning_of_month, end_of_month)
-    @current_user_expenses.where!(both_flg: true).order!(date: :desc)
-
-    @partner_expenses = @partner.expenses.where!('date >= ? AND date <= ?', beginning_of_month, end_of_month)
-    @partner_expenses.where!(both_flg: true).order!(date: :desc)
-
-    @sum = @current_user_expenses.sum(:mypay) + @partner_expenses.sum(:partnerpay)
-
+  def confirm
+    @expense = Expense.new(expense_params)
+    render :new if @expense.invalid?
   end
 
   def create
@@ -64,16 +64,23 @@ class ExpensesController < ApplicationController
     end
 
     def expense_params
-      if params[:expense][:both_flg] == false
-        params.require(:expense).permit(:amount, :date, :note, :category_id, :both_flg, :percent).merge!(user_id: current_user.id)
-      else
+      if params[:expense][:both_flg] == "true"
         partnerpay = params[:expense][:amount].to_i - mypay_amount
-        params.require(:expense).permit(:amount, :date, :note, :category_id, :both_flg, :percent).merge!(user_id: current_user.id, mypay: mypay_amount, partnerpay: partnerpay )
+        params.require(:expense).permit(:amount, :date, :note, :category_id, :both_flg, :percent).merge(user_id: current_user.id, mypay: mypay_amount, partnerpay: partnerpay )
+      else
+        params.require(:expense).permit(:amount, :date, :note, :category_id, :both_flg, :percent).merge(user_id: current_user.id)
       end
     end
 
     def set_expenses_categories
       @categories = Category.all
-      # @expenses = current_user.expenses.order(date: :desc)
+    end
+
+    def back_or_new
+      if params[:back]
+        @expense = Expense.new(expense_params)
+      else
+        @expense = Expense.new
+      end
     end
 end

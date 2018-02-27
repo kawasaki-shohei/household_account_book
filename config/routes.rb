@@ -5,9 +5,10 @@ Rails.application.routes.draw do
   resources :expenses do
     collection do
       get :both
+      post :confirm
     end
   end
   resources :categories
   resources :badgets
-  root to: "expenses#index"
+  root to: "expenses#both"
 end

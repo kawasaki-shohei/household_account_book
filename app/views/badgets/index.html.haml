@@ -9,7 +9,7 @@
       %td
     - @categories.each do |category|
       - unless category.badget.nil?
-        - badget = category.badget
+        - badget = current_user.badgets.find_by(category_id: category.id)
       %tr
         %td #{category.kind}
         - if badget.present?
