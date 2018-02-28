@@ -1,7 +1,8 @@
 class ExpensesController < ApplicationController
   before_action :check_logging_in
-  before_action :set_expenses_categories, only:[:new, :both]
-  before_action :back_or_new, only:[:new, :both]
+  before_action :set_expenses_categories, only:[:new, :both, :edit]
+  before_action :back_or_new, only:[:new, :both, :edit]
+  before_action :set_expense, only:[:edit, :update, :delete]
   include ExpensesHelper
 
   def index
@@ -45,6 +46,7 @@ class ExpensesController < ApplicationController
   end
 
   def edit
+
   end
 
   private
@@ -82,5 +84,9 @@ class ExpensesController < ApplicationController
       else
         @expense = Expense.new
       end
+    end
+
+    def set_expense
+      @expense = Expense.find(params[:id])
     end
 end

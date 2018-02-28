@@ -5,6 +5,8 @@
     %strong ¥#{number_with_delimiter(expense.amount, delimiter: ",")}
     - if flg == "mine"
       %span #{Category.find(expense.category_id).kind}
+      %span #{link_to 'edit', edit_expense_path(expense.id)}
+      %span #{link_to 'delete', expense_path(expense.id), method: :delete, data:{confirm: "Are you sure?"}}
     - elsif flg == "both"
       %span #{Category.find(expense.category_id).kind} (#{which_percent(expense.percent)})
       %br
