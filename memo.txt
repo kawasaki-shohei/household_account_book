@@ -7,3 +7,4 @@ expenseの並び順はdateの次にcreated_atでも並び変えられるよう�
 →done
 
 出費を編集・削除できるように
+→aloneはできたbothができているか確認。そのあとは、delete

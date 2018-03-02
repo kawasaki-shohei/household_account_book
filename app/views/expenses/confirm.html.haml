@@ -1,6 +1,6 @@
 %div.whole_page.container
   %h3 以下の内容で追加する
-  = form_with(model: @expense, local: true, url: expenses_path) do |form|
+  = form_with(model: @expense, local: true) do |form|
     - if @expense.errors.any?
       = render 'layouts/error', var: @expense
     = form.hidden_field :amount
