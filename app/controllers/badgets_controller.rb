@@ -42,7 +42,7 @@ class BadgetsController < ApplicationController
 
 private
   def set_all_categories
-    @categories = Category.all
+    @categories = current_user.categories
   end
 
   def badget_params

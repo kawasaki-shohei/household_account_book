@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
+  get 'partners/new'
+
   resources :sessions, only: [:new, :create, :destroy]
 
   resources :users
+  resources :partners, only:[:new, :create, :destroy]
+  
   resources :expenses do
     collection do
       get :both
