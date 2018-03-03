@@ -1,7 +1,9 @@
 class ExpensesController < ApplicationController
   before_action :check_logging_in
-  before_action :set_expenses_categories, only:[:new, :both]
-  before_action :back_or_new, only:[:new, :both]
+  before_action :set_expenses_categories, only:[:new, :both, :edit]
+  before_action :back_or_new, only:[:new, :both, :edit]
+  before_action :set_expense, only:[:edit, :update, :destroy]
+  before_action :set_category, only:[:update, :create]
   include ExpensesHelper
 
   def index
@@ -34,10 +36,9 @@ class ExpensesController < ApplicationController
   end
 
   def create
-    category = Category.find(params[:expense][:category_id])
     @expense = Expense.new(expense_params)
     if @expense.save
-      redirect_to root_path, notice: "出費を保存しました。#{category.kind}: #{@expense.amount}"
+      redirect_to root_path, notice: "出費を保存しました。#{@category.kind}: #{@expense.amount}"
     else
       set_expenses_categories
       render 'index'
@@ -45,6 +46,19 @@ class ExpensesController < ApplicationController
   end
 
   def edit
+  end
+
+  def update
+    if @expense.update(expense_params)
+      redirect_to expenses_path, notice: "出費を保存しました。#{@category.kind}: #{@expense.amount}"
+    else
+      render 'edit'
+    end
+  end
+
+  def destroy
+    @expense.destroy
+    redirect_to expenses_path, notice: "削除しました"
   end
 
   private
@@ -82,5 +96,13 @@ class ExpensesController < ApplicationController
       else
         @expense = Expense.new
       end
+    end
+
+    def set_expense
+      @expense = Expense.find(params[:id])
+    end
+
+    def set_category
+      @category = Category.find(params[:expense][:category_id])
     end
 end
