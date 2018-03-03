@@ -2,7 +2,7 @@ class ExpensesController < ApplicationController
   before_action :check_logging_in
   before_action :set_expenses_categories, only:[:new, :both, :edit]
   before_action :back_or_new, only:[:new, :both, :edit]
-  before_action :set_expense, only:[:edit, :update, :delete]
+  before_action :set_expense, only:[:edit, :update, :destroy]
   before_action :set_category, only:[:update, :create]
   include ExpensesHelper
 
@@ -54,6 +54,11 @@ class ExpensesController < ApplicationController
     else
       render 'edit'
     end
+  end
+
+  def destroy
+    @expense.destroy
+    redirect_to expenses_path, notice: "削除しました"
   end
 
   private
