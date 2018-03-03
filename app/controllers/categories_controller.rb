@@ -1,6 +1,6 @@
 class CategoriesController < ApplicationController
   before_action :check_logging_in
-  
+
   def new
     @categories = Category.all
     @category = Category.new
@@ -9,7 +9,7 @@ class CategoriesController < ApplicationController
   def create
     @category = Category.new(category_params)
     if @category.save
-      redirect_to root_path, notice: "新しいカテゴリーを作成しました"
+      redirect_to new_category_path, notice: "#{@category.kind}を追加しました"
     else
       render 'new'
     end
@@ -18,6 +18,6 @@ class CategoriesController < ApplicationController
 
   private
   def category_params
-    params.require(:category).permit(:kind)
+    params.require(:category).permit(:kind).merge(user_id: current_user.id)
   end
 end
