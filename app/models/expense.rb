@@ -1,5 +1,6 @@
 class Expense < ApplicationRecord
   belongs_to :user
+  validates :amount, :date, presence: true
 
   end_of_month = Date.today.end_of_month
   beginning_of_month = Date.today.beginning_of_month
