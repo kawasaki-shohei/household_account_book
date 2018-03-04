@@ -1,6 +1,6 @@
 module BadgetsHelper
   def make_left_categories
-    categories = Category.all
+    categories = current_user.categories
     all_categories = Hash.new
     categories.each do |category|
       all_categories[category.kind] = category.id

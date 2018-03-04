@@ -8,3 +8,7 @@ expenseの並び順はdateの次にcreated_atでも並び変えられるよう�
 
 出費を編集・削除できるように
 →aloneはできたbothができているか確認。そのあとは、delete
+
+partners_controllerのcheck_existance
+→done
+user#showでpartnerがnilだとエラーになるからif文でエラーがでないように

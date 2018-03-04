@@ -2,7 +2,7 @@ class CategoriesController < ApplicationController
   before_action :check_logging_in
 
   def new
-    @categories = Category.all
+    @categories = current_user.categories
     @category = Category.new
   end
 

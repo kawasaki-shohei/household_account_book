@@ -66,7 +66,7 @@
         <ul class="navbar-nav">
           <% if logged_in? %>
             <li class="nav-item">
-              <%= link_to "#{current_user.name}さん", edit_user_path(current_user), class: "nav-link" %>
+              <%= link_to "#{current_user.name}さん", user_path(current_user), class: "nav-link" %>
             </li>
           <% end %>
         </ul>

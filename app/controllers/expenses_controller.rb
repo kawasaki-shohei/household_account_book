@@ -87,7 +87,7 @@ class ExpensesController < ApplicationController
     end
 
     def set_expenses_categories
-      @categories = Category.all
+      @categories = current_user.categories
     end
 
     def back_or_new
