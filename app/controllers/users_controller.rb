@@ -17,7 +17,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    who_is_partner
+    partner
   end
 
 

@@ -5,5 +5,4 @@ class Category < ApplicationRecord
 
   scope :oneself, -> {where(common: false)}
 
-
 end

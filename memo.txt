@@ -12,3 +12,5 @@ expenseの並び順はdateの次にcreated_atでも並び変えられるよう�
 partners_controllerのcheck_existance
 →done
 user#showでpartnerがnilだとエラーになるからif文でエラーがでないように
+
+listのbothのeditの編集画面が一人用の編集画面になっている

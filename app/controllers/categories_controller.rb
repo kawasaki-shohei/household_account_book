@@ -1,12 +1,13 @@
 class CategoriesController < ApplicationController
   before_action :check_logging_in
-  before_action :set_category
-  include UsersHelper
+  before_action :set_category, only:[:update]
+  include UsersHelper, CategoriesHelper
 
   def new
-    @categories = current_user.categories.oneself
     @category = Category.new
-    who_is_partner
+    @categories = current_user.categories.oneself
+    partner
+    common_categories
     @partner_categories = @partner.categories.oneself
   end
 

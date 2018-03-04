@@ -1,10 +1,11 @@
 class ExpensesController < ApplicationController
   before_action :check_logging_in
-  before_action :set_expenses_categories, only:[:new, :both, :edit]
+  before_action :set_expenses_categories, only:[:new, :edit]
   before_action :back_or_new, only:[:new, :both, :edit]
   before_action :set_expense, only:[:edit, :update, :destroy]
   before_action :set_category, only:[:update, :create]
-  include ExpensesHelper, UsersHelper
+  before_action :partner, only:[:index, :both, :new]
+  include UsersHelper, CategoriesHelper
 
   def index
     # 自分一人の出費
@@ -12,7 +13,6 @@ class ExpensesController < ApplicationController
     @sum = @current_user_expenses.sum(:amount)
 
     # 二人の出費の内、自分が払うもの、上記との違いはboth_flgのみ
-    who_is_partner
     @current_user_expenses_of_both = current_user.expenses.this_month.both_t.newer
 
     # 相手が記入した二人の出費の内、自分が払うもの
@@ -25,6 +25,7 @@ class ExpensesController < ApplicationController
   end
 
   def both
+    common_categories
   end
 
   def new
@@ -87,7 +88,7 @@ class ExpensesController < ApplicationController
     end
 
     def set_expenses_categories
-      @categories = current_user.categories
+      @categories = Category.where(user_id: current_user.id).or(Category.where(user_id: partner.id, common: true))
     end
 
     def back_or_new
