@@ -1,13 +1,22 @@
 %div.whole_page.container
-  %p 全てのカテゴリ
-  - @categories.each do |category|
-    %ul
-      %li #{category.kind}
-
   %h3 自分のカテゴリを追加
   = form_with(model: @category, local: true) do |form|
     = form.text_field :kind
     = form.submit
   %hr
-  
-  %h3 パートナーのカテゴリを追加
+
+  %h3 二人の共通のカテゴリー
+    
+
+  %h3 二人の共通のカテゴリを登録
+  %h5 自分のカテゴリ
+  - @categories.each do |category|
+    %ul
+      %li
+      = link_to category.kind, category_path(category, name: "common" ), method: :patch, data: {comfirm: "#{category.kind}を共通のカテゴリに登録しますか？"}
+
+
+  %h5 パートナーのカテゴリ
+  - @partner_categories.each do |category|
+    %ul
+      %li #{category.kind}
