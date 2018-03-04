@@ -11,7 +11,7 @@ class BadgetsController < ApplicationController
 
   def create
     @badget = current_user.badgets.new(badget_params)
-    check = Badget.find_by(user_id: params[:user_id], category_id: params[:category_id])
+    check = Badget.find_by(user_id: current_user.id, category_id: params[:category_id])
     if check.present?
       @badget.errors[:base] << "同じカテゴリーに２つの予算を設定できません。予算を編集してください。"
       set_all_categories
