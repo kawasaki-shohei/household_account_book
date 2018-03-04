@@ -1,9 +1,11 @@
 class CategoriesController < ApplicationController
   before_action :check_logging_in
+  include UsersHelper
 
   def new
     @categories = current_user.categories
     @category = Category.new
+    who_is_partner
   end
 
   def create
@@ -18,6 +20,6 @@ class CategoriesController < ApplicationController
 
   private
   def category_params
-    params.require(:category).permit(:kind).merge(user_id: current_user.id)
+    params.require(:category).permit(:kind, :common).merge(user_id: current_user.id)
   end
 end
