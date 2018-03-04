@@ -1,0 +1,13 @@
+%div.whole_page.container
+  %p 全てのカテゴリ
+  - @categories.each do |category|
+    %ul
+      %li #{category.kind}
+
+  %h3 自分のカテゴリを追加
+  = form_with(model: @category, local: true) do |form|
+    = form.text_field :kind
+    = form.submit
+  %hr
+  
+  %h3 パートナーのカテゴリを追加
