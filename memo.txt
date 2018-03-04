@@ -13,4 +13,4 @@ partners_controllerのcheck_existance
 →done
 user#showでpartnerがnilだとエラーになるからif文でエラーがでないように
 
-listのbothのeditの編集画面が一人用の編集画面になっている
+次はlistのbothのeditの編集画面が一人用の編集画面になっているから直す
