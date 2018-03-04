@@ -8,15 +8,6 @@ module ExpensesHelper
     percent_selection.key(val)
   end
 
-  def who_is_partner(current_user)
-    if current_user.email == "shoheimoment@gmail.com"
-      @partner = User.find_by(email: "ikky629@gmail.com")
-    elsif current_user.email == "ikky629@gmail.com"
-      @partner = User.find_by(email: "shoheimoment@gmail.com")
-    end
-    return @partner
-  end
-
   def choose_new_or_edit
     if action_name == 'new' || action_name == 'both' || action_name == 'confirm'
       confirm_expenses_path

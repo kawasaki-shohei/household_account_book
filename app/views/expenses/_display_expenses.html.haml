@@ -10,9 +10,9 @@
     - elsif flg == "both"
       %span #{Category.find(expense.category_id).kind} (#{which_percent(expense.percent)})
       %br
-      #{expense.user.name}の支払い → ¥#{number_with_delimiter(expense.mypay, delimiter: ",")}  #{who_is_partner(expense.user).name}の支払い → ¥#{number_with_delimiter(expense.partnerpay, delimiter: ",")}
-      %span #{link_to 'edit', edit_expense_path(expense.id)}
-      %span #{link_to 'delete', expense_path(expense.id), method: :delete, data:{confirm: "Are you sure?"}}
+      #{expense.user.name}の支払い → ¥#{number_with_delimiter(expense.mypay, delimiter: ",")}  #{who_is_partner.name}の支払い → ¥#{number_with_delimiter(expense.partnerpay, delimiter: ",")}
     %br
     = expense.note
+    %span #{link_to 'edit', edit_expense_path(expense.id)}
+    %span #{link_to 'delete', expense_path(expense.id), method: :delete, data:{confirm: "Are you sure?"}}
   %hr
