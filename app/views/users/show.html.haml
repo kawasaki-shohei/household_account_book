@@ -3,6 +3,6 @@
   %div メールアドレス #{@user.email}
   %div パートナー
   - if @partner.present?
-    = @partner.name
+    %div #{@partner.name}さん
   - else
     = link_to '登録する', new_partner_path, class: "btn btn-default"

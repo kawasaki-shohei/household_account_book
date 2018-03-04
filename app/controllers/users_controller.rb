@@ -15,7 +15,8 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @partner = Partner.find_by(user_id: current_user.id)
+    partner_id = (Partner.find_by(user_id: current_user.id).id)
+    @partner = User.find(partner_id)
   end
 
 

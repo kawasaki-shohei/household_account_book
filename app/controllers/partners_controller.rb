@@ -1,15 +1,22 @@
 class PartnersController < ApplicationController
+
   def new
-    @partner = Partner.new
+    @new_partner = Partner.new
   end
 
   def create
-    @partner = Partner.new(partner_params)
-    @partner.save
+    @partner = User.find_by(email: params[:partner][:email])
+    if @partner.nil?
+      redirect_to new_partner_path, notice: "入力されたメールアドレスのユーザーは存在しません。"
+    else
+      @new_partner = Partner.create(user_id: current_user.id, partner_id: @partner.id)
+      redirect_to user_path(current_user), notice: "#{@partner.name}さんをパートナーとして登録しました。"
+    end
   end
-end
 
-  private
-  def partner_params
-    params.require(:partner).permit(:email).merge(user_id: current_user.id, partner_id: User.find_by(eamil: params[:partner][:email]).id)
-  end
+  # private
+  # def partner_params
+  #   params.require(:partner).permit(:email).merge(user_id: current_user.id, partner_id: @partner.id)
+  # end
+
+end
