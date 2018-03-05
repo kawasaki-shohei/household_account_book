@@ -13,4 +13,6 @@ partners_controllerのcheck_existance
 →done
 user#showでpartnerがnilだとエラーになるからif文でエラーがでないように
 
-次はlistのbothのeditの編集画面が一人用の編集画面になっているから直す
+https://qiita.com/ryohashimoto/items/09724ad4dddcda01bce3
+
+カテゴリーの編集・削除→前後月ボタン→手渡し料金→フロント
