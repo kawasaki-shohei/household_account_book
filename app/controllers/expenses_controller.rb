@@ -1,6 +1,5 @@
 class ExpensesController < ApplicationController
   before_action :check_logging_in
-  before_action :set_expenses_categories, only:[:new, :edit]
   before_action :back_or_new, only:[:new, :both, :edit]
   before_action :set_expense, only:[:edit, :update, :destroy]
   before_action :set_category, only:[:update, :create]
@@ -29,6 +28,7 @@ class ExpensesController < ApplicationController
   end
 
   def new
+    set_expenses_categories
   end
 
   def confirm
@@ -47,6 +47,11 @@ class ExpensesController < ApplicationController
   end
 
   def edit
+    if @expense.both_flg == false
+      set_expenses_categories
+    else
+      common_categories
+    end
   end
 
   def update
