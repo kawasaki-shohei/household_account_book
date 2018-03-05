@@ -1,2 +1,5 @@
 %div.whole_page.container
-  = render 'expenses/form', expense: @expense, categories: @categories
+  - if @expense.both_flg == false
+    = render 'expenses/form', expense: @expense, categories: @categories
+  - elsif @expense.both_flg == true
+    = render 'expenses/both_form', expense: @expense, common_categories: @common_categories

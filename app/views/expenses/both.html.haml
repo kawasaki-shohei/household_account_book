@@ -1,26 +1,2 @@
 %div.whole_page.container
-  %h3 二人の出費を入力
-  = form_with(model: @expense, local: true, url: choose_new_or_edit) do |form|
-    - if @expense.errors.any?
-      = render 'layouts/error', var: @expense
-
-    %div
-      %div 金額
-      = form.number_field :amount, required: true
-    %div
-      %div 日付
-      = form.date_field :date, required: true, value: Date.today
-    %div
-      %div メモ
-      = form.text_field :note
-    %div
-      %div カテゴリー
-      = form.collection_select(:category_id, @categories, :id, :kind)
-    %div
-      %div 自分の割合
-      = form.select :percent, percent_selection
-
-    = form.hidden_field :both_flg, value: true
-    %div
-      = form.submit
-  -# 出費フォーム
+  = render 'expenses/both_form', expense: @expense, common_categories: @common_categories
