@@ -9,6 +9,8 @@
   - @common_categories.each do |category|
     %ul
       %li #{category.kind}
+      = link_to 'edit', edit_category_path(category)
+      
   %hr
 
   %h3 二人の共通のカテゴリを登録

@@ -1,6 +1,6 @@
 class CategoriesController < ApplicationController
   before_action :check_logging_in
-  before_action :set_category, only:[:update]
+  before_action :set_category, only:[:edit, :update]
   include UsersHelper, CategoriesHelper
 
   def new
