@@ -1,14 +1,18 @@
 class CategoriesController < ApplicationController
   before_action :check_logging_in
   before_action :set_category, only:[:edit, :update]
+  before_action :set_categories, only:[:index, :common]
   include UsersHelper, CategoriesHelper
+
+  def index
+  end
+
+  def common
+    @partner_categories = @partner.categories.oneself
+  end
 
   def new
     @category = Category.new
-    @categories = current_user.categories.oneself
-    partner
-    common_categories
-    @partner_categories = @partner.categories.oneself
   end
 
   def create
@@ -37,5 +41,11 @@ class CategoriesController < ApplicationController
 
   def set_category
     @category = Category.find(params[:id])
+  end
+
+  def set_categories
+    @my_categories = current_user.categories.oneself
+    partner
+    common_categories
   end
 end

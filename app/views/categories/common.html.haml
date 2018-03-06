@@ -1,0 +1,25 @@
+%div.whole_page.container
+  %h3 二人の共通のカテゴリー
+  - @common_categories.each do |category|
+    %ul
+      %li #{category.kind}
+      = link_to 'edit', edit_category_path(category)
+
+  %hr
+
+  %h3 二人の共通のカテゴリを登録
+  %h5 自分だけのカテゴリ
+  - @my_categories.each do |category|
+    %ul
+      %li
+      = link_to category.kind, category_path(category, name: "common"), method: :patch, data: {confirm: "#{category.kind}を共通のカテゴリに登録しますか？"}
+
+
+  %h5 パートナーのカテゴリ
+  - @partner_categories.each do |category|
+    %ul
+      %li
+      = link_to category.kind, category_path(category, name: "common"), method: :patch, data: {confirm: "#{category.kind}を共通のカテゴリに登録しますか？"}
+
+  %div
+  = link_to 'カテゴリー一覧へ', categories_path, class: "btn btn-default"

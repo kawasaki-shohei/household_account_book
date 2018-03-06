@@ -2,27 +2,12 @@
   %h3 自分のカテゴリを追加
   = form_with(model: @category, local: true) do |form|
     = form.text_field :kind
+    - if partner.present?
+      %div
+      = form.check_box :common, { class: 'chk'}, true, false
+      共通のカテゴリーにする
+    %div
     = form.submit
-  %hr
 
-  %h3 二人の共通のカテゴリー
-  - @common_categories.each do |category|
-    %ul
-      %li #{category.kind}
-      = link_to 'edit', edit_category_path(category)
-      
-  %hr
-
-  %h3 二人の共通のカテゴリを登録
-  %h5 自分のカテゴリ
-  - @categories.each do |category|
-    %ul
-      %li
-      = link_to category.kind, category_path(category, name: "common"), method: :patch, data: {confirm: "#{category.kind}を共通のカテゴリに登録しますか？"}
-
-
-  %h5 パートナーのカテゴリ
-  - @partner_categories.each do |category|
-    %ul
-      %li
-      = link_to category.kind, category_path(category, name: "common"), method: :patch, data: {confirm: "#{category.kind}を共通のカテゴリに登録しますか？"}
+  %div
+  = link_to 'カテゴリー一覧へ', categories_path, class: "btn btn-default"
