@@ -30,8 +30,11 @@ class CategoriesController < ApplicationController
   def update
     if params[:name] == "common"
       @category.update(common: true)
+      redirect_to new_category_path, notice: "#{@category.kind}を共通のカテゴリに登録しました！"
     end
-    redirect_to new_category_path, notice: "#{@category.kind}を共通のカテゴリーに登録しました！"
+    if @category.update(kind: params[:category][:kind])
+      redirect_to categories_path, notice: "カテゴリ名を変更しました"
+    end
   end
 
   private

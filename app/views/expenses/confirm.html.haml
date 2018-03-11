@@ -13,7 +13,7 @@
     %div 金額：¥#{number_with_delimiter(@expense.amount, delimiter: ",")}
     %div 日付：#{@expense.date.strftime("%Y/%m/%d(%a)")}
     %div メモ：#{@expense.note}
-    %div カテゴリー：#{Category.find(@expense.category_id).kind}
+    %div カテゴリ：#{Category.find(@expense.category_id).kind}
     - if @expense.both_flg == true
       %div 自分の割合：#{which_percent(@expense.percent)}
     = form.submit

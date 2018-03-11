@@ -1,13 +1,1 @@
-%div.whole_page.container
-  %h3 自分のカテゴリを追加
-  = form_with(model: @category, local: true) do |form|
-    = form.text_field :kind
-    - if partner.present?
-      %div
-      = form.check_box :common, { class: 'chk'}, true, false
-      共通のカテゴリーにする
-    %div
-    = form.submit
-
-  %div
-  = link_to 'カテゴリー一覧へ', categories_path, class: "btn btn-default"
+= render 'categories/form', category: @category
