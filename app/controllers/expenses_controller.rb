@@ -3,10 +3,10 @@ class ExpensesController < ApplicationController
   before_action :back_or_new, only:[:new, :both, :edit]
   before_action :set_expense, only:[:edit, :update, :destroy]
   before_action :set_category, only:[:update, :create]
-  before_action :partner, only:[:index, :both, :new]
   include UsersHelper, CategoriesHelper
 
   def index
+    partner(current_user)
     # 自分一人の出費
     @current_user_expenses = current_user.expenses.this_month.both_f.newer
     @sum = @current_user_expenses.sum(:amount)
@@ -24,10 +24,12 @@ class ExpensesController < ApplicationController
   end
 
   def both
+    partner(current_user)
     common_categories
   end
 
   def new
+    partner(current_user)
     set_expenses_categories
   end
 
@@ -39,7 +41,7 @@ class ExpensesController < ApplicationController
   def create
     @expense = Expense.new(expense_params)
     if @expense.save
-      redirect_to root_path, notice: "出費を保存しました。#{@category.kind}: #{@expense.amount}"
+      redirect_to expenses_path, notice: "出費を保存しました。#{@category.kind}: #{@expense.amount}"
     else
       set_expenses_categories
       render 'index'
@@ -93,7 +95,7 @@ class ExpensesController < ApplicationController
     end
 
     def set_expenses_categories
-      @categories = Category.where(user_id: current_user.id).or(Category.where(user_id: partner.id, common: true))
+      @categories = Category.where(user_id: current_user.id).or(Category.where(user_id: partner(current_user).id, common: true))
     end
 
     def back_or_new

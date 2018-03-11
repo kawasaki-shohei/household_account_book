@@ -3,7 +3,7 @@
   = form_with(model: category, local: true) do |form|
     = form.text_field :kind, required: true
     - if action_name == 'new'
-      - if partner.present?
+      - if partner(current_user).present?
         %div
         = form.check_box :common, { class: 'chk'}, true, false
         共通のカテゴリにする

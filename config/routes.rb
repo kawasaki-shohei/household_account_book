@@ -16,7 +16,7 @@ Rails.application.routes.draw do
     collection do
       get :common
     end
-  end  
+  end
   resources :badgets
   root to: "expenses#both"
 end
