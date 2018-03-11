@@ -1,7 +1,7 @@
 %div.whole_page.container
   %h3 自分のカテゴリを追加
   = form_with(model: category, local: true) do |form|
-    = form.text_field :kind
+    = form.text_field :kind, required: true
     - if action_name == 'new'
       - if partner.present?
         %div
