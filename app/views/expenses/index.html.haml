@@ -1,4 +1,5 @@
 %div.whole_page.container
+  %div #{Date.today.strftime("%Y年%m月")}
   %div 支出合計 ¥#{number_with_delimiter(@sum + @both_sum, delimiter: ",")}
   - if Badget.where(user_id: current_user.id).exists?
     %div カテゴリ別予算残金
