@@ -13,7 +13,7 @@
     %div メモ
     = form.text_field :note
   %div
-    %div カテゴリー
+    %div カテゴリ
     = form.collection_select(:category_id, categories, :id, :kind)
 
   = form.submit

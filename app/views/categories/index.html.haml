@@ -1,0 +1,16 @@
+%div.whole_page.container
+  %h3 カテゴリ編集
+  - @common_categories.each do |category|
+    %ul
+      %li
+      = link_to category.kind, edit_category_path(category)
+
+  - @my_categories.each do |category|
+    %ul
+      %li
+      = link_to category.kind, edit_category_path(category)
+
+  %div
+  = link_to '共通のカテゴリの登録', common_categories_path, class: "btn btn-default"
+  %div
+  = link_to 'カテゴリ追加', new_category_path, class: "btn btn-default"

@@ -5,4 +5,6 @@ class Category < ApplicationRecord
 
   scope :oneself, -> {where(common: false)}
 
+  validates :kind, presence: true
+
 end

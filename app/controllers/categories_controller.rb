@@ -1,14 +1,18 @@
 class CategoriesController < ApplicationController
   before_action :check_logging_in
-  before_action :set_category, only:[:update]
+  before_action :set_category, only:[:edit, :update]
+  before_action :set_categories, only:[:index, :common]
   include UsersHelper, CategoriesHelper
+
+  def index
+  end
+
+  def common
+    @partner_categories = @partner.categories.oneself
+  end
 
   def new
     @category = Category.new
-    @categories = current_user.categories.oneself
-    partner
-    common_categories
-    @partner_categories = @partner.categories.oneself
   end
 
   def create
@@ -26,9 +30,13 @@ class CategoriesController < ApplicationController
   def update
     if params[:name] == "common"
       @category.update(common: true)
+      redirect_to new_category_path, notice: "#{@category.kind}を共通のカテゴリに登録しました！"
     end
-    redirect_to new_category_path, notice: "#{@category.kind}を共通のカテゴリーに登録しました！"
+    if @category.update(kind: params[:category][:kind])
+      redirect_to categories_path, notice: "カテゴリ名を変更しました"
+    end
   end
+
 
   private
   def category_params
@@ -37,5 +45,11 @@ class CategoriesController < ApplicationController
 
   def set_category
     @category = Category.find(params[:id])
+  end
+
+  def set_categories
+    @my_categories = current_user.categories.oneself
+    partner
+    common_categories
   end
 end
