@@ -11,6 +11,10 @@ Rails.application.routes.draw do
       get :both
       post :confirm
     end
+    member do
+      get :past
+      get :future
+    end
   end
   resources :categories do
     collection do
