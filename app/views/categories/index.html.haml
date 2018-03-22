@@ -1,9 +1,10 @@
 %div.whole_page.container
   %h3 カテゴリ編集
-  - @common_categories.each do |category|
-    %ul
-      %li
-      = link_to category.kind, edit_category_path(category)
+  - if partner(current_user).present?
+    - @common_categories.each do |category|
+      %ul
+        %li
+        = link_to category.kind, edit_category_path(category)
 
   - @my_categories.each do |category|
     %ul

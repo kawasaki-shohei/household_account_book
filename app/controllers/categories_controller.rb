@@ -50,6 +50,8 @@ class CategoriesController < ApplicationController
   def set_categories
     @my_categories = current_user.categories.oneself
     partner(current_user)
-    common_categories
+    if partner(current_user).present?
+      common_categories
+    end
   end
 end

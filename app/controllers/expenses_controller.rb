@@ -120,7 +120,11 @@ class ExpensesController < ApplicationController
     end
 
     def set_expenses_categories
-      @categories = Category.where(user_id: current_user.id).or(Category.where(user_id: partner(current_user).id, common: true))
+      if partner(current_user).present?
+        @categories = Category.where(user_id: current_user.id).or(Category.where(user_id: partner(current_user).id, common: true))
+      else
+        @categories = Category.where(user_id: current_user.id)
+      end
     end
 
     def back_or_new
