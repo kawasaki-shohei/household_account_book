@@ -49,7 +49,7 @@ class CategoriesController < ApplicationController
 
   def set_categories
     @my_categories = current_user.categories.oneself
-    partner
+    partner(current_user)
     common_categories
   end
 end

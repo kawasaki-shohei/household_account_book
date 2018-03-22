@@ -11,12 +11,16 @@ Rails.application.routes.draw do
       get :both
       post :confirm
     end
+    member do
+      get :past
+      get :future
+    end
   end
   resources :categories do
     collection do
       get :common
     end
-  end  
+  end
   resources :badgets
   root to: "expenses#both"
 end

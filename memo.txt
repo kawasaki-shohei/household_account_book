@@ -39,10 +39,35 @@ category#index
 削除 or 共通カテゴリの解除ページ
   代わりのカテゴリを選ぶ
   新しいカテゴリを追加リンク
+ここは保留
+
+■前後月ボタン
+.month_ago() .month_since()とかでできそう
+引数を変数にして、ajaxで足したり引いたりすればできるかも
+
+1.routingに追加
+  pastとfutureをgetメソッドで
 
 
+2. expenses#indexのviewを前月のリンクと来月のリンクを追加
+リンクに以下のように変数を仕込んでおく。
+  前月へ(x) 来月へ(y)
+  デフォルトはx = 1, y=1
 
 
+3.controllerのpast/futureアクションでparamsからの変数をつかって、month_ago()メソッドなどで１ヶ月前などのデータを取得する。
+controllerにベタ打ちのほうが簡単だけど、名前付きスコープに引数を渡すやり方でできそう。
+ただ、スコープに変数を渡すのではなく、スコープに入れる前の変数定義にviewからのパラメーターを渡せればできそう。
+    end_of_month = Date.today.end_of_month
+    beginning_of_month = Date.today.beginning_of_month
+    scope :past_month, -> {where('date >= ? AND date <= ?', beginning_of_month, end_of_month)}
+    ここの、
+    beginning_of_month = Date.today.beginning_of_month
+    ↓
+    beginning_of_past_month = Date.today.month_ago(x).beginning_of_month　　とか
+
+    でもどうやったら、modelの変数定義に変数を渡せるかわからないので、まずはベタ打ちで良さそう。
+→とりあえずできた。
 
 
 カテゴリの編集・削除→前後月ボタン→手渡し料金→フロント
