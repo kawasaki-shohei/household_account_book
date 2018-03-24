@@ -1,4 +1,5 @@
 class Expense < ApplicationRecord
+
   belongs_to :user
   has_one :category
   validates :amount, :date, presence: true
@@ -10,5 +11,7 @@ class Expense < ApplicationRecord
   scope :both_t, -> {where(both_flg: true)}
   scope :newer, -> {order(date: :desc, created_at: :desc)}
 
-  
+  def self.cu_expenses(current_user)
+    current_user.expenses.this_month.both_f.newer
+  end
 end

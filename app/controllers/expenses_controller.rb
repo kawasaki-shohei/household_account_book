@@ -8,7 +8,8 @@ class ExpensesController < ApplicationController
   def index
     partner(current_user)
     # 自分一人の出費
-    @current_user_expenses = current_user.expenses.this_month.both_f.newer
+    @current_user_expenses = Expense.cu_expenses(current_user)
+    #my_expenses = Expense.current_user_expenses(current_user)
     # 二人の出費の内、自分が払うもの、上記との違いはboth_flgのみ
     @current_user_expenses_of_both = current_user.expenses.this_month.both_t.newer
     # 相手が記入した二人の出費の内、自分が払うもの
@@ -18,7 +19,7 @@ class ExpensesController < ApplicationController
   end
 
   def both
-    partner(current_user)
+    partner(cuser)
     common_categories
   end
 
