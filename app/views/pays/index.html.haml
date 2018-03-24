@@ -1,0 +1,12 @@
+%div.whole_page.container
+  %table{:border => 1}
+    %tr
+      %th 手渡し月
+      %th 金額
+    - @pays.each do |pay|
+      %tr
+        %td #{pay.date.strftime("%Y年%m月")}
+        %td ¥#{number_with_delimiter(pay.pamount, delimiter: ",")}
+  %br
+  %div
+  = link_to '新しい手渡し金額', new_pay_path, class: "btn btn-default"

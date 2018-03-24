@@ -9,4 +9,6 @@ class Expense < ApplicationRecord
   scope :both_f, -> {where(both_flg: false)}
   scope :both_t, -> {where(both_flg: true)}
   scope :newer, -> {order(date: :desc, created_at: :desc)}
+
+  
 end
