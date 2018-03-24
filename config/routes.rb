@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  get 'pays/index'
+
+  get 'pays/new'
+
+  get 'pays/edit'
+
   get 'partners/new'
 
   resources :sessions, only: [:new, :create, :destroy]
@@ -22,5 +28,7 @@ Rails.application.routes.draw do
     end
   end
   resources :badgets
+  resources :pays
+
   root to: "expenses#both"
 end
