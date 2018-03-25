@@ -70,6 +70,11 @@ controllerにベタ打ちのほうが簡単だけど、名前付きスコープ�
 →とりあえずできた。
 
 
+■手渡し料金
+二人の出費の内、
+  手渡し料金 = 自分が払ったお金 - 相手が払ったお金のうち自分が払わなければいけないお金 - 今までに手渡したお金
+  current_user_expenses.both_t.sum(:amount) - partner_expenses_of_both.both_t.sum(:parnerpay) -
+
 
 
 

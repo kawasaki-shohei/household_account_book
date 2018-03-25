@@ -1,6 +1,7 @@
 class PaysController < ApplicationController
   def index
     @pays = Pay.all
+    @balance = Pay.balance_of_gross(current_user, partner(current_user))
   end
 
   def new
