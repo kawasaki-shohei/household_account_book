@@ -19,7 +19,7 @@ class ExpensesController < ApplicationController
   end
 
   def both
-    partner(cuser)
+    partner(current_user)
     common_categories
   end
 
