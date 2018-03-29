@@ -13,7 +13,9 @@ class ExpensesController < ApplicationController
     # 二人の出費の内、自分が払うもの、上記との違いはboth_flgのみ
     @current_user_expenses_of_both = current_user.expenses.this_month.both_t.newer
     # 相手が記入した二人の出費の内、自分が払うもの
-    @partner_expenses_of_both = @partner.expenses.this_month.both_t.newer
+    if @partner.present?
+      @partner_expenses_of_both = @partner.expenses.this_month.both_t.newer
+    end
     common_variables(@current_user_expenses, @current_user_expenses_of_both, @partner_expenses_of_both)
     @cnum = 0
   end
@@ -160,7 +162,11 @@ class ExpensesController < ApplicationController
       # 自分一人の出費の合計
       @sum = current_user_expenses.sum(:amount)
       # 二人の出費の内、自分が払う金額の合計
-      @both_sum = current_user_expenses_of_both.sum(:mypay) + partner_expenses_of_both.sum(:partnerpay)
+      if partner_expenses_of_both.present?
+        @both_sum = current_user_expenses_of_both.sum(:mypay) + partner_expenses_of_both.sum(:partnerpay)
+      else
+        @both_sum = 0
+      end
       #ユーザーの予算
       @category_badgets = current_user.badgets
     end
