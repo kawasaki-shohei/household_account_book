@@ -14,32 +14,40 @@
     - category_badgets.each do |badget|
       - category = Category.find(badget.category_id)
       %div #{category.kind}  ¥#{number_with_delimiter(category_balance(badget, category, current_user_expenses, current_user_expenses_of_both, partner_expenses_of_both), delimiter: ",")}
-
-  / Nav tabs
-  %ul#myTab.nav.nav-tabs{:role => "tablist"}
-    %li.nav-item
-      %a#both-tab.nav-link.active{"aria-controls" => "both", "aria-selected" => "false", "data-toggle" => "tab", :href => "#both", :role => "tab"} Both
-    %li.nav-item
-      %a#mine-tab.nav-link{"aria-controls" => "mine", "aria-selected" => "true", "data-toggle" => "tab", :href => "#mine", :role => "tab"} Mine
-  / Tab panes
-  .tab-content
-    #both.tab-pane.active{"aria-labelledby" => "both-tab", :role => "tabpanel"}
-      %br
-      %strong 二人の出費の内、#{current_user.name}の支払い合計 ¥#{number_with_delimiter(both_sum, delimiter: ",")}
-      %hr
-      %h3 #{current_user.name}の出費
-      - current_user_expenses_of_both.each do |expense|
-        - flg = "both"
-        = render 'expenses/display_expenses', expense: expense, flg: flg
-      %h3 #{partner.name}の出費
-      - partner_expenses_of_both.each do |expense|
-        - flg = "both"
-        = render 'expenses/display_expenses', expense: expense, flg: flg
-    #mine.tab-pane{"aria-labelledby" => "mine-tab", :role => "tabpanel"}
-      %br
-      %h3 #{current_user.name}の出費
-      %strong 合計 ¥#{number_with_delimiter(sum, delimiter: ",")}
-      %hr
-      - current_user_expenses.each do |expense|
-        - flg = "mine"
-        = render 'expenses/display_expenses', expense: expense, flg: flg
+  
+  - if partner.present?
+    / Nav tabs
+    %ul#myTab.nav.nav-tabs{:role => "tablist"}
+      %li.nav-item
+        %a#both-tab.nav-link.active{"aria-controls" => "both", "aria-selected" => "false", "data-toggle" => "tab", :href => "#both", :role => "tab"} Both
+      %li.nav-item
+        %a#mine-tab.nav-link{"aria-controls" => "mine", "aria-selected" => "true", "data-toggle" => "tab", :href => "#mine", :role => "tab"} Mine
+    / Tab panes
+    .tab-content
+      #both.tab-pane.active{"aria-labelledby" => "both-tab", :role => "tabpanel"}
+        %br
+        %strong 二人の出費の内、#{current_user.name}の支払い合計 ¥#{number_with_delimiter(both_sum, delimiter: ",")}
+        %hr
+        %h3 #{current_user.name}の出費
+        - current_user_expenses_of_both.each do |expense|
+          - flg = "both"
+          = render 'expenses/display_expenses', expense: expense, flg: flg
+        %h3 #{partner.name}の出費
+        - partner_expenses_of_both.each do |expense|
+          - flg = "both"
+          = render 'expenses/display_expenses', expense: expense, flg: flg
+      #mine.tab-pane{"aria-labelledby" => "mine-tab", :role => "tabpanel"}
+        %br
+        %h3 #{current_user.name}の出費
+        %strong 合計 ¥#{number_with_delimiter(sum, delimiter: ",")}
+        %hr
+        - current_user_expenses.each do |expense|
+          - flg = "mine"
+          = render 'expenses/display_expenses', expense: expense, flg: flg
+  - else 
+    %h3 #{current_user.name}の出費
+    %strong 合計 ¥#{number_with_delimiter(sum, delimiter: ",")}
+    %hr
+    - current_user_expenses.each do |expense|
+      - flg = "mine"
+      = render 'expenses/display_expenses', expense: expense, flg: flg

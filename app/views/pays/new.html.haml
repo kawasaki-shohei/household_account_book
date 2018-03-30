@@ -1,0 +1,11 @@
+%div.whole_page.container
+  %h3 手渡し料金を入力
+  = form_with(model: @pay, local: true) do |f|
+    %div
+    = f.number_field :pamount, required: true
+    %div 何月分か
+    = f.date_field :date, required: true
+    %div
+    = f.text_field :memo
+    %div
+    = f.submit
