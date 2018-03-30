@@ -1,4 +1,7 @@
 class PaysController < ApplicationController
+  before_action :check_logging_in
+  before_action :check_partner
+  
   def index
     partner(current_user)
     @pays = current_user.pays
