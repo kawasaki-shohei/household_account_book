@@ -1,4 +1,6 @@
 class BadgetsController < ApplicationController
+  before_action :check_logging_in
+  before_action :check_partner
   before_action :set_all_categories, only:[:index, :new, :edit]
   before_action :set_badget, only: [:edit, :update]
 
@@ -42,7 +44,7 @@ class BadgetsController < ApplicationController
 
 private
   def set_all_categories
-    @categories = current_user.categories
+    @categories = current_user.categories.or(partner.categories.common_t)
   end
 
   def badget_params
