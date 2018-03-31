@@ -18,8 +18,6 @@ module UsersHelper
 
   def who_is_partner(user)
     check = Partner.find_by(user_id: user.id)
-    if check.present?
-      @partner ||= User.find(check.partner_id)
-    end
+    User.find(check.partner_id)
   end
 end
