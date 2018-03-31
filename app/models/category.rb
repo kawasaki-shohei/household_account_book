@@ -4,6 +4,7 @@ class Category < ApplicationRecord
   has_many :expenses
 
   scope :oneself, -> {where(common: false)}
+  scope :common_t, -> {where(common: true)}
 
   validates :kind, presence: true
 
