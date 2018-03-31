@@ -44,7 +44,7 @@
         - current_user_expenses.each do |expense|
           - flg = "mine"
           = render 'expenses/display_expenses', expense: expense, flg: flg
-  - else 
+  - else
     %h3 #{current_user.name}の出費
     %strong 合計 ¥#{number_with_delimiter(sum, delimiter: ",")}
     %hr
