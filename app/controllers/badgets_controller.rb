@@ -44,7 +44,7 @@ class BadgetsController < ApplicationController
 
 private
   def set_all_categories
-    @categories = current_user.categories
+    @categories = current_user.categories.or(partner.categories.common_t)
   end
 
   def badget_params
