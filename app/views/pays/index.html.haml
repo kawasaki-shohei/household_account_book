@@ -1,6 +1,5 @@
 %div.whole_page.container
-  %h3 差額 ¥#{number_with_delimiter(@balance, delimiter: ",")}
-
+  %h3 手渡し料金一覧
   %table{:border => 1}
     %tr
       %th 手渡し月
@@ -10,7 +9,15 @@
         %td #{pay.date.strftime("%Y年%m月")}
         %td ¥#{number_with_delimiter(pay.pamount, delimiter: ",")}
   %br
-  = @my_payment
+  %div これまでの全ての出費と全ての手渡した金額の差額 ¥#{number_with_delimiter(@balance, delimiter: ",")}
+  %span 今月分の自分が手渡す金額
+  - if @my_payment < 0
+    %span → ¥#{number_with_delimiter(@my_payment.abs, delimiter: ",")} 受け取る
+  - elsif @my_payment > 0
+    %span → ¥#{number_with_delimiter(@my_payment.abs, delimiter: ",")} 渡す
+  - else @my_payment == 0
+    %span → ¥0
+  %div 今月手渡した方がいい金額 → ¥#{number_with_delimiter(@balance + @my_payment, delimiter: ",")}
   %br
   %div
   = link_to '新しい手渡し金額', new_pay_path, class: "btn btn-default"
