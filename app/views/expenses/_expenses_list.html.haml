@@ -14,6 +14,7 @@
     - category_badgets.each do |badget|
       - category = Category.find(badget.category_id)
       %div #{category.kind}  ¥#{number_with_delimiter(category_balance(badget, category, current_user_expenses, current_user_expenses_of_both, partner_expenses_of_both), delimiter: ",")}
+      
   / Nav tabs
   %ul#myTab.nav.nav-tabs{:role => "tablist"}
     %li.nav-item
