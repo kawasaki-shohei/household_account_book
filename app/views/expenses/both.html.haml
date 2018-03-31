@@ -1,3 +1,2 @@
 %div.whole_page.container
-  - if partner(current_user).present?
-    = render 'expenses/both_form', expense: @expense, common_categories: @common_categories
+  = render 'expenses/both_form', expense: @expense, common_categories: @common_categories

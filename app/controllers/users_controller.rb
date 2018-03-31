@@ -17,7 +17,6 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    partner(current_user)
   end
 
 
