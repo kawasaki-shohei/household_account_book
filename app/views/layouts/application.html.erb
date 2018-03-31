@@ -12,7 +12,7 @@
   <body>
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-      <div class="container">
+      <div class="container-fluid">
         <%= link_to 'Habfoc', root_path, class: "navbar-brand" %>
         <ul class="navbar-nav">
           <% if logged_in? %>
@@ -56,7 +56,7 @@
       </div>
     </nav>
 
-    <div class="container">
+    <div class="container-fluid">
       <% flash.each do |key, value| %>
         <%= content_tag(:div, value, class: "#{key}") %>
       <% end %>
