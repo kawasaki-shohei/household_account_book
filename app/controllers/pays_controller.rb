@@ -4,7 +4,7 @@ class PaysController < ApplicationController
   before_action :set_pay, only:[:edit,:update,:destroy]
 
   def index
-    @pays = current_user.pays
+    @pays = Pay.all_payments(current_user, partner)
     @balance = Pay.balance_of_gross(current_user, partner)
     @my_payment = Expense.expense_in_both_this_month(current_user, partner)
   end

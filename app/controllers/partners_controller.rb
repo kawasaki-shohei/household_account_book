@@ -8,9 +8,8 @@ class PartnersController < ApplicationController
     @partner = User.find_by(email: params[:partner][:email])
     if @partner.nil?
       redirect_to new_partner_path, notice: "入力されたメールアドレスのユーザーは存在しません。"
-    end
-    @new_partner = Partner.new(user_id: current_user.id, partner_id: @partner.id)
-    if @new_partner.save
+    elsif (@new_partner = Partner.new(user_id: current_user.id, partner_id: @partner.id)).present?
+      @new_partner.save
       Partner.create(user_id: @partner.id, partner_id: current_user.id)
       redirect_to user_path(current_user), notice: "#{@partner.name}さんをパートナーとして登録しました。"
     else

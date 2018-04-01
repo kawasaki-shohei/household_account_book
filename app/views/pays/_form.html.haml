@@ -6,7 +6,7 @@
   %div.form-group
     %label{ for: 'date' } 何月分か
     %div
-      = f.date_field :date, class:"form-control", required: true
+      = f.date_select :date, discard_day: true, class:"form-control", required: true
   %div.form-group
     %label{ for: 'memo' } メモ
     %div

@@ -1,11 +1,6 @@
 %div.whole_page
   %div.panel.panel-default
     %div.panel-heading
-      これまでの全ての出費と手渡した金額の差額
-    %div.panel-body
-      ¥#{number_with_delimiter(@balance, delimiter: ",")}
-  %div.panel.panel-default
-    %div.panel-heading
       今月分の自分が手渡す金額
     %div.panel-body
       - if @my_payment < 0
@@ -16,9 +11,9 @@
         ¥0
   %div.panel.panel-default
     %div.panel-heading
-      今月手渡した方がいい金額
+      これまでの全ての出費と手渡した金額の差額
     %div.panel-body
-      ¥#{number_with_delimiter(@balance + @my_payment, delimiter: ",")}
+      ¥#{number_with_delimiter(@balance, delimiter: ",")}
   %br
   %div
   = link_to '新しい手渡し金額を追加', new_pay_path, class: "btn btn-default block"
@@ -30,9 +25,14 @@
       %th.memo memo
     - @pays.each do |pay|
       %tr
-        %td
-          = link_to "#{pay.date.strftime("%Y年%m月")}", edit_pay_path(pay)
-        %td
-          = link_to "¥#{number_with_delimiter(pay.pamount, delimiter: ",")}", edit_pay_path(pay)
-        %td.memo
-          = link_to "#{pay.memo}", edit_pay_path(pay)
+        - if pay.user == current_user
+          %td
+            = link_to "#{pay.date.strftime("%Y年%m月")}", edit_pay_path(pay)
+          %td
+            = link_to "¥#{number_with_delimiter(pay.pamount, delimiter: ",")}", edit_pay_path(pay)
+          %td.memo
+            = link_to "#{pay.memo}", edit_pay_path(pay)
+        - elsif pay.user == partner
+          %td "#{pay.date.strftime("%Y年%m月")}"
+          %td "¥#{number_with_delimiter(pay.pamount, delimiter: ",")}"
+          %td "#{pay.memo}"
