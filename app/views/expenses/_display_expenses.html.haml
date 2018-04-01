@@ -3,12 +3,15 @@
 %div
   %span.amount ¥#{number_with_delimiter(expense.amount, delimiter: ",")}
   - if flg == "mine"
-    %span.category #{Category.find(expense.category_id).kind}
+    %span.each_expense_detail #{Category.find(expense.category_id).kind}
   - elsif flg == "both"
-    %span.category #{Category.find(expense.category_id).kind}
-    %span.percent (#{which_percent(expense.percent)})
+    %span.each_expense_detail #{Category.find(expense.category_id).kind}
+    %span.each_expense_detail (#{which_percent(expense.percent)})
     %br
-    %div #{expense.user.name}の支払い → ¥#{number_with_delimiter(expense.mypay, delimiter: ",")}
-    %div #{who_is_partner(expense.user).name}の支払い → ¥#{number_with_delimiter(expense.partnerpay, delimiter: ",")}
-  %div.expense_note
+    %span.each_expense_detail #{expense.user.name}の支払い
+    %span.each_expense_detail ¥#{number_with_delimiter(expense.mypay, delimiter: ",")}
+    %br
+    %span.each_expense_detail #{who_is_partner(expense.user).name}の支払い
+    %span.each_expense_detail ¥#{number_with_delimiter(expense.partnerpay, delimiter: ",")}
+  %div.each_expense_detail
     = expense.note

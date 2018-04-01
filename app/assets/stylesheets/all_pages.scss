@@ -80,11 +80,13 @@ footer {
 p.notice {
   background-color: #fff;
   margin: 0;
+  padding: 20px;
 }
 
 p.alert {
   background-color: #fff;
   margin: 0;
+  padding: 20px;
 }
 
 .error_explanation {
@@ -93,4 +95,51 @@ p.alert {
 
 .btn-gray-light {
   background-color: lightgray;
+}
+
+input.form-control {
+    font-size: 1.4rem;
+}
+
+.table {
+  margin-bottom: 50px;
+}
+
+th {
+    background-color: #ffe6eb;
+}
+
+.panel-heading {
+    background-color: #ffe6eb;
+    padding: 15px;
+    font-size: 1.2rem;
+    border: 1px solid #ccc;
+}
+
+.panel-body {
+    padding: 15px;
+    text-align: right;
+    font-size: 1.4rem;
+    border: 1px solid #ccc;
+    font-weight: 600;
+}
+
+.block {
+  display: block;
+}
+
+input.btn.btn-default.btn-add {
+  width: 100%;
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+
+input.btn.btn-default.btn-confirm {
+  width: 100%;
+  margin-top: 100px;
+  margin-bottom: 50px;
+}
+
+.btn-delete {
+  display: block;
 }

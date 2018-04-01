@@ -1,12 +1,9 @@
-%div.whole_page.container-fluid
-  %div.panel.panel-default
-    %div.panel-heading
-      #{current_user.name}の予算
+%div
   %table.table
     %tr
       %th カテゴリ
       %th 予算
-      %td
+      %th
     - @categories.each do |category|
       - unless category.badget.nil?
         - badget = current_user.badgets.find_by(category_id: category.id)
@@ -20,4 +17,4 @@
           %td
           -# table.table
 
-  = link_to '予算の追加', new_badget_path, class: "btn btn-default"
+  = link_to '予算の追加', new_badget_path, class: "btn btn-default block"

@@ -27,6 +27,6 @@
 
   = form.hidden_field :both_flg, value: true
   %div.form-group
-    - if action_name == 'edit'
-      =link_to '削除する', expense_path(expense.id), method: :delete, data:{confirm: "Are you sure?"}, class: 'btn btn-delete'
-    = form.submit '確認', class: "btn btn-default"
+    = form.submit '確認', class: "btn btn-default btn-confirm"
+- if action_name == 'edit'
+  =link_to '削除する', expense_path(expense.id), method: :delete, data:{confirm: "Are you sure?"}, class: 'btn btn-delete btn-delete'

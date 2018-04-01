@@ -93,7 +93,7 @@ span.expense_sum_detail {
   margin-bottom: 10px;
   padding: 10px 20px;
   &:active {
-    background-color: #b3b3b3;
+  background-color: #b3b3b3;
   }
 }
 
@@ -113,19 +113,14 @@ a.btn.btn-delete {
   background-color: #ccc;
 }
 
+.each_expense_detail {
+  margin-left: 30px;
+  color: #808080;
+}
+
 span.amount {
   font-size: 1.3rem;
   font-weight: 600;
-}
-
-span.category {
-  margin-left: 30px;
-  color: #808080;
-}
-
-span.percent {
-  margin-left: 30px;
-  color: #808080;
 }
 
 .expense_date {

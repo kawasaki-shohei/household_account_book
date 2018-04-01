@@ -1,4 +1,4 @@
-%div.whole_page.container-fluid
+%div.whole_page
   - if action_name == 'new'
     %h3 自分のカテゴリを追加
   - elsif action_name == 'edit'
@@ -14,7 +14,7 @@
           %label.custom-control-label{ for: 'common_category' }
             共通のカテゴリにする
     %div.form-group
-      = form.submit '追加', class: "btn btn-default"
+      = form.submit '追加', class: "btn btn-default btn-add"
 
   %div
-  = link_to 'カテゴリ一覧へ', categories_path, class: "btn btn-default"
+  = link_to 'カテゴリ一覧へ', categories_path, class: "btn btn-default block"

@@ -2,10 +2,14 @@
   - if badget.errors.any?
     =render 'layouts/error', var: badget
   - if action_name == 'edit'
-    = badget.category.kind
+    %div.panel.panel-default
+      %div.panel-heading
+        = badget.category.kind
+      %div.panel-body
+        = f.number_field :amount, placeholder: '金額を入力', class: 'form-control', required: true
   - elsif action_name == 'new'
     %div.form-group
       = f.select :category_id, make_left_categories(categories),{include_blank: 'カテゴリを選択'}, class: 'form-control', required: true
-  %div.form-group
-    = f.number_field :amount, placeholder: '金額を入力', class: 'form-control', required: true
-  = f.submit '入力', class: "btn btn-default"
+    %div.form-group
+      = f.number_field :amount, placeholder: '金額を入力', class: 'form-control', required: true
+  = f.submit '入力', class: "btn btn-default btn-add"
