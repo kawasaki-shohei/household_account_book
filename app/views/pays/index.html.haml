@@ -1,23 +1,38 @@
-%div.whole_page.container
-  %h3 手渡し料金一覧
-  %table{:border => 1}
+%div.whole_page
+  %div.panel.panel-default
+    %div.panel-heading
+      これまでの全ての出費と手渡した金額の差額
+    %div.panel-body
+      ¥#{number_with_delimiter(@balance, delimiter: ",")}
+  %div.panel.panel-default
+    %div.panel-heading
+      今月分の自分が手渡す金額
+    %div.panel-body
+      - if @my_payment < 0
+        ¥#{number_with_delimiter(@my_payment.abs, delimiter: ",")} 受け取る
+      - elsif @my_payment > 0
+        ¥#{number_with_delimiter(@my_payment.abs, delimiter: ",")} 渡す
+      - else @my_payment == 0
+        ¥0
+  %div.panel.panel-default
+    %div.panel-heading
+      今月手渡した方がいい金額
+    %div.panel-body
+      ¥#{number_with_delimiter(@balance + @my_payment, delimiter: ",")}
+  %br
+  %div
+  = link_to '新しい手渡し金額を追加', new_pay_path, class: "btn btn-default block"
+
+  %table.table.pay
     %tr
       %th 手渡し月
       %th 金額
+      %th.memo memo
     - @pays.each do |pay|
       %tr
-        %td #{pay.date.strftime("%Y年%m月")}
-        %td ¥#{number_with_delimiter(pay.pamount, delimiter: ",")}
-  %br
-  %div これまでの全ての出費と全ての手渡した金額の差額 ¥#{number_with_delimiter(@balance, delimiter: ",")}
-  %span 今月分の自分が手渡す金額
-  - if @my_payment < 0
-    %span → ¥#{number_with_delimiter(@my_payment.abs, delimiter: ",")} 受け取る
-  - elsif @my_payment > 0
-    %span → ¥#{number_with_delimiter(@my_payment.abs, delimiter: ",")} 渡す
-  - else @my_payment == 0
-    %span → ¥0
-  %div 今月手渡した方がいい金額 → ¥#{number_with_delimiter(@balance + @my_payment, delimiter: ",")}
-  %br
-  %div
-  = link_to '新しい手渡し金額', new_pay_path, class: "btn btn-default"
+        %td
+          = link_to "#{pay.date.strftime("%Y年%m月")}", edit_pay_path(pay)
+        %td
+          = link_to "¥#{number_with_delimiter(pay.pamount, delimiter: ",")}", edit_pay_path(pay)
+        %td.memo
+          = link_to "#{pay.memo}", edit_pay_path(pay)

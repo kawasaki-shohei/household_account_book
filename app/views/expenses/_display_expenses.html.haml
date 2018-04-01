@@ -1,19 +1,17 @@
-%div.panel.panel-default
-  %div.panel-heading
-    = expense.date.strftime("%Y/%m/%d(%a)")
-  %div.panel-body
-    %strong ¥#{number_with_delimiter(expense.amount, delimiter: ",")}
-    - if flg == "mine"
-      %span #{Category.find(expense.category_id).kind}
-      %span #{link_to 'edit', edit_expense_path(expense.id)}
-      %span #{link_to 'delete', expense_path(expense.id), method: :delete, data:{confirm: "Are you sure?"}}
-    - elsif flg == "both"
-      %span #{Category.find(expense.category_id).kind} (#{which_percent(expense.percent)})
-      %br
-      %span #{expense.user.name}の支払い → ¥#{number_with_delimiter(expense.mypay, delimiter: ",")}
-      %span #{who_is_partner(expense.user).name}の支払い → ¥#{number_with_delimiter(expense.partnerpay, delimiter: ",")}
-      %span #{link_to 'edit', edit_expense_path(expense.id)}
-      %span #{link_to 'delete', expense_path(expense.id), method: :delete, data:{confirm: "Are you sure?"}}
+%div.expense_date
+  = expense.date.strftime("%Y/%m/%d(%a)")
+%div
+  %span.amount ¥#{number_with_delimiter(expense.amount, delimiter: ",")}
+  - if flg == "mine"
+    %span.each_expense_detail #{Category.find(expense.category_id).kind}
+  - elsif flg == "both"
+    %span.each_expense_detail #{Category.find(expense.category_id).kind}
+    %span.each_expense_detail (#{which_percent(expense.percent)})
     %br
+    %span.each_expense_detail #{expense.user.name}の支払い
+    %span.each_expense_detail ¥#{number_with_delimiter(expense.mypay, delimiter: ",")}
+    %br
+    %span.each_expense_detail #{who_is_partner(expense.user).name}の支払い
+    %span.each_expense_detail ¥#{number_with_delimiter(expense.partnerpay, delimiter: ",")}
+  %div.each_expense_detail
     = expense.note
-  %hr

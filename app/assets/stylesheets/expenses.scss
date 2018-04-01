@@ -1,3 +1,132 @@
-// Place all the styles related to the expenses controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.expense_month {
+  text-align: center;
+}
+
+a.btn.btn-default.choose_month {
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
+#accordion {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.btn-link{
+  color: #fff
+}
+
+.card {
+  border: 1px solid #dc143c;
+}
+.card-header {
+  padding: 0;
+  background-color: #dc143c
+}
+
+.card-body {
+  padding: 0.5rem 1.5rem;
+}
+
+.btn-link:hover {
+    color: #fff;
+    text-decoration: none;
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+    color: #495057;
+    background-color: #ffe6eb;
+    border-color: #dee2e6 #dee2e6 #fff;
+}
+
+ul#pills-tab {
+  border-bottom: 5px solid #fff;
+}
+
+// .nav-tabs .nav-link {
+//     border: 1px solid #ffb3c2;
+// }
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #000;
+  background-color: #ffe6eb;
+}
+
+a#both-tab {
+    width: 300px;
+}
+
+a#mine-tab {
+    width: 300px;
+}
+
+.expense_sum {
+  background-color: #ffe6eb;
+  font-weight: 600;
+  padding: 30px;
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+}
+
+span.expense_sum_detail {
+  display: inline-block;
+  margin-left: 100px;
+}
+
+.both_list {
+  background-color: #ffe6eb;
+  padding: 10px;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.both_list.partner {
+  margin-top: 30px;
+}
+
+
+
+.each_expense {
+  background-color: #f5f5f5;
+  margin-bottom: 10px;
+  padding: 10px 20px;
+  &:active {
+  background-color: #b3b3b3;
+  }
+}
+
+.btn-secondary {
+  color: #000;
+  background-color: #f5f5f5;
+}
+
+.each_expense a {
+  display: block;
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+a.btn.btn-delete {
+  background-color: #ccc;
+}
+
+.each_expense_detail {
+  margin-left: 30px;
+  color: #808080;
+}
+
+span.amount {
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.expense_date {
+  color: #dc143c;
+}
+
+.expense_note {
+  color: #808080;
+}

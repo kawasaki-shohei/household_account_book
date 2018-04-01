@@ -1,4 +1,4 @@
-%div.whole_page.container
+%div.whole_page
   %h3 以下の内容で追加する
   = form_with(model: @expense, local: true) do |form|
     - if @expense.errors.any?
@@ -16,8 +16,9 @@
     %div カテゴリ：#{Category.find(@expense.category_id).kind}
     - if @expense.both_flg == true
       %div 自分の割合：#{which_percent(@expense.percent)}
-    = form.submit
-
+    %br
+    = form.submit '入力する', class: 'btn btn-default'
+  %br
   = form_with(model: @expense, local: true, url: back_new_or_both(@expense), method: :get) do |form|
     = form.hidden_field :amount
     = form.hidden_field :date
@@ -25,5 +26,5 @@
     = form.hidden_field :category_id
     = form.hidden_field :percent
     = form.hidden_field :both_flg
-    = form.submit '戻る', name: 'back'
+    = form.submit '戻る', name: 'back', class: 'btn btn-default'
   -# 出費フォーム
