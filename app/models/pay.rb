@@ -13,7 +13,7 @@ class Pay < ApplicationRecord
     my_expenses = current_user.expenses.both_t.sum(:mypay) + partner.expenses.both_t.sum(:partnerpay)
     current_user_payments = current_user.pays.sum(:pamount)
     partner_payments = partner.pays.sum(:pamount)
-    balance = my_expenses + current_user_payments - partner_payments
+    balance = partner_payments - my_expenses - current_user_payments
     return balance
   end
 
