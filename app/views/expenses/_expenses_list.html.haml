@@ -48,10 +48,9 @@
           = render 'expenses/display_expenses', expense: expense, flg: flg
     .both_list.partner #{partner.name}の出費
     - partner_expenses_of_both.each do |expense|
-      %div.each_expense
-        = link_to edit_expense_path(expense.id) do
-          - flg = "both"
-          = render 'expenses/display_expenses', expense: expense, flg: flg
+      %div.each_partner_expense
+        - flg = "both"
+        = render 'expenses/display_expenses', expense: expense, flg: flg
   #mine.tab-pane.fade{"aria-labelledby" => "mine-tab", :role => "tabpanel"}
     %div.expense_sum
       支払い合計
