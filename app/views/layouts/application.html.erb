@@ -6,7 +6,7 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css" integrity="sha384-5SOiIsAziJl6AWe0HWRKTXlfcSHKmYV4RBF18PPJ173Kzn7jzMyFuTtk8JA7QQG1" crossorigin="anonymous">
   </head>
 
   <body>
@@ -16,8 +16,15 @@
         <%= link_to 'Habfoc', root_path, class: "navbar-brand" %>
         <ul class="navbar-nav">
           <% if logged_in? %>
-            <li class="nav-item">
-              <%= link_to "#{current_user.name}さん", user_path(current_user), class: "nav-link" %>
+            <li>
+              <span>
+                <%= link_to "#{current_user.name}さん", user_path(current_user), class: "nav-top" %>
+              </span>
+              <span class="btn_input">
+                <%= link_to root_path, class: "nav-top" do %>
+                  <i class="far fa-edit fa-lg"></i>
+                <% end %>
+              </span>
             </li>
           <% end %>
         </ul>

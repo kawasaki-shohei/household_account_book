@@ -5,6 +5,23 @@
   margin-left: 0;
 }
 
+li.nav-item {
+    border-top: 2px solid #fff;
+    font-size: 1.2rem;
+}
+
+.nav-top {
+  color: #fff;
+  &:active {
+    color: #dc143c;
+    background-color: #fff;
+  }
+}
+
+span.btn_input {
+    margin-left: 150px;
+}
+
 .bg-dark{
   background-color: #dc143c !important;
 }

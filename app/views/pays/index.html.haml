@@ -21,7 +21,7 @@
         0 円
   %div.panel.panel-default
     %div.panel-heading
-      これまでの全ての出費と手渡した金額の差額
+      今までの全ての出費の精算
     %div.panel-body
       - if @balance < 0
         ¥#{number_with_delimiter(@balance.abs, delimiter: ",")} 円受け取る
