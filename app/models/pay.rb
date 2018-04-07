@@ -5,12 +5,12 @@ class Pay < ApplicationRecord
 
   scope :newer, -> {order(date: :desc, created_at: :desc)}
 
-  def self.ones_gross(user)
-    user.expenses.both_t.sum(:amount) + user.pays.all.sum(:pamount)
-  end
-
   def self.ones_all_payment(user)
     user.pays.all.sum(:pamount)
+  end
+
+  def self.ones_gross(user)
+    user.expenses.both_t.sum(:amount) + ones_all_payment(user)
   end
 
   def self.all_payments(current_user, partner)
@@ -20,14 +20,14 @@ class Pay < ApplicationRecord
   def self.balance_of_gross(current_user, partner)
     my_gross = ones_gross(current_user)
     my_must_pay = Expense.must_pay(current_user, partner)
-    # balance = my_must_pay - my_gross - ones_all_payment(partner)
-    if my_gross > my_must_pay
-      balance = my_must_pay - my_gross + ones_all_payment(partner)
-    elsif my_gross < my_must_pay
-      balance = my_must_pay - my_gross - ones_all_payment(partner)
-    elsif my_gross == my_must_pay
-      balance = 0
-    end
+    balance = my_must_pay - my_gross + ones_all_payment(partner)
+    # if my_gross > my_must_pay
+    #   balance = my_must_pay - my_gross + ones_all_payment(partner)
+    # elsif my_gross < my_must_pay
+    #   balance = my_must_pay - my_gross + ones_all_payment(partner)
+    # elsif my_gross == my_must_pay
+    #   balance = 0
+    # end
     return balance
   end
 
