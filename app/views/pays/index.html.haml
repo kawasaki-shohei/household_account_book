@@ -45,13 +45,13 @@
           %td
             = link_to "#{pay.date.strftime("%Y/%m")}", edit_pay_path(pay)
           %td
-            = link_to "¥#{number_with_delimiter(pay.pamount, delimiter: ",")}", edit_pay_path(pay)
-          %td
             = link_to "#{display_name(pay.user_id).name}", edit_pay_path(pay)
+          %td
+            = link_to "¥#{number_with_delimiter(pay.pamount, delimiter: ",")}", edit_pay_path(pay)
           %td.memo
             = link_to "#{pay.memo}", edit_pay_path(pay)
         - elsif pay.user_id == partner.id
           %td #{pay.date.strftime("%Y/%m")}
-          %td ¥#{number_with_delimiter(pay.pamount, delimiter: ",")}
           %td #{display_name(pay.user_id).name}
+          %td ¥#{number_with_delimiter(pay.pamount, delimiter: ",")}
           %td #{pay.memo}
