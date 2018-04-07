@@ -21,8 +21,8 @@ class Pay < ApplicationRecord
     my_gross = ones_gross(current_user)
     my_must_pay = Expense.must_pay(current_user, partner)
     # balance = my_must_pay - my_gross - ones_all_payment(partner)
-    if my_gross > my_must_pay + ones_all_payment(partner)
-      balance = my_must_pay - my_gross
+    if my_gross > my_must_pay
+      balance = my_must_pay - my_gross + ones_all_payment(partner)
     elsif my_gross < my_must_pay
       balance = my_must_pay - my_gross - ones_all_payment(partner)
     elsif my_gross == my_must_pay
