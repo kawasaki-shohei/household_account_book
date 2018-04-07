@@ -20,4 +20,9 @@ module UsersHelper
     check = Partner.find_by(user_id: user.id)
     User.find(check.partner_id)
   end
+
+  def display_name(user_id)
+    user = User.find(user_id)
+    return user
+  end
 end
