@@ -18,6 +18,7 @@ class ExpensesController < ApplicationController
     @cnum = 0
     
     # 必要な変数
+    # @cnum
     # @current_user_expenses
     # @current_user_expenses_of_both
     # @partner_expenses_of_both
