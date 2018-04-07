@@ -16,6 +16,15 @@ class ExpensesController < ApplicationController
     @partner_expenses_of_both = partner.expenses.this_month.both_t.newer
     common_variables(@current_user_expenses, @current_user_expenses_of_both, @partner_expenses_of_both)
     @cnum = 0
+    
+    # 必要な変数
+    # @cnum
+    # @current_user_expenses
+    # @current_user_expenses_of_both
+    # @partner_expenses_of_both
+    # @sum
+    # @both_sum
+    # @category_badgets
   end
 
   def both
