@@ -21,7 +21,7 @@
         0 円
   %div.panel.panel-default
     %div.panel-heading
-      今までの全ての出費の精算
+      繰り越し支払い金額
     %div.panel-body
       - if @balance < 0
         ¥#{number_with_delimiter(@balance.abs, delimiter: ",")} 円受け取る
