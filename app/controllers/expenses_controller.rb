@@ -24,34 +24,6 @@ class ExpensesController < ApplicationController
     set_expenses_categories
   end
 
-  def past
-    @cnum = params[:id].to_i - 1
-    if @cnum < 0
-      beginning_of_month = Date.today.months_ago(@cnum.abs).beginning_of_month
-      end_of_month = Date.today.months_ago(@cnum.abs).end_of_month
-    elsif @cnum == 0
-      redirect_to expenses_path
-    elsif @cnum > 0
-      beginning_of_month = Date.today.months_since(@cnum.abs).beginning_of_month
-      end_of_month = Date.today.months_since(@cnum.abs).end_of_month
-    end
-    past_and_future(beginning_of_month, end_of_month)
-  end
-
-  def future
-    @cnum = params[:id].to_i + 1
-    if @cnum < 0
-      beginning_of_month = Date.today.months_ago(@cnum.abs).beginning_of_month
-      end_of_month = Date.today.months_ago(@cnum.abs).end_of_month
-    elsif @cnum == 0
-      redirect_to expenses_path
-    elsif @cnum > 0
-      beginning_of_month = Date.today.months_since(@cnum.abs).beginning_of_month
-      end_of_month = Date.today.months_since(@cnum.abs).end_of_month
-    end
-    past_and_future(beginning_of_month, end_of_month)
-  end
-
 
   def confirm
     @expense = Expense.new(expense_params)

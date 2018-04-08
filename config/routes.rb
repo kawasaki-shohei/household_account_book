@@ -1,11 +1,4 @@
 Rails.application.routes.draw do
-  get 'pays/index'
-
-  get 'pays/new'
-
-  get 'pays/edit'
-
-  get 'partners/new'
 
   resources :sessions, only: [:new, :create, :destroy]
 
@@ -17,14 +10,7 @@ Rails.application.routes.draw do
       get :both
       post :confirm
     end
-    # member do
-    #   get :past
-    #   get :future
-    # end
   end
-
-  # get ':shift_months/:past/:id'
-  # get ':shift_months/:future/:id'
   get 'shift_months/past/:id', to: 'shift_months#past', as: :past_expense
   get 'shift_months/future/:id', to: 'shift_months#future', as: :future_expense
 
