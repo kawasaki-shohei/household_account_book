@@ -1,22 +1,12 @@
 class ShiftMonthsController < ApplicationController
   def past
     @cnum = params[:id].to_i - 1
-    @current_user_expenses = ShiftMonth.ones_expenses(user, cnum)
-    @current_user_expenses_of_both
-    @partner_expenses_of_both
-    @sum
-    @both_sum
-    @category_badgets
-    if @cnum < 0
-      beginning_of_month = Date.today.months_ago(@cnum.abs).beginning_of_month
-      end_of_month = Date.today.months_ago(@cnum.abs).end_of_month
-    elsif @cnum == 0
-      redirect_to expenses_path
-    elsif @cnum > 0
-      beginning_of_month = Date.today.months_since(@cnum.abs).beginning_of_month
-      end_of_month = Date.today.months_since(@cnum.abs).end_of_month
-    end
-    past_and_future(beginning_of_month, end_of_month)
+    @current_user_expenses = ShiftMonth.ones_expenses(current_user, @cnum)
+    # @current_user_expenses_of_both
+    # @partner_expenses_of_both
+    # @sum
+    # @both_sum
+    # @category_badgets
   end
 
   def future

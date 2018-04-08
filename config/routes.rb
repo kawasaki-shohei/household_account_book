@@ -17,11 +17,17 @@ Rails.application.routes.draw do
       get :both
       post :confirm
     end
-    member do
-      get :past
-      get :future
-    end
+    # member do
+    #   get :past
+    #   get :future
+    # end
   end
+
+  # get ':shift_months/:past/:id'
+  # get ':shift_months/:future/:id'
+  get 'shift_months/past/:id', to: 'shift_months#past', as: :past_expense
+  get 'shift_months/future/:id', to: 'shift_months#future', as: :future_expense
+
   resources :categories do
     collection do
       get :common

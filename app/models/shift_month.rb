@@ -1,7 +1,7 @@
-class Expense < ApplicationRecord
+class ShiftMonth < ApplicationRecord
 
   def self.ones_expenses(user, cnum)
-    user.expenses.this_month.both_f.newer
+    user.expenses.which_month(which_month_expense(cnum)).both_f.newer
   end
 
   def self.expense_in_both_one_month(current_user, partner, cnum)
@@ -24,15 +24,15 @@ class Expense < ApplicationRecord
 
   def self.which_month_expense(cnum)
     if cnum < 0
-      beginning_of_month = Date.today.months_ago(@cnum.abs).beginning_of_month
-      end_of_month = Date.today.months_ago(@cnum.abs).end_of_month
+      beginning_of_one_month = Date.today.months_ago(cnum.abs).beginning_of_month
+      end_of_one_month = Date.today.months_ago(cnum.abs).end_of_month
     elsif cnum == 0
       redirect_to expenses_path
     elsif cnum > 0
-      beginning_of_month = Date.today.months_since(@cnum.abs).beginning_of_month
-      end_of_month = Date.today.months_since(@cnum.abs).end_of_month
+      beginning_of_one_month = Date.today.months_since(cnum.abs).beginning_of_month
+      end_of_one_month = Date.today.months_since(cnum.abs).end_of_month
     end
-    past_and_future(beginning_of_month, end_of_month)
+    return beginning_of_one_month, end_of_one_month
   end
 
 end
