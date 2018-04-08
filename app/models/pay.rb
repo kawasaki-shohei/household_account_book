@@ -17,17 +17,14 @@ class Pay < ApplicationRecord
     current_user.pays.or(partner.pays).newer
   end
 
+  def self.must_pay(current_user, partner)
+    current_user.expenses.both_t.sum(:mypay) + partner.expenses.both_t.sum(:partnerpay)
+  end
+
   def self.balance_of_gross(current_user, partner)
     my_gross = ones_gross(current_user)
-    my_must_pay = Expense.must_pay(current_user, partner)
+    my_must_pay = must_pay(current_user, partner)
     balance = my_must_pay - my_gross + ones_all_payment(partner)
-    # if my_gross > my_must_pay
-    #   balance = my_must_pay - my_gross + ones_all_payment(partner)
-    # elsif my_gross < my_must_pay
-    #   balance = my_must_pay - my_gross + ones_all_payment(partner)
-    # elsif my_gross == my_must_pay
-    #   balance = 0
-    # end
     return balance
   end
 

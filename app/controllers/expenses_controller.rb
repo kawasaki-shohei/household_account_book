@@ -7,24 +7,13 @@ class ExpensesController < ApplicationController
   include CategoriesHelper
 
   def index
-    # 自分一人の出費
-    @current_user_expenses = current_user.expenses.this_month.both_f.newer
-    #my_expenses = Expense.current_user_expenses(current_user)
-    # 二人の出費の内、自分が払うもの、上記との違いはboth_flgのみ
-    @current_user_expenses_of_both = current_user.expenses.this_month.both_t.newer
-    # 相手が記入した二人の出費の内、自分が払うもの
-    @partner_expenses_of_both = partner.expenses.this_month.both_t.newer
-    common_variables(@current_user_expenses, @current_user_expenses_of_both, @partner_expenses_of_both)
     @cnum = 0
-    
-    # 必要な変数
-    # @cnum
-    # @current_user_expenses
-    # @current_user_expenses_of_both
-    # @partner_expenses_of_both
-    # @sum
-    # @both_sum
-    # @category_badgets
+    @current_user_expenses = Expense.ones_expenses(current_user)
+    @current_user_expenses_of_both = Expense.ones_expenses_of_both(current_user)
+    @partner_expenses_of_both = Expense.ones_expenses_of_both(partner)
+    @sum = @current_user_expenses.sum(:amount)
+    @both_sum = Expense.must_pay_this_month(current_user, partner)
+    @category_badgets = current_user.badgets
   end
 
   def both
