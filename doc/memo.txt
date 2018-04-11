@@ -116,3 +116,11 @@ if @cum != 0
 elsif @cnum == 0
   redirect_to expenses_path
 end
+
+■seeds.rbの使い方
+https://www.sejuku.net/blog/28395
+http://itmemo.net-luck.com/rails-seed/
+http://sakura-bird1.hatenablog.com/entry/2017/02/26/214648
+
+■Heroku
+https://qiita.com/akiko-pusu/items/305e291465d6aac04bf3
