@@ -16,7 +16,12 @@
           支出合計 ¥#{number_with_delimiter(sum + both_sum, delimiter: ",")}
     #collapseOne.collapse{"aria-labelledby" => "headingOne", "data-parent" => "#accordion"}
       .card-body
-        a
+        - category_sums.each do |key, value|
+          - category = Category.find(key).kind
+          %div
+            = category
+            %span.details
+              ¥#{number_with_delimiter(value, delimiter: ",")}
 
   .card
     #headingTwo.card-header
@@ -29,7 +34,8 @@
           - category = Category.find(badget.category_id)
           %div
             = category.kind
-            ¥#{number_with_delimiter(category_balance(badget, category, current_user_expenses, current_user_expenses_of_both, partner_expenses_of_both), delimiter: ",")}
+            %span.details
+              ¥#{number_with_delimiter(category_balance(badget, category, current_user_expenses, current_user_expenses_of_both, partner_expenses_of_both), delimiter: ",")}
 
 
 / Nav tabs

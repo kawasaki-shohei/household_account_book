@@ -10,14 +10,15 @@
     = form.hidden_field :percent
     = form.hidden_field :both_flg
 
-    %div 金額：¥#{number_with_delimiter(@expense.amount, delimiter: ",")}
-    %div 日付：#{@expense.date.strftime("%Y/%m/%d(%a)")}
-    %div メモ：#{@expense.note}
-    %div カテゴリ：#{Category.find(@expense.category_id).kind}
-    - if @expense.both_flg == true
-      %div 自分の割合：#{which_percent(@expense.percent)}
+    .confirm_detail
+      %div 金額：¥#{number_with_delimiter(@expense.amount, delimiter: ",")}
+      %div 日付：#{@expense.date.strftime("%Y/%m/%d(%a)")}
+      %div メモ：#{@expense.note}
+      %div カテゴリ：#{Category.find(@expense.category_id).kind}
+      - if @expense.both_flg == true
+        %div 自分の割合：#{which_percent(@expense.percent)}
     %br
-    = form.submit '入力する', class: 'btn btn-default'
+    = form.submit '入力する', class: 'btn btn-default btn-confirm'
   %br
   = form_with(model: @expense, local: true, url: back_new_or_both(@expense), method: :get) do |form|
     = form.hidden_field :amount
@@ -26,5 +27,5 @@
     = form.hidden_field :category_id
     = form.hidden_field :percent
     = form.hidden_field :both_flg
-    = form.submit '戻る', name: 'back', class: 'btn btn-default'
+    = form.submit '戻る', name: 'back', class: 'btn btn-back'
   -# 出費フォーム

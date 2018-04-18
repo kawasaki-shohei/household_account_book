@@ -31,9 +31,18 @@ span.btn_input {
 }
 
 .btn-default {
-    color: #333;
-    background-color: #ffe6eb;
-    border-color: #ffb3c2;
+  color: #333;
+  background-color: #ffe6eb;
+  border-color: #ffb3c2;
+  &:focus {
+    background-color: #ffb3c2;
+    border-color: #ff8099;
+  }
+  &:active {
+    background-color: #ffb3c2;
+    border-color: #ff8099;
+  }
+
 }
 
 .btn-lg, .btn-group-lg > .btn {

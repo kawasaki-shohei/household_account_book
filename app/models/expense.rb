@@ -11,6 +11,8 @@ class Expense < ApplicationRecord
   scope :this_month, -> {where('date >= ? AND date <= ?', beginning_of_month, end_of_month)}
   scope :last_month, -> {where('date >= ? AND date <= ?', beginning_of_last_month, end_of_last_month)}
   scope :one_month, -> (begging_of_one_month, end_of_one_month) {where('date >= ? AND date <= ?', begging_of_one_month, end_of_one_month)}
+
+  scope :extract_category, -> {unscope(:order).select(:category_id).distinct.pluck(:category_id)}
   scope :both_f, -> {where(both_flg: false)}
   scope :both_t, -> {where(both_flg: true)}
   scope :newer, -> {order(date: :desc, created_at: :desc)}
@@ -36,6 +38,17 @@ class Expense < ApplicationRecord
   def self.must_pay_this_month(current_user, partner)
     current_user.expenses.this_month.both_t.sum(:mypay) + partner.expenses.this_month.both_t.sum(:partnerpay)
   end
+
+  def self.category_sums(current_user_expenses, current_user_expenses_of_both, partner_expenses_of_both)
+    category_ids = (current_user_expenses.extract_category +     current_user_expenses_of_both.extract_category +     partner_expenses_of_both.extract_category).uniq!.sort!
+    category_sums = Hash.new
+    category_ids.each do |category_id|
+      category_sum = current_user_expenses.where(category_id: category_id).sum(:amount) + current_user_expenses_of_both.where(category_id: category_id).sum(:mypay) + partner_expenses_of_both.where(category_id: category_id).sum(:partnerpay)
+      category_sums[category_id] = category_sum
+    end
+    return category_sums
+  end
+
 
 
 

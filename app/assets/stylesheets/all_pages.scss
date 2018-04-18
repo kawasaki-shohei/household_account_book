@@ -132,12 +132,28 @@ input.btn.btn-default.btn-add {
   width: 100%;
   margin-top: 100px;
   margin-bottom: 100px;
+  &:focus {
+    background-color: #ffb3c2;
+    border-color: #ff8099;
+  }
+  &:active {
+    background-color: #ffb3c2;
+    border-color: #ff8099;
+  }
 }
 
 input.btn.btn-default.btn-confirm {
   width: 100%;
   margin-top: 100px;
   margin-bottom: 50px;
+  &:focus {
+    background-color: #ffb3c2;
+    border-color: #ff8099;
+  }
+  &:active {
+    background-color: #ffb3c2;
+    border-color: #ff8099;
+  }
 }
 
 .btn-delete {
