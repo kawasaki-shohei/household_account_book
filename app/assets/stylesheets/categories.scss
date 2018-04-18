@@ -19,4 +19,9 @@ a.btn.btn-primary.btn-lg.btn-block.additional {
   color: #000;
   background-color: #f5f5f5;
   border-color: #808080;
+  &:hover {
+    color: #000;
+    background-color: #f5f5f5;
+    border-color: #808080;
+  }
 }

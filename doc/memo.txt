@@ -122,6 +122,13 @@ https://www.sejuku.net/blog/28395
 http://itmemo.net-luck.com/rails-seed/
 http://sakura-bird1.hatenablog.com/entry/2017/02/26/214648
 
+require 'csv'
+
+csv_data = CSV.read('db/postal_code_tokyo_with_header.csv', headers: true)
+csv_data.each do |data|
+  PostalCode.create!(data.to_hash)
+end
+
 ■Heroku
 https://qiita.com/akiko-pusu/items/305e291465d6aac04bf3
 
@@ -132,7 +139,11 @@ https://qiita.com/akiko-pusu/items/305e291465d6aac04bf3
 でcsv出力。rootディレクトリ直下に保存される
 4. cat ファイル名で中身を確認できる
 
-heroku pg:psql -c "\copy (select * from partners) to partners.csv with csv header"
+heroku pg:psql -c "\copy (select * from expenses) to expenses.csv with csv header"
 
 ■毎月のループ
 https://qiita.com/ryounagaoka/items/97bacfda75b9fd7e050b
+
+ActiveRecord::Base.connection.tables.each do |t|
+  ActiveRecord::Base.connection.reset_pk_sequence!(t)
+end

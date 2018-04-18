@@ -12,12 +12,16 @@
   .card
     #headingOne.card-header
       %h5.mb-0
-        %button.btn.btn-link{"aria-controls" => "collapseOne", "aria-expanded" => "true", "data-target" => "#collapseOne", "data-toggle" => "collapse"}
+        %button.btn.btn-link.collapsed{"aria-controls" => "collapseOne", "aria-expanded" => "true", "data-target" => "#collapseOne", "data-toggle" => "collapse"}
           支出合計 ¥#{number_with_delimiter(sum + both_sum, delimiter: ",")}
+    #collapseOne.collapse{"aria-labelledby" => "headingOne", "data-parent" => "#accordion"}
+      .card-body
+        a
+
   .card
     #headingTwo.card-header
       %h5.mb-0
-        %button.btn.btn-link.collapsed{"aria-controls" => "collapseTwo", "aria-expanded" => "false", "data-target" => "#collapseTwo", "data-toggle" => "collapse"}
+        %button.btn.btn-link.collapsed{"aria-controls" => "collapseTwo", "aria-expanded" => "true", "data-target" => "#collapseTwo", "data-toggle" => "collapse"}
           カテゴリ別予算残金
     #collapseTwo.collapse{"aria-labelledby" => "headingTwo", "data-parent" => "#accordion"}
       .card-body
