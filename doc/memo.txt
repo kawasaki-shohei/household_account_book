@@ -147,3 +147,6 @@ https://qiita.com/ryounagaoka/items/97bacfda75b9fd7e050b
 ActiveRecord::Base.connection.tables.each do |t|
   ActiveRecord::Base.connection.reset_pk_sequence!(t)
 end
+
+■shift_moneth
+category_ids.nil? category_ids.present? 両方falseになってしまう。
