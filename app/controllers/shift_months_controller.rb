@@ -4,14 +4,20 @@ class ShiftMonthsController < ApplicationController
 
   def past
     @cnum = params[:id].to_i - 1
-    redirect_to expenses_path if @cnum == 0
-    past_and_future(@cnum)
+    if @cnum == 0
+      redirect_to expenses_path
+    else
+      past_and_future(@cnum)
+    end
   end
 
   def future
     @cnum = params[:id].to_i + 1
-    redirect_to expenses_path if @cnum == 0
-    past_and_future(@cnum)
+    if @cnum == 0
+      redirect_to expenses_path
+    else
+      past_and_future(@cnum)
+    end
   end
 
   def past_and_future(cnum)
