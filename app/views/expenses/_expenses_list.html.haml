@@ -19,9 +19,10 @@
         - category_sums.each do |key, value|
           - category = Category.find(key).kind
           %div
-            = category
-            %span.details
-              ¥#{number_with_delimiter(value, delimiter: ",")}
+            = link_to category_expense_path(key, cnum), remote: true  do 
+              = category
+              %span.details
+                ¥#{number_with_delimiter(value, delimiter: ",")}
 
   .card
     #headingTwo.card-header

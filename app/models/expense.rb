@@ -17,16 +17,10 @@ class Expense < ApplicationRecord
   scope :both_t, -> {where(both_flg: true)}
   scope :newer, -> {order(date: :desc, created_at: :desc)}
 
-  # def self.current_user_expenses(current_user)
-  #   current_user.expenses.this_month.both_f.newer
-  # end
   def self.ones_expenses(user)
     user.expenses.this_month.both_f.newer
   end
 
-  # def self.current_user_expenses_of_both(current_user)
-  #   current_user.expenses.this_month.both_t.newer
-  # end
   def self.ones_expenses_of_both(user)
     user.expenses.this_month.both_t.newer
   end
@@ -51,7 +45,11 @@ class Expense < ApplicationRecord
     end
     return category_sums
   end
-
+  
+  
+  def self.category_expense
+   
+  end
 
 
 

@@ -61,6 +61,14 @@ class ExpensesController < ApplicationController
     @expense.destroy
     redirect_to expenses_path, notice: "削除しました"
   end
+  
+  def category
+    cnum = params[:format].to_i
+    
+    respond_to do |format|
+      format.js
+    require 'pry'; binding.pry
+  end
 
   private
     def mypay_amount

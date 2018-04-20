@@ -10,6 +10,10 @@ Rails.application.routes.draw do
       get :both
       post :confirm
     end
+    
+    member do
+      get :category
+    end
   end
   get 'shift_months/past/:id', to: 'shift_months#past', as: :past_expense
   get 'shift_months/future/:id', to: 'shift_months#future', as: :future_expense
