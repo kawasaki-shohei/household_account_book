@@ -19,7 +19,7 @@
         - category_sums.each do |key, value|
           - category = Category.find(key).kind
           %div
-            = link_to each_category_expense_path(key, cnum), remote: true, class: "btn btn-category_expense btn-lg btn-block"  do
+            = link_to each_category_expense_path(key, cnum), remote: true, anchor: "accordion", class: "btn btn-category_expense btn-lg btn-block"  do
               = category
               %span.details
                 ¥#{number_with_delimiter(value, delimiter: ",")}
