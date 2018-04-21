@@ -19,7 +19,7 @@
         - category_sums.each do |key, value|
           - category = Category.find(key).kind
           %div
-            = link_to category_expense_path(key, cnum), remote: true  do 
+            = link_to each_category_expense_path(key, cnum), remote: true, class: "btn btn-category_expense btn-lg btn-block"  do
               = category
               %span.details
                 ¥#{number_with_delimiter(value, delimiter: ",")}
@@ -38,36 +38,36 @@
             %span.details
               ¥#{number_with_delimiter(category_balance(badget, category, current_user_expenses, current_user_expenses_of_both, partner_expenses_of_both), delimiter: ",")}
 
-
-/ Nav tabs
-%ul#pills-tab.nav.nav-pills{:role => "tablist"}
-  %li.nav-item
-    %a#both-tab.nav-link.active{"aria-controls" => "both", "aria-selected" => "false", "data-toggle" => "pill", :href => "#both", :role => "tab"} Both
-  %li.nav-item
-    %a#mine-tab.nav-link{"aria-controls" => "mine", "aria-selected" => "true", "data-toggle" => "pill", :href => "#mine", :role => "tab"} Mine
-/ Tab panes
-#pills-tabContent.tab-content
-  #both.tab-pane.fade.show.active{"aria-labelledby" => "both-tab", :role => "tabpanel"}
-    %div.expense_sum
-      支払い合計
-      %span.expense_sum_detail ¥#{number_with_delimiter(both_sum, delimiter: ",")}
-    .both_list #{current_user.name}の出費
-    - current_user_expenses_of_both.each do |expense|
-      %div.each_expense
-        = link_to edit_expense_path(expense.id) do
+#category_expense
+  / Nav tabs
+  %ul#pills-tab.nav.nav-pills{:role => "tablist"}
+    %li.nav-item
+      %a#both-tab.nav-link.active{"aria-controls" => "both", "aria-selected" => "false", "data-toggle" => "pill", :href => "#both", :role => "tab"} Both
+    %li.nav-item
+      %a#mine-tab.nav-link{"aria-controls" => "mine", "aria-selected" => "true", "data-toggle" => "pill", :href => "#mine", :role => "tab"} Mine
+  / Tab panes
+  #pills-tabContent.tab-content
+    #both.tab-pane.fade.show.active{"aria-labelledby" => "both-tab", :role => "tabpanel"}
+      %div.expense_sum
+        支払い合計
+        %span.expense_sum_detail ¥#{number_with_delimiter(both_sum, delimiter: ",")}
+      .both_list #{current_user.name}の出費
+      - current_user_expenses_of_both.each do |expense|
+        %div.each_expense
+          = link_to edit_expense_path(expense.id) do
+            - flg = "both"
+            = render 'expenses/display_expenses', expense: expense, flg: flg
+      .both_list.partner #{partner.name}の出費
+      - partner_expenses_of_both.each do |expense|
+        %div.each_partner_expense
           - flg = "both"
           = render 'expenses/display_expenses', expense: expense, flg: flg
-    .both_list.partner #{partner.name}の出費
-    - partner_expenses_of_both.each do |expense|
-      %div.each_partner_expense
-        - flg = "both"
-        = render 'expenses/display_expenses', expense: expense, flg: flg
-  #mine.tab-pane.fade{"aria-labelledby" => "mine-tab", :role => "tabpanel"}
-    %div.expense_sum
-      支払い合計
-      %span.expense_sum_detail ¥#{number_with_delimiter(sum, delimiter: ",")}
-    - current_user_expenses.each do |expense|
-      %div.each_expense
-        = link_to edit_expense_path(expense.id) do
-          - flg = "mine"
-          = render 'expenses/display_expenses', expense: expense, flg: flg
+    #mine.tab-pane.fade{"aria-labelledby" => "mine-tab", :role => "tabpanel"}
+      %div.expense_sum
+        支払い合計
+        %span.expense_sum_detail ¥#{number_with_delimiter(sum, delimiter: ",")}
+      - current_user_expenses.each do |expense|
+        %div.each_expense
+          = link_to edit_expense_path(expense.id) do
+            - flg = "mine"
+            = render 'expenses/display_expenses', expense: expense, flg: flg

@@ -61,13 +61,18 @@ class ExpensesController < ApplicationController
     @expense.destroy
     redirect_to expenses_path, notice: "削除しました"
   end
-  
-  def category
-    cnum = params[:format].to_i
-    
+
+  def each_category
+    cnum = params[:cnum].to_i
+    @category = Category.find(params[:category_id].to_i)
+    @current_user_expenses = Expense.category_expense(current_user, partner, cnum, @category)[0]
+    @current_user_expenses_of_both = Expense.category_expense(current_user, partner, cnum, @category)[1]
+    @partner_expenses_of_both = Expense.category_expense(current_user, partner, cnum, @category)[2]
+    @sum = @current_user_expenses.unscope(:order).where(category_id: @category.id).sum(:amount)
+    @both_sum = Expense.category_expense(current_user, partner, cnum, @category)[3]
     respond_to do |format|
       format.js
-    require 'pry'; binding.pry
+    end
   end
 
   private

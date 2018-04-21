@@ -13,6 +13,7 @@ class Expense < ApplicationRecord
   scope :one_month, -> (begging_of_one_month, end_of_one_month) {where('date >= ? AND date <= ?', begging_of_one_month, end_of_one_month)}
 
   scope :extract_category, -> {unscope(:order).select(:category_id).distinct.pluck(:category_id)}
+  scope :category, -> (category_id){unscope(:order).where(category_id: category_id)}
   scope :both_f, -> {where(both_flg: false)}
   scope :both_t, -> {where(both_flg: true)}
   scope :newer, -> {order(date: :desc, created_at: :desc)}
@@ -45,10 +46,15 @@ class Expense < ApplicationRecord
     end
     return category_sums
   end
-  
-  
-  def self.category_expense
-   
+
+
+  def self.category_expense(current_user, partner, cnum, category)
+    current_user_expenses = ShiftMonth.ones_expenses(current_user, cnum).category(category.id)
+    current_user_expenses_of_both = ShiftMonth.ones_expenses_of_both(current_user, cnum).category(category.id)
+    partner_expenses_of_both = ShiftMonth.partner_expenses_of_both(partner, cnum).category(category.id)
+    both_sum = ShiftMonth.must_pay_one_month_one_category(current_user, partner, cnum, category)
+
+    return current_user_expenses, current_user_expenses_of_both, partner_expenses_of_both, both_sum
   end
 
 

@@ -25,7 +25,7 @@ class ShiftMonthsController < ApplicationController
     @current_user_expenses_of_both = ShiftMonth.ones_expenses_of_both(current_user, cnum)
     @partner_expenses_of_both = ShiftMonth.ones_expenses_of_both(partner, cnum)
     @sum = @current_user_expenses.sum(:amount)
-    @both_sum = ShiftMonth.must_pay_this_month(current_user, partner, cnum)
+    @both_sum = ShiftMonth.must_pay_one_month(current_user, partner, cnum)
     @category_sums = Expense.category_sums(@current_user_expenses, @current_user_expenses_of_both, @partner_expenses_of_both)
     @category_badgets = current_user.badgets
   end
