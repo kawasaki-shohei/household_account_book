@@ -11,7 +11,7 @@
   %div.form-group
     %label{ for: 'date' } 日付
     %div
-      - if action_name == 'new'
+      - if action_name == 'both'
         = form.date_field :date, class:"form-control", required: true, value: Date.today
       - elsif action_name == 'edit'
         = form.date_field :date, class:"form-control", required: true, value: expense.date
