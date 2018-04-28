@@ -155,4 +155,4 @@ category_ids.nil? category_ids.present? 両方falseになってしまう。
 ~~・updateのとき日付が今日になる~~
 ~~・updateからconfirmに飛んでない~~
 ~~・confirmの戻るボタンに色がついていない~~
-・both listでパートナーの出費が日付の昇順になっている→降順に
+~~・both listでカテゴリ別の出費が日付の昇順になっている→降順に~~
