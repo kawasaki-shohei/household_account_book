@@ -13,7 +13,7 @@ class Expense < ApplicationRecord
   scope :one_month, -> (begging_of_one_month, end_of_one_month) {where('date >= ? AND date <= ?', begging_of_one_month, end_of_one_month)}
 
   scope :extract_category, -> {unscope(:order).select(:category_id).distinct.pluck(:category_id)}
-  scope :category, -> (category_id){unscope(:order).where(category_id: category_id)}
+  scope :category, -> (category_id){unscope(:order).where(category_id: category_id).order(date: :desc, created_at: :desc)}
   scope :both_f, -> {where(both_flg: false)}
   scope :both_t, -> {where(both_flg: true)}
   scope :newer, -> {order(date: :desc, created_at: :desc)}
