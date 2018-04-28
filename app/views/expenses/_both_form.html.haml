@@ -11,7 +11,10 @@
   %div.form-group
     %label{ for: 'date' } 日付
     %div
-      = form.date_field :date, class:"form-control", required: true, value: Date.today
+      - if action_name == 'new'
+        = form.date_field :date, class:"form-control", required: true, value: Date.today
+      - elsif action_name == 'edit'
+        = form.date_field :date, class:"form-control", required: true, value: expense.date
   %div.form-group
     %label{ for: 'memo' } メモ
     %div
