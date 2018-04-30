@@ -2,7 +2,9 @@
   %div ユーザーネーム #{@user.name}
   %div メールアドレス #{@user.email}
   %div パートナー
-  - if @partner.present?
-    %div #{@partner.name}さん
+  - if partner.present?
+    %div #{partner.name}さん
   - else
     = link_to '登録する', new_partner_path, class: "btn btn-default"
+
+  
