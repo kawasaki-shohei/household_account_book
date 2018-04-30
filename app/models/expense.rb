@@ -36,7 +36,7 @@ class Expense < ApplicationRecord
 
   def self.category_sums(current_user_expenses, current_user_expenses_of_both, partner_expenses_of_both)
     category_ids = (current_user_expenses.extract_category + current_user_expenses_of_both.extract_category + partner_expenses_of_both.extract_category)
-    if category_ids.present?
+    if category_ids.present? && category_ids.size > 2
       category_ids.uniq!.sort!
     end
     category_sums = Hash.new

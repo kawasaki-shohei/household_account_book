@@ -139,7 +139,7 @@ https://qiita.com/akiko-pusu/items/305e291465d6aac04bf3
 でcsv出力。rootディレクトリ直下に保存される
 4. cat ファイル名で中身を確認できる
 
-heroku pg:psql -c "\copy (select * from expenses) to expenses.csv with csv header"
+heroku pg:psql -c "\copy (select * from badgets) to badgets.csv with csv header"
 
 ■毎月のループ
 https://qiita.com/ryounagaoka/items/97bacfda75b9fd7e050b
