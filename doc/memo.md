@@ -150,9 +150,12 @@ end
 
 ■shift_moneth
 category_ids.nil? category_ids.present? 両方falseになってしまう。
+<<<<<<< HEAD:doc/memo.md
 
 
 ~~・updateのとき日付が今日になる~~
 ~~・updateからconfirmに飛んでない~~
 ~~・confirmの戻るボタンに色がついていない~~
 ~~・both listでカテゴリ別の出費が日付の昇順になっている→降順に~~
+=======
+>>>>>>> 繰り返し出費の入力:doc/memo.txt
