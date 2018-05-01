@@ -141,9 +141,6 @@ https://qiita.com/akiko-pusu/items/305e291465d6aac04bf3
 
 heroku pg:psql -c "\copy (select * from badgets) to badgets.csv with csv header"
 
-■毎月のループ
-https://qiita.com/ryounagaoka/items/97bacfda75b9fd7e050b
-
 ■idのクリア
 ActiveRecord::Base.connection.tables.each do |t|
   ActiveRecord::Base.connection.reset_pk_sequence!(t)
@@ -157,3 +154,25 @@ category_ids.nil? category_ids.present? 両方falseになってしまう。
 ~~・updateからconfirmに飛んでない~~
 ~~・confirmの戻るボタンに色がついていない~~
 ~~・both listでカテゴリ別の出費が日付の昇順になっている→降順に~~
+
+■毎月のループ
+https://qiita.com/ryounagaoka/items/97bacfda75b9fd7e050b
+
+date_selectの取得方法
+```ruby
+[1] pry(#<TestsController>)> params
+=> <ActionController::Parameters {"utf8"=>"✓", "authenticity_token"=>"jPyxEPq6oGtEUsTRrGfPICmecC8b1rwZC/HTI/KHXpDzFRL4kX37StLUXZqgNDPayV6FCE82p/IhoDdOPBfNdg==", "test"=>{"amount"=>"1000", "date(1i)"=>"2018", "date(2i)"=>"5", "date(3i)"=>"1", "date2(1i)"=>"2018", "date2(2i)"=>"5", "date2(3i)"=>"12"}, "commit"=>"Create Test", "controller"=>"tests", "action"=>"create"} permitted: false>
+[2] pry(#<TestsController>)> params[:test][:date]
+=> nil
+[3] pry(#<TestsController>)> params[:test][:date1]
+=> nil
+[6] pry(#<TestsController>)> params[:test]["date(1i)"]
+=> "2018"
+```
+これでも取れる
+```ruby
+[1] pry(#<PaysController>)> params
+=> <ActionController::Parameters {"utf8"=>"✓", "authenticity_token"=>"oeNbZLMUDjoC2wCAcdaXXOAM/LZFBmhRPD1+mq0wS61yBr7E2mKuMtpeGSA8E26sIGWpjnqJl26H2vK26M2VvQ==", "pay"=>{"pamount"=>"1000", "date(1i)"=>"2018", "date(2i)"=>"5", "date(3i)"=>"1", "memo"=>""}, "commit"=>"追加", "controller"=>"pays", "action"=>"create"} permitted: false>
+[2] pry(#<PaysController>)> params.require(:pay).permit(:pamount, :date, :memo)
+=> <ActionController::Parameters {"pamount"=>"1000", "date(1i)"=>"2018", "date(2i)"=>"5", "date(3i)"=>"1", "memo"=>""} permitted: true>
+```

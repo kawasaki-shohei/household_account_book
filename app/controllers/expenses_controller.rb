@@ -32,6 +32,7 @@ class ExpensesController < ApplicationController
   end
 
   def create
+    binding.pry
     @expense = Expense.new(expense_params)
     if @expense.save
       redirect_to expenses_path, notice: "出費を保存しました。#{@category.kind}: #{@expense.amount}"
