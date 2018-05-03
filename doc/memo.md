@@ -158,7 +158,11 @@ category_ids.nil? category_ids.present? 両方falseになってしまう。
 ■毎月のループ
 https://qiita.com/ryounagaoka/items/97bacfda75b9fd7e050b
 
+<<<<<<< HEAD
 ■date_selectの取得方法
+=======
+date_selectの取得方法
+>>>>>>> 繰り返し出費の入力
 ```ruby
 [1] pry(#<TestsController>)> params
 => <ActionController::Parameters {"utf8"=>"✓", "authenticity_token"=>"jPyxEPq6oGtEUsTRrGfPICmecC8b1rwZC/HTI/KHXpDzFRL4kX37StLUXZqgNDPayV6FCE82p/IhoDdOPBfNdg==", "test"=>{"amount"=>"1000", "date(1i)"=>"2018", "date(2i)"=>"5", "date(3i)"=>"1", "date2(1i)"=>"2018", "date2(2i)"=>"5", "date2(3i)"=>"12"}, "commit"=>"Create Test", "controller"=>"tests", "action"=>"create"} permitted: false>
@@ -172,6 +176,7 @@ https://qiita.com/ryounagaoka/items/97bacfda75b9fd7e050b
 これでも取れる
 ```ruby
 [1] pry(#<PaysController>)> params
+<<<<<<< HEAD
 => <ActionController::Parameters {"utf8"=>"✓","authenticity_token"=>"oeNbZLMUDjoC2wCAcdaXXOAM/LZFBmhRPD1+mq0wS61yBr7E2mKuMtpeGSA8E26sIGWpjnqJl26H2vK26M2VvQ==", "pay"=>{"pamount"=>"1000", "date(1i)"=>"2018", "date(2i)"=>"5", "date(3i)"=>"1", "memo"=>""}, "commit"=>"追加", "controller"=>"pays", "action"=>"create"} permitted: false>
 [2] pry(#<PaysController>)> params.require(:pay).permit(:pamount, :date, :memo)
 => <ActionController::Parameters {"pamount"=>"1000", "date(1i)"=>"2018", "date(2i)"=>"5", "date(3i)"=>"1", "memo"=>""} permitted: true>
@@ -206,3 +211,9 @@ https://qiita.com/ryounagaoka/items/97bacfda75b9fd7e050b
 [33] pry(main)> e
 => [4, 6, 7, 23, 89]
 [34] pry(main)>
+=======
+=> <ActionController::Parameters {"utf8"=>"✓", "authenticity_token"=>"oeNbZLMUDjoC2wCAcdaXXOAM/LZFBmhRPD1+mq0wS61yBr7E2mKuMtpeGSA8E26sIGWpjnqJl26H2vK26M2VvQ==", "pay"=>{"pamount"=>"1000", "date(1i)"=>"2018", "date(2i)"=>"5", "date(3i)"=>"1", "memo"=>""}, "commit"=>"追加", "controller"=>"pays", "action"=>"create"} permitted: false>
+[2] pry(#<PaysController>)> params.require(:pay).permit(:pamount, :date, :memo)
+=> <ActionController::Parameters {"pamount"=>"1000", "date(1i)"=>"2018", "date(2i)"=>"5", "date(3i)"=>"1", "memo"=>""} permitted: true>
+```
+>>>>>>> 繰り返し出費の入力
