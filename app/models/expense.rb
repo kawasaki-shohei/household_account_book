@@ -4,12 +4,13 @@ class Expense < ApplicationRecord
   has_one :category
   validates :amount, :date, presence: true
 
-  end_of_month = Date.today.end_of_month
-  beginning_of_month = Date.today.beginning_of_month
+  end_of_this_month = Date.today.end_of_month
+  beginning_of_this_month = Date.today.beginning_of_month
   end_of_last_month = Date.today.months_ago(1).end_of_month
   beginning_of_last_month = Date.today.months_ago(1).beginning_of_month
-  scope :this_month, -> {where('date >= ? AND date <= ?', beginning_of_month, end_of_month)}
+  scope :this_month, -> {where('date >= ? AND date <= ?', beginning_of_this_month, end_of_this_month)}
   scope :last_month, -> {where('date >= ? AND date <= ?', beginning_of_last_month, end_of_last_month)}
+  scope :until_last_month, -> {where('date <= ?', end_of_last_month)}
   scope :one_month, -> (begging_of_one_month, end_of_one_month) {where('date >= ? AND date <= ?', begging_of_one_month, end_of_one_month)}
 
   scope :extract_category, -> {unscope(:order).select(:category_id).distinct.pluck(:category_id)}
