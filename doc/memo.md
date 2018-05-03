@@ -139,7 +139,9 @@ https://qiita.com/akiko-pusu/items/305e291465d6aac04bf3
 でcsv出力。rootディレクトリ直下に保存される
 4. cat ファイル名で中身を確認できる
 
-heroku pg:psql -c "\copy (select * from badgets) to badgets.csv with csv header"
+heroku pg:psql -c "\copy (select * from expenses) to expenses.csv with csv header"
+
+ActiveRecord::Base.connection.execute("SELECT setval('expenses_id_seq', coalesce((SELECT MAX(id)+1 FROM expenses), 1), false)")
 
 ■idのクリア
 ActiveRecord::Base.connection.tables.each do |t|
@@ -158,11 +160,7 @@ category_ids.nil? category_ids.present? 両方falseになってしまう。
 ■毎月のループ
 https://qiita.com/ryounagaoka/items/97bacfda75b9fd7e050b
 
-<<<<<<< HEAD
 ■date_selectの取得方法
-=======
-date_selectの取得方法
->>>>>>> 繰り返し出費の入力
 ```ruby
 [1] pry(#<TestsController>)> params
 => <ActionController::Parameters {"utf8"=>"✓", "authenticity_token"=>"jPyxEPq6oGtEUsTRrGfPICmecC8b1rwZC/HTI/KHXpDzFRL4kX37StLUXZqgNDPayV6FCE82p/IhoDdOPBfNdg==", "test"=>{"amount"=>"1000", "date(1i)"=>"2018", "date(2i)"=>"5", "date(3i)"=>"1", "date2(1i)"=>"2018", "date2(2i)"=>"5", "date2(3i)"=>"12"}, "commit"=>"Create Test", "controller"=>"tests", "action"=>"create"} permitted: false>
@@ -176,7 +174,6 @@ date_selectの取得方法
 これでも取れる
 ```ruby
 [1] pry(#<PaysController>)> params
-<<<<<<< HEAD
 => <ActionController::Parameters {"utf8"=>"✓","authenticity_token"=>"oeNbZLMUDjoC2wCAcdaXXOAM/LZFBmhRPD1+mq0wS61yBr7E2mKuMtpeGSA8E26sIGWpjnqJl26H2vK26M2VvQ==", "pay"=>{"pamount"=>"1000", "date(1i)"=>"2018", "date(2i)"=>"5", "date(3i)"=>"1", "memo"=>""}, "commit"=>"追加", "controller"=>"pays", "action"=>"create"} permitted: false>
 [2] pry(#<PaysController>)> params.require(:pay).permit(:pamount, :date, :memo)
 => <ActionController::Parameters {"pamount"=>"1000", "date(1i)"=>"2018", "date(2i)"=>"5", "date(3i)"=>"1", "memo"=>""} permitted: true>
@@ -184,36 +181,4 @@ date_selectの取得方法
 
 
 ■[1,10].uniq!メソッドでエラーが出る。
-[21] pry(main)> a = [1,10]
-=> [1, 10]
-[22] pry(main)> a.uniq
-=> [1, 10]
-[23] pry(main)> a.uniq!
-=> nil
-[24] pry(main)> b = [1,1]
-=> [1, 1]
-[25] pry(main)> b.uniq!
-=> [1]
-[26] pry(main)> a.uniq.sort!
-=> [1, 10]
-[27] pry(main)> c= [4,6,7,23,4,7,6,89]
-=> [4, 6, 7, 23, 4, 7, 6, 89]
-[28] pry(main)> c.uniq
-=> [4, 6, 7, 23, 89]
-[29] pry(main)> c
-=> [4, 6, 7, 23, 4, 7, 6, 89]
-[30] pry(main)> c.uniq.sort!
-=> [4, 6, 7, 23, 89]
-[31] pry(main)> c
-=> [4, 6, 7, 23, 4, 7, 6, 89]
-[32] pry(main)> e = c.uniq.sort!
-=> [4, 6, 7, 23, 89]
-[33] pry(main)> e
-=> [4, 6, 7, 23, 89]
-[34] pry(main)>
-=======
-=> <ActionController::Parameters {"utf8"=>"✓", "authenticity_token"=>"oeNbZLMUDjoC2wCAcdaXXOAM/LZFBmhRPD1+mq0wS61yBr7E2mKuMtpeGSA8E26sIGWpjnqJl26H2vK26M2VvQ==", "pay"=>{"pamount"=>"1000", "date(1i)"=>"2018", "date(2i)"=>"5", "date(3i)"=>"1", "memo"=>""}, "commit"=>"追加", "controller"=>"pays", "action"=>"create"} permitted: false>
-[2] pry(#<PaysController>)> params.require(:pay).permit(:pamount, :date, :memo)
-=> <ActionController::Parameters {"pamount"=>"1000", "date(1i)"=>"2018", "date(2i)"=>"5", "date(3i)"=>"1", "memo"=>""} permitted: true>
-```
->>>>>>> 繰り返し出費の入力
+→uniq!メソッドは、配列の中で重複する要素を削除します。レシーバ自身を変更するメソッドです。戻り値は、変更があったときはレシーバ自身、なかったときはnilです。
