@@ -1,0 +1,49 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title Habfoc
+    = csrf_meta_tags
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+    %link{:crossorigin => "anonymous", :href => "https://use.fontawesome.com/releases/v5.0.9/css/all.css", :integrity => "sha384-5SOiIsAziJl6AWe0HWRKTXlfcSHKmYV4RBF18PPJ173Kzn7jzMyFuTtk8JA7QQG1", :rel => "stylesheet"}/
+  %body
+    / Navigation
+    %nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.fixed-top
+      .container-fluid
+        = link_to 'Habfoc', expenses_path, class: "navbar-brand"
+        %ul.navbar-nav
+          - if logged_in?
+            %li
+              %span
+                = link_to "#{current_user.name}さん", user_path(current_user), class: "nav-top"
+              %span.btn_input
+                = link_to root_path, class: "nav-top" do
+                  %i.far.fa-edit.fa-lg
+        %button.navbar-toggler{"aria-controls" => "navbarResponsive", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarResponsive", "data-toggle" => "collapse", :type => "button"}
+          %span.navbar-toggler-icon
+        - if logged_in?
+          #navbarResponsive.collapse.navbar-collapse
+            %ul.navbar-nav
+              %li.nav-item
+                = link_to expenses_path, class: "nav-link" do
+                  List
+                  %span.sr-only (current)
+              %li.nav-item
+                = link_to "Both", both_expenses_path, class: "nav-link"
+              %li.nav-item
+                = link_to "Mine", new_expense_path, class: "nav-link"
+              %li.nav-item
+                = link_to "Repeat", new_repeat_expense_path, class: "nav-link"
+              %li.nav-item
+                = link_to "Badget", badgets_path, class: "nav-link"
+              %li.nav-item
+                = link_to "Category", categories_path, class: "nav-link"
+              %li.nav-item
+                = link_to "Pay", pays_path, class: "nav-link"
+              %li.nav-item
+                = link_to "Sign out", session_path(current_user.id), method: :delete, class: "nav-link"
+    .container-fluid
+      - flash.each do |key, value|
+        = content_tag(:div, value, class: "#{key}")
+    = yield

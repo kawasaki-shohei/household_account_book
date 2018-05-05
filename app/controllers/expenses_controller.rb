@@ -119,13 +119,4 @@ class ExpensesController < ApplicationController
     def set_category
       @category = Category.find(params[:expense][:category_id])
     end
-
-    def common_variables(current_user_expenses, current_user_expenses_of_both, partner_expenses_of_both)
-      # 自分一人の出費の合計
-      @sum = current_user_expenses.sum(:amount)
-      # 二人の出費の内、自分が払う金額の合計
-      @both_sum = current_user_expenses_of_both.sum(:mypay) + partner_expenses_of_both.sum(:partnerpay)
-      #ユーザーの予算
-      @category_badgets = current_user.badgets
-    end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180324031455) do
+ActiveRecord::Schema.define(version: 20180505101343) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,6 +46,8 @@ ActiveRecord::Schema.define(version: 20180324031455) do
     t.integer "mypay"
     t.integer "partnerpay"
     t.integer "percent"
+    t.bigint "repeat_expense_id"
+    t.index ["repeat_expense_id"], name: "index_expenses_on_repeat_expense_id"
   end
 
   create_table "partners", force: :cascade do |t|
@@ -67,6 +69,23 @@ ActiveRecord::Schema.define(version: 20180324031455) do
     t.index ["user_id"], name: "index_pays_on_user_id"
   end
 
+  create_table "repeat_expenses", force: :cascade do |t|
+    t.integer "ramount"
+    t.date "s_date"
+    t.date "e_date"
+    t.string "note"
+    t.bigint "category_id"
+    t.bigint "user_id"
+    t.boolean "both_flg", default: false
+    t.integer "mypay"
+    t.integer "partnerpay"
+    t.integer "percent"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_repeat_expenses_on_category_id"
+    t.index ["user_id"], name: "index_repeat_expenses_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email"
@@ -79,7 +98,10 @@ ActiveRecord::Schema.define(version: 20180324031455) do
   add_foreign_key "badgets", "categories"
   add_foreign_key "badgets", "users"
   add_foreign_key "categories", "users"
+  add_foreign_key "expenses", "repeat_expenses"
   add_foreign_key "partners", "users"
   add_foreign_key "partners", "users", column: "partner_id"
   add_foreign_key "pays", "users"
+  add_foreign_key "repeat_expenses", "categories"
+  add_foreign_key "repeat_expenses", "users"
 end
