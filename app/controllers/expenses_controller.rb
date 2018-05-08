@@ -1,7 +1,6 @@
 class ExpensesController < ApplicationController
   before_action :check_logging_in
   before_action :check_partner
-  before_action :back_or_new, only:[:new, :both, :edit]
   before_action :set_expense, only:[:edit, :update, :destroy]
   before_action :set_category, only:[:update, :create]
   include CategoriesHelper
@@ -18,10 +17,20 @@ class ExpensesController < ApplicationController
   end
 
   def both
+    if params[:back]
+      @expense = Expense.new(expense_params)
+    else
+      @expense = Expense.new
+    end
     @common_categories = common_categories
   end
 
   def new
+    if params[:back]
+      @expense = Expense.new(expense_params)
+    else
+      @expense = Expense.new
+    end
     @categories = Category.ones_categories(current_user, partner)
   end
 
@@ -103,14 +112,6 @@ class ExpensesController < ApplicationController
     def set_expenses_categories
       @categories = current_user.categories.or(partner.categories.where(common: true))
       # @categories = Category.where(user_id: current_user.id).or(Category.where(user_id: partner.id, common: true))
-    end
-
-    def back_or_new
-      if params[:back]
-        @expense = Expense.new(expense_params)
-      else
-        @expense = Expense.new
-      end
     end
 
     def set_expense

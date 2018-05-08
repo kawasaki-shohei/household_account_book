@@ -1,7 +1,7 @@
 class RepeatExpensesController < ApplicationController
   before_action :check_logging_in
   before_action :check_partner
-  before_action :back_or_new, only:[:new, :both, :edit]
+  # before_action :back_or_new, only:[:new, :both, :edit]
   before_action :set_expense, only:[:edit, :update, :destroy]
   before_action :set_category, only:[:update, :create]
   include CategoriesHelper
@@ -22,8 +22,8 @@ class RepeatExpensesController < ApplicationController
   end
 
   def new
-    
-    set_expenses_categories
+    @expense = RepeatExpense.new
+    @categories = Category.ones_categories(current_user, partner)
   end
 
   def create
