@@ -18,7 +18,7 @@ class ExpensesController < ApplicationController
   end
 
   def both
-    common_categories
+    @common_categories = common_categories
   end
 
   def new
