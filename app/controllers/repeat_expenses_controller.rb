@@ -22,6 +22,7 @@ class RepeatExpensesController < ApplicationController
   end
 
   def new
+    
     set_expenses_categories
   end
 
@@ -87,9 +88,9 @@ class RepeatExpensesController < ApplicationController
 
     def back_or_new
       if params[:back]
-        @expense = Expense.new(expense_params)
+        @expense = RepeatExpense.new(expense_params)
       else
-        @expense = Expense.new
+        @expense = RepeatExpense.new
       end
     end
 

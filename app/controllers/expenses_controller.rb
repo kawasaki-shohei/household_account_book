@@ -22,7 +22,7 @@ class ExpensesController < ApplicationController
   end
 
   def new
-    set_expenses_categories
+    @categories = Category.ones_categories(current_user, partner)
   end
 
 
@@ -101,7 +101,8 @@ class ExpensesController < ApplicationController
     end
 
     def set_expenses_categories
-      @categories = Category.where(user_id: current_user.id).or(Category.where(user_id: partner.id, common: true))
+      @categories = current_user.categories.or(partner.categories.where(common: true))
+      # @categories = Category.where(user_id: current_user.id).or(Category.where(user_id: partner.id, common: true))
     end
 
     def back_or_new

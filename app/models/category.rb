@@ -8,4 +8,7 @@ class Category < ApplicationRecord
 
   validates :kind, presence: true
 
+  def self.ones_categories(current_user, partner)
+    current_user.categories.or(partner.categories.where(common: true))
+  end
 end
