@@ -7,13 +7,29 @@
     %label{ for: 'amount' } 金額
     %div
       = form.number_field :amount, class:"form-control", required: true
-  %div.form-group
-    %label{ for: 'date' } 日付
-    %div
-      - if action_name == 'new'
-        = form.date_field :date, class:"form-control", required: true, value: Date.today
-      - elsif action_name == 'edit'
-        = form.date_field :date, class:"form-control", required: true, value: expense.date
+  - if controller.controller_name == 'repeat_expenses'
+    %div.form-group
+      %label{ for: 's_date' } 開始日
+      %div
+        - if action_name == 'new'
+          = form.date_field :date, class:"form-control", required: true, value: Date.today
+        - elsif action_name == 'edit'
+          = form.date_field :date, class:"form-control", required: true, value: expense.date
+    %div.form-group
+      %label{ for: 'e_date' } 終了日
+      %div
+        - if action_name == 'new'
+          = form.date_field :date, class:"form-control", required: true, value: Date.today
+        - elsif action_name == 'edit'
+          = form.date_field :date, class:"form-control", required: true, value: expense.date
+  - elsif controller.controller_name == 'expenses'
+    %div.form-group
+      %label{ for: 'date' } 日付
+      %div
+        - if action_name == 'new'
+          = form.date_field :date, class:"form-control", required: true, value: Date.today
+        - elsif action_name == 'edit'
+          = form.date_field :date, class:"form-control", required: true, value: expense.date
   %div.form-group
     %label{ for: 'memo' } メモ
     %div
