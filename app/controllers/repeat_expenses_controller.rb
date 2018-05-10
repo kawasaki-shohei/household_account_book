@@ -27,13 +27,18 @@ class RepeatExpensesController < ApplicationController
   end
 
   def create
-    binding.pry
     @repeat_expense = RepeatExpense.new(repeat_expense_params)
     if @repeat_expense.save
-      start_date = Date.parse(params[:repeat_expense][:s_date])
-    end_date =  Date.parse(params[:repeat_expense][:e_date]
-    date = params[:repeat_expense][:day].to_i
-      redirect_to expenses_path, notice: "出費を保存しました。#{@category.kind}: #{@expense.amount}"
+      s_date = Date.parse(params[:repeat_expense][:s_date])
+      e_date =  Date.parse(params[:repeat_expense][:e_date])
+      r_date = params[:repeat_expense][:r_date].to_i
+      (s_date..e_date).select{|d| d.day == r_date }.each do |date|
+        expense = Expense.new(expense_params)
+        expense.date = date
+        expense.repeat_expense_id = @repeat_expense.id
+        expense.save
+      end
+      redirect_to new_repeat_expense_path, notice: "繰り返し出費を保存しました。"
     else
       set_expenses_categories
       render 'index'
@@ -83,6 +88,15 @@ class RepeatExpensesController < ApplicationController
         params.require(:repeat_expense).permit(:amount, :s_date, :e_date, :r_date, :note, :category_id, :both_flg, :percent).merge(user_id: current_user.id, mypay: mypay_amount, partnerpay: partnerpay )
       else
         params.require(:repeat_expense).permit(:amount, :s_date, :e_date, :r_date, :note, :category_id, :both_flg, :percent).merge(user_id: current_user.id)
+      end
+    end
+
+    def expense_params
+      if params[:repeat_expense][:both_flg] == "true"
+        partnerpay = params[:repeat_expense][:amount].to_i - mypay_amount
+        params.require(:repeat_expense).permit(:amount, :note, :category_id, :both_flg, :percent).merge(user_id: current_user.id, mypay: mypay_amount, partnerpay: partnerpay )
+      else
+        params.require(:repeat_expense).permit(:amount, :note, :category_id, :both_flg, :percent).merge(user_id: current_user.id)
       end
     end
 

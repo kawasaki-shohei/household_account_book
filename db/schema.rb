@@ -70,7 +70,7 @@ ActiveRecord::Schema.define(version: 20180510214332) do
   end
 
   create_table "repeat_expenses", force: :cascade do |t|
-    t.integer "ramount"
+    t.integer "amount"
     t.date "s_date"
     t.date "e_date"
     t.integer "r_date"

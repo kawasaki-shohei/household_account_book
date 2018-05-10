@@ -1,7 +1,7 @@
 class CreateRepeatExpensesWithDate < ActiveRecord::Migration[5.1]
   def change
     create_table :repeat_expenses do |t|
-      t.integer :ramount
+      t.integer :amount
       t.date :s_date
       t.date :e_date
       t.integer :r_date
