@@ -1,5 +1,5 @@
 module RepeatExpensesHelper
-  def day_option
-    @day_option = 1..28
+  def r_date_option
+    @r_date_option = 1..28
   end
 end

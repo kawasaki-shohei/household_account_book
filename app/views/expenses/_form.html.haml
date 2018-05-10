@@ -23,12 +23,12 @@
         - elsif action_name == 'edit'
           = form.date_field :e_date, class:"form-control", required: true, value: expense.date
     %div.form-group
-      %label{ for: 'day' } 毎月 何日？
+      %label{ for: 'r_date' } 毎月 何日？
       %div
         - if action_name == 'new'
-          = form.date_field :day, class:"form-control", required: true
+          = form.select :r_date, r_date_option, { include_blank: true }, required: true
         - elsif action_name == 'edit'
-          = form.date_field :day, class:"form-control", required: true, value: expense.day
+          = form.select :r_date, r_date_option, { include_blank: true }, required: true, value: expense.r_date
   - elsif controller.controller_name == 'expenses'
     %div.form-group
       %label{ for: 'date' } 日付

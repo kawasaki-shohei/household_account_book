@@ -73,7 +73,7 @@ ActiveRecord::Schema.define(version: 20180510214332) do
     t.integer "ramount"
     t.date "s_date"
     t.date "e_date"
-    t.integer "date"
+    t.integer "r_date"
     t.string "note"
     t.bigint "category_id"
     t.bigint "user_id"

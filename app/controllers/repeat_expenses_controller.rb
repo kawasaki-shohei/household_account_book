@@ -32,7 +32,7 @@ class RepeatExpensesController < ApplicationController
     if @repeat_expense.save
       start_date = Date.parse(params[:repeat_expense][:s_date])
     end_date =  Date.parse(params[:repeat_expense][:e_date]
-    day = params[:repeat_expense][:day].to_i
+    date = params[:repeat_expense][:day].to_i
       redirect_to expenses_path, notice: "出費を保存しました。#{@category.kind}: #{@expense.amount}"
     else
       set_expenses_categories
@@ -80,9 +80,9 @@ class RepeatExpensesController < ApplicationController
     def repeat_expense_params
       if params[:repeat_expense][:both_flg] == "true"
         partnerpay = params[:repeat_expense][:amount].to_i - mypay_amount
-        params.require(:repeat_expense).permit(:amount, :date, :note, :category_id, :both_flg, :percent).merge(user_id: current_user.id, mypay: mypay_amount, partnerpay: partnerpay )
+        params.require(:repeat_expense).permit(:amount, :s_date, :e_date, :r_date, :note, :category_id, :both_flg, :percent).merge(user_id: current_user.id, mypay: mypay_amount, partnerpay: partnerpay )
       else
-        params.require(:repeat_expense).permit(:amount, :s_date, :e_date, :note, :category_id, :both_flg, :percent).merge(user_id: current_user.id)
+        params.require(:repeat_expense).permit(:amount, :s_date, :e_date, :r_date, :note, :category_id, :both_flg, :percent).merge(user_id: current_user.id)
       end
     end
 

@@ -4,7 +4,7 @@ class CreateRepeatExpensesWithDate < ActiveRecord::Migration[5.1]
       t.integer :ramount
       t.date :s_date
       t.date :e_date
-      t.integer :date
+      t.integer :r_date
       t.string :note
       t.references :category, foreign_key: true
       t.references :user, foreign_key: true
