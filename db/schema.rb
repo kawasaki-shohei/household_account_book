@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180505101343) do
+ActiveRecord::Schema.define(version: 20180510214332) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -73,6 +73,7 @@ ActiveRecord::Schema.define(version: 20180505101343) do
     t.integer "ramount"
     t.date "s_date"
     t.date "e_date"
+    t.integer "date"
     t.string "note"
     t.bigint "category_id"
     t.bigint "user_id"
@@ -80,8 +81,6 @@ ActiveRecord::Schema.define(version: 20180505101343) do
     t.integer "mypay"
     t.integer "partnerpay"
     t.integer "percent"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.index ["category_id"], name: "index_repeat_expenses_on_category_id"
     t.index ["user_id"], name: "index_repeat_expenses_on_user_id"
   end

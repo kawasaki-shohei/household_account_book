@@ -1,6 +1,6 @@
 -# 変数 expense, categories
 %h3 自分の出費を入力
-= form_with(model: expense, local: true, url: choose_new_or_edit) do |form|
+= form_with(model: expense, local: true) do |form|
   - if expense.errors.any?
     = render 'layouts/error', var: expense
   %div.form-group
@@ -12,16 +12,23 @@
       %label{ for: 's_date' } 開始日
       %div
         - if action_name == 'new'
-          = form.date_field :date, class:"form-control", required: true, value: Date.today
+          = form.date_field :s_date, class:"form-control", required: true, value: Date.today
         - elsif action_name == 'edit'
-          = form.date_field :date, class:"form-control", required: true, value: expense.date
+          = form.date_field :s_date, class:"form-control", required: true, value: expense.date
     %div.form-group
       %label{ for: 'e_date' } 終了日
       %div
         - if action_name == 'new'
-          = form.date_field :date, class:"form-control", required: true, value: Date.today
+          = form.date_field :e_date, class:"form-control", required: true, value: Date.today
         - elsif action_name == 'edit'
-          = form.date_field :date, class:"form-control", required: true, value: expense.date
+          = form.date_field :e_date, class:"form-control", required: true, value: expense.date
+    %div.form-group
+      %label{ for: 'day' } 毎月 何日？
+      %div
+        - if action_name == 'new'
+          = form.date_field :day, class:"form-control", required: true
+        - elsif action_name == 'edit'
+          = form.date_field :day, class:"form-control", required: true, value: expense.day
   - elsif controller.controller_name == 'expenses'
     %div.form-group
       %label{ for: 'date' } 日付

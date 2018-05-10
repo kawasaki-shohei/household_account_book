@@ -3,7 +3,7 @@ class RepeatExpensesController < ApplicationController
   before_action :check_partner
   # before_action :back_or_new, only:[:new, :both, :edit]
   before_action :set_expense, only:[:edit, :update, :destroy]
-  before_action :set_category, only:[:update, :create]
+  before_action :set_category, only:[:update]
   include CategoriesHelper
 
   def index
@@ -27,8 +27,12 @@ class RepeatExpensesController < ApplicationController
   end
 
   def create
-    @expense = Expense.new(expense_params)
-    if @expense.save
+    binding.pry
+    @repeat_expense = RepeatExpense.new(repeat_expense_params)
+    if @repeat_expense.save
+      start_date = Date.parse(params[:repeat_expense][:s_date])
+    end_date =  Date.parse(params[:repeat_expense][:e_date]
+    day = params[:repeat_expense][:day].to_i
       redirect_to expenses_path, notice: "出費を保存しました。#{@category.kind}: #{@expense.amount}"
     else
       set_expenses_categories
@@ -45,7 +49,7 @@ class RepeatExpensesController < ApplicationController
   end
 
   def update
-    if @expense.update(expense_params)
+    if @expense.update(repeat_expense_params)
       redirect_to expenses_path, notice: "出費を保存しました。#{@category.kind}: #{@expense.amount}"
     else
       render 'edit'
@@ -73,12 +77,12 @@ class RepeatExpensesController < ApplicationController
       return mypay
     end
 
-    def expense_params
-      if params[:expense][:both_flg] == "true"
-        partnerpay = params[:expense][:amount].to_i - mypay_amount
-        params.require(:expense).permit(:amount, :date, :note, :category_id, :both_flg, :percent).merge(user_id: current_user.id, mypay: mypay_amount, partnerpay: partnerpay )
+    def repeat_expense_params
+      if params[:repeat_expense][:both_flg] == "true"
+        partnerpay = params[:repeat_expense][:amount].to_i - mypay_amount
+        params.require(:repeat_expense).permit(:amount, :date, :note, :category_id, :both_flg, :percent).merge(user_id: current_user.id, mypay: mypay_amount, partnerpay: partnerpay )
       else
-        params.require(:expense).permit(:amount, :date, :note, :category_id, :both_flg, :percent).merge(user_id: current_user.id)
+        params.require(:repeat_expense).permit(:amount, :s_date, :e_date, :note, :category_id, :both_flg, :percent).merge(user_id: current_user.id)
       end
     end
 
@@ -88,7 +92,7 @@ class RepeatExpensesController < ApplicationController
 
     def back_or_new
       if params[:back]
-        @expense = RepeatExpense.new(expense_params)
+        @expense = RepeatExpense.new(repeat_expense_params)
       else
         @expense = RepeatExpense.new
       end
@@ -99,6 +103,6 @@ class RepeatExpensesController < ApplicationController
     end
 
     def set_category
-      @category = Category.find(params[:expense][:category_id])
+      @category = Category.find(params[:repeat_expense][:category_id])
     end
 end
