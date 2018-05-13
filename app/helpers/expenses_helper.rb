@@ -9,11 +9,22 @@ module ExpensesHelper
   end
 
   def choose_new_or_edit
-    if action_name == 'new' || action_name == 'both' || action_name == 'confirm'
-      confirm_expenses_path
-    elsif action_name == 'edit'
-      expense_path
+    if controller.controller_name == 'expenses'
+      if action_name == 'new' || action_name == 'both' || action_name == 'confirm'
+        url = confirm_expenses_path
+      elsif action_name == 'edit'
+        url = expense_path
+      end
     end
+
+    if controller.controller_name == 'repeat_expenses'
+      if action_name == 'new' || action_name == 'both' || action_name == 'confirm'
+        url = confirm_repeat_expenses_path
+      elsif action_name == 'edit'
+        url = repeat_expense_path
+      end
+    end
+    return url
   end
 
   def back_new_or_both(expense)

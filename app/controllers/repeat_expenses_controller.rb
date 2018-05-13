@@ -32,6 +32,8 @@ class RepeatExpensesController < ApplicationController
   end
 
   def confirm
+    @expense = RepeatExpense.new(repeat_expense_params)
+    render :new if @expense.invalid?
   end
 
   def create

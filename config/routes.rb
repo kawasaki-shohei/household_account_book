@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   resources :repeat_expenses do
     collection do
       get :both
+      post :confirm
     end
   end
 
