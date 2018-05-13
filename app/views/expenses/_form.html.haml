@@ -10,6 +10,5 @@
       = form.collection_select(:category_id, categories, :id, :kind, {}, class: 'form-control', id: 'category')
 
   = form.submit '確認', class: "btn btn-default btn-confirm"
-%div.test
-  - if action_name == 'edit'
-    =link_to '削除する', expense_path(expense.id), method: :delete, data:{confirm: "Are you sure?"}, class: 'btn btn-delete btn-delete'
+- if action_name == 'edit'
+  =link_to '削除する', expense_path(expense.id), method: :delete, data:{confirm: "Are you sure?"}, class: 'btn btn-delete btn-delete'
