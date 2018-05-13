@@ -1,6 +1,6 @@
 -# 変数 expense, categories
 %h3 自分の出費を入力
-= form_with(model: expense, local: true) do |form|
+= form_with(model: expense, local: true, url: choose_new_or_edit) do |form|
   - if expense.errors.any?
     = render 'layouts/error', var: expense
   = render 'expenses/same_form', form: form, expense: expense

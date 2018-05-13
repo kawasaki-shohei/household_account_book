@@ -20,7 +20,11 @@ Rails.application.routes.draw do
   get 'shift_months/past/:id', to: 'shift_months#past', as: :past_expense
   get 'shift_months/future/:id', to: 'shift_months#future', as: :future_expense
 
-  resources :repeat_expenses
+  resources :repeat_expenses do
+    collection do
+      get :both
+    end
+  end
 
   resources :categories do
     collection do

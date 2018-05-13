@@ -31,6 +31,9 @@ class RepeatExpensesController < ApplicationController
     @categories = Category.ones_categories(current_user, partner)
   end
 
+  def confirm
+  end
+
   def create
     @repeat_expense = RepeatExpense.new(repeat_expense_params)
     if @repeat_expense.save
