@@ -105,7 +105,7 @@ class ExpensesController < ApplicationController
         partnerpay = params[:expense][:amount].to_i - mypay_amount
         params.require(:expense).permit(:amount, :date, :note, :category_id, :both_flg, :percent).merge(user_id: current_user.id, mypay: mypay_amount, partnerpay: partnerpay )
       else
-        params.require(:expense).permit(:amount, :date, :note, :category_id, :both_flg, :percent).merge(user_id: current_user.id)
+        params.require(:expense).permit(:amount, :date, :note, :category_id, :both_flg, :percent).merge(user_id: current_user.id, repeat_expense_id: nil)
       end
     end
 
