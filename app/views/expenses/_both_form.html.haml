@@ -1,24 +1,8 @@
-
 %h3 二人の出費を入力
 = form_with(model: expense, local: true, url: choose_new_or_edit) do |form|
   - if expense.errors.any?
     = render 'layouts/error', var: expense
-
-  %div.form-group
-    %label{ for: 'amount' } 金額
-    %div
-      = form.number_field :amount, class:"form-control", required: true
-  %div.form-group
-    %label{ for: 'date' } 日付
-    %div
-      - if action_name == 'both'
-        = form.date_field :date, class:"form-control", required: true, value: Date.today
-      - elsif action_name == 'edit'
-        = form.date_field :date, class:"form-control", required: true, value: expense.date
-  %div.form-group
-    %label{ for: 'memo' } メモ
-    %div
-      = form.text_field :note, class:"form-control"
+  = render 'expenses/same_form', form: form, expense: expense
   %div.form-group
     %label{ for: 'category' } カテゴリ
     %div

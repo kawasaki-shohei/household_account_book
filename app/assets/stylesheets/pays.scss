@@ -15,16 +15,7 @@ table.table.pay {
   }
 }
 
-select#pay_date_1i {
-    border: 1px solid #ced4da;
-    border-radius: 0.25rem;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-    font-size: 1.2rem;
-    background-color: #fff;
-    padding: 10px;
-}
-
-select#pay_date_2i {
+select#pay_date_1i, select#pay_date_2i  {
     border: 1px solid #ced4da;
     border-radius: 0.25rem;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;

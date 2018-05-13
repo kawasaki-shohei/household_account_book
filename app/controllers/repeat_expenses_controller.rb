@@ -18,7 +18,12 @@ class RepeatExpensesController < ApplicationController
   end
 
   def both
-    common_categories
+    if params[:back]
+      @expense = Expense.new(expense_params)
+    else
+      @expense = Expense.new
+    end
+    @common_categories = common_categories
   end
 
   def new
