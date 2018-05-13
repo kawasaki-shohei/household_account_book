@@ -9,14 +9,14 @@
       - if action_name == 'new' || action_name == 'both'
         = form.date_field :s_date, class:"form-control", required: true, value: Date.today
       - elsif action_name == 'edit'
-        = form.date_field :s_date, class:"form-control", required: true, value: expense.date
+        = form.date_field :s_date, class:"form-control", required: true, value: expense.s_date
   %div.form-group
     %label{ for: 'e_date' } 終了日
     %div
       - if action_name == 'new' || action_name == 'both'
         = form.date_field :e_date, class:"form-control", required: true, value: Date.today
       - elsif action_name == 'edit'
-        = form.date_field :e_date, class:"form-control", required: true, value: expense.date
+        = form.date_field :e_date, class:"form-control", required: true, value: expense.e_date
   %div.form-group
     %label{ for: 'r_date' } 毎月 何日？
     %div

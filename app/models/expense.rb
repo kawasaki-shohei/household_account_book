@@ -70,5 +70,21 @@ class Expense < ApplicationRecord
     current_user.expenses.last_month.both_t.sum(:mypay) + partner.expenses.last_month.both_t.sum(:partnerpay) - current_user.expenses.last_month.both_t.sum(:amount)
   end
 
+  def create_new_expenses
+  end
+
+  def update_repeat_expense(repeat_expense)
+    today = Date.today
+    if today > repeat_expense.e_date
+      old_records = user.expenses.where('repeat_expense_id = ? AND date >= ?', repeat_expense.id, today)
+      old_records.destroy_all
+      (Date.today..repeat_expense.e_date).select{|d| d.day == repeat_expense.r_date }.each do |date|
+
+      end
+
+    elsif Date.tody < repeat_expense.e_date
+
+    end
+  end
 
 end

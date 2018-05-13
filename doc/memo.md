@@ -186,5 +186,8 @@ https://qiita.com/ryounagaoka/items/97bacfda75b9fd7e050b
 html2haml app/views/layouts/application.html.erb application.html.haml
 
 ■repeat_expensesのconfirm実装
+→ok
+
+■やっぱり開始日が今日より過去日でも入力されるように。でもまずは、入力できるようにロジックを組む。
 
 ■expense updateの時にrepeat_expense_idをnilにする

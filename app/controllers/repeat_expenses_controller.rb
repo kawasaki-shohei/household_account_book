@@ -1,9 +1,6 @@
 class RepeatExpensesController < ApplicationController
   before_action :check_logging_in
   before_action :check_partner
-  # before_action :back_or_new, only:[:new, :both, :edit]
-  before_action :set_expense, only:[:edit, :update, :destroy]
-  before_action :set_category, only:[:update]
   include CategoriesHelper
 
   def index
@@ -38,9 +35,9 @@ class RepeatExpensesController < ApplicationController
   def create
     @repeat_expense = RepeatExpense.new(repeat_expense_params)
     if @repeat_expense.save
-      s_date = Date.parse(params[:repeat_expense][:s_date])
-      e_date = Date.parse(params[:repeat_expense][:e_date])
-      r_date = params[:repeat_expense][:r_date].to_i
+      s_date = @repeat_expense.s_date
+      e_date = @repeat_expense.e_date
+      r_date = @repeat_expense.r_date
       (s_date..e_date).select{|d| d.day == r_date }.each do |date|
         expense = Expense.new(expense_params)
         expense.date = date
@@ -64,11 +61,30 @@ class RepeatExpensesController < ApplicationController
   end
 
   def update
-    if @expense.update(repeat_expense_params)
-      redirect_to expenses_path, notice: "出費を保存しました。#{@category.kind}: #{@expense.amount}"
+    @repeat_expense = RepeatExpense.find(params[:id])
+    old_s_date = @repeat_expense.s_date
+    old_e_date = @repeat_expense.e_date
+    old_r_date = @repeat_expense.r_date
+    if @repeat_expense.update(repeat_expense_params)
+      Expense.update_repeat_expense()
+      redirect_to repeat_expenses_path, notice: "繰り返し出費を編集しました。"
     else
       render 'edit'
     end
+      (Date.today..@expense.e_date).select{|d| d.day == @expense.r_date }.each do |date|
+      end
+      # if @expense.s_date < old_s_date
+      #   create
+      # elsif @expense.s_date > old_s_date
+      #   destroy
+      # end
+      # if @expense.e_date > old_e_date
+      #   create
+      # elsif @expense.e_date < old_e_date
+      #   destroy
+      # end
+
+
   end
 
   def destroy
@@ -112,21 +128,5 @@ class RepeatExpensesController < ApplicationController
 
     def set_expenses_categories
       @categories = Category.where(user_id: current_user.id).or(Category.where(user_id: partner.id, common: true))
-    end
-
-    def back_or_new
-      if params[:back]
-        @expense = RepeatExpense.new(repeat_expense_params)
-      else
-        @expense = RepeatExpense.new
-      end
-    end
-
-    def set_expense
-      @expense = Expense.find(params[:id])
-    end
-
-    def set_category
-      @category = Category.find(params[:repeat_expense][:category_id])
     end
 end
