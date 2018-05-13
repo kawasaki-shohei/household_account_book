@@ -70,21 +70,30 @@ class Expense < ApplicationRecord
     current_user.expenses.last_month.both_t.sum(:mypay) + partner.expenses.last_month.both_t.sum(:partnerpay) - current_user.expenses.last_month.both_t.sum(:amount)
   end
 
-  def create_new_expenses
+  def self.creat_repeat_expenses(s_date, r_date, e_date, repeat_expense, expense_params)
+    (s_date..e_date).select{|d| d.day == r_date }.each do |date|
+      expense = Expense.new(expense_params)
+      expense.date = date
+      expense.repeat_expense_id = repeat_expense.id
+      expense.save
   end
 
-  def update_repeat_expense(repeat_expense)
+  def self.update_repeat_expense(repeat_expense, expense_params)
     today = Date.today
-    if today > repeat_expense.e_date
-      old_records = user.expenses.where('repeat_expense_id = ? AND date >= ?', repeat_expense.id, today)
+    s_date = repeat_expense.s_date
+    e_date = repeat_expense.e_date
+    r_date = repeat_expense.r_date
+    if today < s_date
+      old_records = user.expenses.where(repeat_expense_id: repeat_expense.id)
       old_records.destroy_all
-      (Date.today..repeat_expense.e_date).select{|d| d.day == repeat_expense.r_date }.each do |date|
-
-      end
-
-    elsif Date.tody < repeat_expense.e_date
-
+      creat_repeat_expenses(s_date, r_date, e_date, repeat_expense, expense_params)
+    elsif today > e_date
+      old_records = user.expenses.where('repeat_expense_id = ? AND date > ?', repeat_expense.id, e_date)
+      old_records.destroy_all
+    elsif today > s_date && today < e_date
+      
     end
+
   end
 
 end

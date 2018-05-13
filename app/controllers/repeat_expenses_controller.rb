@@ -38,12 +38,7 @@ class RepeatExpensesController < ApplicationController
       s_date = @repeat_expense.s_date
       e_date = @repeat_expense.e_date
       r_date = @repeat_expense.r_date
-      (s_date..e_date).select{|d| d.day == r_date }.each do |date|
-        expense = Expense.new(expense_params)
-        expense.date = date
-        expense.repeat_expense_id = @repeat_expense.id
-        expense.save
-      end
+      Expense.creat_repeat_expenses(s_date, r_date, e_date, @repeat_expense, expense_params)
       redirect_to repeat_expenses_path, notice: "繰り返し出費を保存しました。"
     else
       @categories = Category.ones_categories(current_user, partner)
