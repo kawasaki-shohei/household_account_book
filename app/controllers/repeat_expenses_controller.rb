@@ -19,15 +19,19 @@ class RepeatExpensesController < ApplicationController
 
   def both
     if params[:back]
-      @expense = Expense.new(expense_params)
+      @expense = RepeatExpense.new(repeat_expense_params)
     else
-      @expense = Expense.new
+      @expense = RepeatExpense.new
     end
     @common_categories = common_categories
   end
 
   def new
-    @expense = RepeatExpense.new
+    if params[:back]
+      @expense = RepeatExpense.new(repeat_expense_params)
+    else
+      @expense = RepeatExpense.new
+    end
     @categories = Category.ones_categories(current_user, partner)
   end
 
@@ -40,7 +44,7 @@ class RepeatExpensesController < ApplicationController
     @repeat_expense = RepeatExpense.new(repeat_expense_params)
     if @repeat_expense.save
       s_date = Date.parse(params[:repeat_expense][:s_date])
-      e_date =  Date.parse(params[:repeat_expense][:e_date])
+      e_date = Date.parse(params[:repeat_expense][:e_date])
       r_date = params[:repeat_expense][:r_date].to_i
       (s_date..e_date).select{|d| d.day == r_date }.each do |date|
         expense = Expense.new(expense_params)
@@ -78,8 +82,8 @@ class RepeatExpensesController < ApplicationController
 
   private
     def mypay_amount
-      whole_payment = params[:expense][:amount].to_i
-      case params[:expense][:percent].to_i
+      whole_payment = params[:repeat_expense][:amount].to_i
+      case params[:repeat_expense][:percent].to_i
       when 1
         mypay = (whole_payment / 2).round
       when 2
