@@ -27,9 +27,9 @@ class Expense < ApplicationRecord
     user.expenses.this_month.both_t.newer
   end
 
-  def self.partner_expenses_of_both(partner)
-    partner.expenses.this_month.both_t.newer
-  end
+  # def self.partner_expenses_of_both(partner)
+  #   partner.expenses.this_month.both_t.newer
+  # end
 
   def self.must_pay_this_month(current_user, partner)
     current_user.expenses.this_month.both_t.sum(:mypay) + partner.expenses.this_month.both_t.sum(:partnerpay)
@@ -54,7 +54,7 @@ class Expense < ApplicationRecord
   def self.category_expense(current_user, partner, cnum, category)
     current_user_expenses = ShiftMonth.ones_expenses(current_user, cnum).category(category.id)
     current_user_expenses_of_both = ShiftMonth.ones_expenses_of_both(current_user, cnum).category(category.id)
-    partner_expenses_of_both = ShiftMonth.partner_expenses_of_both(partner, cnum).category(category.id)
+    partner_expenses_of_both = ShiftMonth.ones_expenses_of_both(partner, cnum).category(category.id)
     both_sum = ShiftMonth.must_pay_one_month_one_category(current_user, partner, cnum, category)
 
     return current_user_expenses, current_user_expenses_of_both, partner_expenses_of_both, both_sum

@@ -12,11 +12,11 @@ class ShiftMonth < ApplicationRecord
     user.expenses.one_month(begging_of_one_month, end_of_one_month).both_t.newer
   end
 
-  def self.partner_expenses_of_both(partner, cnum)
-    begging_of_one_month = which_month_expense(cnum)[0]
-    end_of_one_month = which_month_expense(cnum)[1]
-    partner.expenses.one_month(begging_of_one_month, end_of_one_month).both_t.newer
-  end
+  # def self.partner_expenses_of_both(partner, cnum)
+  #   begging_of_one_month = which_month_expense(cnum)[0]
+  #   end_of_one_month = which_month_expense(cnum)[1]
+  #   partner.expenses.one_month(begging_of_one_month, end_of_one_month).both_t.newer
+  # end
 
   def self.must_pay_one_month(current_user, partner, cnum)
     begging_of_one_month = which_month_expense(cnum)[0]

@@ -1,5 +1,9 @@
 %div.expense_date
-  = expense.date.strftime("%Y/%m/%d(%a)")
+  - if controller.controller_name == 'expenses'
+    = expense.date.strftime("%Y/%m/%d(%a)")
+  - elsif controller.controller_name == 'repeat_expenses'
+    #{expense.s_date.strftime("%Y/%m/%d(%a)")} 〜 #{expense.e_date.strftime("%Y/%m/%d(%a)")}
+    %span#r_date 毎月 #{expense.r_date}日
 %div
   %span.amount ¥#{number_with_delimiter(expense.amount, delimiter: ",")}
   - if flg == "mine"

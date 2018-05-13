@@ -9,6 +9,7 @@ class User < ApplicationRecord
   validates :password, presence: true, length: { minimum: 6 }
 
   has_many :expenses, dependent: :destroy
+  has_many :repeat_expenses, dependent: :destroy
   has_many :badgets, dependent: :destroy
   has_many :categories, dependent: :destroy
   has_many :pays, dependent: :destroy

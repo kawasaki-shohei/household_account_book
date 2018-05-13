@@ -7,14 +7,9 @@ class RepeatExpensesController < ApplicationController
   include CategoriesHelper
 
   def index
-    @cnum = 0
-    @current_user_expenses = Expense.ones_expenses(current_user)
-    @current_user_expenses_of_both = Expense.ones_expenses_of_both(current_user)
-    @partner_expenses_of_both = Expense.ones_expenses_of_both(partner)
-    @sum = @current_user_expenses.sum(:amount)
-    @both_sum = Expense.must_pay_this_month(current_user, partner)
-    @category_sums = Expense.category_sums(@current_user_expenses, @current_user_expenses_of_both, @partner_expenses_of_both)
-    @category_badgets = current_user.badgets
+    @current_user_expenses = RepeatExpense.ones_expenses(current_user)
+    @current_user_expenses_of_both = RepeatExpense.ones_expenses_of_both(current_user)
+    @partner_expenses_of_both = RepeatExpense.ones_expenses_of_both(partner)
   end
 
   def both
@@ -52,18 +47,19 @@ class RepeatExpensesController < ApplicationController
         expense.repeat_expense_id = @repeat_expense.id
         expense.save
       end
-      redirect_to new_repeat_expense_path, notice: "繰り返し出費を保存しました。"
+      redirect_to repeat_expenses_path, notice: "繰り返し出費を保存しました。"
     else
-      set_expenses_categories
+      @categories = Category.ones_categories(current_user, partner)
       render 'index'
     end
   end
 
   def edit
+    @expense = RepeatExpense.find(params[:id])
     if @expense.both_flg == false
-      set_expenses_categories
+      @categories = Category.ones_categories(current_user, partner)
     else
-      common_categories
+      @common_categories = common_categories
     end
   end
 

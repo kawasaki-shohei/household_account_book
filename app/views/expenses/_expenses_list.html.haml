@@ -1,42 +1,8 @@
-%div.expense_month
-  = link_to '前月', past_expense_path(cnum), class: 'btn btn-default choose_month'
-  - if cnum == 0
-    = Date.today.strftime("%Y年%m月")
-  - elsif cnum < 0
-    = Date.today.months_ago(cnum.abs).strftime("%Y年%m月")
-  - elsif cnum > 0
-    = Date.today.months_since(cnum.abs).strftime("%Y年%m月")
-  = link_to '来月', future_expense_path(cnum), class: 'btn btn-default choose_month'
-
-#accordion
-  .card
-    #headingOne.card-header
-      %h5.mb-0
-        %button.btn.btn-link.collapsed{"aria-controls" => "collapseOne", "aria-expanded" => "true", "data-target" => "#collapseOne", "data-toggle" => "collapse"}
-          支出合計 ¥#{number_with_delimiter(sum + both_sum, delimiter: ",")}
-    #collapseOne.collapse{"aria-labelledby" => "headingOne", "data-parent" => "#accordion"}
-      .card-body
-        - category_sums.each do |key, value|
-          - category = Category.find(key).kind
-          %div
-            = link_to each_category_expense_path(key, cnum), remote: true, anchor: "accordion", class: "btn btn-category_expense btn-lg btn-block"  do
-              = category
-              %span.details
-                ¥#{number_with_delimiter(value, delimiter: ",")}
-
-  .card
-    #headingTwo.card-header
-      %h5.mb-0
-        %button.btn.btn-link.collapsed{"aria-controls" => "collapseTwo", "aria-expanded" => "true", "data-target" => "#collapseTwo", "data-toggle" => "collapse"}
-          カテゴリ別予算残金
-    #collapseTwo.collapse{"aria-labelledby" => "headingTwo", "data-parent" => "#accordion"}
-      .card-body
-        - category_badgets.each do |badget|
-          - category = Category.find(badget.category_id)
-          %div
-            = category.kind
-            %span.details
-              ¥#{number_with_delimiter(category_balance(badget, category, current_user_expenses, current_user_expenses_of_both, partner_expenses_of_both), delimiter: ",")}
+- if controller.controller_name == 'repeat_expenses'
+  = link_to '自分の繰返し出費の追加', new_repeat_expense_path, class: "btn btn-default block"
+  %br
+  = link_to '二人の繰返し出費の追加', both_repeat_expenses_path, class: "btn btn-default block"
+  %br
 
 #category_expense
   / Nav tabs
@@ -48,26 +14,38 @@
   / Tab panes
   #pills-tabContent.tab-content
     #both.tab-pane.fade.show.active{"aria-labelledby" => "both-tab", :role => "tabpanel"}
-      %div.expense_sum
-        支払い合計
-        %span.expense_sum_detail ¥#{number_with_delimiter(both_sum, delimiter: ",")}
+      - if controller.controller_name == 'expenses'
+        %div.expense_sum
+          支払い合計
+          %span.expense_sum_detail ¥#{number_with_delimiter(both_sum, delimiter: ",")}
       .both_list #{current_user.name}の出費
       - current_user_expenses_of_both.each do |expense|
         %div.each_expense
-          = link_to edit_expense_path(expense.id) do
-            - flg = "both"
-            = render 'expenses/display_expenses', expense: expense, flg: flg
+          - if controller.controller_name == 'expenses'
+            = link_to edit_expense_path(expense.id) do
+              - flg = "both"
+              = render 'expenses/display_expenses', expense: expense, flg: flg
+          - elsif controller.controller_name == 'repeat_expenses'
+            = link_to edit_repeat_expense_path(expense.id) do
+              - flg = "both"
+              = render 'expenses/display_expenses', expense: expense, flg: flg
       .both_list.partner #{partner.name}の出費
       - partner_expenses_of_both.each do |expense|
         %div.each_partner_expense
           - flg = "both"
           = render 'expenses/display_expenses', expense: expense, flg: flg
     #mine.tab-pane.fade{"aria-labelledby" => "mine-tab", :role => "tabpanel"}
-      %div.expense_sum
-        支払い合計
-        %span.expense_sum_detail ¥#{number_with_delimiter(sum, delimiter: ",")}
+      - if controller.controller_name == 'expenses'
+        %div.expense_sum
+          支払い合計
+          %span.expense_sum_detail ¥#{number_with_delimiter(sum, delimiter: ",")}
       - current_user_expenses.each do |expense|
         %div.each_expense
-          = link_to edit_expense_path(expense.id) do
-            - flg = "mine"
-            = render 'expenses/display_expenses', expense: expense, flg: flg
+          - if controller.controller_name == 'expenses'
+            = link_to edit_expense_path(expense.id) do
+              - flg = "mine"
+              = render 'expenses/display_expenses', expense: expense, flg: flg
+          - elsif controller.controller_name == 'repeat_expenses'
+            = link_to edit_repeat_expense_path(expense.id) do
+              - flg = "mine"
+              = render 'expenses/display_expenses', expense: expense, flg: flg
