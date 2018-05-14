@@ -15,6 +15,21 @@
   - if action_name == 'new' || action_name == 'both'
     = form.submit '確認', class: "btn btn-default btn-confirm"
   - elsif action_name == 'edit'
-    = form.submit '送信', class: "btn btn-default btn-confirm", data:{confirm: "Are you sure?"}
+    - if controller.controller_name == 'expenses'
+      = form.submit '送信', class: "btn btn-default btn-confirm", data:{confirm: "Are you sure?"}
+    - if controller.controller_name == 'repeat_expenses'
+      更新は実装中
+      %br
+      %br
+      %br
 - if action_name == 'edit'
-  =link_to '削除する', expense_path(expense.id), method: :delete, data:{confirm: "Are you sure?"}, class: 'btn btn-delete btn-delete'
+  - if controller.controller_name == 'expenses'
+    =link_to '削除する', expense_path(expense.id), method: :delete, data:{confirm: "Are you sure?"}, class: 'btn btn-delete btn-delete'
+  - if controller.controller_name == 'repeat_expenses'
+    =link_to '削除する', repeat_expense_path(expense.id), method: :delete, data:{confirm: "Are you sure?"}, class: 'btn btn-delete btn-delete'
+    .causion
+      この繰返し出費の今月分以降のものは削除できます。
+    :css
+      .causion {
+        color: red;
+      }

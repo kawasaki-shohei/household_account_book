@@ -79,8 +79,11 @@ class Expense < ApplicationRecord
     end
   end
 
-  def self.update_repeat_expense(repeat_expense, expense_params)
+  def self.update_repeat_expense(old, repeat_expense, expense_params)
     today = Date.today
+    old_s_date = old.s_date
+    old_e_date = old.e_date
+    old_r_date = old.r_date
     s_date = repeat_expense.s_date
     e_date = repeat_expense.e_date
     r_date = repeat_expense.r_date
@@ -91,10 +94,14 @@ class Expense < ApplicationRecord
     elsif today > e_date
       old_records = user.expenses.where('repeat_expense_id = ? AND date > ?', repeat_expense.id, e_date)
       old_records.destroy_all
-    elsif today > s_date && today < e_date
-      
-    end
+    # elsif today > s_date && today < e_date
 
+    end
+  end
+
+  def self.destroy_repeat_expenses(user, repeat_expense_id)
+    expenses = user.expenses.where('repeat_expense_id = ? AND date >= ?', repeat_expense_id, Date.today.beginning_of_month)
+    expenses.destroy_all
   end
 
 end

@@ -139,14 +139,27 @@ https://qiita.com/akiko-pusu/items/305e291465d6aac04bf3
 でcsv出力。rootディレクトリ直下に保存される
 4. cat ファイル名で中身を確認できる
 
-heroku pg:psql -c "\copy (select * from badgets) to badgets.csv with csv header"
+```rb
+tables = [Badget, Category, Expense]
+tables.each do |table|
+  table.destroy_all
+end
+```
 
-ActiveRecord::Base.connection.execute("SELECT setval('expenses_id_seq', coalesce((SELECT MAX(id)+1 FROM expenses), 1), false)")
+heroku pg:psql -c "\copy (select * from badgets) to db/badgets.csv with csv header"
+heroku pg:psql -c "\copy (select * from categories) to db/categories.csv with csv header"
+heroku pg:psql -c "\copy (select * from expenses) to db/expenses.csv with csv header"
+heroku pg:psql -c "\copy (select * from pays) to db/pays.csv with csv header"
+
 
 ■idのクリア
+```rb
 ActiveRecord::Base.connection.tables.each do |t|
   ActiveRecord::Base.connection.reset_pk_sequence!(t)
 end
+
+ActiveRecord::Base.connection.execute("SELECT setval('expenses_id_seq', coalesce((SELECT MAX(id)+1 FROM expenses), 1), false)")
+```
 
 ■shift_moneth
 category_ids.nil? category_ids.present? 両方falseになってしまう。

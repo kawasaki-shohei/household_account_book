@@ -57,34 +57,20 @@ class RepeatExpensesController < ApplicationController
 
   def update
     @repeat_expense = RepeatExpense.find(params[:id])
-    old_s_date = @repeat_expense.s_date
-    old_e_date = @repeat_expense.e_date
-    old_r_date = @repeat_expense.r_date
+    old = @repeat_expense
     if @repeat_expense.update(repeat_expense_params)
-      Expense.update_repeat_expense()
+      Expense.update_repeat_expense(old, @repeat_expense, expense_params)
       redirect_to repeat_expenses_path, notice: "繰り返し出費を編集しました。"
     else
       render 'edit'
     end
-      (Date.today..@expense.e_date).select{|d| d.day == @expense.r_date }.each do |date|
-      end
-      # if @expense.s_date < old_s_date
-      #   create
-      # elsif @expense.s_date > old_s_date
-      #   destroy
-      # end
-      # if @expense.e_date > old_e_date
-      #   create
-      # elsif @expense.e_date < old_e_date
-      #   destroy
-      # end
-
-
   end
 
   def destroy
-    @expense.destroy
-    redirect_to expenses_path, notice: "削除しました"
+    @repeat_expense = RepeatExpense.find(params[:id])
+    Expense.destroy_repeat_expenses(current_user, @repeat_expense.id)
+    @repeat_expense.destroy
+    redirect_to repeat_expenses_path, notice: "削除しました"
   end
 
   private
