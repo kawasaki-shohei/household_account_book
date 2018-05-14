@@ -1,7 +1,5 @@
 class DropAndCreateRepeatExpenses < ActiveRecord::Migration[5.1]
   def change
-    remove_column :expenses, :repeat_expense_id
-    drop_table :repeat_expenses
     create_table :repeat_expenses do |t|
       t.integer :amount
       t.date :s_date
