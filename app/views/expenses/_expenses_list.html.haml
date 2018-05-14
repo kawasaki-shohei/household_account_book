@@ -41,7 +41,7 @@
           %span.expense_sum_detail ¥#{number_with_delimiter(sum, delimiter: ",")}
       - current_user_expenses.each do |expense|
         %div.each_expense
-          - if controller.controller_name == 'expenses'
+          - if controller.controller_name == 'expenses' || controller.controller_name == 'shift_months'
             = link_to edit_expense_path(expense.id) do
               - flg = "mine"
               = render 'expenses/display_expenses', expense: expense, flg: flg
