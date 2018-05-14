@@ -21,7 +21,7 @@
       .both_list #{current_user.name}の出費
       - current_user_expenses_of_both.each do |expense|
         %div.each_expense
-          - if controller.controller_name == 'expenses'
+          - if controller.controller_name == 'expenses' || controller.controller_name == 'shift_months'
             = link_to edit_expense_path(expense.id) do
               - flg = "both"
               = render 'expenses/display_expenses', expense: expense, flg: flg

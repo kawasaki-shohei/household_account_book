@@ -76,6 +76,7 @@ class Expense < ApplicationRecord
       expense.date = date
       expense.repeat_expense_id = repeat_expense.id
       expense.save
+    end
   end
 
   def self.update_repeat_expense(repeat_expense, expense_params)
