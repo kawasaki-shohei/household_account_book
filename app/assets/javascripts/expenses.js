@@ -1,5 +1,5 @@
 $(function(){
-  $('input:visible').eq(0).focus();
+  $('input:visible').eq(0).click();
 
   $(document).on('click', 'input#percent_checkbox', function(){
     var chk_status = $('input#percent_checkbox').prop("checked");
