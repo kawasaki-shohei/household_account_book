@@ -1,6 +1,6 @@
 %div.whole_page
   %h3 以下の内容で追加する
-  = form_with(model: @expense, local: true) do |form|
+  = form_with(model: expense, local: true) do |form|
     - if expense.errors.any?
       = render 'layouts/error', var: expense
     = form.hidden_field :amount
@@ -12,8 +12,14 @@
       = form.hidden_field :date
     = form.hidden_field :note
     = form.hidden_field :category_id
-    = form.hidden_field :percent
+    - if expense.percent == nil && expense.mypay != nil
+      = form.hidden_field :percent, value: false
+    - else
+      = form.hidden_field :percent
+    = form.hidden_field :mypay
+    = form.hidden_field :partnerpay
     = form.hidden_field :both_flg
+    
 
     .confirm_detail
       %div 金額：¥#{number_with_delimiter(expense.amount, delimiter: ",")}
@@ -41,6 +47,8 @@
     = form.hidden_field :note
     = form.hidden_field :category_id
     = form.hidden_field :percent
+    = form.hidden_field :mypay
+    = form.hidden_field :partnerpay
     = form.hidden_field :both_flg
     = form.submit '戻る', name: 'back', class: 'btn btn-back'
   -# 出費フォーム

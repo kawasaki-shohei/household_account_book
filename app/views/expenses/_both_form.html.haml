@@ -6,13 +6,38 @@
     %label{ for: 'category' } カテゴリ
     %div
       = form.collection_select(:category_id, common_categories, :id, :kind, {}, class: 'form-control', id: 'category')
-  %div
-    %div.form-group
-      %label{ for: 'percent' } 自分の割合
-      = form.select :percent, percent_selection, {}, class:'form-control', id: 'percent'
+
+  .input_percent_field
+    .custom-control.custom-checkbox
+      = form.check_box :percent, {checked: true, class: 'custom-control-input', id: 'percent_checkbox'}, true, false
+      %label.custom-control-label{for: 'percent_checkbox'}
+        割合で入力
+    .input-group.mb-3
+      .input-group-prepend
+        %label.input-group-text{:for => "percent_input" } 自分の割合
+        = form.select :percent, percent_selection, {}, class:'custom-select', id: 'percent_input'
+  
+  .input_amount_field.uneditable
+    .custom-control.custom-checkbox
+      = form.check_box :percent, {checked: false, class: 'custom-control-input', id: 'amount_checkbox'}, false, false
+      %label.custom-control-label{for: 'amount_checkbox'}
+        金額で入力
+    .input-group.mb-3
+      .input-group-prepend
+        %span.input-group-text 自分の金額
+      = form.number_field :mypay, class: "form-control", id:"maypay_input", disabled: "disabled"
+      .input-group-append
+        %span.input-group-text 円
+        
+    .input-group.mb-3
+      .input-group-prepend
+        %span.input-group-text 相手の金額
+      = form.number_field :partnerpay, class: "form-control", id:"partnerpay_input", disabled: "disabled"
+      .input-group-append
+        %span.input-group-text 円
 
   = form.hidden_field :both_flg, value: true
-  - if action_name == 'new' || action_name == 'both'
+  - if action_name == 'new' || action_name == 'both' || action_name == 'confirm'
     = form.submit '確認', class: "btn btn-default btn-confirm"
   - elsif action_name == 'edit'
     - if controller.controller_name == 'expenses'

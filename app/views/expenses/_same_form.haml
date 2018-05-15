@@ -1,7 +1,11 @@
-%div.form-group
-  %label{ for: 'amount' } 金額
-  %div
-    = form.number_field :amount, class:"form-control", required: true
+
+.input-group.mb-3
+  .input-group-prepend
+    %span.input-group-text 支払い金額
+  = form.number_field :amount, class: "form-control", required: true
+  .input-group-append
+    %span.input-group-text 円
+  
 - if controller.controller_name == 'repeat_expenses'
   %div.form-group
     %label{ for: 's_date' } 開始日

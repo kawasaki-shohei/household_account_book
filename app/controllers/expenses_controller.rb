@@ -37,7 +37,12 @@ class ExpensesController < ApplicationController
 
   def confirm
     @expense = Expense.new(expense_params)
-    render :new if @expense.invalid?
+    if @expense.invalid? && @expense.mypay != nil
+      @common_categories = common_categories
+      render :both
+    elsif @expense.invalid?
+      render :new
+    end
   end
 
   def create
@@ -101,10 +106,12 @@ class ExpensesController < ApplicationController
     end
 
     def expense_params
-      if params[:expense][:both_flg] == "true"
+      if params[:expense][:both_flg] == "true" && params[:expense][:percent] == "false"
+        params.require(:expense).permit(:amount, :date, :note, :category_id, :both_flg, :mypay, :partnerpay).merge(user_id: current_user.id, percent: nil, repeat_expense_id: nil)
+      elsif params[:expense][:both_flg] == "true"
         partnerpay = params[:expense][:amount].to_i - mypay_amount
-        params.require(:expense).permit(:amount, :date, :note, :category_id, :both_flg, :percent).merge(user_id: current_user.id, mypay: mypay_amount, partnerpay: partnerpay )
-      else
+        params.require(:expense).permit(:amount, :date, :note, :category_id, :both_flg, :percent).merge(user_id: current_user.id, mypay: mypay_amount, partnerpay: partnerpay, repeat_expense_id: nil)
+      else 
         params.require(:expense).permit(:amount, :date, :note, :category_id, :both_flg, :percent).merge(user_id: current_user.id, repeat_expense_id: nil)
       end
     end

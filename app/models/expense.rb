@@ -3,6 +3,12 @@ class Expense < ApplicationRecord
   belongs_to :user
   has_one :category
   validates :amount, :date, presence: true
+  validate :calculate_amount
+  def calculate_amount
+    if mypay != nil && partnerpay != nil && mypay + partnerpay != amount
+      errors[:base] << "入力した金額の合計が支払い金額と一致しません"
+    end
+  end
 
   end_of_this_month = Date.today.end_of_month
   beginning_of_this_month = Date.today.beginning_of_month
