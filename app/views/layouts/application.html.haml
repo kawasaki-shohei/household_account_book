@@ -18,6 +18,9 @@
               %span
                 = link_to "#{current_user.name}さん", user_path(current_user), class: "nav-top"
               %span.btn_input
+                = link_to new_expense_path, class: "nav-top" do
+                  %i.fas.fa-pencil-alt.fa-lg
+              %span.btn_input
                 = link_to root_path, class: "nav-top" do
                   %i.far.fa-edit.fa-lg
         %button.navbar-toggler{"aria-controls" => "navbarResponsive", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarResponsive", "data-toggle" => "collapse", :type => "button"}
