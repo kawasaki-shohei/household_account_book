@@ -10,7 +10,8 @@
     %span.each_expense_detail #{Category.find(expense.category_id).kind}
   - elsif flg == "both"
     %span.each_expense_detail #{Category.find(expense.category_id).kind}
-    %span.each_expense_detail (#{which_percent(expense.percent)})
+    - if expense.percent != nil
+      %span.each_expense_detail (#{which_percent(expense.percent)})
     %br
     %span.each_expense_detail #{expense.user.name}の支払い
     %span.each_expense_detail ¥#{number_with_delimiter(expense.mypay, delimiter: ",")}
