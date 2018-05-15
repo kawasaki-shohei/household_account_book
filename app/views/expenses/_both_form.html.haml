@@ -1,4 +1,4 @@
-= form_with(model: expense, local: true, url: choose_new_or_edit) do |form|
+= form_with(model: expense, local: true, url: choose_new_or_edit, id: "both_form") do |form|
   - if expense.errors.any?
     = render 'layouts/error', var: expense
   = render 'expenses/same_form', form: form, expense: expense
@@ -16,7 +16,7 @@
       .input-group-prepend
         %label.input-group-text{:for => "percent_input" } 自分の割合
         = form.select :percent, percent_selection, {}, class:'custom-select', id: 'percent_input'
-  
+
   .input_amount_field.uneditable
     .custom-control.custom-checkbox
       = form.check_box :percent, {checked: false, class: 'custom-control-input', id: 'amount_checkbox'}, false, false
@@ -25,14 +25,14 @@
     .input-group.mb-3
       .input-group-prepend
         %span.input-group-text 自分の金額
-      = form.number_field :mypay, class: "form-control", id:"maypay_input", disabled: "disabled"
+      = form.number_field :mypay, class: "form-control", id:"maypay_input", min: 0, disabled: "disabled"
       .input-group-append
         %span.input-group-text 円
-        
+
     .input-group.mb-3
       .input-group-prepend
         %span.input-group-text 相手の金額
-      = form.number_field :partnerpay, class: "form-control", id:"partnerpay_input", disabled: "disabled"
+      = form.number_field :partnerpay, class: "form-control", id:"partnerpay_input", min: 0, disabled: "disabled"
       .input-group-append
         %span.input-group-text 円
 
