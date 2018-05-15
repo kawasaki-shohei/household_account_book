@@ -48,7 +48,7 @@ class ExpensesController < ApplicationController
   def create
     @expense = Expense.new(expense_params)
     if @expense.save
-      redirect_to expenses_path, notice: "出費を保存しました。#{@category.kind}: #{@expense.amount}"
+      redirect_to expenses_path, notice: "出費を保存しました。#{@category.kind}: #{@expense.amount}円"
     else
       set_expenses_categories
       render 'index'
@@ -65,7 +65,7 @@ class ExpensesController < ApplicationController
 
   def update
     if @expense.update(expense_params)
-      redirect_to expenses_path, notice: "出費を保存しました。#{@category.kind}: #{@expense.amount}"
+      redirect_to expenses_path, notice: "出費を保存しました。#{@category.kind}: #{@expense.amount}円"
     else
       render 'edit'
     end
@@ -111,7 +111,7 @@ class ExpensesController < ApplicationController
       elsif params[:expense][:both_flg] == "true"
         partnerpay = params[:expense][:amount].to_i - mypay_amount
         params.require(:expense).permit(:amount, :date, :note, :category_id, :both_flg, :percent).merge(user_id: current_user.id, mypay: mypay_amount, partnerpay: partnerpay, repeat_expense_id: nil)
-      else 
+      else
         params.require(:expense).permit(:amount, :date, :note, :category_id, :both_flg, :percent).merge(user_id: current_user.id, repeat_expense_id: nil)
       end
     end
