@@ -150,8 +150,7 @@ heroku pg:psql -c "\copy (select * from badgets) to db/badgets.csv with csv head
 heroku pg:psql -c "\copy (select * from categories) to db/categories.csv with csv header"
 heroku pg:psql -c "\copy (select * from expenses) to db/expenses.csv with csv header"
 heroku pg:psql -c "\copy (select * from pays) to db/pays.csv with csv header"
-heroku pg:psql -c "\copy (select * from partners) to db/partners.csv with csv header"
-heroku pg:psql -c "\copy (select * from repeat_expenses) to db/repeat_expenses.csv with csv header"
+
 
 ■idのクリア
 ```rb
@@ -205,14 +204,3 @@ html2haml app/views/layouts/application.html.erb application.html.haml
 ■やっぱり開始日が今日より過去日でも入力されるように。でもまずは、入力できるようにロジックを組む。
 
 ■expense updateの時にrepeat_expense_idをnilにする
-
-■repeat_expense#update
-基本的にレコードは消さない
-・テーブルの変更
-expenses
-  1. repeat_expensesからのレコードの作成は金額やメモなどユーザーが変更可能なものはnilにする
-  2. repeat_expense_idの枝番のカラムを加えてrepeat_expensesから参照するようにする
-repeat_expenses
-  1. idとsub_idで複合主キーを作る。
-update時
-  どのカラムが変わったかによって処理を変更する必要がある

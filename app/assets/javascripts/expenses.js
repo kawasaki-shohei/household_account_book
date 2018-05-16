@@ -1,6 +1,4 @@
 $(function(){
-  $('input:visible').eq(0).focus();
-
   $(document).on('click', 'input#percent_checkbox', function(){
     var chk_status = $('input#percent_checkbox').prop("checked");
     if (chk_status ){
