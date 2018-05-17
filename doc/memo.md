@@ -215,3 +215,25 @@ repeat_expenses
   1. idとsub_idで複合主キーを作る。
 update時
   どのカラムが変わったかによって処理を変更する必要がある
+
+■map
+category_ids = (current_user_expenses.extract_category + current_user_expenses_of_both.extract_category + partner_expenses_of_both.extract_category)
+↓
+category_ids = @current_user_expenses + @current_user_expenses_of_both + @partner_expenses_of_both
+category_ids.map{|i| i.category_id}
+
+extract_categoryがいらなくなるから、処理が早くなる
+
+■インスタンスメソッド内のself.カラムの使い方
+  1. controllerで
+    @current_user_expenses = current_user.expenses
+    @partner_expenses = partner.expenses
+    みたいなのでviewに渡す。
+  2. modelでは
+    def method
+      self.col 〜〜
+    end
+    でデータを取得
+  3. viewで
+    @current_user_expenses.method
+    で取得してデータを表示できる
