@@ -12,7 +12,6 @@ class ExpensesController < ApplicationController
     @partner_expenses_of_both = Expense.ones_expenses_of_both(partner)
     @sum = @current_user_expenses.sum(:amount)
     @both_sum = Expense.must_pay_this_month(current_user, partner)
-    binding.pry
     @category_sums = Expense.category_sums(@current_user_expenses, @current_user_expenses_of_both, @partner_expenses_of_both)
     @category_badgets = current_user.badgets
   end
