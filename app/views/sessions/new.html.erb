@@ -1,7 +1,7 @@
 <div class="form-wrapper">
   <h1>Log in</h1>
 
-  <%= form_with(scope: :session, url: sessions_path) do |f| %>
+  <%= form_with(scope: :session, url: sessions_path, local: true) do |f| %>
     <div class="form-item">
       <%= f.email_field :email, placeholder: "Email Address", required: true %>
     </div>
