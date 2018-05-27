@@ -34,6 +34,7 @@ Rails.application.routes.draw do
   end
   resources :badgets
   resources :pays
+  resources :wants
 
   root to: "expenses#both"
 end

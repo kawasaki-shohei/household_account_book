@@ -237,3 +237,9 @@ extract_categoryがいらなくなるから、処理が早くなる
   3. viewで
     @current_user_expenses.method
     で取得してデータを表示できる
+
+
+■wants lists
+モデル名：want
+カラム
+| id | user_id | name | buy_flg | memo |

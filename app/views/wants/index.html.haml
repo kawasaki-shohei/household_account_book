@@ -1,0 +1,19 @@
+.container
+  %table.table
+    %tr.row
+      %th.col-xs-8 商品名
+      %th.col-xs-2 bought
+      %th.col-xs-2 delete
+    - @wants.each do |want|
+      %tr
+        %td
+          = link_to edit_want_path(want) do
+            %div #{want.name}
+            %div.want_memo #{want.memo}
+        %td
+          - if want.bought_flg == false
+            = link_to 'Bought', edit_want_path(want), class: "btn btn-default"
+          - elsif want.bought_flg == true
+            = link_to 'Not yet', class: "btn btn-default"
+        %td
+          = link_to 'Delete', want_path(want), method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-delete"

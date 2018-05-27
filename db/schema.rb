@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180513115053) do
+ActiveRecord::Schema.define(version: 20180527053750) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -96,6 +96,16 @@ ActiveRecord::Schema.define(version: 20180513115053) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  create_table "wants", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "name"
+    t.boolean "bought_flg", default: false
+    t.text "memo"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_wants_on_user_id"
+  end
+
   add_foreign_key "badgets", "categories"
   add_foreign_key "badgets", "users"
   add_foreign_key "categories", "users"
@@ -105,4 +115,5 @@ ActiveRecord::Schema.define(version: 20180513115053) do
   add_foreign_key "pays", "users"
   add_foreign_key "repeat_expenses", "categories"
   add_foreign_key "repeat_expenses", "users"
+  add_foreign_key "wants", "users"
 end
