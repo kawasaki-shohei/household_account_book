@@ -6,6 +6,7 @@ class WantsController < ApplicationController
     @wants = (current_user.wants).or(partner.wants).order(created_at: :desc)
   end
 
+ß
   def new
     @want = Want.new
   end
