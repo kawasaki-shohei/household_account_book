@@ -1,11 +1,12 @@
-.whole_page
-  %table#wants_list
-    %tr
-      %th 商品名
-      %th bought
-      %th delete
-    - @wants.each do |want|
-      %tr
+<div class="whole_page" %>
+  <table id="wants_list" %>
+    <tr>
+      <th>商品名</th>
+      <th>bought</th>
+      <th>delete</th>
+    </tr>
+    <% @wants.each do |want| %>
+      <tr>
         %td
           = link_to edit_want_path(want) do
             %div #{want.name}
