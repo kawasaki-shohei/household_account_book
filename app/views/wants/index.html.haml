@@ -11,10 +11,7 @@
             %div #{want.name}
             %div.want_memo #{want.memo}
         %td
-          - if want.bought_flg == false
-            = link_to 'Bought', edit_want_path(want), class: "btn btn-default"
-          - elsif want.bought_flg == true
-            = link_to 'Not yet', class: "btn btn-default"
+          = render 'wants/bought_button', want: want
         %td
           = link_to 'Delete', want_path(want), method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-delete"
 

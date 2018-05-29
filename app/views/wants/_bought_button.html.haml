@@ -1,0 +1,4 @@
+- if want.bought_flg == false
+  = link_to 'Bought', bought_path(want), class: "btn btn-default", data: {list_id: "#{want.id}"}, remote: true
+- elsif want.bought_flg == true
+  = link_to 'Not yet', not_yet_path(want), class: "btn btn-default", data: {list_id: "#{want.id}"}, remote: true

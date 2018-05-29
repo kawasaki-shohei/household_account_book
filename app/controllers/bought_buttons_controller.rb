@@ -1,0 +1,24 @@
+class BoughtButtonsController < ApplicationController
+  before_action :check_logging_in
+  before_action :check_partner
+
+  def bought
+    @want = Want.find(params[:id])
+    if @want.bought_flg == false
+      @want.update(bought_flg: true)
+    end
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def not_yet
+    @want = Want.find(params[:id])
+    if @want.bought_flg == true
+      @want.update(bought_flg: false)
+    end
+    respond_to do |format|
+      format.js
+    end
+  end
+end
