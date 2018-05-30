@@ -8,7 +8,7 @@ class BoughtButtonsController < ApplicationController
       @want.update(bought_flg: true)
     end
     respond_to do |format|
-      format.js
+      format.js {render :bought_buttons}
     end
   end
 
@@ -18,7 +18,7 @@ class BoughtButtonsController < ApplicationController
       @want.update(bought_flg: false)
     end
     respond_to do |format|
-      format.js
+      format.js {render :bought_buttons}
     end
   end
 end
