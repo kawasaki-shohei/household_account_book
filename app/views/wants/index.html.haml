@@ -9,9 +9,10 @@
       %tr
         %td.col-8
           = link_to edit_want_path(want) do
-            %div #{want.name}
-            %div.want_memo #{want.memo}
+            .goods_name #{want.name}
+            .want_memo #{want.memo}
         %td.col-2
           = render 'wants/bought_button', want: want
         %td.col-2
-          = link_to 'Delete', want_path(want), method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-delete"
+          = link_to want_path(want), method: :delete, data: {confirm: "Are you sure?"} do
+            %i.fas.fa-minus-circle.fa-2x

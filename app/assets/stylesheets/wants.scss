@@ -11,7 +11,18 @@ table#wants_list {
   }
   td {
     word-wrap: break-word;
-    white-space: pre-wrap;
-    max-width: 600px;
+    max-width: 18rem;
   }
+}
+
+i.fas.fa-minus-circle{
+  color: red;
+}
+
+.goods_name {
+    font-size: 2rem;
+}
+
+.want_memo {
+    color: darkgray;
 }
