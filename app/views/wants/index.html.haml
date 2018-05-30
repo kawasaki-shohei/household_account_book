@@ -1,18 +1,17 @@
-.whole_page
-  %table.table#wants_list
+.container-fluid
+  = link_to '欲しいものリストを追加', new_want_path, class: "btn btn-default block"
+  %table.row.table#wants_list
     %tr
       %th 商品名
-      %th bought
-      %th delete
+      %th Bought
+      %th Delete
     - @wants.each do |want|
       %tr
-        %td
+        %td.col-8
           = link_to edit_want_path(want) do
             %div #{want.name}
             %div.want_memo #{want.memo}
-        %td
+        %td.col-2
           = render 'wants/bought_button', want: want
-        %td
+        %td.col-2
           = link_to 'Delete', want_path(want), method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-delete"
-
-  = link_to '欲しいものリストを追加', new_want_path, class: "btn btn-default block"
