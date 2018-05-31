@@ -2,7 +2,7 @@ table#wants_list {
   table-layout: fixed;
   margin-top: 100px;
   a {
-    &:hover{
+    &:active{
       color: #333;
       text-decoration: underline;
       display: block;
@@ -12,6 +12,12 @@ table#wants_list {
   td {
     word-wrap: break-word;
     max-width: 18rem;
+  }
+}
+
+a#del_list_btn {
+  &:active {
+    background-color: transparent !important;
   }
 }
 
