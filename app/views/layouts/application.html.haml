@@ -29,14 +29,6 @@
           #navbarResponsive.collapse.navbar-collapse
             %ul.navbar-nav
               %li.nav-item
-                = link_to expenses_path, class: "nav-link" do
-                  List
-                  %span.sr-only (current)
-              %li.nav-item
-                = link_to "Both", both_expenses_path, class: "nav-link"
-              %li.nav-item
-                = link_to "Mine", new_expense_path, class: "nav-link"
-              %li.nav-item
                 = link_to "Want", wants_path, class: "nav-link"
               %li.nav-item
                 = link_to "Repeat", repeat_expenses_path, class: "nav-link"

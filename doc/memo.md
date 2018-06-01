@@ -243,3 +243,9 @@ extract_categoryがいらなくなるから、処理が早くなる
 モデル名：want
 カラム
 | id | user_id | name | buy_flg | memo |
+
+■notifications
+モデル名 Notificaion
+通知されるアクション
+  
+カラム
