@@ -245,7 +245,45 @@ extract_categoryがいらなくなるから、処理が早くなる
 | id | user_id | name | buy_flg | memo |
 
 ■notifications
-モデル名 Notificaion
-通知されるアクション
-  
-カラム
+・モデル名 Notificaion
+・通知されるアクション
+    expense#create, update, destroy (bothのみ)
+    repeat_expnese#create, update, destroy(bothのみ)
+    want#create, update, destroy
+    category#create, update
+    pay#create, update, destroy
+    controller_path
+    action_name
+・カラム
+    | id | user_id | notified_by_id | msg_id | read_flg |
+    t.boolean :read_flg, default: false
+    userはcurrent_user
+    destroyのときは消す前にdeleted_recordsテーブルにjsonでsave
+    その後notified_by_idにdeleted_records_idが付く
+
+count使って通知数を表示。controllerを作って実装
+destroyのときはレコードを消す前に移行する？
+
+■NotificationMsg
+・モデル名 NotificationMsg
+・カラム
+    | id | func | act | message |
+
+
+■deleted_records
+・モデル名 DeletedRecord
+・カラム
+    | id | record_meta |
+
+
+レコードをHashにする
+a.attributes
+
+レコードをjsonに
+.to_json
+
+jsonをhash
+JSON.parse(json)
+
+hash化された値を取り出す
+a['key']

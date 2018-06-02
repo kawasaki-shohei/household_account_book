@@ -3,6 +3,7 @@ class ExpensesController < ApplicationController
   before_action :check_partner
   before_action :set_expense, only:[:edit, :update, :destroy]
   before_action :set_category, only:[:update, :create]
+  after_action :create_notifications, only: [:update]
   include CategoriesHelper
 
   def index
