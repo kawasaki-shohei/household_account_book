@@ -277,7 +277,7 @@ createやupdateはそのidがわかったら引いてこれると思ったけど
 ■NotificationMessage
 ・モデル名 NotificationMessage
 ・カラム
-    | id | func | act | msg |
+    | id | msg_id | func | act | msg |
     create_table :notification_messages do |t|
       t.string :func
       t.string :act
@@ -308,3 +308,7 @@ JSON.parse(json)
 
 ■hash化された値を取り出す
 a['key']
+
+■毎月1日に支払い金額を通知したい
+
+notification_messagesのmsg_idカラムを追加それをprimary_keyに。notifications_helperもmsg_idを引くように
