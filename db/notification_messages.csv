@@ -1,0 +1,16 @@
+id,func,act,msg
+1,expenses,create,新しい出費を追加しました。
+2,expenses,update,出費を更新しました。
+3,expenses,destroy,出費を削除しました。
+4,repeat_expenses,create,新しい繰り返し出費を追加しました。
+5,repeat_expenses,update,繰り返し出費を更新しました。
+6,repeat_expenses,destroy,繰り返し出費を削除しました。
+7,wants,create,新しく欲しいものリストを追加しました。
+8,wants,update,欲しいものリストを更新しました。
+9,wants,destroy,欲しいものリストを削除しました。
+10,categories,create,新しいカテゴリを追加しました。
+11,categories,update,カテゴリを更新しました。
+12,categories,destroy,カテゴリを削除しました。
+13,pays,create,新しく手渡し記録を追加しました。
+14,pays,update,手渡し記録を更新しました。
+15,pays,destroy,手渡し記録を削除しました。

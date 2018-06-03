@@ -1,6 +1,7 @@
 class WantsController < ApplicationController
   before_action :check_logging_in
   before_action :check_partner
+  after_action :create_notification, only:[:create]
 
   def index
     @wants = (current_user.wants).or(partner.wants).order(created_at: :desc)
@@ -42,5 +43,13 @@ class WantsController < ApplicationController
   private
   def want_params
     params.require(:want).permit(:name, :memo).merge(user_id: current_user.id)
+  end
+
+  def create_notification
+    Notification.create(user_id: @want.user_id,
+      notification_message_id: notification_msg,
+      notified_by_id: @want.id,
+      record_meta: @want.to_json
+    )
   end
 end

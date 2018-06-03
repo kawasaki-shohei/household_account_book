@@ -255,35 +255,56 @@ extract_categoryがいらなくなるから、処理が早くなる
     controller_path
     action_name
 ・カラム
-    | id | user_id | notified_by_id | msg_id | read_flg |
-    t.boolean :read_flg, default: false
+    | id | user_id | notified_by_id | notification_message_id | record_meta | read_flg |
+    create_table :notifications do |t|
+      t.references :user, foreign_key: true
+      t.references :notification_message, foreign_key: true
+      t.integer :notified_by_id
+      t.text :record_meta, null: false
+      t.boolean :read_flg, default: false
+      t.timestamps
+    end
     userはcurrent_user
+    引いてくるのはpartnerのもの
     destroyのときは消す前にdeleted_recordsテーブルにjsonでsave
-    その後notified_by_idにdeleted_records_idが付く
+    同時に
+    その後、notified_by_idにdeleted_records_idがはいる
 
 count使って通知数を表示。controllerを作って実装
 destroyのときはレコードを消す前に移行する？
+createやupdateはそのidがわかったら引いてこれると思ったけど、変更された後にまた変更されてしまった場合、前の値まで変更された値で表示してしまうから、やっぱり通知情報もjsonで保存していったほうがいい。
 
-■NotificationMsg
-・モデル名 NotificationMsg
+■NotificationMessage
+・モデル名 NotificationMessage
 ・カラム
-    | id | func | act | message |
-
+    | id | func | act | msg |
+    create_table :notification_messages do |t|
+      t.string :func
+      t.string :act
+      t.text :msg
+    end    
 
 ■deleted_records
 ・モデル名 DeletedRecord
 ・カラム
-    | id | record_meta |
+    | id | deleted_by | table_name | record_meta |
+    create_table :deleted_records do |t|
+      t.references :user, foreign_key: true
+      t.string :table_name
+      t.text :record_meta, null: false
 
+      t.timestamps
+    end
+    rename_column :deleted_records, :user_id, :deleted_by
 
-レコードをHashにする
+■レコードをHashにする
 a.attributes
 
-レコードをjsonに
+■レコードをjsonに
 .to_json
 
-jsonをhash
+■jsonをhash
 JSON.parse(json)
 
-hash化された値を取り出す
+■hash化された値を取り出す
 a['key']

@@ -20,7 +20,7 @@
           %span.expense_sum_detail ¥#{number_with_delimiter(both_sum, delimiter: ",")}
       .both_list #{current_user.name}の出費
       - current_user_expenses_of_both.each do |expense|
-        %div.each_expense
+        %div.each_expense{id: "expense-id-#{expense.id}"}
           - if controller.controller_name == 'expenses' || controller.controller_name == 'shift_months'
             = link_to edit_expense_path(expense.id) do
               - flg = "both"

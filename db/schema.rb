@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180602010154) do
+ActiveRecord::Schema.define(version: 20180602095948) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,15 @@ ActiveRecord::Schema.define(version: 20180602010154) do
     t.index ["user_id"], name: "index_categories_on_user_id"
   end
 
+  create_table "deleted_records", force: :cascade do |t|
+    t.bigint "deleted_by"
+    t.string "table_name"
+    t.text "record_meta", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["deleted_by"], name: "index_deleted_records_on_deleted_by"
+  end
+
   create_table "expenses", force: :cascade do |t|
     t.integer "amount"
     t.date "date"
@@ -50,14 +59,21 @@ ActiveRecord::Schema.define(version: 20180602010154) do
     t.index ["repeat_expense_id"], name: "index_expenses_on_repeat_expense_id"
   end
 
-  create_table "notifications", force: :cascade do |t|
-    t.bigint "user_id"
+  create_table "notification_messages", force: :cascade do |t|
     t.string "func"
     t.string "act"
+    t.text "msg"
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "notification_message_id"
     t.integer "notified_by_id"
+    t.text "record_meta", null: false
     t.boolean "read_flg", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["notification_message_id"], name: "index_notifications_on_notification_message_id"
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
@@ -120,7 +136,9 @@ ActiveRecord::Schema.define(version: 20180602010154) do
   add_foreign_key "badgets", "categories"
   add_foreign_key "badgets", "users"
   add_foreign_key "categories", "users"
+  add_foreign_key "deleted_records", "users", column: "deleted_by"
   add_foreign_key "expenses", "repeat_expenses"
+  add_foreign_key "notifications", "notification_messages"
   add_foreign_key "notifications", "users"
   add_foreign_key "partners", "users"
   add_foreign_key "partners", "users", column: "partner_id"
