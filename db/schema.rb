@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180602095948) do
+ActiveRecord::Schema.define(version: 20180604214104) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,6 +63,8 @@ ActiveRecord::Schema.define(version: 20180602095948) do
     t.string "func"
     t.string "act"
     t.text "msg"
+    t.integer "msg_id"
+    t.index ["msg_id"], name: "index_notification_messages_on_msg_id", unique: true
   end
 
   create_table "notifications", force: :cascade do |t|

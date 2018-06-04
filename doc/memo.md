@@ -310,5 +310,9 @@ JSON.parse(json)
 a['key']
 
 ■毎月1日に支払い金額を通知したい
+→メソッドを書いておいて、herokuのコンソールから実行できるみたい
 
 notification_messagesのmsg_idカラムを追加それをprimary_keyに。notifications_helperもmsg_idを引くように
+
+
+ActiveRecord::Base.connection.execute("SELECT setval('notification_messages_id_seq', coalesce((SELECT MAX(id)+1 FROM notification_messages), 1), false)")
