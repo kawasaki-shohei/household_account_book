@@ -1,6 +1,4 @@
 class BadgetsController < ApplicationController
-  before_action :check_logging_in
-  before_action :check_partner
   before_action :set_all_categories, only:[:index, :new, :edit]
   before_action :set_badget, only: [:edit, :update]
 

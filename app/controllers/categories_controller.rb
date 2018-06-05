@@ -1,6 +1,4 @@
 class CategoriesController < ApplicationController
-  before_action :check_logging_in
-  before_action :check_partner
   before_action :set_category, only:[:edit, :update]
   before_action :set_categories, only:[:index, :common]
   include UsersHelper, CategoriesHelper

@@ -1,6 +1,4 @@
 class PaysController < ApplicationController
-  before_action :check_logging_in
-  before_action :check_partner
   before_action :set_pay, only:[:edit,:update,:destroy]
 
   def index

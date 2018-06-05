@@ -1,6 +1,4 @@
 class RepeatExpensesController < ApplicationController
-  before_action :check_logging_in
-  before_action :check_partner
   include CategoriesHelper
 
   def index

@@ -1,5 +1,6 @@
 class PartnersController < ApplicationController
-
+  skip_before_action :check_partner, only: [:new, :create]
+  
   def new
     @new_partner = Partner.new
   end

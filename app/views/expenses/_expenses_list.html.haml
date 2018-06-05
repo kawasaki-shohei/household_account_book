@@ -14,7 +14,7 @@
   / Tab panes
   #pills-tabContent.tab-content
     #both.tab-pane.fade.show.active{"aria-labelledby" => "both-tab", :role => "tabpanel"}
-      - if controller.controller_name == 'expenses'
+      - if controller.controller_name == 'expenses' || controller.controller_name == 'shift_months'
         %div.expense_sum
           支払い合計
           %span.expense_sum_detail ¥#{number_with_delimiter(both_sum, delimiter: ",")}
@@ -35,7 +35,7 @@
           - flg = "both"
           = render 'expenses/display_expenses', expense: expense, flg: flg
     #mine.tab-pane.fade{"aria-labelledby" => "mine-tab", :role => "tabpanel"}
-      - if controller.controller_name == 'expenses'
+      - if controller.controller_name == 'expenses' || controller.controller_name == 'shift_months'
         %div.expense_sum
           支払い合計
           %span.expense_sum_detail ¥#{number_with_delimiter(sum, delimiter: ",")}

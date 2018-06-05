@@ -1,6 +1,4 @@
 class ShiftMonthsController < ApplicationController
-  before_action :check_logging_in
-  before_action :check_partner
 
   def past
     @cnum = params[:id].to_i - 1

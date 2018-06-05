@@ -1,6 +1,4 @@
 class BoughtButtonsController < ApplicationController
-  before_action :check_logging_in
-  before_action :check_partner
 
   def bought
     @want = Want.find(params[:id])
