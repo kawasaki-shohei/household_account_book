@@ -34,8 +34,6 @@ gem 'jbuilder', '~> 2.5'
 
 gem 'haml'
 gem 'bcrypt', '3.1.11'
-gem 'delayed_job_active_record', '~> 4.1', '>= 4.1.3'
-gem 'daemons', '~> 1.2', '>= 1.2.6'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
