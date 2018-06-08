@@ -34,20 +34,16 @@ class WantsController < ApplicationController
 
   def destroy
     @want = Want.find(params[:id])
-    @want.destroy
-    redirect_to wants_path, notice: "新しい欲しいものリストを削除しました。"
+    if create_notification(@want)
+      @want.destroy
+      redirect_to wants_path, notice: "新しい欲しいものリストを削除しました。"
+    else
+      redirect_to wants_path, notice: "システムエラーのため削除できません"
+    end
   end
 
   private
   def want_params
     params.require(:want).permit(:name, :memo).merge(user_id: current_user.id)
-  end
-
-  def create_notification
-    Notification.create(user_id: @want.user_id,
-      notification_message_id: notification_msg,
-      notified_by_id: @want.id,
-      record_meta: @want.to_json
-    )
   end
 end

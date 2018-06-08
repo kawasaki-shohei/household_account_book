@@ -8,7 +8,10 @@ class Notification < ApplicationRecord
     case self.notification_message.func
     when "wants"
       details['商品'] = meta['name']
-    return details
+    when "expenses"
+      details['カテゴリ'] = Category.find(meta['category_id'].to_i).kind
+      details['金額'] = "#{(meta['amount'].to_i).to_s(:delimited)}円"
     end
+    return details
   end
 end
