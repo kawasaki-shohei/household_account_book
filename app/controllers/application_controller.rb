@@ -9,8 +9,18 @@ class ApplicationController < ActionController::Base
     return notification_msg_id
   end
 
+  def check_if_both_expenses(obj)
+    if controller_path == "expenses" && obj.both_flg == false
+      return true
+    elsif controller_path == "repeat_expenses" && obj.both_flg == false
+      return true
+    else
+      return false
+    end
+  end
+
   def create_notification(obj)
-    unless controller_path == 'expenses' && obj.both_flg == false
+    unless check_if_both_expenses(obj)
       Notification.create(user_id: current_user.id,
         notification_message_id: notification_msg,
         notified_by_id: obj.id,

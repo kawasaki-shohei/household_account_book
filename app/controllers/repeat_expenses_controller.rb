@@ -1,4 +1,5 @@
 class RepeatExpensesController < ApplicationController
+  after_action -> {create_notification(@repeat_expense)}, only: [:create]
   include CategoriesHelper
 
   def index
@@ -67,6 +68,7 @@ class RepeatExpensesController < ApplicationController
   def destroy
     @repeat_expense = RepeatExpense.find(params[:id])
     Expense.destroy_repeat_expenses(current_user, @repeat_expense.id)
+    create_notification(@repeat_expense)
     @repeat_expense.destroy
     redirect_to repeat_expenses_path, notice: "削除しました"
   end
