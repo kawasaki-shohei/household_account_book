@@ -6,7 +6,7 @@ class Notification < ApplicationRecord
     meta = JSON.parse(self.record_meta)
     details = Hash.new
     case self.notification_message.func
-    when "wants"
+    when "wants", "bought_buttons"
       details['商品'] = meta['name']
     when "expenses"
       details['カテゴリ'] = Category.find(meta['category_id'].to_i).kind

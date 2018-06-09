@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
 
   def create_notification(obj)
     unless controller_path == 'expenses' && obj.both_flg == false
-      Notification.create(user_id: obj.user_id,
+      Notification.create(user_id: current_user.id,
         notification_message_id: notification_msg,
         notified_by_id: obj.id,
         record_meta: obj.to_json

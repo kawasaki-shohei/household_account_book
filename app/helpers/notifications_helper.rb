@@ -25,6 +25,10 @@ module NotificationsHelper
       act = "更新"
     when "destroy"
       act = "削除"
+    when "bought"
+      act = "購入"
+    when "want"
+      act = "未購入に戻"
     end
     return act
   end

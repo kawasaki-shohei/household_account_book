@@ -315,4 +315,5 @@ a['key']
 notification_messagesのmsg_idカラムを追加それをprimary_keyに。notifications_helperもmsg_idを引くように
 →ok
 
-一連の通知処理を実装。
+bought buttonの通知機能を実装中
+notification_messages tableのmessageカラムを消去

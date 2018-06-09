@@ -9,7 +9,7 @@ id,msg_id,func,act,msg
 8,8,wants,update,欲しいものリストを更新しました。
 9,9,wants,destroy,欲しいものリストを削除しました。
 10,10,bought_buttons,bought,欲しいものリストのアイテムを購入しました。
-11,11,bought_buttons,not_yet,欲しいものリストのアイテムを未購入に戻しました。
+11,11,bought_buttons,want,欲しいものリストのアイテムを未購入に戻しました。
 12,12,categories,create,新しいカテゴリを追加しました。
 13,13,categories,update,カテゴリを更新しました。
 14,14,categories,destroy,カテゴリを削除しました。

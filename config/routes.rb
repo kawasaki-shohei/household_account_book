@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
   get 'bought_buttons/bought/:id', to: 'bought_buttons#bought', as: :bought
-  get 'bought_buttons/not_yet/:id', to: 'bought_buttons#not_yet', as: :not_yet
+  get 'bought_buttons/want/:id', to: 'bought_buttons#want', as: :want
 
   resources :sessions, only: [:new, :create, :destroy]
 
