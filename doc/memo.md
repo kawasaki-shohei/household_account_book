@@ -317,3 +317,6 @@ notification_messagesのmsg_idカラムを追加それをprimary_keyに。notifi
 
 bought buttonの通知機能を実装中
 notification_messages tableのmessageカラムを消去
+
+shiftmonthsで出費リストに日付が出ない。
+→終わったらexpenses, repeat_expenses, shiftmontsをリファクタリングして、繰り返し出費の表示を一番下に

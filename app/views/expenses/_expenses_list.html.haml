@@ -19,7 +19,7 @@
           支払い合計
           %span.expense_sum_detail ¥#{number_with_delimiter(both_sum, delimiter: ",")}
       .both_list #{current_user.name}の出費
-      - current_user_expenses_of_both.each do |expense|
+      - current_user_expenses.for_both.each do |expense|
         %div.each_expense{id: "expense-id-#{expense.id}"}
           - if controller.controller_name == 'expenses' || controller.controller_name == 'shift_months'
             = link_to edit_expense_path(expense.id) do
@@ -30,7 +30,7 @@
               - flg = "both"
               = render 'expenses/display_expenses', expense: expense, flg: flg
       .both_list.partner#partner_expenses #{partner.name}の出費
-      - partner_expenses_of_both.each do |expense|
+      - partner_expenses.for_both.each do |expense|
         %div.each_partner_expense
           - flg = "both"
           = render 'expenses/display_expenses', expense: expense, flg: flg
@@ -39,7 +39,7 @@
         %div.expense_sum
           支払い合計
           %span.expense_sum_detail ¥#{number_with_delimiter(sum, delimiter: ",")}
-      - current_user_expenses.each do |expense|
+      - current_user_expenses.for_oneself.each do |expense|
         %div.each_expense
           - if controller.controller_name == 'expenses' || controller.controller_name == 'shift_months'
             = link_to edit_expense_path(expense.id) do

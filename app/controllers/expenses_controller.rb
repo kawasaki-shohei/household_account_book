@@ -6,9 +6,11 @@ class ExpensesController < ApplicationController
 
   def index
     @cnum = 0
-    @current_user_expenses = Expense.ones_expenses(current_user)
-    @current_user_expenses_of_both = Expense.ones_expenses_of_both(current_user)
-    @partner_expenses_of_both = Expense.ones_expenses_of_both(partner)
+    # @current_user_expenses = Expense.ones_expenses(current_user)
+    @current_user_expenses = current_user.expenses
+    # @current_user_expenses_of_both = Expense.ones_expenses_of_both(current_user)
+    # @partner_expenses_of_both = Expense.ones_expenses_of_both(partner)
+    @partner_expenses = partner.expenses
     @sum = @current_user_expenses.sum(:amount)
     @both_sum = Expense.must_pay_this_month(current_user, partner)
     @category_sums = Expense.category_sums(@current_user_expenses, @current_user_expenses_of_both, @partner_expenses_of_both)
