@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+  skip_before_action :check_logging_in
+  skip_before_action :check_partner
   def new
   end
 

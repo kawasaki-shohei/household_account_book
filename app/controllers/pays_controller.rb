@@ -1,7 +1,6 @@
 class PaysController < ApplicationController
-  before_action :check_logging_in
-  before_action :check_partner
-  before_action :set_pay, only:[:edit,:update,:destroy]
+  before_action :set_pay, only:[:edit, :update, :destroy]
+  after_action -> {create_notification(@pay)}, only: [:create, :update]
 
   def index
     @pays = Pay.all_payments(current_user, partner)
@@ -32,6 +31,7 @@ class PaysController < ApplicationController
   end
 
   def destroy
+    create_notification(@pay)
     @pay.destroy
     redirect_to pays_path, notice: "手渡し料金を削除しました。"
   end

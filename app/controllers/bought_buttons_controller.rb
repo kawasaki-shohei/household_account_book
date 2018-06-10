@@ -1,7 +1,5 @@
 class BoughtButtonsController < ApplicationController
-  before_action :check_logging_in
-  before_action :check_partner
-
+  after_action -> {create_notification(@want)}
   def bought
     @want = Want.find(params[:id])
     if @want.bought_flg == false
@@ -12,7 +10,7 @@ class BoughtButtonsController < ApplicationController
     end
   end
 
-  def not_yet
+  def want
     @want = Want.find(params[:id])
     if @want.bought_flg == true
       @want.update(bought_flg: false)

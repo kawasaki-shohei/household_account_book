@@ -1,8 +1,7 @@
 class ExpensesController < ApplicationController
-  before_action :check_logging_in
-  before_action :check_partner
   before_action :set_expense, only:[:edit, :update, :destroy]
   before_action :set_category, only:[:update, :create]
+  after_action -> {create_notification(@expense)}, only: [:create, :update]
   include CategoriesHelper
 
   def index
@@ -73,6 +72,7 @@ class ExpensesController < ApplicationController
 
   def destroy
     @expense.destroy
+    create_notification(@expense)
     redirect_to expenses_path, notice: "削除しました"
   end
 

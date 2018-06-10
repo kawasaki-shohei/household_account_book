@@ -1,0 +1,24 @@
+.each_notification {
+  background-color: #ccc;
+  padding: 2vw 3vw;
+  border-bottom: 2px solid #ccc;
+  margin-bottom: 0.5rem;
+  &:active {
+  background-color: #b3b3b3;
+  }
+}
+
+.each_notification a {
+  display: block;
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.each_notification.not-yet {
+  background-color: #fff;
+}
+
+span.msg_for_func, span.msg_for_act {
+    font-weight: bold;
+}

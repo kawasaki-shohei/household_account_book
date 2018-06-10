@@ -1,6 +1,5 @@
 class WantsController < ApplicationController
-  before_action :check_logging_in
-  before_action :check_partner
+  after_action :create_notification, only:[:create, :update]
 
   def index
     @wants = (current_user.wants).or(partner.wants).order(created_at: :desc)
@@ -35,8 +34,12 @@ class WantsController < ApplicationController
 
   def destroy
     @want = Want.find(params[:id])
-    @want.destroy
-    redirect_to wants_path, notice: "新しい欲しいものリストを削除しました。"
+    if create_notification(@want)
+      @want.destroy
+      redirect_to wants_path, notice: "新しい欲しいものリストを削除しました。"
+    else
+      redirect_to wants_path, notice: "システムエラーのため削除できません"
+    end
   end
 
   private

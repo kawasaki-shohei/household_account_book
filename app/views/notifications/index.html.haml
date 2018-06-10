@@ -1,0 +1,20 @@
+.container-fluid
+  - @notifications.each do |notification|
+    - msg = notification.notification_message
+    .each_notification{:class => "#{ 'not-yet' if notification.read_flg == false }" }
+      = link_to notification_link(msg) do
+        .notification_msg
+          - if msg.func == "notifications"
+            【お知らせ】今月の手渡し料金をお知らせします。
+          - else
+            #{partner.name}さんが
+            %span.msg_for_func #{notifying_func(msg)}
+            を
+            %span.msg_for_act #{notifying_act(msg)}
+            しました。
+          - notification.details.each do |key, value|
+            %div.notification_detail #{key}: #{value}
+        %div.notification_datetime
+          = notification.created_at.strftime("%Y/%m/%d(%a)")
+    - if notification.read_flg == false
+      - notification.change_read_flg

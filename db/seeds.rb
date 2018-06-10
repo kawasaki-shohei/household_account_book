@@ -15,7 +15,12 @@ require 'csv'
 #   Expense.create!(data.to_hash)
 # end
 
-csv_data = CSV.read('db/pays.csv', headers: true)
+# csv_data = CSV.read('db/pays.csv', headers: true)
+# csv_data.each do |data|
+#   Pay.create!(data.to_hash)
+# end
+
+csv_data = CSV.read('db/notification_messages.csv', headers: true)
 csv_data.each do |data|
-  Pay.create!(data.to_hash)
+  NotificationMessage.create!(data.to_hash)
 end

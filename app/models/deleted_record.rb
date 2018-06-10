@@ -1,0 +1,2 @@
+class DeletedRecord < ApplicationRecord
+end

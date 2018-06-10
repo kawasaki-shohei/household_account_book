@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  func: MyString
+  act: MyString
+  read_flg: false
+
+two:
+  user: two
+  func: MyString
+  act: MyString
+  read_flg: false
