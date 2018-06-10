@@ -16,3 +16,4 @@ id,msg_id,func,act,msg
 15,15,pays,create,新しく手渡し記録を追加しました。
 16,16,pays,update,手渡し記録を更新しました。
 17,17,pays,destroy,手渡し記録を削除しました。
+18,18,notification,payment

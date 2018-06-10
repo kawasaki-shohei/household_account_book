@@ -8,7 +8,7 @@
       - elsif @my_last_payment > 0
         #{number_with_delimiter(@my_last_payment.abs, delimiter: ",")} 円渡す
       - else @my_last_payment == 0
-        ¥0
+        0 円
   %div.panel.panel-default
     %div.panel-heading
       今月分の自分が手渡す金額
