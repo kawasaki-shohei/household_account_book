@@ -1,5 +1,5 @@
 class WantsController < ApplicationController
-  after_action :create_notification, only:[:create, :update]
+  after_action -> {create_notification(@want)}, only:[:create, :update]
 
   def index
     @wants = (current_user.wants).or(partner.wants).order(created_at: :desc)
