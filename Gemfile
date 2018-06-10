@@ -33,6 +33,9 @@ gem 'jbuilder', '~> 2.5'
 # gem 'capistrano-rails', group: :development
 
 gem 'haml'
+gem 'daemons', '~> 1.2', '>= 1.2.6'
+gem 'delayed_job_active_record', '~> 4.1', '>= 4.1.3'
+
 gem 'bcrypt', '3.1.11'
 
 group :development, :test do
