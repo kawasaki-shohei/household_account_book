@@ -29,7 +29,7 @@
             = link_to edit_repeat_expense_path(expense.id) do
               - flg = "both"
               = render 'expenses/display_expenses', expense: expense, flg: flg
-      .both_list.partner #{partner.name}の出費
+      .both_list.partner#partner_expenses #{partner.name}の出費
       - partner_expenses_of_both.each do |expense|
         %div.each_partner_expense
           - flg = "both"

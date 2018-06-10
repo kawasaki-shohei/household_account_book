@@ -24,7 +24,10 @@
                 = link_to root_path, class: "nav-top" do
                   %i.far.fa-edit.fa-lg
               %span.btn_input
-                = link_to "#{partner.notifications.where(read_flg: false).count}", notifications_path, class: "nav-top", id: "notification_btn"
+                - if @notification_count.present?
+                  = link_to @notification_count, notifications_path, class: "nav-top", id: "notification_btn"
+                -else
+                  = link_to "#{partner.notifications.where(read_flg: false).count}", notifications_path, class: "nav-top", id: "notification_btn"
         %button.navbar-toggler{"aria-controls" => "navbarResponsive", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarResponsive", "data-toggle" => "collapse", :type => "button"}
           %span.navbar-toggler-icon
         - if logged_in?

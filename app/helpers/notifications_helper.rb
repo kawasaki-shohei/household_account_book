@@ -32,4 +32,19 @@ module NotificationsHelper
     end
     return act
   end
+
+  def notification_link(msg)
+    case msg.func
+    when "expenses"
+      expenses_path(anchor: :partner_expenses)
+    when "repeat_expenses"
+      repeat_expenses_path
+    when "wants", "bought_buttons"
+      wants_path
+    when "categories"
+      categories_path
+    when "pays"
+      pays_path
+    end
+  end
 end
