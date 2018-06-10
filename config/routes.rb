@@ -1,8 +1,5 @@
 Rails.application.routes.draw do
 
-  get 'bought_buttons/bought/:id', to: 'bought_buttons#bought', as: :bought
-  get 'bought_buttons/want/:id', to: 'bought_buttons#want', as: :want
-
   resources :sessions, only: [:new, :create, :destroy]
 
   resources :users
@@ -41,6 +38,9 @@ Rails.application.routes.draw do
   resources :badgets
   resources :pays
   resources :wants
+
+  get 'bought_buttons/bought/:id', to: 'bought_buttons#bought', as: :bought
+  get 'bought_buttons/want/:id', to: 'bought_buttons#want', as: :back_to_want
 
   root to: "expenses#both"
 end
