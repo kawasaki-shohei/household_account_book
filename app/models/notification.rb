@@ -13,6 +13,9 @@ class Notification < ApplicationRecord
       details['金額'] = "#{(meta['amount'].to_i).to_s(:delimited)}円"
     when "categories"
       details['カテゴリ名'] = meta['kind']
+    when "pays"
+      details['該当月'] = Date.parse(meta['date']).strftime("%Y年%m月")
+      details['金額'] = "#{(meta['pamount'].to_i).to_s(:delimited)}円"
     end
     return details
   end

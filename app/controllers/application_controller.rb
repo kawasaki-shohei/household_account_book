@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
     return notification_msg_id
   end
 
-  def check_if_for_partner(obj)
+  def check_need_notify(obj)
     if controller_path == "expenses" && obj.both_flg == false
       return true
     elsif controller_path == "repeat_expenses" && obj.both_flg == false
@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
   end
 
   def create_notification(obj)
-    unless check_if_for_partner(obj)
+    unless check_need_notify(obj)
       Notification.create(user_id: current_user.id,
         notification_message_id: notification_msg,
         notified_by_id: obj.id,

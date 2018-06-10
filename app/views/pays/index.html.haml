@@ -4,7 +4,7 @@
       先月分の自分が手渡す金額
     %div.panel-body
       - if @my_last_payment < 0
-        ¥#{number_with_delimiter(@my_last_payment.abs, delimiter: ",")} 円受け取る
+        #{number_with_delimiter(@my_last_payment.abs, delimiter: ",")} 円受け取る
       - elsif @my_last_payment > 0
         #{number_with_delimiter(@my_last_payment.abs, delimiter: ",")} 円渡す
       - else @my_last_payment == 0
@@ -14,7 +14,7 @@
       今月分の自分が手渡す金額
     %div.panel-body
       - if @my_payment < 0
-        ¥#{number_with_delimiter(@my_payment.abs, delimiter: ",")} 円受け取る
+        #{number_with_delimiter(@my_payment.abs, delimiter: ",")} 円受け取る
       - elsif @my_payment > 0
         #{number_with_delimiter(@my_payment.abs, delimiter: ",")} 円渡す
       - else @my_payment == 0
@@ -24,7 +24,7 @@
       先月までの繰り越し支払い金額
     %div.panel-body
       - if @balance < 0
-        ¥#{number_with_delimiter(@balance.abs, delimiter: ",")} 円受け取る
+        #{number_with_delimiter(@balance.abs, delimiter: ",")} 円受け取る
       - elsif @balance > 0
         #{number_with_delimiter(@balance.abs, delimiter: ",")} 円渡す
       - else @balance == 0
@@ -35,7 +35,7 @@
 
   %table.table.pay
     %tr
-      %th 手渡し月
+      %th 該当月
       %th 名前
       %th 金額
       %th.memo memo
