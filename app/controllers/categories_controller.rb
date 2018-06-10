@@ -1,7 +1,8 @@
 class CategoriesController < ApplicationController
   before_action :set_category, only:[:edit, :update]
   before_action :set_categories, only:[:index, :common]
-  include UsersHelper, CategoriesHelper
+  after_action -> {create_notification(@category)}, only: [:create, :update]
+  include CategoriesHelper
 
   def index
   end
