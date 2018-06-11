@@ -1,5 +1,5 @@
 %div.expense_date
-  - if controller.controller_name == 'expenses'
+  - if controller.controller_name == 'expenses' || controller.controller_name == 'shift_months'
     = expense.date.strftime("%Y/%m/%d(%a)")
   - elsif controller.controller_name == 'repeat_expenses'
     #{expense.s_date.strftime("%Y/%m/%d(%a)")} 〜 #{expense.e_date.strftime("%Y/%m/%d(%a)")}
