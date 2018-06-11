@@ -25,12 +25,12 @@ class Expense < ApplicationRecord
   scope :both_t, -> {where(both_flg: true)}
   scope :newer, -> {order(date: :desc, created_at: :desc)}
 
-  def for_oneself
-    self.this_month.both_f.newer
+  def self.ones_expenses(user)
+    user.expenses.this_month.both_f.newer
   end
 
-  def for_both
-    self.this_month.both_t.newer
+  def self.ones_expenses_of_both(user)
+    user.expenses.this_month.both_t.newer
   end
 
   def self.must_pay_this_month(current_user, partner)
