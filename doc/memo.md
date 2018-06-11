@@ -117,17 +117,13 @@ elsif @cnum == 0
   redirect_to expenses_path
 end
 
-■seeds.rbの使い方
-https://www.sejuku.net/blog/28395
-http://itmemo.net-luck.com/rails-seed/
-http://sakura-bird1.hatenablog.com/entry/2017/02/26/214648
-
-require 'csv'
-
-csv_data = CSV.read('db/postal_code_tokyo_with_header.csv', headers: true)
-csv_data.each do |data|
-  PostalCode.create!(data.to_hash)
+■devのpgのレコード削除
+```rb
+tables = [Badget, Category, Expense]
+tables.each do |table|
+  table.destroy_all
 end
+```
 
 ■Heroku
 https://qiita.com/akiko-pusu/items/305e291465d6aac04bf3
@@ -139,18 +135,50 @@ https://qiita.com/akiko-pusu/items/305e291465d6aac04bf3
 でcsv出力。rootディレクトリ直下に保存される
 4. cat ファイル名で中身を確認できる
 
-```rb
-tables = [Badget, Category, Expense]
-tables.each do |table|
-  table.destroy_all
-end
-```
+```bash
+tables=("categories" "badgets" "expenses" "repeat_expenses" "pays" "wants" "notification_messages" "notifications" "deleted_records")
+ 
+i=0
+for table in ${tables[@]}; do
+heroku pg:psql -c "\copy (select * from ${table}) to db/${table}.csv with csv header"
+let i++
+done
 
 heroku pg:psql -c "\copy (select * from badgets) to db/badgets.csv with csv header"
 heroku pg:psql -c "\copy (select * from categories) to db/categories.csv with csv header"
 heroku pg:psql -c "\copy (select * from expenses) to db/expenses.csv with csv header"
 heroku pg:psql -c "\copy (select * from pays) to db/pays.csv with csv header"
+```
 
+■seeds.rbの使い方
+https://www.sejuku.net/blog/28395
+http://itmemo.net-luck.com/rails-seed/
+http://sakura-bird1.hatenablog.com/entry/2017/02/26/214648
+
+```rb
+require 'csv'
+
+tables=["categories", "badgets", "repeat_expenses", "expenses", "pays", "wants", "notification_messages", "notifications", "deleted_records"]
+tables.each do |t|
+  csv_data = CSV.read("db/#{t}.csv", headers: true)
+  csv_data.each do |data|
+    (t.classify.constantize).create!(data.to_hash)
+  end
+end
+
+tables = [Category, Badget, RepeatExpense, Expense, Pay, Want, NotificationMessage, Notification, DeletedRecord]
+tables.each do |t|
+  csv_data = CSV.read("db/#{t.table_name}.csv", headers: true)
+  csv_data.each do |data|
+    t.create!(data.to_hash)
+  end
+end
+
+csv_data = CSV.read('db/postal_code_tokyo_with_header.csv', headers: true)
+csv_data.each do |data|
+  PostalCode.create!(data.to_hash)
+end
+```
 
 ■idのクリア
 ```rb
