@@ -137,7 +137,7 @@ https://qiita.com/akiko-pusu/items/305e291465d6aac04bf3
 
 ```bash
 tables=("categories" "badgets" "expenses" "repeat_expenses" "pays" "wants" "notification_messages" "notifications" "deleted_records")
- 
+
 i=0
 for table in ${tables[@]}; do
 heroku pg:psql -c "\copy (select * from ${table}) to db/${table}.csv with csv header"
@@ -157,6 +157,7 @@ http://sakura-bird1.hatenablog.com/entry/2017/02/26/214648
 
 ```rb
 require 'csv'
+<<<<<<< HEAD
 
 tables=["categories", "badgets", "repeat_expenses", "expenses", "pays", "wants", "notification_messages", "notifications", "deleted_records"]
 tables.each do |t|
@@ -348,3 +349,38 @@ notification_messages tableのmessageカラムを消去
 
 shiftmonthsで出費リストに日付が出ない。
 →終わったらexpenses, repeat_expenses, shiftmontsをリファクタリングして、繰り返し出費の表示を一番下に
+
+
+
+■current_user_expenses
+  self.both_f.newer
+
+■partner_expenses.both_t.newer
+
+■current_user_expenses_of_both → 要らない
+  current_user_expenses → self.both_t.newer
+
+■category_badgets → 要らないかも
+  current_user.badgets
+
+■category_sums
+
+■sum
+
+■both_sum
+
+category_sumsなどのcurrent_userとpartnerの両方の出費を使うとなると、viewからどうやって呼びだすのが一番綺麗か？
+インスタンスメソッドがいいから、
+@all_expenses = current_user.expenses.this_month.or(partner.expenses.this_month.both_t)
+を渡して、そこからインスタンスメソッドを作るとか
+
+あと、helperでcurrent_userとか使えるのか？
+
+単純に大元の@all_expensesをどの月かに合わせて変えて、viewに送ればあとはインスタンスメソッドで計算する計算式は全部同じなんじゃないか？→そうすればすごくシンプルになりそう。shiftmonthのロジックはほとんど要らないかも。
+
+current_userやpartnerは分けてテンプレート変数にしたほうがいいのか？
+  →しなければ、viewで切り分けるけど、どうやる？
+    @all_expenses.for_current_user っていうメソッド使うとして、current_userを送らなければいけない。引数の指定しなければいけないから、全体的にコードが増えてしまう気がする。
+
+そんなメリットあるか？
+  →@all_expenses, @current_user_expenses, @partner_expensesの３つをテンプレート変数にすればいいんじゃないかな？
