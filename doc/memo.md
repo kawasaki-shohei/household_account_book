@@ -363,7 +363,7 @@ shiftmonthsで出費リストに日付が出ない。
   current_user.badgets
 
 ■category_sums
-
+  current_user_expensesとpartner_expensesだけ送れば今とほとんど変わらずメソッドが使えるいいかも。だからクラスメソッドにしてやればいい。
 ■sum
 
 ■both_sum
