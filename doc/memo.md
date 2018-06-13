@@ -365,8 +365,10 @@ shiftmonthsで出費リストに日付が出ない。
 ■category_sums
   current_user_expensesとpartner_expensesだけ送れば今とほとんど変わらずメソッドが使えるいいかも。だからクラスメソッドにしてやればいい。
 ■sum
+  helperでもviewでもどっちでも
 
 ■both_sum
+
 
 category_sumsなどのcurrent_userとpartnerの両方の出費を使うとなると、viewからどうやって呼びだすのが一番綺麗か？
 インスタンスメソッドがいいから、

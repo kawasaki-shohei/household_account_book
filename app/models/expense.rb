@@ -37,6 +37,20 @@ class Expense < ApplicationRecord
     current_user.expenses.this_month.both_t.sum(:mypay) + partner.expenses.this_month.both_t.sum(:partnerpay)
   end
 
+  def ones_sum
+    self.both_f.sum(:amount)
+  end
+
+  def ones_both_sum
+    self.both_t.
+
+
+  def partner_both_sum
+
+
+  def self.total_expenditures(current_user_expenses, partner_expenses)
+    current_user_expenses.oneself_sum + current_user_expenses_both_t.sum
+
   def self.category_sums(current_user_expenses, current_user_expenses_of_both, partner_expenses_of_both)
     category_ids = (current_user_expenses.extract_category + current_user_expenses_of_both.extract_category + partner_expenses_of_both.extract_category)
     if category_ids.present? && category_ids.size > 2 && (category_ids.count - category_ids.uniq.count) > 0

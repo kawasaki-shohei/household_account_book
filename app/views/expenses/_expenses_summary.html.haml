@@ -13,7 +13,7 @@
     #headingOne.card-header
       %h5.mb-0
         %button.btn.btn-link.collapsed{"aria-controls" => "collapseOne", "aria-expanded" => "true", "data-target" => "#collapseOne", "data-toggle" => "collapse"}
-          支出合計 ¥#{number_with_delimiter(sum + both_sum, delimiter: ",")}
+          支出合計 ¥#{number_with_delimiter(Expense.total_expenditures(current_user_expenses, partner_expenses), delimiter: ",")}
     #collapseOne.collapse{"aria-labelledby" => "headingOne", "data-parent" => "#accordion"}
       .card-body
         - category_sums.each do |key, value|
