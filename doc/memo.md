@@ -150,6 +150,15 @@ heroku pg:psql -c "\copy (select * from expenses) to db/expenses.csv with csv he
 heroku pg:psql -c "\copy (select * from pays) to db/pays.csv with csv header"
 ```
 
+■idのクリア
+```rb
+ActiveRecord::Base.connection.tables.each do |t|
+  ActiveRecord::Base.connection.reset_pk_sequence!(t)
+end
+
+ActiveRecord::Base.connection.execute("SELECT setval('expenses_id_seq', coalesce((SELECT MAX(id)+1 FROM expenses), 1), false)")
+```
+
 ■seeds.rbの使い方
 https://www.sejuku.net/blog/28395
 http://itmemo.net-luck.com/rails-seed/
@@ -178,15 +187,6 @@ csv_data = CSV.read('db/postal_code_tokyo_with_header.csv', headers: true)
 csv_data.each do |data|
   PostalCode.create!(data.to_hash)
 end
-```
-
-■idのクリア
-```rb
-ActiveRecord::Base.connection.tables.each do |t|
-  ActiveRecord::Base.connection.reset_pk_sequence!(t)
-end
-
-ActiveRecord::Base.connection.execute("SELECT setval('expenses_id_seq', coalesce((SELECT MAX(id)+1 FROM expenses), 1), false)")
 ```
 
 ■shift_moneth
