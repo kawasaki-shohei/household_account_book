@@ -346,7 +346,6 @@ notification_messagesのmsg_idカラムを追加それをprimary_keyに。notifi
 
 bought buttonの通知機能を実装中
 notification_messages tableのmessageカラムを消去
-<<<<<<<<< saved version
 
 shiftmonthsで出費リストに日付が出ない。
 →終わったらexpenses, repeat_expenses, shiftmontsをリファクタリングして、繰り返し出費の表示を一番下に
@@ -387,6 +386,33 @@ current_userやpartnerは分けてテンプレート変数にしたほうがい�
 
 そんなメリットあるか？
   →@all_expenses, @current_user_expenses, @partner_expensesの３つをテンプレート変数にすればいいんじゃないかな？
-=========
 
->>>>>>>>> local version
+たくさん抜き出したレコードはインスタンスの集合体なので、インスタンスメソッドが使えない。
+だからクラスメソッドにすればviewからでも使える。
+
+
+■expenses#indexとrepeat_expenses#indexで使うviewは_expenses_list.html.haml
+  ▽@current_user_expenses
+    @partner_expenses
+    modelでrepeat_expensesからのレコードを省くいてviewから呼び出すか
+    ・メリット
+      
+    ・デメリット
+    
+  ▽expensesでもrepeat_expensesでも４つのテンプレート変数を作って、viewに送るか
+    @current_user_expenses
+    @partner_expenses
+    @current_user_repeat_expenses
+    @partner_repeat_expenses
+    ・メリット
+      
+    ・デメリット
+      この場合だとsumなどの合計を計算するときに引数が増える
+  
+
+■_expenses_list.html.hamlでeditに飛ぶようにリンクを貼っているけど、
+これリンク内でcontoroller_pathでif文を作ればmoduleでpathを作れれば、
+controllerで分けているのがもっと見やすくなる。
+あと最初の「自分の繰り返し出費を追加」とかはrepeat_expensesのviewに書いたらif文がいらない。
+
+■extract_categoryは.mapを使うとめちゃくちゃ簡単に書ける。scopeを書かなくてもいい。
