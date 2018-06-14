@@ -1,5 +1,6 @@
 require 'csv'
 
+tables = [Category, Badget, RepeatExpense, Expense]
 tables = [Category, Badget, RepeatExpense, Expense, Pay, Want, NotificationMessage, Notification, DeletedRecord]
 tables.each do |t|
   csv_data = CSV.read("db/#{t.table_name}.csv", headers: true)
@@ -7,6 +8,7 @@ tables.each do |t|
     t.create!(data.to_hash)
   end
 end
+
 
 # csv_data = CSV.read('db/categories.csv', headers: true)
 # csv_data.each do |data|
@@ -16,6 +18,11 @@ end
 # csv_data = CSV.read('db/badgets.csv', headers: true)
 # csv_data.each do |data|
 #   Badget.create!(data.to_hash)
+# end
+#
+# csv_data = CSV.read('db/repeat_expenses.csv', headers: true)
+# csv_data.each do |data|
+#   RepeatExpense.create!(data.to_hash)
 # end
 #
 # csv_data = CSV.read('db/expenses.csv', headers: true)

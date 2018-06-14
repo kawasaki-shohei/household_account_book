@@ -150,6 +150,15 @@ heroku pg:psql -c "\copy (select * from expenses) to db/expenses.csv with csv he
 heroku pg:psql -c "\copy (select * from pays) to db/pays.csv with csv header"
 ```
 
+■idのクリア
+```rb
+ActiveRecord::Base.connection.tables.each do |t|
+  ActiveRecord::Base.connection.reset_pk_sequence!(t)
+end
+
+ActiveRecord::Base.connection.execute("SELECT setval('expenses_id_seq', coalesce((SELECT MAX(id)+1 FROM expenses), 1), false)")
+```
+
 ■seeds.rbの使い方
 https://www.sejuku.net/blog/28395
 http://itmemo.net-luck.com/rails-seed/
@@ -179,15 +188,6 @@ csv_data = CSV.read('db/postal_code_tokyo_with_header.csv', headers: true)
 csv_data.each do |data|
   PostalCode.create!(data.to_hash)
 end
-```
-
-■idのクリア
-```rb
-ActiveRecord::Base.connection.tables.each do |t|
-  ActiveRecord::Base.connection.reset_pk_sequence!(t)
-end
-
-ActiveRecord::Base.connection.execute("SELECT setval('expenses_id_seq', coalesce((SELECT MAX(id)+1 FROM expenses), 1), false)")
 ```
 
 ■shift_moneth
@@ -346,6 +346,7 @@ notification_messagesのmsg_idカラムを追加それをprimary_keyに。notifi
 
 bought buttonの通知機能を実装中
 notification_messages tableのmessageカラムを消去
+<<<<<<<<< saved version
 
 shiftmonthsで出費リストに日付が出ない。
 →終わったらexpenses, repeat_expenses, shiftmontsをリファクタリングして、繰り返し出費の表示を一番下に
@@ -364,10 +365,12 @@ shiftmonthsで出費リストに日付が出ない。
   current_user.badgets
 
 ■category_sums
-
+  current_user_expensesとpartner_expensesだけ送れば今とほとんど変わらずメソッドが使えるいいかも。だからクラスメソッドにしてやればいい。
 ■sum
+  helperでもviewでもどっちでも
 
 ■both_sum
+
 
 category_sumsなどのcurrent_userとpartnerの両方の出費を使うとなると、viewからどうやって呼びだすのが一番綺麗か？
 インスタンスメソッドがいいから、
@@ -384,3 +387,6 @@ current_userやpartnerは分けてテンプレート変数にしたほうがい�
 
 そんなメリットあるか？
   →@all_expenses, @current_user_expenses, @partner_expensesの３つをテンプレート変数にすればいいんじゃないかな？
+=========
+
+>>>>>>>>> local version
