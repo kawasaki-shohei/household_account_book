@@ -42,14 +42,18 @@ class Expense < ApplicationRecord
   end
 
   def ones_both_sum
-    self.both_t.
+    self.both_t.sum(:mypay)
+  end
 
 
   def partner_both_sum
+    self.sum(:partnerpay)
+  end
 
 
   def self.total_expenditures(current_user_expenses, partner_expenses)
-    current_user_expenses.oneself_sum + current_user_expenses_both_t.sum
+    current_user_expenses.oneself_sum + current_user_expenses.ones_both_sum + partner_expenses.partner_both_sum
+  end
 
   def self.category_sums(current_user_expenses, current_user_expenses_of_both, partner_expenses_of_both)
     category_ids = (current_user_expenses.extract_category + current_user_expenses_of_both.extract_category + partner_expenses_of_both.extract_category)
