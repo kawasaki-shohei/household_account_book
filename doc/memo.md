@@ -394,26 +394,44 @@ current_userやpartnerは分けてテンプレート変数にしたほうがい�
 ■expenses#indexとrepeat_expenses#indexで使うviewは_expenses_list.html.haml
   ▽@current_user_expenses
     @partner_expenses
-    modelでrepeat_expensesからのレコードを省くいてviewから呼び出すか
+    modelでrepeat_expensesのレコードを省くいてviewから呼び出すか
+    current_user_expenses.
     ・メリット
-      
+
     ・デメリット
-    
+
   ▽expensesでもrepeat_expensesでも４つのテンプレート変数を作って、viewに送るか?
     メソッド側で引数をオーバーライドできれば、一つのメソッドいけるかも？
     @current_user_expenses
     @partner_expenses
     @current_user_repeat_expenses
     @partner_repeat_expenses
+    repeat_expenses controllerからはcontroller_pathで分岐する
+    @current_user_expenses
+    @partner_expenses
+    shift_monthからはexpensesと同じで
+    @current_user_expenses
+    @partner_expenses
+    @current_user_repeat_expenses
+    @partner_repeat_expenses
+    total_expendituresもロジック組み直し。
     ・メリット
-      
+
     ・デメリット
       この場合だとsumなどの合計を計算するときに引数が増える
-  
 
-■_expenses_list.html.hamlでeditに飛ぶようにリンクを貼っているけど、
+
+■_expenses_list.html.haml
+editに飛ぶようにリンクを貼っているけど、
 これリンク内でcontoroller_pathでif文を作ればmoduleでpathを作れれば、
 controllerで分けているのがもっと見やすくなる。
 あと最初の「自分の繰り返し出費を追加」とかはrepeat_expensesのviewに書いたらif文がいらない。
+each文の中は
+- next if controller.controller_name != "repeat_expenses" || expense.repeat_expense_id != nil
+でスキップできるかも。できるだけそれぞれのコントローラーで振り分けるようにしたくない。
+link_toは結局ビューヘルパー内でどうにかするんじゃなくて、helperモジュールでパスを指定する。
+
+■_expenses_summary.html.haml
+repeat_expensesはここは行かないから、expensesとshiftmonthsの時だけsumなどの計算ができればいい。
 
 ■extract_categoryは.mapを使うとめちゃくちゃ簡単に書ける。scopeを書かなくてもいい。

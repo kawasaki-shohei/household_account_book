@@ -11,38 +11,45 @@ module ExpensesHelper
   def choose_new_or_edit
     if controller.controller_name == 'expenses'
       if action_name == 'new' || action_name == 'both' || action_name == 'confirm'
-        url = confirm_expenses_path
+        confirm_expenses_path
       elsif action_name == 'edit'
-        url = expense_path
+        expense_path
       end
     end
     if controller.controller_name == 'repeat_expenses'
       if action_name == 'new' || action_name == 'both' || action_name == 'confirm'
-        url = confirm_repeat_expenses_path
+        confirm_repeat_expenses_path
       elsif action_name == 'edit'
-        url = repeat_expense_path
+        repeat_expense_path
       end
     end
-    return url
   end
 
   def back_new_or_both(expense)
     if controller.controller_name == 'expenses'
       if expense.both_flg == true
-        url = both_expenses_path
+        both_expenses_path
       else
-        url = new_expense_path
+        new_expense_path
       end
     end
     if controller.controller_name == 'repeat_expenses'
       if expense.both_flg == true
-        url = both_repeat_expenses_path
+        both_repeat_expenses_path
       else
-        url = new_repeat_expense_path
+        new_repeat_expense_path
       end
     end
-    return url
   end
+
+  def edit_link(expense)
+    if controller.controller_name == 'expenses' || controller.controller_name == 'shift_months'
+      edit_expense_path(expense.id)
+    elsif controller.controller_name == 'repeat_expenses'
+      edit_repeat_expense_path(expense.id)
+    end
+  end
+
 
   def category_balance(badget, category, current_user_expenses, current_user_expenses_of_both, partner_expenses_of_both)
     # そのカテゴリの自分の出費の合計
