@@ -402,10 +402,10 @@ current_userやpartnerは分けてテンプレート変数にしたほうがい�
 
   ▽expensesでもrepeat_expensesでも４つのテンプレート変数を作って、viewに送るか?
     メソッド側で引数をオーバーライドできれば、一つのメソッドいけるかも？
-    @current_user_expenses
-    @partner_expenses
-    @current_user_repeat_expenses
-    @partner_repeat_expenses
+    @current_user_expenses(mine,both)
+    @partner_expenses(both)
+    @current_user_repeat_expenses(mine,both)
+    @partner_repeat_expenses(both)
     repeat_expenses controllerからはcontroller_pathで分岐する
     @current_user_expenses
     @partner_expenses
@@ -431,7 +431,17 @@ each文の中は
 でスキップできるかも。できるだけそれぞれのコントローラーで振り分けるようにしたくない。
 link_toは結局ビューヘルパー内でどうにかするんじゃなくて、helperモジュールでパスを指定する。
 
+＠currnet_expensesと@partner_expensesを引数で渡せば全ての出費を並び変えてくれるメソッドを作成し、
+indexを
+.each.with_index(30) do |expense, i|
+を使えば、
+
 ■_expenses_summary.html.haml
 repeat_expensesはここは行かないから、expensesとshiftmonthsの時だけsumなどの計算ができればいい。
 
 ■extract_categoryは.mapを使うとめちゃくちゃ簡単に書ける。scopeを書かなくてもいい。
+
+user = User.find(1)
+a=user.expenses.newer.limit(3)
+arr = [194, 223, 290]
+a.arrange_by_ids(arr)

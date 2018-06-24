@@ -1,5 +1,4 @@
 class Expense < ApplicationRecord
-
   belongs_to :user
   has_one :category
   validates :amount, :date, presence: true
@@ -18,7 +17,7 @@ class Expense < ApplicationRecord
   scope :last_month, -> {where('date >= ? AND date <= ?', beginning_of_last_month, end_of_last_month)}
   scope :until_last_month, -> {where('date <= ?', end_of_last_month)}
   scope :one_month, -> (begging_of_one_month, end_of_one_month) {where('date >= ? AND date <= ?', begging_of_one_month, end_of_one_month)}
-
+  scope :except_repeat_ones, -> {where.not()}
   scope :extract_category, -> {unscope(:order).select(:category_id).distinct.pluck(:category_id)}
   scope :category, -> (category_id){unscope(:order).where(category_id: category_id).order(date: :desc, created_at: :desc)}
   scope :both_f, -> {where(both_flg: false)}
@@ -54,6 +53,26 @@ class Expense < ApplicationRecord
   def self.total_expenditures(current_user_expenses, partner_expenses)
     current_user_expenses.ones_sum + current_user_expenses.ones_both_sum + partner_expenses.partner_both_sum
   end
+
+  def self.arrange_by_ids(ids)
+    order_condition = "CASE id "
+    ids.each_with_index do |id, index|
+      order_condition << sanitize_sql_array(["WHEN ? THEN ? ", id, index])
+    end
+    order_condition << sanitize_sql_array(["ELSE ? END", ids.length])
+    where(id: ids).order(order_condition)
+  end
+
+  def self.both_expenses
+    ids = self.both_t.where(repeat_expense_id: nil).newer.map{|i| i.id}
+    repeat_ones = self.both_t.where.not(repeat_expense_id: nil).newer.map{|i| i.id}
+    unless repeat_ones[0] == nil
+      ids << repeat_ones
+    end
+    self.arrange_by_ids(ids)
+  end
+
+
 
   def self.category_sums(current_user_expenses, current_user_expenses_of_both, partner_expenses_of_both)
     category_ids = (current_user_expenses.extract_category + current_user_expenses_of_both.extract_category + partner_expenses_of_both.extract_category)
