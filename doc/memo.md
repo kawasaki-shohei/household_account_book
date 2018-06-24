@@ -441,7 +441,4 @@ repeat_expensesはここは行かないから、expensesとshiftmonthsの時だ�
 
 ■extract_categoryは.mapを使うとめちゃくちゃ簡単に書ける。scopeを書かなくてもいい。
 
-user = User.find(1)
-a=user.expenses.newer.limit(3)
-arr = [194, 223, 290]
-a.arrange_by_ids(arr)
+expense controllerはできたからshiftmonthを考える。
