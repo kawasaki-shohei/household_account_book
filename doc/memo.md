@@ -441,4 +441,6 @@ repeat_expensesはここは行かないから、expensesとshiftmonthsの時だ�
 
 ■extract_categoryは.mapを使うとめちゃくちゃ簡単に書ける。scopeを書かなくてもいい。
 
-expense controllerはできたからshiftmonthを考える。
+expense controllerはできたからexpensesのmineができるか試す。→ok
+bothとmineのロジックを一緒にしたい。→できた
+次はshiftmonthのロジック

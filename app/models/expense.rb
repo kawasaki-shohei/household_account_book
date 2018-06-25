@@ -24,9 +24,9 @@ class Expense < ApplicationRecord
   scope :both_t, -> {where(both_flg: true)}
   scope :newer, -> {order(date: :desc, created_at: :desc)}
 
-  def self.ones_expenses(user)
-    user.expenses.this_month.both_f.newer
-  end
+  # def self.ones_expenses(user)
+  #   user.expenses.this_month.both_f.newer
+  # end
 
   def self.ones_expenses_of_both(user)
     user.expenses.this_month.both_t.newer
@@ -63,11 +63,16 @@ class Expense < ApplicationRecord
     where(id: ids).order(order_condition)
   end
 
-  def self.both_expenses
-    ids = self.both_t.where(repeat_expense_id: nil).newer.map{|i| i.id}
-    repeat_ones = self.both_t.where.not(repeat_expense_id: nil).newer.map{|i| i.id}
+  def self.arrange(both_flg)
+    if both_flg == true
+      expenses = self.both_t
+    elsif both_flg == false
+      expenses = self.both_f
+    end
+    ids = expenses.where(repeat_expense_id: nil).newer.map{|i| i.id}
+    repeat_ones = expenses.where.not(repeat_expense_id: nil).newer.map{|i| i.id}
     unless repeat_ones[0] == nil
-      ids << repeat_ones
+      ids += repeat_ones
     end
     self.arrange_by_ids(ids)
   end
