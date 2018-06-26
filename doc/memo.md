@@ -443,4 +443,8 @@ repeat_expensesはここは行かないから、expensesとshiftmonthsの時だ�
 
 expense controllerはできたからexpensesのmineができるか試す。→ok
 bothとmineのロジックを一緒にしたい。→できた
-次はshiftmonthのロジック
+次はshiftmonthのロジック→ok
+repeat_expensesはarrangeメソッドでboth_tかboth_fを分けたいけど、難しそう。
+repeat_expenses_idカラムがあるかどうか調べて分ける？なんか変。
+てかrepeat_expenses.arrangeだからrepeat_expense classのクラスメソッドがよばれるんじゃないの？
+そしたら、repeat_expensesに振り分けるメソッドかいたらよさそう！

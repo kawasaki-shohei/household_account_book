@@ -2,10 +2,15 @@ class RepeatExpensesController < ApplicationController
   after_action -> {create_notification(@repeat_expense)}, only: [:create]
   include CategoriesHelper
 
+  # def index
+  #   @current_user_expenses = RepeatExpense.ones_expenses(current_user)
+  #   @current_user_expenses_of_both = RepeatExpense.ones_expenses_of_both(current_user)
+  #   @partner_expenses_of_both = RepeatExpense.ones_expenses_of_both(partner)
+  # end
+
   def index
-    @current_user_expenses = RepeatExpense.ones_expenses(current_user)
-    @current_user_expenses_of_both = RepeatExpense.ones_expenses_of_both(current_user)
-    @partner_expenses_of_both = RepeatExpense.ones_expenses_of_both(partner)
+    @current_user_expenses = current_user.repeat_expenses
+    @partner_expenses_of_both = partner.repeat_expenses
   end
 
   def both
