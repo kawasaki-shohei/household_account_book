@@ -54,15 +54,6 @@ class Expense < ApplicationRecord
     current_user_expenses.ones_sum + current_user_expenses.ones_both_sum + partner_expenses.partner_both_sum
   end
 
-  def self.arrange_by_ids(ids)
-    order_condition = "CASE id "
-    ids.each_with_index do |id, index|
-      order_condition << sanitize_sql_array(["WHEN ? THEN ? ", id, index])
-    end
-    order_condition << sanitize_sql_array(["ELSE ? END", ids.length])
-    where(id: ids).order(order_condition)
-  end
-
   def self.arrange(both_flg)
     if both_flg == true
       expenses = self.both_t
@@ -74,7 +65,12 @@ class Expense < ApplicationRecord
     unless repeat_ones[0] == nil
       ids += repeat_ones
     end
-    self.arrange_by_ids(ids)
+    order_condition = "CASE id "
+    ids.each_with_index do |id, index|
+      order_condition << sanitize_sql_array(["WHEN ? THEN ? ", id, index])
+    end
+    order_condition << sanitize_sql_array(["ELSE ? END", ids.length])
+    self.where(id: ids).order(order_condition)
   end
 
 

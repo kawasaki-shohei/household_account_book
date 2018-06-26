@@ -1,9 +1,15 @@
 class ShiftMonth < ApplicationRecord
 
+  # def self.ones_expenses(user, cnum)
+  #   begging_of_one_month = which_month_expense(cnum)[0]
+  #   end_of_one_month = which_month_expense(cnum)[1]
+  #   user.expenses.one_month(begging_of_one_month, end_of_one_month).both_f.newer
+  # end
+
   def self.ones_expenses(user, cnum)
     begging_of_one_month = which_month_expense(cnum)[0]
     end_of_one_month = which_month_expense(cnum)[1]
-    user.expenses.one_month(begging_of_one_month, end_of_one_month).both_f.newer
+    user.expenses.one_month(begging_of_one_month, end_of_one_month)
   end
 
   def self.ones_expenses_of_both(user, cnum)
