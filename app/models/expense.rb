@@ -18,7 +18,7 @@ class Expense < ApplicationRecord
   scope :until_last_month, -> {where('date <= ?', end_of_last_month)}
   scope :one_month, -> (begging_of_one_month, end_of_one_month) {where('date >= ? AND date <= ?', begging_of_one_month, end_of_one_month)}
   scope :except_repeat_ones, -> {where.not()}
-  scope :extract_category, -> {unscope(:order).select(:category_id).distinct.pluck(:category_id)}
+  # scope :extract_category, -> {unscope(:order).select(:category_id).distinct.pluck(:category_id)}
   scope :category, -> (category_id){unscope(:order).where(category_id: category_id).order(date: :desc, created_at: :desc)}
   scope :both_f, -> {where(both_flg: false)}
   scope :both_t, -> {where(both_flg: true)}
@@ -75,8 +75,23 @@ class Expense < ApplicationRecord
 
 
 
-  def self.category_sums(current_user_expenses, current_user_expenses_of_both, partner_expenses_of_both)
-    category_ids = (current_user_expenses.extract_category + current_user_expenses_of_both.extract_category + partner_expenses_of_both.extract_category)
+  # def self.category_sums(current_user_expenses, current_user_expenses_of_both, partner_expenses_of_both)
+  #   category_ids = (current_user_expenses.extract_category + current_user_expenses_of_both.extract_category + partner_expenses_of_both.extract_category)
+  #   if category_ids.present? && category_ids.size > 2 && (category_ids.count - category_ids.uniq.count) > 0
+  #     category_ids.uniq!.sort!
+  #   elsif category_ids.present?
+  #     category_ids.sort!
+  #   end
+  #   category_sums = Hash.new
+  #   category_ids.each do |category_id|
+  #     category_sum = current_user_expenses.where(category_id: category_id).sum(:amount) + current_user_expenses_of_both.where(category_id: category_id).sum(:mypay) + partner_expenses_of_both.where(category_id: category_id).sum(:partnerpay)
+  #     category_sums[category_id] = category_sum
+  #   end
+  #   return category_sums
+  # end
+
+  def self.category_sums(current_user_expenses, partner_expenses)
+    category_ids = (current_user_expenses + partner_expenses).map{|i| i.category_id}
     if category_ids.present? && category_ids.size > 2 && (category_ids.count - category_ids.uniq.count) > 0
       category_ids.uniq!.sort!
     elsif category_ids.present?
@@ -84,7 +99,7 @@ class Expense < ApplicationRecord
     end
     category_sums = Hash.new
     category_ids.each do |category_id|
-      category_sum = current_user_expenses.where(category_id: category_id).sum(:amount) + current_user_expenses_of_both.where(category_id: category_id).sum(:mypay) + partner_expenses_of_both.where(category_id: category_id).sum(:partnerpay)
+      category_sum = current_user_expenses.both_f.where(category_id: category_id).sum(:amount) + current_user_expenses.both_f.where(category_id: category_id).sum(:mypay) + partner_expenses.where(category_id: category_id).sum(:partnerpay)
       category_sums[category_id] = category_sum
     end
     return category_sums

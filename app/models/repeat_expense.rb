@@ -14,4 +14,12 @@ class RepeatExpense < ApplicationRecord
   def self.ones_expenses_of_both(user)
     user.repeat_expenses.both_t.newer
   end
+
+  def self.arrange(both_flg)
+    if both_flg == false
+      self.both_f.newer
+    else
+      self.both_t.newer
+    end
+  end
 end

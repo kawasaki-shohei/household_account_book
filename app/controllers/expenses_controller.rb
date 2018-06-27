@@ -7,7 +7,7 @@ class ExpensesController < ApplicationController
   def index
     @cnum = 0
     @current_user_expenses = current_user.expenses.this_month
-    @partner_expenses = partner.expenses.this_month.both_t.newer
+    @partner_expenses = partner.expenses.this_month.both_t
     # @current_user_expenses = Expense.ones_expenses(current_user)
     # @current_user_expenses_of_both = Expense.ones_expenses_of_both(current_user)
     # @partner_expenses_of_both = Expense.ones_expenses_of_both(partner)

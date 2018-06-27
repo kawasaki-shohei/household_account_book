@@ -10,7 +10,8 @@ class RepeatExpensesController < ApplicationController
 
   def index
     @current_user_expenses = current_user.repeat_expenses
-    @partner_expenses_of_both = partner.repeat_expenses
+    @partner_expenses = partner.repeat_expenses
+    render 'expenses/index'
   end
 
   def both

@@ -448,3 +448,5 @@ repeat_expensesはarrangeメソッドでboth_tかboth_fを分けたいけど、�
 repeat_expenses_idカラムがあるかどうか調べて分ける？なんか変。
 てかrepeat_expenses.arrangeだからrepeat_expense classのクラスメソッドがよばれるんじゃないの？
 そしたら、repeat_expensesに振り分けるメソッドかいたらよさそう！
+→ok
+次はexpense helperに書いてあるcategory_balanceのメソッドの引数を変える。
