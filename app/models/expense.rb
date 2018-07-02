@@ -56,7 +56,11 @@ class Expense < ApplicationRecord
       order_condition << sanitize_sql_array(["WHEN ? THEN ? ", id, index])
     end
     order_condition << sanitize_sql_array(["ELSE ? END", ids.length])
-    self.where(id: ids).order(order_condition)
+    if ids.empty?
+      self.where(id: ids)
+    else
+      self.where(id: ids).order(order_condition)
+    end
   end
 
   # def self.category_sums(current_user_expenses, current_user_expenses_of_both, partner_expenses_of_both)

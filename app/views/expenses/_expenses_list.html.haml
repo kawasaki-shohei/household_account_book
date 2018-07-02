@@ -14,23 +14,20 @@
           支払い合計
           %span.expense_sum_detail ¥#{number_with_delimiter(both_sum(current_user_expenses, partner_expenses), delimiter: ",")}
       .both_list #{current_user.name}の出費
-      - current_user_expenses.each do |expense|
+      - (current_user_expenses.arrange(true)).each do |expense|
         %div.each_expense
           = link_to edit_link(expense) do
-            - flg = "both"
-            = render 'expenses/display_expenses', expense: expense, flg: flg
+            = render 'expenses/display_expenses', expense: expense
       .both_list.partner#partner_expenses #{partner.name}の出費
-      - partner_expenses.each do |expense|
+      - (partner_expenses.arrange(true)).each do |expense|
         %div.each_partner_expense
-          - flg = "both"
-          = render 'expenses/display_expenses', expense: expense, flg: flg
+          = render 'expenses/display_expenses', expense: expense
     #mine.tab-pane.fade{"aria-labelledby" => "mine-tab", :role => "tabpanel"}
       - if controller.controller_name == 'expenses' || controller.controller_name == 'shift_months'
         %div.expense_sum
           支払い合計
           %span.expense_sum_detail ¥#{number_with_delimiter(mine_sum(current_user_expenses), delimiter: ",")}
-      - current_user_expenses.each do |expense|
+      - (current_user_expenses.arrange(false)).each do |expense|
         %div.each_expense
           = link_to edit_link(expense) do
-            - flg = "mine"
-            = render 'expenses/display_expenses', expense: expense, flg: flg
+            = render 'expenses/display_expenses', expense: expense
