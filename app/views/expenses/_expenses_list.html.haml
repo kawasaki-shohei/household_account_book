@@ -12,7 +12,7 @@
       - if controller.controller_name == 'expenses' || controller.controller_name == 'shift_months'
         %div.expense_sum
           支払い合計
-          %span.expense_sum_detail ¥#{number_with_delimiter(both_sum, delimiter: ",")}
+          %span.expense_sum_detail ¥#{number_with_delimiter(both_sum(current_user_expenses, partner_expenses), delimiter: ",")}
       .both_list #{current_user.name}の出費
       - current_user_expenses.each do |expense|
         %div.each_expense
@@ -28,7 +28,7 @@
       - if controller.controller_name == 'expenses' || controller.controller_name == 'shift_months'
         %div.expense_sum
           支払い合計
-          %span.expense_sum_detail ¥#{number_with_delimiter(sum, delimiter: ",")}
+          %span.expense_sum_detail ¥#{number_with_delimiter(mine_sum(current_user_expenses), delimiter: ",")}
       - current_user_expenses.each do |expense|
         %div.each_expense
           = link_to edit_link(expense) do

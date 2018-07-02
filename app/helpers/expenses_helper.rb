@@ -50,6 +50,14 @@ module ExpensesHelper
     end
   end
 
+  def both_sum(current_user_expenses, partner_expenses)
+    current_user_expenses.both_t.sum(:mypay) + partner_expenses.sum(:partnerpay)
+  end
+
+  def mine_sum(current_user_expenses)
+    current_user_expenses.both_f.sum(:amount)
+  end
+
 
   # def category_balance(badget, category, current_user_expenses, current_user_expenses_of_both, partner_expenses_of_both)
   #   # そのカテゴリの自分の出費の合計

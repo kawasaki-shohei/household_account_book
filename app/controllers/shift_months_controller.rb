@@ -7,8 +7,8 @@ class ShiftMonthsController < ApplicationController
     else
       @current_user_expenses = ShiftMonth.ones_expenses(current_user, @cnum)
       @partner_expenses = ShiftMonth.ones_expenses(partner, @cnum).both_t
+      render 'expenses/index'
     end
-    render 'expenses/index'
   end
 
   def future
@@ -18,8 +18,8 @@ class ShiftMonthsController < ApplicationController
     else
       @current_user_expenses = ShiftMonth.ones_expenses(current_user, @cnum)
       @partner_expenses = ShiftMonth.ones_expenses(partner, @cnum).both_t
+      render 'expenses/index'
     end
-    render 'expenses/index'
   end
 
   def past_and_future(cnum)

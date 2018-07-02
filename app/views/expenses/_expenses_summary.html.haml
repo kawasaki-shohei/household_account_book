@@ -36,6 +36,6 @@
           %div
             = category.kind
             %span.details
-              ¥#{number_with_delimiter(category_balance(badget, category, current_user_expenses partner_expenses), delimiter: ",")}
+              ¥#{number_with_delimiter(category_balance(badget, category, current_user_expenses, partner_expenses), delimiter: ",")}
 
 = render 'expenses/expenses_list', current_user_expenses: current_user_expenses, partner_expenses: partner_expenses
