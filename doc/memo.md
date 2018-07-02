@@ -440,6 +440,9 @@ repeat_expensesはここは行かないから、expensesとshiftmonthsの時だ�
 
 ■extract_categoryは.mapを使うとめちゃくちゃ簡単に書ける。scopeを書かなくてもいい。
 
+■計算があってるか確認できないところがあれば、今のdbからcsvを取り出して、masterのコードで新しいアプリを立ち上げて、取り出したレコードを入れて、portを変えてやれば確認できそう。
+\copy (select * from deleted_records) to db/deleted_records.csv with csv header
+
 expense controllerはできたからexpensesのmineができるか試す。→ok
 bothとmineのロジックを一緒にしたい。→できた
 次はshiftmonthのロジック→ok
@@ -449,6 +452,6 @@ repeat_expenses_idカラムがあるかどうか調べて分ける？なんか�
 そしたら、repeat_expensesに振り分けるメソッドかいたらよさそう！
 →ok
 次はexpense helperに書いてあるcategory_balanceのメソッドの引数を変える。
-
-■計算があってるか確認できないところがあれば、今のdbからcsvを取り出して、masterのコードで新しいアプリを立ち上げて、取り出したレコードを入れて、portを変えてやれば確認できそう。
-\copy (select * from deleted_records) to db/deleted_records.csv with csv header
+→ok
+一通り大丈夫そうだけど、テストは入念に
+次はajaxで送られるeach_categoryの見直し、他のコントローラー同様に変数が多くなっている。別のコントローラーとモデルに切り出してもいいかも。
