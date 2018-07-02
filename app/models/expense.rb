@@ -36,22 +36,8 @@ class Expense < ApplicationRecord
     current_user.expenses.this_month.both_t.sum(:mypay) + partner.expenses.this_month.both_t.sum(:partnerpay)
   end
 
-  def self.ones_sum
-    self.both_f.sum(:amount)
-  end
-
-  def self.ones_both_sum
-    self.both_t.sum(:mypay)
-  end
-
-
-  def self.partner_both_sum
-    self.sum(:partnerpay)
-  end
-
-
   def self.total_expenditures(current_user_expenses, partner_expenses)
-    current_user_expenses.ones_sum + current_user_expenses.ones_both_sum + partner_expenses.partner_both_sum
+    current_user_expenses.both_f.sum(:amount) + current_user_expenses.both_t.sum(:mypay) + partner_expenses.sum(:partnerpay)
   end
 
   def self.arrange(both_flg)
@@ -72,8 +58,6 @@ class Expense < ApplicationRecord
     order_condition << sanitize_sql_array(["ELSE ? END", ids.length])
     self.where(id: ids).order(order_condition)
   end
-
-
 
   # def self.category_sums(current_user_expenses, current_user_expenses_of_both, partner_expenses_of_both)
   #   category_ids = (current_user_expenses.extract_category + current_user_expenses_of_both.extract_category + partner_expenses_of_both.extract_category)

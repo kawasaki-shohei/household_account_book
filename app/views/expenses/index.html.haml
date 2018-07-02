@@ -1,16 +1,1 @@
-#accordion
-  .card
-    #headingOne.card-header
-      %h5.mb-0
-        %button.btn.btn-link.collapsed{"aria-controls" => "collapseOne", "aria-expanded" => "true", "data-target" => "#collapseOne", "data-toggle" => "collapse"}
-          支出合計 ¥#{number_with_delimiter(Expense.total_expenditures(@current_user_expenses, @partner_expenses), delimiter: ",")}
-    #collapseOne.collapse{"aria-labelledby" => "headingOne", "data-parent" => "#accordion"}
-      .card-body
-        - Expense.category_sums(@current_user_expenses, @partner_expenses).each do |key, value|
-          - category = Category.find(key).kind
-          %div
-            = link_to each_category_expense_path(key, @cnum), remote: true, anchor: "accordion", class: "btn btn-category_expense btn-lg btn-block"  do
-              = category
-              %span.details
-                ¥#{number_with_delimiter(value, delimiter: ",")}
-// = render 'expenses/expenses_summary', cnum: @cnum, current_user_expenses: @current_user_expenses, partner_expenses: @partner_expenses
+= render 'expenses/expenses_summary', cnum: @cnum, current_user_expenses: @current_user_expenses, partner_expenses: @partner_expenses

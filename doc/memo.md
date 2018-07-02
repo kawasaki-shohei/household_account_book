@@ -166,7 +166,6 @@ http://sakura-bird1.hatenablog.com/entry/2017/02/26/214648
 
 ```rb
 require 'csv'
-<<<<<<< HEAD
 
 tables=["categories", "badgets", "repeat_expenses", "expenses", "pays", "wants", "notification_messages", "notifications", "deleted_records"]
 tables.each do |t|
@@ -450,3 +449,6 @@ repeat_expenses_idカラムがあるかどうか調べて分ける？なんか�
 そしたら、repeat_expensesに振り分けるメソッドかいたらよさそう！
 →ok
 次はexpense helperに書いてあるcategory_balanceのメソッドの引数を変える。
+
+■計算があってるか確認できないところがあれば、今のdbからcsvを取り出して、masterのコードで新しいアプリを立ち上げて、取り出したレコードを入れて、portを変えてやれば確認できそう。
+\copy (select * from deleted_records) to db/deleted_records.csv with csv header
