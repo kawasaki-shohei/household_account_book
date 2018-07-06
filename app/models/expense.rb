@@ -87,7 +87,7 @@ class Expense < ApplicationRecord
     end
     category_sums = Hash.new
     category_ids.each do |category_id|
-      category_sum = current_user_expenses.both_f.where(category_id: category_id).sum(:amount) + current_user_expenses.both_f.where(category_id: category_id).sum(:mypay) + partner_expenses.where(category_id: category_id).sum(:partnerpay)
+      category_sum = current_user_expenses.both_f.where(category_id: category_id).sum(:amount) + current_user_expenses.both_t.where(category_id: category_id).sum(:mypay) + partner_expenses.where(category_id: category_id).sum(:partnerpay)
       category_sums[category_id] = category_sum
     end
     return category_sums

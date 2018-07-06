@@ -455,3 +455,16 @@ repeat_expenses_idカラムがあるかどうか調べて分ける？なんか�
 →ok
 一通り大丈夫そうだけど、テストは入念に
 次はajaxで送られるeach_categoryの見直し、他のコントローラー同様に変数が多くなっている。別のコントローラーとモデルに切り出してもいいかも。
+ロジックがおかしすぎる。each_category actionからexpense.rb→shiftmonth.rbに飛んでるから、shiftmonth.rbに直接飛ばす？もしくは別のコントローラー？
+
+category_expenses.html.hamlはexpenses_list.html.hamlとほぼ同じなので、action_nameで分岐させれば一つでできそう。
+each_category.js.erbは
+$('#category_expense').parent().html("<%= j(render 'expenses/expenses_list', current_user_expenses: @current_user_expenses, partner_expenses: @partner_expenses) %>");
+のようにcategory_expense→expenses_listに書き換える。
+これはただただ、インスタンス変数の中身を変えて、expenses_listだけをリストさせたい。
+
+ルーティング
+member do
+  get :category
+end
+↑要らなくない？
