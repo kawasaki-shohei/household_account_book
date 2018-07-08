@@ -10,10 +10,6 @@ Rails.application.routes.draw do
       get :both
       post :confirm
     end
-
-    member do
-      get :category
-    end
   end
 
   resources :notifications, only: [:index, :create, :destroy]

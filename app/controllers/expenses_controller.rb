@@ -8,13 +8,6 @@ class ExpensesController < ApplicationController
     @cnum = 0
     @current_user_expenses = current_user.expenses.this_month
     @partner_expenses = partner.expenses.this_month.both_t
-    # @current_user_expenses = Expense.ones_expenses(current_user)
-    # @current_user_expenses_of_both = Expense.ones_expenses_of_both(current_user)
-    # @partner_expenses_of_both = Expense.ones_expenses_of_both(partner)
-    # @sum = @current_user_expenses.sum(:amount)
-    # @both_sum = Expense.must_pay_this_month(current_user, partner)
-    # @category_sums = Expense.category_sums(@current_user_expenses, @current_user_expenses_of_both, @partner_expenses_of_both)
-    # @category_badgets = current_user.badgets
   end
 
   def both
@@ -78,24 +71,11 @@ class ExpensesController < ApplicationController
     redirect_to expenses_path, notice: "削除しました"
   end
 
-  # def each_category
-  #   cnum = params[:cnum].to_i
-  #   @category = Category.find(params[:category_id].to_i)
-  #   @current_user_expenses = Expense.category_expense(current_user, partner, cnum, @category)[0]
-  #   @current_user_expenses_of_both = Expense.category_expense(current_user, partner, cnum, @category)[1]
-  #   @partner_expenses_of_both = Expense.category_expense(current_user, partner, cnum, @category)[2]
-  #   @sum = @current_user_expenses.unscope(:order).where(category_id: @category.id).sum(:amount)
-  #   @both_sum = Expense.category_expense(current_user, partner, cnum, @category)[3]
-  #   respond_to do |format|
-  #     format.js
-  #   end
-  # end
-
   def each_category
     cnum = params[:cnum].to_i
     @category = Category.find(params[:category_id].to_i)
-    @current_user_expenses = Expense.category_expense(current_user, partner, cnum, @category)[0]
-    @partner_expenses = Expense.category_expense(current_user, partner, cnum, @category)[2]
+    @current_user_expenses = ShiftMonth.ones_expenses(current_user, cnum).category(@category.id)
+    @partner_expenses = ShiftMonth.ones_expenses(partner, cnum).both_t.category(@category.id)
     respond_to do |format|
       format.js
     end
@@ -130,7 +110,6 @@ class ExpensesController < ApplicationController
 
     def set_expenses_categories
       @categories = current_user.categories.or(partner.categories.where(common: true))
-      # @categories = Category.where(user_id: current_user.id).or(Category.where(user_id: partner.id, common: true))
     end
 
     def set_expense

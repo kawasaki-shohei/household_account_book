@@ -462,9 +462,4 @@ each_category.js.erbは
 $('#category_expense').parent().html("<%= j(render 'expenses/expenses_list', current_user_expenses: @current_user_expenses, partner_expenses: @partner_expenses) %>");
 のようにcategory_expense→expenses_listに書き換える。
 これはただただ、インスタンス変数の中身を変えて、expenses_listだけをリストさせたい。
-
-ルーティング
-member do
-  get :category
-end
-↑要らなくない？
+→やってみたけど、ajaxでエラーが出てる。
