@@ -1,8 +1,3 @@
-- if controller.controller_name == 'repeat_expenses'
-  = link_to '自分の繰返し出費の追加', new_repeat_expense_path, class: "btn btn-default block"
-  %br
-  = link_to '二人の繰返し出費の追加', both_repeat_expenses_path, class: "btn btn-default block"
-  %br
 
 #category_expense
   / Nav tabs
@@ -16,36 +11,29 @@
     #both.tab-pane.fade.show.active{"aria-labelledby" => "both-tab", :role => "tabpanel"}
       - if controller.controller_name == 'expenses' || controller.controller_name == 'shift_months'
         %div.expense_sum
-          支払い合計
-          %span.expense_sum_detail ¥#{number_with_delimiter(both_sum, delimiter: ",")}
+          - if action_name == 'each_category'
+            #{category.kind}の合計
+          - else
+            支払い合計
+          %span.expense_sum_detail ¥#{number_with_delimiter(both_sum(current_user_expenses, partner_expenses), delimiter: ",")}
       .both_list #{current_user.name}の出費
-      - current_user_expenses_of_both.each do |expense|
-        %div.each_expense{id: "expense-id-#{expense.id}"}
-          - if controller.controller_name == 'expenses' || controller.controller_name == 'shift_months'
-            = link_to edit_expense_path(expense.id) do
-              - flg = "both"
-              = render 'expenses/display_expenses', expense: expense, flg: flg
-          - elsif controller.controller_name == 'repeat_expenses'
-            = link_to edit_repeat_expense_path(expense.id) do
-              - flg = "both"
-              = render 'expenses/display_expenses', expense: expense, flg: flg
+      - (current_user_expenses.arrange(true)).each do |expense|
+        %div.each_expense
+          = link_to edit_link(expense) do
+            = render 'expenses/display_expenses', expense: expense
       .both_list.partner#partner_expenses #{partner.name}の出費
-      - partner_expenses_of_both.each do |expense|
+      - (partner_expenses.arrange(true)).each do |expense|
         %div.each_partner_expense
-          - flg = "both"
-          = render 'expenses/display_expenses', expense: expense, flg: flg
+          = render 'expenses/display_expenses', expense: expense
     #mine.tab-pane.fade{"aria-labelledby" => "mine-tab", :role => "tabpanel"}
       - if controller.controller_name == 'expenses' || controller.controller_name == 'shift_months'
         %div.expense_sum
-          支払い合計
-          %span.expense_sum_detail ¥#{number_with_delimiter(sum, delimiter: ",")}
-      - current_user_expenses.each do |expense|
+          - if action_name == 'each_category'
+            #{category.kind}の合計
+          - else
+            支払い合計
+          %span.expense_sum_detail ¥#{number_with_delimiter(mine_sum(current_user_expenses), delimiter: ",")}
+      - (current_user_expenses.arrange(false)).each do |expense|
         %div.each_expense
-          - if controller.controller_name == 'expenses' || controller.controller_name == 'shift_months'
-            = link_to edit_expense_path(expense.id) do
-              - flg = "mine"
-              = render 'expenses/display_expenses', expense: expense, flg: flg
-          - elsif controller.controller_name == 'repeat_expenses'
-            = link_to edit_repeat_expense_path(expense.id) do
-              - flg = "mine"
-              = render 'expenses/display_expenses', expense: expense, flg: flg
+          = link_to edit_link(expense) do
+            = render 'expenses/display_expenses', expense: expense

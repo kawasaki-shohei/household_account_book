@@ -6,9 +6,9 @@
     %span#r_date 毎月 #{expense.r_date}日
 %div
   %span.amount ¥#{number_with_delimiter(expense.amount, delimiter: ",")}
-  - if flg == "mine"
+  - if expense.both_flg == false
     %span.each_expense_detail #{Category.find(expense.category_id).kind}
-  - elsif flg == "both"
+  - elsif expense.both_flg == true
     %span.each_expense_detail #{Category.find(expense.category_id).kind}
     - if expense.percent != nil
       %span.each_expense_detail (#{which_percent(expense.percent)})

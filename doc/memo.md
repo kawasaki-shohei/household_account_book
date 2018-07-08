@@ -117,17 +117,13 @@ elsif @cnum == 0
   redirect_to expenses_path
 end
 
-■seeds.rbの使い方
-https://www.sejuku.net/blog/28395
-http://itmemo.net-luck.com/rails-seed/
-http://sakura-bird1.hatenablog.com/entry/2017/02/26/214648
-
-require 'csv'
-
-csv_data = CSV.read('db/postal_code_tokyo_with_header.csv', headers: true)
-csv_data.each do |data|
-  PostalCode.create!(data.to_hash)
+■devのpgのレコード削除
+```rb
+tables = [Badget, Category, Expense]
+tables.each do |table|
+  table.destroy_all
 end
+```
 
 ■Heroku
 https://qiita.com/akiko-pusu/items/305e291465d6aac04bf3
@@ -139,18 +135,20 @@ https://qiita.com/akiko-pusu/items/305e291465d6aac04bf3
 でcsv出力。rootディレクトリ直下に保存される
 4. cat ファイル名で中身を確認できる
 
-```rb
-tables = [Badget, Category, Expense]
-tables.each do |table|
-  table.destroy_all
-end
-```
+```bash
+tables=("categories" "badgets" "expenses" "repeat_expenses" "pays" "wants" "notification_messages" "notifications" "deleted_records")
+
+i=0
+for table in ${tables[@]}; do
+heroku pg:psql -c "\copy (select * from ${table}) to db/${table}.csv with csv header"
+let i++
+done
 
 heroku pg:psql -c "\copy (select * from badgets) to db/badgets.csv with csv header"
 heroku pg:psql -c "\copy (select * from categories) to db/categories.csv with csv header"
 heroku pg:psql -c "\copy (select * from expenses) to db/expenses.csv with csv header"
 heroku pg:psql -c "\copy (select * from pays) to db/pays.csv with csv header"
-
+```
 
 ■idのクリア
 ```rb
@@ -159,6 +157,36 @@ ActiveRecord::Base.connection.tables.each do |t|
 end
 
 ActiveRecord::Base.connection.execute("SELECT setval('expenses_id_seq', coalesce((SELECT MAX(id)+1 FROM expenses), 1), false)")
+```
+
+■seeds.rbの使い方
+https://www.sejuku.net/blog/28395
+http://itmemo.net-luck.com/rails-seed/
+http://sakura-bird1.hatenablog.com/entry/2017/02/26/214648
+
+```rb
+require 'csv'
+
+tables=["categories", "badgets", "repeat_expenses", "expenses", "pays", "wants", "notification_messages", "notifications", "deleted_records"]
+tables.each do |t|
+  csv_data = CSV.read("db/#{t}.csv", headers: true)
+  csv_data.each do |data|
+    (t.classify.constantize).create!(data.to_hash)
+  end
+end
+
+tables = [Category, Badget, RepeatExpense, Expense, Pay, Want, NotificationMessage, Notification, DeletedRecord]
+tables.each do |t|
+  csv_data = CSV.read("db/#{t.table_name}.csv", headers: true)
+  csv_data.each do |data|
+    t.create!(data.to_hash)
+  end
+end
+
+csv_data = CSV.read('db/postal_code_tokyo_with_header.csv', headers: true)
+csv_data.each do |data|
+  PostalCode.create!(data.to_hash)
+end
 ```
 
 ■shift_moneth
@@ -317,3 +345,121 @@ notification_messagesのmsg_idカラムを追加それをprimary_keyに。notifi
 
 bought buttonの通知機能を実装中
 notification_messages tableのmessageカラムを消去
+
+shiftmonthsで出費リストに日付が出ない。
+→終わったらexpenses, repeat_expenses, shiftmontsをリファクタリングして、繰り返し出費の表示を一番下に
+
+
+
+■current_user_expenses
+  self.both_f.newer
+
+■partner_expenses.both_t.newer
+
+■current_user_expenses_of_both → 要らない
+  current_user_expenses → self.both_t.newer
+
+■category_badgets → 要らないかも
+  current_user.badgets
+
+■category_sums
+  current_user_expensesとpartner_expensesだけ送れば今とほとんど変わらずメソッドが使えるいいかも。だからクラスメソッドにしてやればいい。
+■sum
+  helperでもviewでもどっちでも
+
+■both_sum
+
+
+category_sumsなどのcurrent_userとpartnerの両方の出費を使うとなると、viewからどうやって呼びだすのが一番綺麗か？
+インスタンスメソッドがいいから、
+@all_expenses = current_user.expenses.this_month.or(partner.expenses.this_month.both_t)
+を渡して、そこからインスタンスメソッドを作るとか
+
+あと、helperでcurrent_userとか使えるのか？
+
+単純に大元の@all_expensesをどの月かに合わせて変えて、viewに送ればあとはインスタンスメソッドで計算する計算式は全部同じなんじゃないか？→そうすればすごくシンプルになりそう。shiftmonthのロジックはほとんど要らないかも。
+
+current_userやpartnerは分けてテンプレート変数にしたほうがいいのか？
+  →しなければ、viewで切り分けるけど、どうやる？
+    @all_expenses.for_current_user っていうメソッド使うとして、current_userを送らなければいけない。引数の指定しなければいけないから、全体的にコードが増えてしまう気がする。
+
+そんなメリットあるか？
+  →@all_expenses, @current_user_expenses, @partner_expensesの３つをテンプレート変数にすればいいんじゃないかな？
+
+たくさん抜き出したレコードはインスタンスの集合体なので、インスタンスメソッドが使えない。
+だからクラスメソッドにすればviewからでも使える。
+
+
+■expenses#indexとrepeat_expenses#indexで使うviewは_expenses_list.html.haml
+  ▽@current_user_expenses
+    @partner_expenses
+    modelでrepeat_expensesのレコードを省くいてviewから呼び出すか
+    current_user_expenses.
+    ・メリット
+
+    ・デメリット
+
+  ▽expensesでもrepeat_expensesでも４つのテンプレート変数を作って、viewに送るか?
+    メソッド側で引数をオーバーライドできれば、一つのメソッドいけるかも？
+    @current_user_expenses(mine,both)
+    @partner_expenses(both)
+    @current_user_repeat_expenses(mine,both)
+    @partner_repeat_expenses(both)
+    repeat_expenses controllerからはcontroller_pathで分岐する
+    @current_user_expenses
+    @partner_expenses
+    shift_monthからはexpensesと同じで
+    @current_user_expenses
+    @partner_expenses
+    @current_user_repeat_expenses
+    @partner_repeat_expenses
+    total_expendituresもロジック組み直し。
+    ・メリット
+
+    ・デメリット
+      この場合だとsumなどの合計を計算するときに引数が増える
+
+
+■_expenses_list.html.haml
+editに飛ぶようにリンクを貼っているけど、
+これリンク内でcontoroller_pathでif文を作ればmoduleでpathを作れれば、
+controllerで分けているのがもっと見やすくなる。
+あと最初の「自分の繰り返し出費を追加」とかはrepeat_expensesのviewに書いたらif文がいらない。
+each文の中は
+- next if controller.controller_name != "repeat_expenses" || expense.repeat_expense_id != nil
+でスキップできるかも。できるだけそれぞれのコントローラーで振り分けるようにしたくない。
+link_toは結局ビューヘルパー内でどうにかするんじゃなくて、helperモジュールでパスを指定する。
+
+＠currnet_expensesと@partner_expensesを引数で渡せば全ての出費を並び変えてくれるメソッドを作成し、
+indexを
+.each.with_index(30) do |expense, i|
+を使えば、
+
+■_expenses_summary.html.haml
+repeat_expensesはここは行かないから、expensesとshiftmonthsの時だけsumなどの計算ができればいい。
+
+■extract_categoryは.mapを使うとめちゃくちゃ簡単に書ける。scopeを書かなくてもいい。
+
+■計算があってるか確認できないところがあれば、今のdbからcsvを取り出して、masterのコードで新しいアプリを立ち上げて、取り出したレコードを入れて、portを変えてやれば確認できそう。
+\copy (select * from deleted_records) to db/deleted_records.csv with csv header
+
+expense controllerはできたからexpensesのmineができるか試す。→ok
+bothとmineのロジックを一緒にしたい。→できた
+次はshiftmonthのロジック→ok
+repeat_expensesはarrangeメソッドでboth_tかboth_fを分けたいけど、難しそう。
+repeat_expenses_idカラムがあるかどうか調べて分ける？なんか変。
+てかrepeat_expenses.arrangeだからrepeat_expense classのクラスメソッドがよばれるんじゃないの？
+そしたら、repeat_expensesに振り分けるメソッドかいたらよさそう！
+→ok
+次はexpense helperに書いてあるcategory_balanceのメソッドの引数を変える。
+→ok
+一通り大丈夫そうだけど、テストは入念に
+次はajaxで送られるeach_categoryの見直し、他のコントローラー同様に変数が多くなっている。別のコントローラーとモデルに切り出してもいいかも。
+ロジックがおかしすぎる。each_category actionからexpense.rb→shiftmonth.rbに飛んでるから、shiftmonth.rbに直接飛ばす？もしくは別のコントローラー？
+
+category_expenses.html.hamlはexpenses_list.html.hamlとほぼ同じなので、action_nameで分岐させれば一つでできそう。
+each_category.js.erbは
+$('#category_expense').parent().html("<%= j(render 'expenses/expenses_list', current_user_expenses: @current_user_expenses, partner_expenses: @partner_expenses) %>");
+のようにcategory_expense→expenses_listに書き換える。
+これはただただ、インスタンス変数の中身を変えて、expenses_listだけをリストさせたい。
+→やってみたけど、ajaxでエラーが出てる。

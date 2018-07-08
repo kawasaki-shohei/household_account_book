@@ -11,48 +11,62 @@ module ExpensesHelper
   def choose_new_or_edit
     if controller.controller_name == 'expenses'
       if action_name == 'new' || action_name == 'both' || action_name == 'confirm'
-        url = confirm_expenses_path
+        confirm_expenses_path
       elsif action_name == 'edit'
-        url = expense_path
+        expense_path
       end
     end
     if controller.controller_name == 'repeat_expenses'
       if action_name == 'new' || action_name == 'both' || action_name == 'confirm'
-        url = confirm_repeat_expenses_path
+        confirm_repeat_expenses_path
       elsif action_name == 'edit'
-        url = repeat_expense_path
+        repeat_expense_path
       end
     end
-    return url
   end
 
   def back_new_or_both(expense)
     if controller.controller_name == 'expenses'
       if expense.both_flg == true
-        url = both_expenses_path
+        both_expenses_path
       else
-        url = new_expense_path
+        new_expense_path
       end
     end
     if controller.controller_name == 'repeat_expenses'
       if expense.both_flg == true
-        url = both_repeat_expenses_path
+        both_repeat_expenses_path
       else
-        url = new_repeat_expense_path
+        new_repeat_expense_path
       end
     end
-    return url
   end
 
-  def category_balance(badget, category, current_user_expenses, current_user_expenses_of_both, partner_expenses_of_both)
+  def edit_link(expense)
+    if controller.controller_name == 'expenses' || controller.controller_name == 'shift_months'
+      edit_expense_path(expense.id)
+    elsif controller.controller_name == 'repeat_expenses'
+      edit_repeat_expense_path(expense.id)
+    end
+  end
+
+  def both_sum(current_user_expenses, partner_expenses)
+    current_user_expenses.both_t.sum(:mypay) + partner_expenses.sum(:partnerpay)
+  end
+
+  def mine_sum(current_user_expenses)
+    current_user_expenses.both_f.sum(:amount)
+  end
+
+
+  def category_balance(badget, category, current_user_expenses, partner_expenses)
     # そのカテゴリの自分の出費の合計
-    current_user_category_expenses_sum = current_user_expenses.where(category_id: category.id).sum(:amount)
+    current_user_category_expenses_sum = current_user_expenses.both_f.where(category_id: category.id).sum(:amount)
     # 二人の出費の内、そのカテゴリの自分の払う金額の合計
-    mypays_sum_of_both = current_user_expenses_of_both.where(category_id: category.id).sum(:mypay)
+    mypays_sum_of_both = current_user_expenses.both_t.where(category_id: category.id).sum(:mypay)
     # 相手が記入した二人の出費の内、そのカテゴリの自分の払う金額の合計
-    partnerpays_sum_of_both = partner_expenses_of_both.where(category_id: category.id).sum(:partnerpay)
-    balance = badget.amount.to_i - current_user_category_expenses_sum - mypays_sum_of_both - partnerpays_sum_of_both
-    return balance
+    partnerpays_sum_of_both = partner_expenses.where(category_id: category.id).sum(:partnerpay)
+    badget.amount.to_i - current_user_category_expenses_sum - mypays_sum_of_both - partnerpays_sum_of_both
   end
 
 end
