@@ -27,9 +27,9 @@ class Expense < ApplicationRecord
     user.expenses.this_month.both_t.newer
   end
 
-  def self.total_expenditures(current_user_expenses, partner_expenses)
-    current_user_expenses.both_f.sum(:amount) + current_user_expenses.both_t.sum(:mypay) + partner_expenses.sum(:partnerpay)
-  end
+  # def self.one_total_expenditures(current_user_expenses, partner_expenses)
+  #   current_user_expenses.both_f.sum(:amount) + current_user_expenses.both_t.sum(:mypay) + partner_expenses.sum(:partnerpay)
+  # end
 
   def self.arrange(both_flg)
     if both_flg == true
@@ -53,22 +53,6 @@ class Expense < ApplicationRecord
       self.where(id: ids).order(order_condition)
     end
   end
-
-  def self.category_sums(current_user_expenses, partner_expenses)
-    category_ids = (current_user_expenses + partner_expenses).map{|i| i.category_id}
-    if category_ids.present? && category_ids.size > 2 && (category_ids.count - category_ids.uniq.count) > 0
-      category_ids.uniq!.sort!
-    elsif category_ids.present?
-      category_ids.sort!
-    end
-    category_sums = Hash.new
-    category_ids.each do |category_id|
-      category_sum = current_user_expenses.both_f.where(category_id: category_id).sum(:amount) + current_user_expenses.both_t.where(category_id: category_id).sum(:mypay) + partner_expenses.where(category_id: category_id).sum(:partnerpay)
-      category_sums[category_id] = category_sum
-    end
-    return category_sums
-  end
-
 
   def self.expense_in_both_this_month(current_user, partner)
     current_user.expenses.this_month.both_t.sum(:mypay) + partner.expenses.this_month.both_t.sum(:partnerpay) - current_user.expenses.this_month.both_t.sum(:amount)

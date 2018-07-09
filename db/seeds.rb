@@ -1,13 +1,13 @@
 require 'csv'
 
-tables = [Category, Badget, RepeatExpense, Expense]
-tables = [Category, Badget, RepeatExpense, Expense, Pay, Want, NotificationMessage, Notification, DeletedRecord]
-tables.each do |t|
-  csv_data = CSV.read("db/#{t.table_name}.csv", headers: true)
-  csv_data.each do |data|
-    t.create!(data.to_hash)
-  end
-end
+# tables = [Category, Badget, RepeatExpense, Expense]
+# tables = [Category, Badget, RepeatExpense, Expense, Pay, Want, NotificationMessage, Notification, DeletedRecord]
+# tables.each do |t|
+#   csv_data = CSV.read("db/#{t.table_name}.csv", headers: true)
+#   csv_data.each do |data|
+#     t.create!(data.to_hash)
+#   end
+# end
 
 
 # csv_data = CSV.read('db/categories.csv', headers: true)
@@ -25,10 +25,10 @@ end
 #   RepeatExpense.create!(data.to_hash)
 # end
 #
-# csv_data = CSV.read('db/expenses.csv', headers: true)
-# csv_data.each do |data|
-#   Expense.create!(data.to_hash)
-# end
+csv_data = CSV.read('db/expenses.csv', headers: true)
+csv_data.each do |data|
+  Expense.create!(data.to_hash)
+end
 
 # csv_data = CSV.read('db/pays.csv', headers: true)
 # csv_data.each do |data|

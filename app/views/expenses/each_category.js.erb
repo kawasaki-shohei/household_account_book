@@ -1,4 +1,0 @@
-$('#category_expense_parent').html("<%= j(render 'expenses/expenses_list', category:@category, current_user_expenses:@current_user_expenses, partner_expenses:@partner_expenses) %>");
-var speed = 400;
-var position = $('#category_expense').offset().top;
-$('body,html').animate({scrollTop:position}, speed, 'swing');
