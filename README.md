@@ -4,11 +4,14 @@
 
 
 # staging環境ログインアカウント
-・user1 (user2のパートナー)  
+- URL  
+https://stage-habfoc.herokuapp.com/
+
+- user1 (user2のパートナー)  
 user1@gmail.com  
 000000  
 
-・user2 (user1のパートナー)  
+- user2 (user1のパートナー)  
 user2@gmail.com  
 000000  
 
