@@ -4,25 +4,23 @@
 
 
 # staging環境ログインアカウント
-・user1 (user2のパートナー)
-user1@gmail.com
-000000
-000000
+・user1 (user2のパートナー)  
+user1@gmail.com  
+000000  
 
-・user2 (user1のパートナー)
-user2@gmail.com
-000000
-000000
+・user2 (user1のパートナー)  
+user2@gmail.com  
+000000  
 
 
 # staging環境デプロイ方法
-1. stage-habfocのgitリポジトリを追加
-git remote add staging HEROKU-GIT-URL
+1. stage-habfocのgitリポジトリを追加  
+`git remote add staging HEROKU-GIT-URL`  
 2. stagingブランチにマージ
-3. stagingブランチをpush
-git push staging staging:master
-4. マイグレーション
-heroku run rails db:migrate --remote staging
+3. stagingブランチをpush  
+`git push staging staging:master`
+4. マイグレーション  
+`heroku run rails db:migrate --remote staging`
 
 
 # 背景
