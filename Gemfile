@@ -38,6 +38,10 @@ gem 'delayed_job_active_record', '~> 4.1', '>= 4.1.3'
 
 gem 'bcrypt', '3.1.11'
 
+group :staging do
+  gem 'pg', '~> 0.18'
+end
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
