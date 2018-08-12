@@ -1,3 +1,0 @@
-module RepeatExpensesHelper
-  
-end
