@@ -25,6 +25,11 @@ user2@gmail.com
 4. マイグレーション  
 `heroku run rails db:migrate --remote staging`
 
+# stylesheet適応方法
+デフォルトなら`rails g`コマンドでassetsやhelperが自動生成されるが、  
+`application.rb`で自動生成しないようにしてあるため、
+scssファイルを足したいなら、`app/assets/stylesheets/`配下にファイルを作成し、  
+`app/assets/stylesheets/application.scss`に`@import 'ファイル名';`を追記する。
 
 # 背景
 - カップルの財布を別にしたい
