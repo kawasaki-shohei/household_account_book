@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 
   resources :users do
     resources :settings, only: [:index] do
-      get :change_allow_share_mine, on: :collection
+      get :change_allow_share_own, on: :collection
     end
   end
   resources :partners, only:[:new, :create, :destroy]
