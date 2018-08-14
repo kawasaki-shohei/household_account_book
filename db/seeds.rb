@@ -1,7 +1,7 @@
 require 'csv'
 
-tables = [Category, RepeatExpense, Expense]
-# tables = [Category, Badget, RepeatExpense, Expense, Pay, Want, NotificationMessage, Notification, DeletedRecord]
+# tables = [Category, RepeatExpense, Expense]
+tables = [Category, Badget, RepeatExpense, Expense, Pay, Want, NotificationMessage, Notification, DeletedRecord]
 tables.each do |t|
   csv_data = CSV.read("db/#{t.table_name}.csv", headers: true)
   csv_data.each do |data|

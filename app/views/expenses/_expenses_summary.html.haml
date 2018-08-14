@@ -24,7 +24,7 @@
     #headingTwo.card-header
       %h5.mb-0
         %button.btn.btn-link.collapsed{"aria-controls" => "collapseTwo", "aria-expanded" => "true", "data-target" => "#collapseTwo", "data-toggle" => "collapse"}
-          支出合計 ¥#{number_with_delimiter(one_total_expenditures(current_user_expenses, partner_expenses), delimiter: ",")}
+          パートナーの支出合計 ¥#{number_with_delimiter(one_total_expenditures(current_user_expenses, partner_expenses), delimiter: ",")}
     #collapseTwo.collapse{"aria-labelledby" => "headingTwo", "data-parent" => "#accordion"}
       .card-body
         - category_sums(current_user_expenses, partner_expenses).each do |key, value|
