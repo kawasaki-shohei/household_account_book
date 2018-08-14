@@ -1,0 +1,1 @@
+$('a[data-list-id="'+<%= @want.id %>+'"]').parent().html("<%= j(render 'shared/ajax_button', val: @want, true_str: 'Bought', false_str: 'Wnat', path: change_bought_button_want_path(@want)) %>")

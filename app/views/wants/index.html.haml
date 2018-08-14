@@ -12,7 +12,7 @@
             .goods_name #{want.name}
             .want_memo #{want.memo}
         %td.col-2
-          = render 'wants/bought_button', want: want
+          = render 'shared/ajax_button', val: want, true_str: 'Bought', false_str: 'Wnat', path: change_bought_button_want_path(want)
         %td.col-2
           = link_to want_path(want), method: :delete, data: {confirm: "Are you sure?"}, id: "del_list_btn" do
             %i.fas.fa-minus-circle.fa-2x
