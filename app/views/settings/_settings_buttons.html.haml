@@ -1,0 +1,4 @@
+- if user.allow_share_mine
+  = link_to '許可', change_allow_share_mine_user_settings_path(user), class: "btn btn-default", remote: true
+- else
+  = link_to '禁止', change_allow_share_mine_user_settings_path(user), class: "btn btn-default btn-delete", remote: true
