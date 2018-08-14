@@ -54,8 +54,8 @@ module ExpensesHelper
     current_user_expenses.both_t.sum(:mypay) + partner_expenses.sum(:partnerpay)
   end
 
-  def mine_sum(current_user_expenses)
-    current_user_expenses.both_f.sum(:amount)
+  def mine_sum(user_expenses)
+    user_expenses.both_f.sum(:amount)
   end
 
   def one_total_expenditures(current_user_expenses, partner_expenses)
