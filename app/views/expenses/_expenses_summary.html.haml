@@ -13,7 +13,7 @@
     #headingOne.card-header
       %h5.mb-0
         %button.btn.btn-link.collapsed{"aria-controls" => "collapseOne", "aria-expanded" => "true", "data-target" => "#collapseOne", "data-toggle" => "collapse"}
-          支出合計 ¥#{number_with_delimiter(one_total_expenditures(current_user_expenses, partner_expenses), delimiter: ",")}
+          パートナーの支出合計 ¥#{number_with_delimiter(one_total_expenditures(current_user_expenses, partner_expenses), delimiter: ",")}
     #collapseOne.collapse{"aria-labelledby" => "headingOne", "data-parent" => "#accordion"}
       .card-body
         - category_sums(current_user_expenses, partner_expenses).each do |key, value|
@@ -24,10 +24,10 @@
     #headingTwo.card-header
       %h5.mb-0
         %button.btn.btn-link.collapsed{"aria-controls" => "collapseTwo", "aria-expanded" => "true", "data-target" => "#collapseTwo", "data-toggle" => "collapse"}
-          パートナーの支出合計 ¥#{number_with_delimiter(one_total_expenditures(current_user_expenses, partner_expenses), delimiter: ",")}
+          支出合計 ¥#{number_with_delimiter(one_total_expenditures(current_user_expenses, partner_expenses.both_t), delimiter: ",")}
     #collapseTwo.collapse{"aria-labelledby" => "headingTwo", "data-parent" => "#accordion"}
       .card-body
-        - category_sums(current_user_expenses, partner_expenses).each do |key, value|
+        - category_sums(current_user_expenses, partner_expenses.both_t).each do |key, value|
           - category = Category.find(key).kind
           %div
             = link_to each_category_expense_path(key, cnum), remote: true, anchor: "accordion", class: "btn btn-category_expense btn-lg btn-block"  do
@@ -47,7 +47,7 @@
           %div
             = category.kind
             %span.details
-              ¥#{number_with_delimiter(category_balance(badget, category, current_user_expenses, partner_expenses), delimiter: ",")}
+              ¥#{number_with_delimiter(category_balance(badget, category, current_user_expenses, partner_expenses.both_t), delimiter: ",")}
 
 #category_expense_parent
   = render 'expenses/expenses_list', current_user_expenses: current_user_expenses, partner_expenses: partner_expenses

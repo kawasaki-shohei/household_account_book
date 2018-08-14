@@ -32,11 +32,7 @@ class Expense < ApplicationRecord
   # end
 
   def self.arrange(both_flg)
-    if both_flg == true
-      expenses = self.both_t
-    elsif both_flg == false
-      expenses = self.both_f
-    end
+    expenses = both_flg ? self.both_t : self.both_f
     ids = expenses.where(repeat_expense_id: nil).newer.map{|i| i.id}
     repeat_ones = expenses.where.not(repeat_expense_id: nil).newer.map{|i| i.id}
     unless repeat_ones[0] == nil
