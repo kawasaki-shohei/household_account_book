@@ -1,8 +1,16 @@
 Rails.application.routes.draw do
 
+  get 'settings/index'
+
+  get 'settings/show'
+
   resources :sessions, only: [:new, :create, :destroy]
 
-  resources :users
+  resources :users do
+    resources :settings, only: [:index] do
+      get :change_allow_share_own, on: :collection
+    end
+  end
   resources :partners, only:[:new, :create, :destroy]
 
   resources :expenses do
@@ -33,10 +41,12 @@ Rails.application.routes.draw do
   end
   resources :badgets
   resources :pays
-  resources :wants
+  resources :wants do
+    get :change_bought_button, on: :member
+  end
 
-  get 'bought_buttons/bought/:id', to: 'bought_buttons#bought', as: :bought
-  get 'bought_buttons/want/:id', to: 'bought_buttons#want', as: :back_to_want
+  # get 'bought_buttons/bought/:id', to: 'bought_buttons#bought', as: :bought
+  # get 'bought_buttons/want/:id', to: 'bought_buttons#want', as: :back_to_want
 
   root to: "expenses#both"
 end

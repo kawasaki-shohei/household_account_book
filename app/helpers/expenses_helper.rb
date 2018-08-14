@@ -58,15 +58,37 @@ module ExpensesHelper
     current_user_expenses.both_f.sum(:amount)
   end
 
+  def one_total_expenditures(current_user_expenses, partner_expenses)
+    current_user_expenses.both_f.sum(:amount) + current_user_expenses.both_t.sum(:mypay) + partner_expenses.sum(:partnerpay)
+  end
 
-  def category_balance(badget, category, current_user_expenses, partner_expenses)
+  def ordered_badget(user)
+    user.badgets.order(category_id: :asc)
+  end
+
+  def category_sums(user_expenses, partner_expenses)
+    category_ids = (user_expenses + partner_expenses).map{|i| i.category_id}
+    if category_ids.present? && category_ids.size > 2 && (category_ids.count - category_ids.uniq.count) > 0
+      category_ids.uniq!.sort!
+    elsif category_ids.present?
+      category_ids.sort!
+    end
+    category_sums = Hash.new
+    category_ids.each do |category_id|
+      category_sum = user_expenses.both_f.where(category_id: category_id).sum(:amount) + user_expenses.both_t.where(category_id: category_id).sum(:mypay) + partner_expenses.where(category_id: category_id).sum(:partnerpay)
+      category_sums[category_id] = category_sum
+    end
+    return category_sums
+  end
+
+  def category_balance(badget, category, user_expenses, partner_expenses)
     # そのカテゴリの自分の出費の合計
-    current_user_category_expenses_sum = current_user_expenses.both_f.where(category_id: category.id).sum(:amount)
+    user_category_expenses_sum = user_expenses.both_f.where(category_id: category.id).sum(:amount)
     # 二人の出費の内、そのカテゴリの自分の払う金額の合計
-    mypays_sum_of_both = current_user_expenses.both_t.where(category_id: category.id).sum(:mypay)
+    mypays_sum_of_both = user_expenses.both_t.where(category_id: category.id).sum(:mypay)
     # 相手が記入した二人の出費の内、そのカテゴリの自分の払う金額の合計
     partnerpays_sum_of_both = partner_expenses.where(category_id: category.id).sum(:partnerpay)
-    badget.amount.to_i - current_user_category_expenses_sum - mypays_sum_of_both - partnerpays_sum_of_both
+    badget.amount.to_i - user_category_expenses_sum - mypays_sum_of_both - partnerpays_sum_of_both
   end
 
 end

@@ -6,7 +6,7 @@ class ShiftMonthsController < ApplicationController
       redirect_to expenses_path
     else
       @current_user_expenses = ShiftMonth.ones_expenses(current_user, @cnum)
-      @partner_expenses = ShiftMonth.ones_expenses(partner, @cnum).both_t
+      @partner_expenses = ShiftMonth.ones_expenses(partner, @cnum)
       render 'expenses/index'
     end
   end
@@ -17,7 +17,7 @@ class ShiftMonthsController < ApplicationController
       redirect_to expenses_path
     else
       @current_user_expenses = ShiftMonth.ones_expenses(current_user, @cnum)
-      @partner_expenses = ShiftMonth.ones_expenses(partner, @cnum).both_t
+      @partner_expenses = ShiftMonth.ones_expenses(partner, @cnum)
       render 'expenses/index'
     end
   end

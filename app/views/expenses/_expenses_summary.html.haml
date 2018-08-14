@@ -13,16 +13,16 @@
     #headingOne.card-header
       %h5.mb-0
         %button.btn.btn-link.collapsed{"aria-controls" => "collapseOne", "aria-expanded" => "true", "data-target" => "#collapseOne", "data-toggle" => "collapse"}
-          支出合計 ¥#{number_with_delimiter(Expense.total_expenditures(current_user_expenses, partner_expenses), delimiter: ",")}
+          支出合計 ¥#{number_with_delimiter(one_total_expenditures(current_user_expenses, partner_expenses.both_t), delimiter: ",")}
     #collapseOne.collapse{"aria-labelledby" => "headingOne", "data-parent" => "#accordion"}
       .card-body
-        - Expense.category_sums(current_user_expenses, partner_expenses).each do |key, value|
-          - category = Category.find(key).kind
+        - category_sums(current_user_expenses, partner_expenses.both_t).each do |category_id, amount|
+          - category = Category.find(category_id).kind
           %div
-            = link_to each_category_expense_path(key, cnum), remote: true, anchor: "accordion", class: "btn btn-category_expense btn-lg btn-block"  do
+            = link_to each_category_expense_path(category_id, cnum), remote: true, anchor: "accordion", class: "btn btn-category_expense btn-lg btn-block"  do
               = category
               %span.details
-                ¥#{number_with_delimiter(value, delimiter: ",")}
+                ¥#{number_with_delimiter(amount, delimiter: ",")}
 
   .card
     #headingTwo.card-header
@@ -31,12 +31,41 @@
           カテゴリ別予算残金
     #collapseTwo.collapse{"aria-labelledby" => "headingTwo", "data-parent" => "#accordion"}
       .card-body
-        - (current_user.badgets).each do |badget|
-          - category = Category.find(badget.category_id)
+        - ordered_badget(current_user).each do |badget|
           %div
-            = category.kind
+            = badget.category.kind
             %span.details
-              ¥#{number_with_delimiter(category_balance(badget, category, current_user_expenses, partner_expenses), delimiter: ",")}
+              ¥#{number_with_delimiter(category_balance(badget, badget.category, current_user_expenses, partner_expenses.both_t), delimiter: ",")}
+
+  - if partner.allow_share_own
+    .card
+      #headingThree.card-header
+        %h5.mb-0
+          %button.btn.btn-link.collapsed{"aria-controls" => "collapseThree", "aria-expanded" => "true", "data-target" => "#collapseThree", "data-toggle" => "collapse"}
+            パートナーの支出合計 ¥#{number_with_delimiter(one_total_expenditures(partner_expenses, current_user_expenses.both_t), delimiter: ",")}
+      #collapseThree.collapse{"aria-labelledby" => "headingThree", "data-parent" => "#accordion"}
+        .card-body
+          - category_sums(partner_expenses, current_user_expenses.both_t).each do |category_id, amount|
+            - category = Category.find(category_id).kind
+            %div
+              = link_to each_category_expense_path(category_id, cnum), remote: true, anchor: "accordion", class: "btn btn-category_expense btn-lg btn-block"  do
+                = category
+                %span.details
+                  ¥#{number_with_delimiter(amount, delimiter: ",")}
+
+  - if partner.allow_share_own
+    .card
+      #headingFour.card-header
+        %h5.mb-0
+          %button.btn.btn-link.collapsed{"aria-controls" => "collapseFour", "aria-expanded" => "true", "data-target" => "#collapseFour", "data-toggle" => "collapse"}
+            パートナーのカテゴリ別予算残金
+      #collapseFour.collapse{"aria-labelledby" => "headingFour", "data-parent" => "#accordion"}
+        .card-body
+          - ordered_badget(partner).each do |badget|
+            %div
+              = badget.category.kind
+              %span.details
+                ¥#{number_with_delimiter(category_balance(badget, badget.category, partner_expenses, current_user_expenses.both_t), delimiter: ",")}
 
 #category_expense_parent
   = render 'expenses/expenses_list', current_user_expenses: current_user_expenses, partner_expenses: partner_expenses

@@ -33,7 +33,11 @@
   %div
   = link_to '新しい手渡し金額を追加', new_pay_path, class: "btn btn-default block"
 
-  %table.table.pay
+  %br
+  %br
+  %br
+
+  %table.table
     %tr
       %th 該当月
       %th 名前
@@ -48,7 +52,7 @@
             = link_to "#{display_name(pay.user_id).name}", edit_pay_path(pay)
           %td
             = link_to "¥#{number_with_delimiter(pay.pamount, delimiter: ",")}", edit_pay_path(pay)
-          %td.memo
+          %td
             = link_to "#{pay.memo}", edit_pay_path(pay)
         - elsif pay.user_id == partner.id
           %td #{pay.date.strftime("%Y/%m")}

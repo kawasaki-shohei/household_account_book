@@ -16,10 +16,6 @@ class RepeatExpense < ApplicationRecord
   end
 
   def self.arrange(both_flg)
-    if both_flg == false
-      self.both_f.newer
-    else
-      self.both_t.newer
-    end
+    both_flg ? self.both_t.newer : self.both_f.newer
   end
 end

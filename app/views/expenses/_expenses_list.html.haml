@@ -15,7 +15,7 @@
             #{category.kind}の合計
           - else
             支払い合計
-          %span.expense_sum_detail ¥#{number_with_delimiter(both_sum(current_user_expenses, partner_expenses), delimiter: ",")}
+          %span.expense_sum_detail ¥#{number_with_delimiter(both_sum(current_user_expenses, partner_expenses.both_t), delimiter: ",")}
       .both_list #{current_user.name}の出費
       - (current_user_expenses.arrange(true)).each do |expense|
         %div.each_expense

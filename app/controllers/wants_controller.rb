@@ -1,5 +1,5 @@
 class WantsController < ApplicationController
-  after_action -> {create_notification(@want)}, only:[:create, :update]
+  after_action -> {create_notification(@want)}, only:[:create, :update, :change_bought_button]
 
   def index
     @wants = (current_user.wants).or(partner.wants).order(created_at: :desc)
@@ -39,6 +39,15 @@ class WantsController < ApplicationController
       redirect_to wants_path, notice: "新しい欲しいものリストを削除しました。"
     else
       redirect_to wants_path, notice: "システムエラーのため削除できません"
+    end
+  end
+
+  def change_bought_button
+    @want = Want.find(params[:id])
+    if @want.bought_flg
+      @want.update(bought_flg: false)
+    else
+      @want.update(bought_flg: true)
     end
   end
 

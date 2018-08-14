@@ -7,7 +7,7 @@ class ExpensesController < ApplicationController
   def index
     @cnum = 0
     @current_user_expenses = current_user.expenses.this_month
-    @partner_expenses = partner.expenses.this_month.both_t
+    @partner_expenses = partner.expenses.this_month
   end
 
   def both
@@ -75,10 +75,7 @@ class ExpensesController < ApplicationController
     cnum = params[:cnum].to_i
     @category = Category.find(params[:category_id].to_i)
     @current_user_expenses = ShiftMonth.ones_expenses(current_user, cnum).category(@category.id)
-    @partner_expenses = ShiftMonth.ones_expenses(partner, cnum).both_t.category(@category.id)
-    respond_to do |format|
-      format.js
-    end
+    @partner_expenses = ShiftMonth.ones_expenses(partner, cnum).category(@category.id)
   end
 
   private

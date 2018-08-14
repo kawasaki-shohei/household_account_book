@@ -1,0 +1,7 @@
+.container-fluid
+  %table.row.table
+    %tr
+      %td.col-8 自分だけの出費を共有
+      %td.col-2
+        #allow_share_own
+          = render 'settings_buttons', user: current_user

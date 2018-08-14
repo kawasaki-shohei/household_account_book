@@ -1,6 +1,6 @@
 .container-fluid
   = link_to '欲しいものリストを追加', new_want_path, class: "btn btn-default block"
-  %table.row.table#wants_list
+  %table.row.table
     %tr
       %th.col-8 商品名
       %th.col-2 Bought
@@ -12,7 +12,7 @@
             .goods_name #{want.name}
             .want_memo #{want.memo}
         %td.col-2
-          = render 'wants/bought_button', want: want
+          = render 'bought_button', want: want
         %td.col-2
           = link_to want_path(want), method: :delete, data: {confirm: "Are you sure?"}, id: "del_list_btn" do
             %i.fas.fa-minus-circle.fa-2x
