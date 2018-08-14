@@ -15,6 +15,9 @@ user1@gmail.com
 user2@gmail.com  
 000000  
 
+# アセッツプリコンバイル
+`bundle exec rake assets:precompile RAILS_ENV=production`
+
 
 # staging環境デプロイ方法
 1. stage-habfocのgitリポジトリを追加  
