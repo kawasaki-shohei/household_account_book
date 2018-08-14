@@ -1,8 +1,16 @@
 Rails.application.routes.draw do
 
+  get 'settings/index'
+
+  get 'settings/show'
+
   resources :sessions, only: [:new, :create, :destroy]
 
-  resources :users
+  resources :users do
+    resources :settings, only: [:index] do
+      get :change_allow_show_mine, on: :collection
+    end
+  end
   resources :partners, only:[:new, :create, :destroy]
 
   resources :expenses do
