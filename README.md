@@ -26,7 +26,9 @@ herokuの場合はこれをしてデプロイしないとassetsが反映され�
 3. stagingブランチをpush  
 `git push staging staging:master`
 4. マイグレーション  
-`heroku run rails db:migrate --remote staging`
+`heroku run rails db:migrate --remote staging`  
+or  
+`heroku run rails db:migrate --app stage-habfoc`
 
 # stylesheet適応方法
 デフォルトなら`rails g`コマンドでassetsやhelperが自動生成されるが、  
