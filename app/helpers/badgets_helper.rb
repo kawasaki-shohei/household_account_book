@@ -1,4 +1,5 @@
 module BadgetsHelper
+  # 予算が未入力のカテゴリを抽出
   def make_left_categories(categories)
     all_categories = Hash.new
     categories.each do |category|

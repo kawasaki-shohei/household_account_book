@@ -36,6 +36,12 @@ or
 scssファイルを足したいなら、`app/assets/stylesheets/`配下にファイルを作成し、  
 `app/assets/stylesheets/application.scss`に`@import 'ファイル名';`を追記する。
 
+# RDoc表示方法
+ターミナルでコマンド入力
+`yardoc app/helpers/* app/models/* app/controllers/*`
+`yard server`
+http://localhost:8808/docs/index にアクセス
+
 # 背景
 - カップルの財布を別にしたい
 - 出費をしっかり管理したい
