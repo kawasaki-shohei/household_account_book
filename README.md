@@ -44,10 +44,10 @@ http://localhost:8808/docs/index にアクセス
 
 # テストデータ挿入方法
 1. seedファイルを指定して挿入する方法  
-    `rails db:seed_from_file SEED_FILENAME='ファイル名' RAILS_ENV=test`   
+    `rails db:seed_from_file SEED_FILENAME='ファイル名' RAILS_ENV=環境`   
     ファイル名はパス付き。パスはdb/からの相対パス。`db/seeds/sample_seeds.rb`なら`seeds/sample_seeds.rb`  
     e.g  
-    `rails db:seed_from_file SEED_FILENAME='dummy_users.rb' RAILS_ENV=test`  
+    `rails db:seed_from_file SEED_FILENAME='seeds/01_dummy_users_seeds.rb' RAILS_ENV=test`  
 2. seedsディレクトリ配下の全てのseedを実行  
     `rails db:seeds RAILS_ENV=test`
 
