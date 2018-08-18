@@ -4,9 +4,9 @@ tables.each do |table|
 end
 
 users = []
-1.upto 2 do |i|
+2.times do |i|
+  i += 1
   users << User.new(
-    id: i,
     name: "test-user#{i}",
     email: "user#{i}@gmail.com",
     password: ENV['DUMMY_USERS_PASSWORD'],
