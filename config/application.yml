@@ -1,5 +1,4 @@
 default: &defaults
-  dummy_user_password: "000000"
 development:
   <<: *defaults
 test:

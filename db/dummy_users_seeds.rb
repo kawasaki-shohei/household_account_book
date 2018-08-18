@@ -6,12 +6,12 @@ end
 users = []
 1.upto 2 do |i|
   users << User.new(
-        id: i,
-        name: "test-user#{i}",
-        email: "user#{i}@gmail.com",
-        password: Settings.dummy_user_password,
-        password_confirmation: Settings.dummy_user_password,
-        allow_share_own: false
+    id: i,
+    name: "test-user#{i}",
+    email: "user#{i}@gmail.com",
+    password: ENV['DUMMY_USERS_PASSWORD'],
+    password_confirmation: ENV['DUMMY_USERS_PASSWORD'],
+    allow_share_own: false
   )
 end
 
@@ -23,8 +23,8 @@ partner = users[1]
 
 def make_partner(user, partner)
   @partners << Partner.new(
-                       user_id: user.id,
-                       partner_id: partner.id
+    user_id: user.id,
+    partner_id: partner.id
   )
 end
 
