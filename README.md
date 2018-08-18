@@ -37,10 +37,19 @@ scssファイルを足したいなら、`app/assets/stylesheets/`配下にファ
 `app/assets/stylesheets/application.scss`に`@import 'ファイル名';`を追記する。
 
 # RDoc表示方法
-ターミナルでコマンド入力
-`yardoc app/helpers/* app/models/* app/controllers/*`
-`yard server`
-http://localhost:8808/docs/index にアクセス
+ターミナルでコマンド入力  
+`yardoc app/helpers/* app/models/*   app/controllers/*`  
+`yard server`  
+http://localhost:8808/docs/index にアクセス  
+
+# テストデータ挿入方法
+1. seedファイルを指定して挿入する方法  
+    `rails db:seed_from_file SEED_FILENAME='ファイル名' RAILS_ENV=test`   
+    ファイル名はパス付き。パスはdb/からの相対パス。`db/seeds/sample_seeds.rb`なら`seeds/sample_seeds.rb`  
+    e.g  
+    `rails db:seed_from_file SEED_FILENAME='dummy_users.rb' RAILS_ENV=test`  
+2. seedsディレクトリ配下の全てのseedを実行  
+    `rails db:seeds RAILS_ENV=test`
 
 # 背景
 - カップルの財布を別にしたい

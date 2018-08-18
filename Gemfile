@@ -39,6 +39,8 @@ gem 'bcrypt', '3.1.11'
 gem 'bootstrap', '~> 4.1.3'
 gem 'jquery-rails'
 gem 'sprockets-rails', '~> 3.2', '>= 3.2.1'
+gem 'settingslogic'
+gem 'activerecord-import'
 
 group :staging do
   gem 'pg', '~> 0.18'
@@ -54,6 +56,7 @@ group :development, :test do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'rspec-rails', '~> 3.8'
+  gem 'faker'
 end
 
 group :development do
