@@ -23,14 +23,9 @@ class Expense < ApplicationRecord
   scope :both_t, -> {where(both_flg: true)}
   scope :newer, -> {order(date: :desc, created_at: :desc)}
 
-  def self.ones_expenses_of_both(user)
-    user.expenses.this_month.both_t.newer
-  end
-
-  # def self.one_total_expenditures(current_user_expenses, partner_expenses)
-  #   current_user_expenses.both_f.sum(:amount) + current_user_expenses.both_t.sum(:mypay) + partner_expenses.sum(:partnerpay)
-  # end
-
+  # viewで出費リストを表示するために、並び替えを行うメソッド
+  # @param [boolean] both_flg 二人のための出費ならtrue, 自分だけのためのフラグならfalse
+  # @return 基本的には新しいものが上に表示されるようにしているが、繰り返し出費で入力されたものは、普通の出費が全て表示された後に表示されるように並び替えている
   def self.arrange(both_flg)
     expenses = both_flg ? self.both_t : self.both_f
     ids = expenses.where(repeat_expense_id: nil).newer.map{|i| i.id}
@@ -50,15 +45,21 @@ class Expense < ApplicationRecord
     end
   end
 
-  def self.expense_in_both_this_month(current_user, partner)
+  # 手渡し料金表示画面で今月の料金を計算するメソッド
+  def self.both_this_month(current_user, partner)
     current_user.expenses.this_month.both_t.sum(:mypay) + partner.expenses.this_month.both_t.sum(:partnerpay) - current_user.expenses.this_month.both_t.sum(:amount)
   end
 
-  def self.expense_in_both_last_month(current_user, partner)
+  # 手渡し料金表示画面で先月の料金を計算するメソッド
+  def self.both_last_month(current_user, partner)
     current_user.expenses.last_month.both_t.sum(:mypay) + partner.expenses.last_month.both_t.sum(:partnerpay) - current_user.expenses.last_month.both_t.sum(:amount)
   end
 
-  def self.creat_repeat_expenses(s_date, r_date, e_date, repeat_expense, expense_params)
+  # 新しく繰り返し出費が登録されたときに、expensesテーブルに該当する出費をインサートしていくメソッド
+  def self.creat_repeat_expenses(repeat_expense, expense_params)
+    s_date = repeat_expense.s_date
+    e_date = repeat_expense.e_date
+    r_date = repeat_expense.r_date
     (s_date..e_date).select{|d| d.day == r_date }.each do |date|
       expense = Expense.new(expense_params)
       expense.date = date
@@ -67,6 +68,7 @@ class Expense < ApplicationRecord
     end
   end
 
+  # 繰り返し出費の更新のときのためのメソッド。方針が決まらず、途中
   def self.update_repeat_expense(old, repeat_expense, expense_params)
     today = Date.today
     old_s_date = old.s_date
@@ -87,9 +89,13 @@ class Expense < ApplicationRecord
     end
   end
 
+  # 繰り返し出費を消したときのそれに紐づいているexpensesを消去するメソッド
+  # 当月以降のexpensesは消去。当月以前のexpensesは残す
   def self.destroy_repeat_expenses(user, repeat_expense_id)
-    expenses = user.expenses.where('repeat_expense_id = ? AND date >= ?', repeat_expense_id, Date.today.beginning_of_month)
-    expenses.destroy_all
+    future_expenses = user.expenses.where('repeat_expense_id = ? AND date >= ?', repeat_expense_id, Date.today.beginning_of_month)
+    future_expenses.destroy_all
+    past_expenses = user.expenses.where('repeat_expense_id = ? AND date <= ?', repeat_expense_id, Date.today.beginning_of_month)
+    past_expenses.update(repeat_expense_id: nil)
   end
 
 end

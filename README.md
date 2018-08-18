@@ -26,13 +26,21 @@ herokuの場合はこれをしてデプロイしないとassetsが反映され�
 3. stagingブランチをpush  
 `git push staging staging:master`
 4. マイグレーション  
-`heroku run rails db:migrate --remote staging`
+`heroku run rails db:migrate --remote staging`  
+or  
+`heroku run rails db:migrate --app stage-habfoc`
 
 # stylesheet適応方法
 デフォルトなら`rails g`コマンドでassetsやhelperが自動生成されるが、  
 `application.rb`で自動生成しないようにしてあるため、
 scssファイルを足したいなら、`app/assets/stylesheets/`配下にファイルを作成し、  
 `app/assets/stylesheets/application.scss`に`@import 'ファイル名';`を追記する。
+
+# RDoc表示方法
+ターミナルでコマンド入力
+`yardoc app/helpers/* app/models/* app/controllers/*`
+`yard server`
+http://localhost:8808/docs/index にアクセス
 
 # 背景
 - カップルの財布を別にしたい
@@ -41,7 +49,19 @@ scssファイルを足したいなら、`app/assets/stylesheets/`配下にファ
 
 # 各機能
 ### 出費の入力(expense)
-出費の入力のときに、自分の出費かパートナーとの出費かを入力するだけで、総支出額やカテゴリ別の出費の計算などを自動計算。
+出費の入力のときに、自分の出費かパートナーとの出費かを入力するだけで、総支出額やカテゴリ別の出費の計算などを自動計算。  
+出費の一覧画面で表示されるもの
+- 支出合計額 (設定画面で共有を許可すると、パートナーの分も表示)
+  - カテゴリ別の支出合計額 (設定画面で共有を許可すると、パートナーの分も表示)  
+  各カテゴリがリンクになっていて、クリックすると、出費リストがそのカテゴリの出費だけのものに入れ替わる。
+- カテゴリ別の予算残高 (設定画面で共有を許可すると、パートナーの分も表示)
+- 入力した出費の一覧
+  - Bothタブ 二人のための出費のリスト
+  - Mine 自分のためだけの出費のリスト  
+  - (設定画面で共有を許可すると、パートナーの分も表示)  
+  Partner パートナーの自分のためだけの出費のリスト
+- 前後月移動ボタン  
+
 
 ### 予算 (badget)
 予算を登録しておくと、出費一覧画面に「カテゴリ別予算残金」を計算してくれる。  

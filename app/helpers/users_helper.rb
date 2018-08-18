@@ -16,6 +16,7 @@ module UsersHelper
     end
   end
 
+  # パートナーが誰かを調べるもの。出費リストの表示でパートナーのパートナーを表示するため。
   def who_is_partner(user)
     check = Partner.find_by(user_id: user.id)
     User.find(check.partner_id)
