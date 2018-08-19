@@ -18,7 +18,6 @@ user2@gmail.com
 `bundle exec rake assets:precompile RAILS_ENV=production`  
 herokuの場合はこれをしてデプロイしないとassetsが反映されない。
 
-
 # staging環境デプロイ方法
 1. stage-habfocのgitリポジトリを追加  
 `git remote add staging HEROKU-GIT-URL`  
@@ -50,6 +49,78 @@ http://localhost:8808/docs/index にアクセス
     `rails db:seed_from_file SEED_FILENAME='seeds/01_dummy_users_seeds.rb' RAILS_ENV=test`  
 2. seedsディレクトリ配下の全てのseedを実行  
     `rails db:seeds RAILS_ENV=test`
+
+# AWS使用時設定方法
+利用環境:
+ - サーバー:AmazonLinux2
+ - 参考サイト: 
+  - https://qiita.com/yutaka_izumaru/items/44ae64df91f9fed593d2(途中からのRuby導入方法)
+  - https://normalblog.net/system/ruby-on-rails5-aws/ (3行ぐらい役に立った)
+  - https://qiita.com/yujiro0102/items/0bc30ab0a73de62c4e2d (何故かNode.js入れれなかったので)
+手順
+ 1. sshできる必要設定をAmazonマネジメントコンソールより設定
+ 2. ssh後以下コマンドを上から実行
+ ```text
+yum update
+##多分ここから
+sudo yum install \
+git make gcc-c++ patch \
+openssl-devel \
+libyaml-devel libffi-devel libicu-devel \
+libxml2 libxslt libxml2-devel libxslt-devel \
+zlib-devel readline-devel \
+mysql mysql-server mysql-devel \
+ImageMagick ImageMagick-devel \
+epel-release
+##ここまで入力できる
+##node.jsインストール手順
+##必要ないかもだけど下2つ実行（怒られても無視で）
+sudo yum -y install gcc-c++
+sudo yum -y install git
+##ここから本番
+##nvmのクローン
+git clone https://github.com/creationix/nvm.git ~/.nvm
+##パスを通す
+source ~/.nvm/nvm.sh
+vim .bash_profile
+## 以下を追加(.bash_profile)
+# nvm
+if [[ -s ~/.nvm/nvm.sh ]] ; then
+        source ~/.nvm/nvm.sh ;
+fi
+#インストール可能なNode.jsの確認
+nvm ls-remote
+#最新版(安定版)をインストール
+nvm install 8.11.4
+#インストールされたバージョンの確認(念の為)
+node -v
+#nodejs終わり
+#以下からRuby
+git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
+git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
+echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
+echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
+source ~/.bash_profile
+sudo yum install gcc openssl-devel readline-devel sqlite-devel
+rbenv install 2.3.0
+rbenv global 2.3.0
+gem update --system
+gem install --no-ri --no-rdoc rails
+gem install bundler
+#sqliteなのか・・・？
+gem install sqlite3
+#これもわかってない
+gem install unicorn
+rbenv rehash
+rails -v
+rails new /var/www/html/sample
+sudo mkdir /var/run/unicorn
+sudo chmod 777 /var/run/unicorn
+sudo chown -R nginx:ec2-user /var/www/html
+sudo chmod 2777 /var/www -R
+```
+上記暫定版のため使用の際は注意
+  
 
 # 背景
 - カップルの財布を別にしたい
