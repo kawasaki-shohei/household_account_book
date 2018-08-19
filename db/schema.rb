@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180812085207) do
+ActiveRecord::Schema.define(version: 20180818135015) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -78,15 +78,6 @@ ActiveRecord::Schema.define(version: 20180812085207) do
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
-  create_table "partners", force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "partner_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["partner_id"], name: "index_partners_on_partner_id"
-    t.index ["user_id"], name: "index_partners_on_user_id"
-  end
-
   create_table "pays", force: :cascade do |t|
     t.integer "pamount"
     t.bigint "user_id"
@@ -122,7 +113,9 @@ ActiveRecord::Schema.define(version: 20180812085207) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "allow_share_own", default: false
+    t.bigint "partner_id"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["partner_id"], name: "index_users_on_partner_id"
   end
 
   create_table "wants", force: :cascade do |t|
@@ -142,8 +135,6 @@ ActiveRecord::Schema.define(version: 20180812085207) do
   add_foreign_key "expenses", "repeat_expenses"
   add_foreign_key "notifications", "notification_messages"
   add_foreign_key "notifications", "users"
-  add_foreign_key "partners", "users"
-  add_foreign_key "partners", "users", column: "partner_id"
   add_foreign_key "pays", "users"
   add_foreign_key "repeat_expenses", "categories"
   add_foreign_key "repeat_expenses", "users"

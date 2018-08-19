@@ -1,7 +1,0 @@
-%div.whole_page.container-fluid
-  %div パートナーを登録する
-  = form_with(model:@new_partner, local: true) do |form|
-    %div メールアドレス
-    %div
-    = form.email_field :email, required: true
-    = form.submit
