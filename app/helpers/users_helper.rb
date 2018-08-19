@@ -1,4 +1,5 @@
 module UsersHelper
+  include SessionsHelper
   def partner
     @partner ||= current_user.partner
 end
