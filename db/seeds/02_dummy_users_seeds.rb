@@ -17,17 +17,13 @@ end
 
 User.import users
 
-user = users[0]
-partner = users[1]
-@partners = []
-
-def make_partner(user, partner)
-  @partners << Partner.new(
-    user_id: user.id,
-    partner_id: partner.id
-  )
+def register_partner(user, partner)
+  user.assign_attributes(partner_id: partner.id)
+  user.password = ENV['DUMMY_USERS_PASSWORD']
+  user.save
 end
 
-make_partner(user, partner)
-make_partner(partner, user)
-Partner.import @partners
+user = users[0]
+partner = users[1]
+register_partner(user, partner)
+register_partner(partner, user)
