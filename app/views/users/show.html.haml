@@ -5,6 +5,12 @@
   - if partner.present?
     %div #{partner.name}さん
   - else
-    = link_to '登録する', new_partner_path, class: "btn btn-default"
-
-  
+    - if @user.errors.any?
+      = render 'layouts/error', var: @user
+    %div
+      パートナーを登録する
+      = form_with(model: @user, url: register_partner_user_path, local: true) do |form|
+        %div パートナーのメールアドレス
+        %div
+        = form.email_field :partner_email, required: true
+        = form.submit "パートナーを登録", class: "btn btn-default"

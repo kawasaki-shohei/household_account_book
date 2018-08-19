@@ -7,11 +7,12 @@ Rails.application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
 
   resources :users do
+    put :register_partner, on: :member
+    patch :register_partner, on: :member
     resources :settings, only: [:index] do
       get :change_allow_share_own, on: :collection
     end
   end
-  resources :partners, only:[:new, :create, :destroy]
 
   resources :expenses do
     collection do
@@ -48,5 +49,5 @@ Rails.application.routes.draw do
   # get 'bought_buttons/bought/:id', to: 'bought_buttons#bought', as: :bought
   # get 'bought_buttons/want/:id', to: 'bought_buttons#want', as: :back_to_want
 
-  root to: "expenses#both"
+  root to: "expenses#index"
 end

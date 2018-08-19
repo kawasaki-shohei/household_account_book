@@ -1,6 +1,6 @@
 class Expense < ApplicationRecord
   belongs_to :user
-  has_one :category
+  belongs_to :category
   validates :amount, :date, presence: true
   validate :calculate_amount
   def calculate_amount

@@ -39,6 +39,9 @@ gem 'bcrypt', '3.1.11'
 gem 'bootstrap', '~> 4.1.3'
 gem 'jquery-rails'
 gem 'sprockets-rails', '~> 3.2', '>= 3.2.1'
+gem 'settingslogic'
+gem 'activerecord-import'
+gem 'dotenv-rails'
 
 group :staging do
   gem 'pg', '~> 0.18'
@@ -53,6 +56,8 @@ group :development, :test do
   gem 'pry-rails'
   gem 'better_errors'
   gem 'binding_of_caller'
+  gem 'rspec-rails', '~> 3.8'
+  gem 'faker'
 end
 
 group :development do
@@ -65,6 +70,7 @@ group :development do
   gem 'html2haml'
   gem 'yard', '~> 0.9.16'
   gem 'guard-yard', '~> 2.2', '>= 2.2.1'
+  gem 'spring-commands-rspec', '~> 1.0', '>= 1.0.4'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

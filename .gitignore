@@ -18,3 +18,5 @@
 
 .byebug_history
 /doc/*
+/csv/*
+.env
