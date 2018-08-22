@@ -68,9 +68,11 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'html2haml'
+  gem 'spring-commands-rspec', '~> 1.0', '>= 1.0.4'
   gem 'yard', '~> 0.9.16'
   gem 'guard-yard', '~> 2.2', '>= 2.2.1'
-  gem 'spring-commands-rspec', '~> 1.0', '>= 1.0.4'
+  gem 'annotate'
+  gem 'kramdown', :require => false
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

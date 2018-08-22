@@ -1,3 +1,35 @@
+# ## Schema Information
+#
+# Table name: `notifications`
+#
+# ### Columns
+#
+# Name                           | Type               | Attributes
+# ------------------------------ | ------------------ | ---------------------------
+# **`id`**                       | `bigint(8)`        | `not null, primary key`
+# **`read_flg`**                 | `boolean`          | `default(FALSE)`
+# **`record_meta`**              | `text`             | `not null`
+# **`created_at`**               | `datetime`         | `not null`
+# **`updated_at`**               | `datetime`         | `not null`
+# **`notification_message_id`**  | `bigint(8)`        |
+# **`notified_by_id`**           | `integer`          |
+# **`user_id`**                  | `bigint(8)`        |
+#
+# ### Indexes
+#
+# * `index_notifications_on_notification_message_id`:
+#     * **`notification_message_id`**
+# * `index_notifications_on_user_id`:
+#     * **`user_id`**
+#
+# ### Foreign Keys
+#
+# * `fk_rails_...`:
+#     * **`notification_message_id => notification_messages.id`**
+# * `fk_rails_...`:
+#     * **`user_id => users.id`**
+#
+
 class Notification < ApplicationRecord
   belongs_to :user
   belongs_to :notification_message
