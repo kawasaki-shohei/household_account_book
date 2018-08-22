@@ -20,3 +20,8 @@
 /doc/*
 /csv/*
 .env
+.DS_Store
+
+# IntelliJ
+.idea
+*.iml

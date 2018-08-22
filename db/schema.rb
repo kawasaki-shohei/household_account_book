@@ -78,6 +78,15 @@ ActiveRecord::Schema.define(version: 20180818135015) do
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
+  create_table "partners", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "partner_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["partner_id"], name: "index_partners_on_partner_id"
+    t.index ["user_id"], name: "index_partners_on_user_id"
+  end
+
   create_table "pays", force: :cascade do |t|
     t.integer "pamount"
     t.bigint "user_id"
@@ -135,6 +144,8 @@ ActiveRecord::Schema.define(version: 20180818135015) do
   add_foreign_key "expenses", "repeat_expenses"
   add_foreign_key "notifications", "notification_messages"
   add_foreign_key "notifications", "users"
+  add_foreign_key "partners", "users"
+  add_foreign_key "partners", "users", column: "partner_id"
   add_foreign_key "pays", "users"
   add_foreign_key "repeat_expenses", "categories"
   add_foreign_key "repeat_expenses", "users"
