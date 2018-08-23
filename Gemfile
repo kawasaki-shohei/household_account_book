@@ -73,6 +73,9 @@ group :development do
   gem 'guard-yard', '~> 2.2', '>= 2.2.1'
   gem 'annotate'
   gem 'kramdown', :require => false
+  gem 'rails-erd'
+  gem 'schemadoc'
+  gem 'ruby-graphviz'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
