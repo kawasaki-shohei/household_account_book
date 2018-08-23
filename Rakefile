@@ -4,3 +4,7 @@
 require_relative 'config/application'
 
 Rails.application.load_tasks
+
+Rake::Task['db:migrate'].enhance do
+  Rake::Task['erd'].invoke
+end

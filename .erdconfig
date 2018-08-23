@@ -1,0 +1,10 @@
+exclude: 'ActiveRecord::InternalMetadata, ActiveRecord::SchemaMigration'
+
+attributes:
+  - content
+  - foreign_key
+  - primary_keys
+  - timestamps
+  - inheritance
+filetype: png
+title: Habfoc ERD

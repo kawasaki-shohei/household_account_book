@@ -71,6 +71,7 @@ GEM
       xpath (>= 2.0, < 4.0)
     childprocess (0.8.0)
       ffi (~> 1.0, >= 1.0.11)
+    choice (0.2.0)
     coderay (1.1.2)
     coffee-rails (4.2.2)
       coffee-script (>= 2.2.0)
@@ -98,6 +99,8 @@ GEM
     execjs (2.7.0)
     faker (1.9.1)
       i18n (>= 0.7)
+    fetcher (0.4.5)
+      logutils (>= 0.6)
     ffi (1.9.18)
     formatador (0.2.5)
     globalid (0.4.1)
@@ -142,6 +145,7 @@ GEM
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
       ruby_dep (~> 1.2)
+    logutils (0.6.1)
     loofah (2.2.2)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -187,6 +191,11 @@ GEM
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
+    rails-erd (1.5.2)
+      activerecord (>= 3.2)
+      activesupport (>= 3.2)
+      choice (~> 0.2.0)
+      ruby-graphviz (~> 1.2)
     rails-html-sanitizer (1.0.4)
       loofah (~> 2.2, >= 2.2.2)
     railties (5.1.4)
@@ -216,6 +225,7 @@ GEM
       rspec-mocks (~> 3.8.0)
       rspec-support (~> 3.8.0)
     rspec-support (3.8.0)
+    ruby-graphviz (1.2.3)
     ruby_dep (1.5.0)
     ruby_parser (3.10.1)
       sexp_processor (~> 4.9)
@@ -231,6 +241,9 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
+    schemadoc (1.1.0)
+      fetcher
+      logutils
     selenium-webdriver (3.8.0)
       childprocess (~> 0.5)
       rubyzip (~> 1.0)
@@ -299,8 +312,11 @@ DEPENDENCIES
   pry-rails
   puma (~> 3.7)
   rails (~> 5.1.4)
+  rails-erd
   rspec-rails (~> 3.8)
+  ruby-graphviz
   sass-rails (~> 5.0)
+  schemadoc
   selenium-webdriver
   settingslogic
   spring
