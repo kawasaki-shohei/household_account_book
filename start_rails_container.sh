@@ -28,6 +28,8 @@ if [ '' == "$COMMAND_RESULT" ] ; then
     # rails再起動
     docker-compose exec web rails restart
 
+    # テストデータ投入
+    docker-compose exec web rails db:seeds RAILS_ENV=staging
 else
 
     # バックグラウンドで起動のみ
