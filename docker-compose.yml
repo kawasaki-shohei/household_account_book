@@ -1,0 +1,26 @@
+version: '3'
+services:
+  web:
+    build: ./
+    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+    volumes:
+      - ./:/usr/src/household_account_book
+    environment:
+      RAILS_ENV: staging
+      RAILS_SERVE_STATIC_FILES: 'true'
+      DATABASE_URL: postgres://household_account_book:password@db:5432
+      STAGING_SECRET_KEY_BASE: ea7ba4d329e9e221bbbc43a1e300bec0d900a74a7668b8db71a341af36417696d2411c5cad03872b7f78621b8723a6eada8f4e358aa57cb1fdc8b839820e5495
+    tty: true
+    stdin_open: true
+  db:
+    image: postgres:10.1-alpine
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: household_account_book
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: household_account_book
