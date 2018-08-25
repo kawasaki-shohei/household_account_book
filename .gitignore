@@ -18,9 +18,9 @@
 
 .byebug_history
 /doc/*
-/.yardoc/*
-/db/csv/*
-/db/migrate/.DS_Store
+/csv/*
+.env
+.DS_Store
 
 # IntelliJ
 .idea
