@@ -25,7 +25,6 @@ gem 'jquery-rails'
 gem 'sprockets-rails', '~> 3.2', '>= 3.2.1'
 gem 'settingslogic'
 gem 'activerecord-import'
-gem 'dotenv-rails'
 
 group :staging do
   gem 'pg', '~> 0.18'
