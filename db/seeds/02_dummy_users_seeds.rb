@@ -1,4 +1,4 @@
-tables = ['users', 'partners']
+tables = %w(users, partners)
 tables.each do |table|
   ActiveRecord::Base.connection.reset_pk_sequence!(table)
 end
@@ -9,8 +9,8 @@ users = []
   users << User.new(
     name: "test-user#{i}",
     email: "user#{i}@gmail.com",
-    password: ENV['DUMMY_USERS_PASSWORD'],
-    password_confirmation: ENV['DUMMY_USERS_PASSWORD'],
+    password: Settings.dummy_users_password,
+    password_confirmation: Settings.dummy_users_password,
     allow_share_own: false
   )
 end
@@ -19,7 +19,7 @@ User.import users
 
 def register_partner(user, partner)
   user.assign_attributes(partner_id: partner.id)
-  user.password = ENV['DUMMY_USERS_PASSWORD']
+  user.password = Settings.dummy_users_password
   user.save
 end
 
