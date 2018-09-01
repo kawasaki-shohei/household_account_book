@@ -1,8 +1,10 @@
 default: &defaults
 development:
   <<: *defaults
+  dummy_users_password: "000000"
 test:
   <<: *defaults
+  dummy_users_password: "000000"
 staging:
   <<: *defaults
 production:
