@@ -38,7 +38,7 @@ class User < ApplicationRecord
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }
 
-  belongs_to :partner, class_name: 'User', optional: true, foreign_key: { to_table: :users }
+  belongs_to :partner, class_name: 'User', optional: true
   has_many :expenses, dependent: :destroy
   has_many :repeat_expenses, dependent: :destroy
   has_many :badgets, dependent: :destroy
@@ -46,5 +46,6 @@ class User < ApplicationRecord
   has_many :pays, dependent: :destroy
   has_many :wants, dependent: :destroy
   has_many :notifications, dependent: :destroy
+  has_many :deposits, dependent: :destroy
 
 end

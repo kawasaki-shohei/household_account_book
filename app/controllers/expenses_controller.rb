@@ -42,7 +42,7 @@ class ExpensesController < ApplicationController
   def create
     @expense = Expense.new(expense_params)
     if @expense.save
-      redirect_to expenses_path, notice: "出費を保存しました。#{@category.kind}: #{@expense.amount}円"
+      redirect_to expenses_path, notice: "出費を保存しました。#{@category.kind}: #{@expense.amount.to_s(:delimited)}円"
     else
       set_expenses_categories
       render 'index'
@@ -79,41 +79,41 @@ class ExpensesController < ApplicationController
   end
 
   private
-    def mypay_amount
-      whole_payment = params[:expense][:amount].to_i
-      case params[:expense][:percent].to_i
-      when 1
-        mypay = (whole_payment / 2).round
-      when 2
-        mypay = (whole_payment / 3).round
-      when 3
-        mypay = (whole_payment * 2 / 3).round
-      when 4
-        mypay = 0
-      end
-      return mypay
+  def mypay_amount
+    whole_payment = params[:expense][:amount].to_i
+    case params[:expense][:percent].to_i
+    when 1
+      mypay = (whole_payment / 2).round
+    when 2
+      mypay = (whole_payment / 3).round
+    when 3
+      mypay = (whole_payment * 2 / 3).round
+    when 4
+      mypay = 0
     end
+    return mypay
+  end
 
-    def expense_params
-      if params[:expense][:both_flg] == "true" && params[:expense][:percent] == "false"
-        params.require(:expense).permit(:amount, :date, :note, :category_id, :both_flg, :mypay, :partnerpay).merge(user_id: current_user.id, percent: nil, repeat_expense_id: nil)
-      elsif params[:expense][:both_flg] == "true"
-        partnerpay = params[:expense][:amount].to_i - mypay_amount
-        params.require(:expense).permit(:amount, :date, :note, :category_id, :both_flg, :percent).merge(user_id: current_user.id, mypay: mypay_amount, partnerpay: partnerpay, repeat_expense_id: nil)
-      else
-        params.require(:expense).permit(:amount, :date, :note, :category_id, :both_flg, :percent).merge(user_id: current_user.id, repeat_expense_id: nil)
-      end
+  def expense_params
+    if params[:expense][:both_flg] == "true" && params[:expense][:percent] == "false"
+      params.require(:expense).permit(:amount, :date, :note, :category_id, :both_flg, :mypay, :partnerpay).merge(user_id: current_user.id, percent: nil, repeat_expense_id: nil)
+    elsif params[:expense][:both_flg] == "true"
+      partnerpay = params[:expense][:amount].to_i - mypay_amount
+      params.require(:expense).permit(:amount, :date, :note, :category_id, :both_flg, :percent).merge(user_id: current_user.id, mypay: mypay_amount, partnerpay: partnerpay, repeat_expense_id: nil)
+    else
+      params.require(:expense).permit(:amount, :date, :note, :category_id, :both_flg, :percent).merge(user_id: current_user.id, repeat_expense_id: nil)
     end
+  end
 
-    def set_expenses_categories
-      @categories = current_user.categories.or(partner.categories.where(common: true))
-    end
+  def set_expenses_categories
+    @categories = current_user.categories.or(partner.categories.where(common: true))
+  end
 
-    def set_expense
-      @expense = Expense.find(params[:id])
-    end
+  def set_expense
+    @expense = Expense.find(params[:id])
+  end
 
-    def set_category
-      @category = Category.find(params[:expense][:category_id])
-    end
+  def set_category
+    @category = Category.find(params[:expense][:category_id])
+  end
 end

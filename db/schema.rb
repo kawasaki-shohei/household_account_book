@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180818135015) do
+ActiveRecord::Schema.define(version: 20180930033620) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,17 @@ ActiveRecord::Schema.define(version: 20180818135015) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["deleted_by"], name: "index_deleted_records_on_deleted_by"
+  end
+
+  create_table "deposits", force: :cascade do |t|
+    t.bigint "user_id"
+    t.boolean "is_withdrawn", default: false
+    t.integer "amount", null: false
+    t.datetime "date", null: false
+    t.string "memo"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_deposits_on_user_id"
   end
 
   create_table "expenses", force: :cascade do |t|
@@ -132,6 +143,7 @@ ActiveRecord::Schema.define(version: 20180818135015) do
   add_foreign_key "badgets", "users"
   add_foreign_key "categories", "users"
   add_foreign_key "deleted_records", "users", column: "deleted_by"
+  add_foreign_key "deposits", "users"
   add_foreign_key "expenses", "repeat_expenses"
   add_foreign_key "notifications", "notification_messages"
   add_foreign_key "notifications", "users"

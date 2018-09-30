@@ -51,7 +51,7 @@
   - if controller.controller_name == 'expenses'
     =link_to '削除する', expense_path(expense.id), method: :delete, data:{confirm: "Are you sure?"}, class: 'btn btn-delete btn-delete'
   - if controller.controller_name == 'repeat_expenses'
-    =link_to '削除する', repeat_expense_path(expense.id), method: :delete, data:{confirm: "Are you sure?"}, class: 'btn btn-delete btn-delete'
+    =link_to '削除する', repeat_expense_path(expense.id), method: :delete, data:{confirm: "Are you sure?"}, class: 'btn btn-delete'
     .causion
       この繰返し出費の今月分以降のものは削除できます。
     :css
