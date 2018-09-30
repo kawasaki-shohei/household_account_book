@@ -1,9 +1,5 @@
 Rails.application.routes.draw do
 
-  get 'settings/index'
-
-  get 'settings/show'
-
   resources :sessions, only: [:new, :create, :destroy]
 
   resources :users do
@@ -45,6 +41,9 @@ Rails.application.routes.draw do
   resources :wants do
     get :change_bought_button, on: :member
   end
+
+  resources :deposits, except: [:show]
+  get 'deposits/withdraw', to: 'deposits#withdraw', as: :withdraw_deposit
 
   # get 'bought_buttons/bought/:id', to: 'bought_buttons#bought', as: :bought
   # get 'bought_buttons/want/:id', to: 'bought_buttons#want', as: :back_to_want

@@ -35,6 +35,8 @@ class Expense < ApplicationRecord
   belongs_to :user
   belongs_to :category
   validates :amount, :date, presence: true
+  validates_length_of :amount, maximum: 10
+  validates_length_of :note, maximum: 100
   validate :calculate_amount
   def calculate_amount
     if mypay != nil && partnerpay != nil && mypay + partnerpay != amount

@@ -35,6 +35,10 @@
           #navbarResponsive.collapse.navbar-collapse
             %ul.navbar-nav
               %li.nav-item
+                = link_to "Pay", pays_path, class: "nav-link"
+              %li.nav-item
+                = link_to "Deposit", deposits_path, class: "nav-link"
+              %li.nav-item
                 = link_to "Want", wants_path, class: "nav-link"
               %li.nav-item
                 = link_to "Repeat", repeat_expenses_path, class: "nav-link"
@@ -42,8 +46,6 @@
                 = link_to "Badget", badgets_path, class: "nav-link"
               %li.nav-item
                 = link_to "Category", categories_path, class: "nav-link"
-              %li.nav-item
-                = link_to "Pay", pays_path, class: "nav-link"
               %li.nav-item
                 = link_to "Setting", user_settings_path(current_user.id), class: "nav-link"
               %li.nav-item
