@@ -54,5 +54,4 @@
           %span.expense_sum_detail ¥#{number_with_delimiter(mine_sum(partner_expenses), delimiter: ",")}
       - (partner_expenses.arrange(false)).each do |expense|
         %div.each_expense
-          = link_to edit_link(expense) do
-            = render 'expenses/display_expenses', expense: expense
+          = render 'expenses/display_expenses', expense: expense
