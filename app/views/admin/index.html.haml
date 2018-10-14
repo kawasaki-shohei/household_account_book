@@ -1,0 +1,25 @@
+.container-fluid
+  - if flash[:success].try(:any?)
+    = flash[:success]
+  - elsif flash[:error].try(:any?)
+    = flash[:error]
+
+  %h1 管理画面
+  - unless Rails.env.production?
+    %h3 サンプルデータ管理
+    %table.table
+      %tr
+        .row
+          %td.col-10 自分とパートナーのカテゴリを挿入
+          %td.col-2
+            = link_to "実行", insert_categories_admin_path, class: "btn btn-default", data: {confirm: "Are you sure? You must delete your all categories in advance. Did you?"}
+      %tr
+        .row
+          %td.col-10 自分とパートナーの今月の出費を挿入
+          %td.col-2
+            = link_to "実行", insert_this_month_expenses_admin_path, class: "btn btn-default"
+      %tr
+        .row
+          %td.col-10 自分とパートナーのデータを全て削除
+          %td.col-2
+            = link_to "実行", delete_all_data_admin_path, class: "btn btn-default", data: {confirm: "Are you really sure?"}
