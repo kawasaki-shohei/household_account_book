@@ -34,7 +34,7 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true,
                     length: { maximum: 255 },
                     format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i }
-  validates :partner_id, uniqueness: true
+  validates :partner_id, uniqueness: { scope: [:id, :partner_id] }
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }
 
