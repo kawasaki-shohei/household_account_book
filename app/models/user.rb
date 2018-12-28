@@ -47,5 +47,6 @@ class User < ApplicationRecord
   has_many :wants, dependent: :destroy
   has_many :notifications, dependent: :destroy
   has_many :deposits, dependent: :destroy
+  has_many :incomes, dependent: :destroy
 
 end

@@ -45,6 +45,8 @@ Rails.application.routes.draw do
   resources :deposits, except: [:show]
   get 'deposits/withdraw', to: 'deposits#withdraw', as: :withdraw_deposit
 
+  resources :incomes
+
   # get 'bought_buttons/bought/:id', to: 'bought_buttons#bought', as: :bought
   # get 'bought_buttons/want/:id', to: 'bought_buttons#want', as: :back_to_want
 
