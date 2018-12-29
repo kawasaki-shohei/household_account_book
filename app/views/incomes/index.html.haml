@@ -1,2 +1,31 @@
-%h1 Incomes#index
-%p Find me in app/views/incomes/index.html.haml
+.whole_page
+  %h3 収入一覧
+  = link_to '新しく収入を追加', new_income_path, class: "btn btn-default block"
+  %br
+  %br
+
+  %table.table
+    %tr
+      %th 日付
+      %th 名前
+      %th 金額
+      %th.memo メモ
+    - if @incomes
+      - @incomes.each do |income|
+        %tr
+          - if income.user_id == current_user.id
+            - path = edit_income_path(income)
+            %td
+              = link_to "#{income.date.strftime("%Y/%m/%d")}", path
+            %td
+              = link_to "#{income.user.name}", path
+            %td
+              = link_to "#{income.amount.to_s(:delimited)}円", path
+            %td
+              = link_to "#{truncate(income.memo, length: 10)}", path
+          -else
+            %td{style: color} #{income.date.strftime("%Y/%m/%d")}
+            %td{style: color} #{income.user.name}
+            %td{style: color} #{income.amount.to_s(:delimited)}円
+            %td{style: color} #{truncate(income.memo, length: 10)}
+%div

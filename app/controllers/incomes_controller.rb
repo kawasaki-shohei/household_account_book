@@ -1,5 +1,6 @@
 class IncomesController < ApplicationController
   def index
+    @incomes = current_user.incomes.order(date: :desc)
   end
 
   def new
