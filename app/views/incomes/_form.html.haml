@@ -1,0 +1,23 @@
+= form_with(model: @income, local: true) do |f|
+  - if @income.errors.any?
+    = render 'layouts/error', var: @income
+  .input-group.mb-3
+    .input-group-prepend
+      %span.input-group-text
+        収入
+    = f.number_field :amount, class: "form-control"
+    -#min: 0, max: 9999999999, required: true
+    .input-group-append
+      %span.input-group-text 円
+  .form-group
+    %label{for: 'date'} 日付
+    %div
+      = f.date_field :date, class: "form-control", required: true, value: action_name == 'edit' ? Date.parse(@income.date.strftime("%Y-%m-%d")) : Date.current
+  .form-group
+    %label{ for: 'memo' } メモ
+    %div
+      = f.text_field :memo, class: "form-control", maxlength: 100
+  = f.submit '送信する', class: "btn btn-default btn-confirm"
+
+  - if action_name == 'edit'
+    = link_to '削除する', income_path(@income.id), method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-delete'
