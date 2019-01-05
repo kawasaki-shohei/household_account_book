@@ -5,8 +5,7 @@
     .input-group-prepend
       %span.input-group-text
         収入
-    = f.number_field :amount, class: "form-control"
-    -#min: 0, max: 9999999999, required: true
+    = f.number_field :amount, class: "form-control", min: 0, max: 9999999999, required: true
     .input-group-append
       %span.input-group-text 円
   .form-group
