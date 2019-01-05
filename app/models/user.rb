@@ -36,7 +36,7 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true,
                     length: { maximum: 255 },
                     format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i }
-  validates :partner_id, uniqueness: true
+  validates :partner_id, uniqueness: { scope: [:id, :partner_id] }
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }
 
@@ -49,6 +49,7 @@ class User < ApplicationRecord
   has_many :wants, dependent: :destroy
   has_many :notifications, dependent: :destroy
   has_many :deposits, dependent: :destroy
+  has_many :incomes, dependent: :destroy
 
   def insert_expenses_for_a_month(year: Time.zone.today.year, month: Time.zone.today.month)
     @import_expenses = []
