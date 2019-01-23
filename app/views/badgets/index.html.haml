@@ -1,20 +1,29 @@
-%div
-  %table.table
-    %tr
-      %th カテゴリ
-      %th 予算
-      %th
-    - @categories.each do |category|
-      - unless category.badget.nil?
-        - badget = current_user.badgets.find_by(category_id: category.id)
+.whole_page
+  %div
+    %table.table
       %tr
-        %td #{category.kind}
-        - if badget.present?
-          %td ¥#{number_with_delimiter(badget.amount, delimiter: ",")}
-          %td #{link_to '編集', edit_badget_path(badget.id), class: "btn btn-default"}
-        - else
-          %td
-          %td
-          -# table.table
+        %th カテゴリ
+        %th 予算
+        %th
+      - @categories.each do |category|
+        - unless category.badget.nil?
+          - badget = current_user.badgets.find_by(category_id: category.id)
+        %tr
+          %td #{category.kind}
+          - if badget.present?
+            %td ¥#{badget.amount.to_s(:delimited)}
+            %td #{link_to '編集', edit_badget_path(badget.id), class: "btn btn-default"}
+          - else
+            %td
+            %td
+
+  - if @badgets.any?
+    %div.panel.panel-default
+      %div.panel-heading
+        予算の合計値
+      %div.panel-body
+        @badgets.sum
+
 
   = link_to '予算の追加', new_badget_path, class: "btn btn-default block"
+

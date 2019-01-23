@@ -3,6 +3,7 @@ class BadgetsController < ApplicationController
   before_action :set_badget, only: [:edit, :update]
 
   def index
+    @badgets = current_user.badgets.order(category_id: :asc)
   end
 
   def new
