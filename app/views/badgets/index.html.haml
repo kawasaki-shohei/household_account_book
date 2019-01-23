@@ -1,4 +1,17 @@
 .whole_page
+  %h2 予算一覧
+  - if @badgets.any?
+    %div.panel.panel-default
+      %div.panel-heading
+        予算の合計値
+      %div.panel-body
+        #{@badgets.map(&:amount).sum.to_s(:delimited)} 円
+    %br
+
+  = link_to '予算の追加', new_badget_path, class: "btn btn-default block"
+
+  %br
+
   %div
     %table.table
       %tr
@@ -14,15 +27,3 @@
           - else
             %td
             %td
-
-  - if @badgets.any?
-    %div.panel.panel-default
-      %div.panel-heading
-        予算の合計値
-      %div.panel-body
-        #{@badgets.map(&:amount).sum.to_s(:delimited)} 円
-  %br
-
-
-  = link_to '予算の追加', new_badget_path, class: "btn btn-default block"
-
