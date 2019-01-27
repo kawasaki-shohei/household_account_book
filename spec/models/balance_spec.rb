@@ -17,6 +17,9 @@
 #
 # * `index_balances_on_user_id`:
 #     * **`user_id`**
+# * `index_balances_on_user_id_and_month` (_unique_):
+#     * **`user_id`**
+#     * **`month`**
 #
 # ### Foreign Keys
 #

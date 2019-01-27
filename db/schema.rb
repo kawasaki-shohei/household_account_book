@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 2019_01_27_102436) do
     t.integer "amount"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id", "month"], name: "index_balances_on_user_id_and_month", unique: true
     t.index ["user_id"], name: "index_balances_on_user_id"
   end
 

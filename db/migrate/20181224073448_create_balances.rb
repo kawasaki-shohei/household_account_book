@@ -7,5 +7,6 @@ class CreateBalances < ActiveRecord::Migration[5.1]
 
       t.timestamps
     end
+    add_index :balances, [:user_id, :month], unique: true
   end
 end
