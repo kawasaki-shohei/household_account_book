@@ -10,8 +10,8 @@
 # **`amount`**             | `integer`          |
 # **`both_flg`**           | `boolean`          | `default(FALSE)`
 # **`date`**               | `date`             |
+# **`memo`**               | `string`           |
 # **`mypay`**              | `integer`          |
-# **`note`**               | `string`           |
 # **`partnerpay`**         | `integer`          |
 # **`percent`**            | `integer`          |
 # **`created_at`**         | `datetime`         | `not null`
@@ -36,7 +36,7 @@ class Expense < ApplicationRecord
   belongs_to :category
   validates :amount, :date, presence: true
   validates_length_of :amount, maximum: 10
-  validates_length_of :note, maximum: 100
+  validates_length_of :memo, maximum: 100
   validate :calculate_amount
   def calculate_amount
     if mypay != nil && partnerpay != nil && mypay + partnerpay != amount

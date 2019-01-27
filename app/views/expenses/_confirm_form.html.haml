@@ -10,7 +10,7 @@
       = form.hidden_field :r_date
     - elsif controller.controller_name == 'expenses'
       = form.hidden_field :date
-    = form.hidden_field :note
+    = form.hidden_field :memo
     = form.hidden_field :category_id
     - if expense.percent == nil && expense.mypay != nil
       = form.hidden_field :percent, value: false
@@ -29,7 +29,7 @@
         %div 毎月　#{expense.r_date}日
       - elsif controller.controller_name == 'expenses'
         %div 日付：#{expense.date.strftime("%Y/%m/%d(%a)")}
-      %div メモ：#{expense.note}
+      %div メモ：#{expense.memo}
       %div カテゴリ：#{Category.find(expense.category_id).kind}
       - if expense.both_flg == true && expense.percent != nil
         %div 自分の割合：#{which_percent(expense.percent)}
@@ -50,7 +50,7 @@
       = form.hidden_field :r_date
     - elsif controller.controller_name == 'expenses'
       = form.hidden_field :date
-    = form.hidden_field :note
+    = form.hidden_field :memo
     = form.hidden_field :category_id
     - if expense.percent == nil && expense.mypay != nil
       = form.hidden_field :percent, value: false

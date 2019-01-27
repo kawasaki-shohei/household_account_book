@@ -11,6 +11,7 @@
 # **`email`**            | `string`           |
 # **`name`**             | `string`           |
 # **`password_digest`**  | `string`           |
+# **`sys_admin`**        | `boolean`          | `default(FALSE)`
 # **`created_at`**       | `datetime`         | `not null`
 # **`updated_at`**       | `datetime`         | `not null`
 # **`partner_id`**       | `bigint(8)`        |

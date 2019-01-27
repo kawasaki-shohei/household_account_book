@@ -89,18 +89,18 @@ class RepeatExpensesController < ApplicationController
   def repeat_expense_params
     if params[:repeat_expense][:both_flg] == "true"
       partnerpay = params[:repeat_expense][:amount].to_i - mypay_amount
-      params.require(:repeat_expense).permit(:amount, :s_date, :e_date, :r_date, :note, :category_id, :both_flg, :percent).merge(user_id: current_user.id, mypay: mypay_amount, partnerpay: partnerpay )
+      params.require(:repeat_expense).permit(:amount, :s_date, :e_date, :r_date, :memo, :category_id, :both_flg, :percent).merge(user_id: current_user.id, mypay: mypay_amount, partnerpay: partnerpay )
     else
-      params.require(:repeat_expense).permit(:amount, :s_date, :e_date, :r_date, :note, :category_id, :both_flg, :percent).merge(user_id: current_user.id)
+      params.require(:repeat_expense).permit(:amount, :s_date, :e_date, :r_date, :memo, :category_id, :both_flg, :percent).merge(user_id: current_user.id)
     end
   end
 
   def expense_params
     if params[:repeat_expense][:both_flg] == "true"
       partnerpay = params[:repeat_expense][:amount].to_i - mypay_amount
-      params.require(:repeat_expense).permit(:amount, :note, :category_id, :both_flg, :percent).merge(user_id: current_user.id, mypay: mypay_amount, partnerpay: partnerpay )
+      params.require(:repeat_expense).permit(:amount, :memo, :category_id, :both_flg, :percent).merge(user_id: current_user.id, mypay: mypay_amount, partnerpay: partnerpay )
     else
-      params.require(:repeat_expense).permit(:amount, :note, :category_id, :both_flg, :percent).merge(user_id: current_user.id)
+      params.require(:repeat_expense).permit(:amount, :memo, :category_id, :both_flg, :percent).merge(user_id: current_user.id)
     end
   end
 

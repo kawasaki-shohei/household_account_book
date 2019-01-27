@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181228082411) do
+ActiveRecord::Schema.define(version: 2019_01_27_102436) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,7 +66,7 @@ ActiveRecord::Schema.define(version: 20181228082411) do
   create_table "expenses", force: :cascade do |t|
     t.integer "amount"
     t.date "date"
-    t.string "note"
+    t.string "memo"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "category_id"
@@ -123,7 +123,7 @@ ActiveRecord::Schema.define(version: 20181228082411) do
     t.date "s_date"
     t.date "e_date"
     t.integer "r_date"
-    t.string "note"
+    t.string "memo"
     t.bigint "category_id"
     t.bigint "user_id"
     t.boolean "both_flg", default: false
@@ -144,6 +144,7 @@ ActiveRecord::Schema.define(version: 20181228082411) do
     t.datetime "updated_at", null: false
     t.boolean "allow_share_own", default: false
     t.bigint "partner_id"
+    t.boolean "sys_admin", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["partner_id"], name: "index_users_on_partner_id", unique: true
   end

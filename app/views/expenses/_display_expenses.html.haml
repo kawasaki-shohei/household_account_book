@@ -19,4 +19,4 @@
     %span.each_expense_detail #{who_is_partner(expense.user).name}の支払い
     %span.each_expense_detail ¥#{number_with_delimiter(expense.partnerpay, delimiter: ",")}
   %div.each_expense_detail
-    = expense.note
+    = expense.memo

@@ -10,8 +10,8 @@
 # **`amount`**             | `integer`          |
 # **`both_flg`**           | `boolean`          | `default(FALSE)`
 # **`date`**               | `date`             |
+# **`memo`**               | `string`           |
 # **`mypay`**              | `integer`          |
-# **`note`**               | `string`           |
 # **`partnerpay`**         | `integer`          |
 # **`percent`**            | `integer`          |
 # **`created_at`**         | `datetime`         | `not null`
