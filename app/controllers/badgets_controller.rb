@@ -1,8 +1,10 @@
 class BadgetsController < ApplicationController
-  before_action :set_all_categories, only:[:index, :new, :edit]
+  before_action :set_all_categories, only:[:new, :edit]
   before_action :set_badget, only: [:edit, :update]
 
   def index
+    @categories = current_user.categories.or(partner.categories.common_t).includes(:badgets).order(:id)
+    @badgets = current_user.badgets.order(category_id: :asc)
   end
 
   def new

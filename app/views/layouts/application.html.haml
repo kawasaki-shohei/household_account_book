@@ -50,6 +50,9 @@
                 = link_to "Category", categories_path, class: "nav-link"
               %li.nav-item
                 = link_to "Setting", user_settings_path(current_user.id), class: "nav-link"
+              - if current_user.sys_admin
+                %li.nav-item
+                  = link_to "Admin", admin_path, class: "nav-link"
               %li.nav-item
                 = link_to "Sign out", session_path(current_user.id), method: :delete, class: "nav-link"
     .container-fluid

@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
 
+  get 'admin/' , to: 'admin#index', as: :admin
+  get 'admin/insert_6_months_expenses' , to: 'admin#insert_6_months_expenses', as: :insert_6_months_expenses_admin
+  get 'admin/insert_this_month_expenses' , to: 'admin#insert_this_month_expenses', as: :insert_this_month_expenses_admin
+  get 'admin/insert_categories' , to: 'admin#insert_categories', as: :insert_categories_admin
+  get 'admin/delete_all_data' , to: 'admin#delete_all_data', as: :delete_all_data_admin
+
   resources :sessions, only: [:new, :create, :destroy]
 
   resources :users do
