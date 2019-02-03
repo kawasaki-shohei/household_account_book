@@ -50,6 +50,11 @@ class User < ApplicationRecord
   has_many :notifications, dependent: :destroy
   has_many :deposits, dependent: :destroy
   has_many :incomes, dependent: :destroy
+  has_many :balances, dependent: :destroy
+
+  def get_applicable_balance(month)
+    balances.where(month: month).first_or_initialize
+  end
 
   def insert_expenses_for_a_month(year: Time.zone.today.year, month: Time.zone.today.month)
     @import_expenses = []

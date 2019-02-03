@@ -30,8 +30,24 @@
 class Balance < ApplicationRecord
   belongs_to :user
 
-  # 当月の総支出を計算して、支出バランスを計算し直して、balanceのレコードを更新するメソッド
-  def after_save(object)
-    logger.info "===============after_saveを実行: #{object}==============="
+  # 当月の総支出を計算して、支出バランスを計算し直し、balanceのレコードを更新するメソッド
+  def self.create_or_update_balance(object)
+    target_month = object.date.month_as_string
+    user = object.user
+    partner = user.partner
+    user_balance = set_balance(user, target_month)
+    if user_balance.save! && object.is_a?(Expense) && object.both_flg
+      partner_balance = set_balance(partner, target_month)
+      partner_balance.save!
+    end
+    raise Exception.new(StandardError) # FIXME: 必ず削除
+  end
+
+  def self.set_balance(user, target_month)
+    balance = user.get_applicable_balance(target_month)
+    # amountの算出
+    # 収入額 - 支出合計額
+    balance.amount = Income.one_month_total_income(user, target_month) - Expense.one_month_total_expenditures(user, target_month)
+    balance
   end
 end

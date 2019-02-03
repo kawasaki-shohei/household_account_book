@@ -59,6 +59,43 @@ class Expense < ApplicationRecord
   scope :both_t, -> {where(both_flg: true)}
   scope :newer, -> {order(date: :desc, created_at: :desc)}
 
+  attr_accessor :skip_calculate_balance, :is_new, :is_changed_over_month
+  alias_method :is_new?, :is_new
+  alias_method :is_changed_over_month?, :is_changed_over_month
+
+  before_save :set_skip_calculate_balance, :set_is_changed_over_month
+  after_save{ Balance.create_or_update_balance(self) unless skip_calculate_balance }
+  after_destroy do
+    if date_was.beginning_of_month > Date.today.beginning_of_month
+      Balance.create_or_update_balance(self)
+    end
+  end
+
+
+  # コールバックで使用。dateが月をまたいで変更されていればis_changed_over_monthにtrueをセットして返す。
+  # ex) "2018-12-20" → "2019-01-05"
+  def set_is_changed_over_month
+    return false unless self.date_changed?
+    self.is_changed_over_month = date_was.beginning_of_month != date.beginning_of_month
+  end
+
+  # コールバックで使用。金額に関するattributesが変更されていればtrueを返す。
+  def money_attributes_are_changed?
+    attributes = %w(amount mypay partnerpay)
+    attributes.each do |attr|
+      return true if self.send("#{attr}_changed?")
+    end
+  end
+
+  # コールバックで使用。収支バランスを計算するか判断する。
+  def set_skip_calculate_balance
+    if is_new? || is_changed_over_month? || money_attributes_are_changed?
+      self.skip_calculate_balance = false
+    else
+      self.skip_calculate_balance = true
+    end
+  end
+
   # viewで出費リストを表示するために、並び替えを行うメソッド
   # @param [boolean] both_flg 二人のための出費ならtrue, 自分だけのためのフラグならfalse
   # @return 基本的には新しいものが上に表示されるようにしているが、繰り返し出費で入力されたものは、普通の出費が全て表示された後に表示されるように並び替えている
@@ -132,6 +169,15 @@ class Expense < ApplicationRecord
     future_expenses.destroy_all
     past_expenses = user.expenses.where('repeat_expense_id = ? AND date <= ?', repeat_expense_id, Date.today.beginning_of_month)
     past_expenses.update(repeat_expense_id: nil)
+  end
+
+  # ユーザーと該当月からその月の支出合計額を算出
+  # @param user: Userクラス, month: Stringクラス "2019-01"
+  # @return Integer 支出合計額
+  def self.one_month_total_expenditures(user, month)
+    # 自分の一人の出費の支払い額(amount)の合計額 + 自分の二人の出費の自分の支払い分(mypay)の合計額 + パートナーの二人の出費のパートナーの支払い分(partner)の合計額
+    user_expenses = user.expenses.one_month(month)
+    user_expenses.both_f.sum(:amount) + user_expenses.both_t.sum(:mypay) + user.partner.expenses.one_month(month).both_t.sum(:partnerpay)
   end
 
 end
