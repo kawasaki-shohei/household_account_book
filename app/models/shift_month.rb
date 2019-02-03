@@ -2,14 +2,10 @@ class ShiftMonth < ApplicationRecord
 
   def self.ones_expenses(user, cnum)
     begging_of_one_month = which_month_expense(cnum)[0]
-    end_of_one_month = which_month_expense(cnum)[1]
-    user.expenses.one_month(begging_of_one_month, end_of_one_month)
-  end
-
-  def self.must_pay_one_month_one_category(current_user, partner, cnum, category)
-    begging_of_one_month = which_month_expense(cnum)[0]
-    end_of_one_month = which_month_expense(cnum)[1]
-    current_user.expenses.one_month(begging_of_one_month, end_of_one_month).category(category.id).both_t.sum(:mypay) + partner.expenses.one_month(begging_of_one_month, end_of_one_month).category(category.id).both_t.sum(:partnerpay)
+    # end_of_one_month = which_month_expense(cnum)[1]
+    # TODO: 前後月のルーティングパスを変更するときに修正
+    month = begging_of_one_month.month_as_string
+    user.expenses.one_month(month)
   end
 
   def self.which_month_expense(cnum)
