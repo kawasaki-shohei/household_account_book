@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_27_102436) do
+ActiveRecord::Schema.define(version: 2019_02_03_054539) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -78,6 +78,16 @@ ActiveRecord::Schema.define(version: 2019_01_27_102436) do
     t.integer "percent"
     t.bigint "repeat_expense_id"
     t.index ["repeat_expense_id"], name: "index_expenses_on_repeat_expense_id"
+  end
+
+  create_table "incomes", force: :cascade do |t|
+    t.bigint "user_id"
+    t.integer "amount"
+    t.date "date"
+    t.string "memo"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_incomes_on_user_id"
   end
 
   create_table "notification_messages", force: :cascade do |t|
@@ -157,6 +167,7 @@ ActiveRecord::Schema.define(version: 2019_01_27_102436) do
   add_foreign_key "deleted_records", "users", column: "deleted_by"
   add_foreign_key "deposits", "users"
   add_foreign_key "expenses", "repeat_expenses"
+  add_foreign_key "incomes", "users"
   add_foreign_key "notifications", "notification_messages"
   add_foreign_key "notifications", "users"
   add_foreign_key "pays", "users"
