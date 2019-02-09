@@ -29,6 +29,7 @@
 
 class Balance < ApplicationRecord
   belongs_to :user
+  validates :month, uniqueness: { scope: :user_id }, format: { with: /\A\d{4}-\d{2}\z/ }
 
   # 当月の総支出を計算して、支出バランスを計算し直し、balanceのレコードを更新するメソッド
   def self.create_or_update_balance(object)
