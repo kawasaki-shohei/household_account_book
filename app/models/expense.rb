@@ -63,7 +63,7 @@ class Expense < ApplicationRecord
   alias_method :is_new?, :is_new
   alias_method :is_changed_over_month?, :is_changed_over_month
 
-  before_save :set_skip_calculate_balance, :set_is_changed_over_month
+  before_save :set_is_changed_over_month, :set_skip_calculate_balance
   after_save{ Balance.create_or_update_balance(self) unless skip_calculate_balance }
   after_destroy do
     if date_was.beginning_of_month > Date.today.beginning_of_month
@@ -71,9 +71,8 @@ class Expense < ApplicationRecord
     end
   end
 
-
   # コールバックで使用。dateが月をまたいで変更されていればis_changed_over_monthにtrueをセットして返す。
-  # ex) "2018-12-20" → "2019-01-05"
+  # ex) "2018-12-20" → "2019-01-05" tureを返す
   def set_is_changed_over_month
     return false unless self.date_changed?
     self.is_changed_over_month = date_was.beginning_of_month != date.beginning_of_month

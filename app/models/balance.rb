@@ -33,6 +33,7 @@ class Balance < ApplicationRecord
 
   # 当月の総支出を計算して、支出バランスを計算し直し、balanceのレコードを更新するメソッド
   def self.create_or_update_balance(object)
+    return if object.skip_calculate_balance
     target_month = object.date.month_as_string
     user = object.user
     partner = user.partner
