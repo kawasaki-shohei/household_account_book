@@ -32,6 +32,8 @@
 #
 
 class Expense < ApplicationRecord
+  include BalanceHelper
+
   belongs_to :user
   belongs_to :category
   validates :amount, :date, presence: true
@@ -59,40 +61,19 @@ class Expense < ApplicationRecord
   scope :both_t, -> {where(both_flg: true)}
   scope :newer, -> {order(date: :desc, created_at: :desc)}
 
-  attr_accessor :skip_calculate_balance, :is_new, :is_changed_over_month
+  attr_accessor :is_new, :is_destroyed, :differences
   alias_method :is_new?, :is_new
-  alias_method :is_changed_over_month?, :is_changed_over_month
+  alias_method :is_destroyed?, :is_destroyed
 
-  before_save :set_is_changed_over_month, :set_skip_calculate_balance
-  after_save{ Balance.create_or_update_balance(self) unless skip_calculate_balance }
-  after_destroy do
-    if date_was.beginning_of_month > Date.today.beginning_of_month
-      Balance.create_or_update_balance(self)
-    end
-  end
+  after_initialize { self.is_new = true unless self.id }
+  before_save :set_differences
+  before_destroy { self.is_destroyed = true }
+  after_commit { go_calculate_balance(self) }
 
-  # コールバックで使用。dateが月をまたいで変更されていればis_changed_over_monthにtrueをセットして返す。
-  # ex) "2018-12-20" → "2019-01-05" tureを返す
-  def set_is_changed_over_month
-    return false unless self.date_changed?
-    self.is_changed_over_month = date_was.beginning_of_month != date.beginning_of_month
-  end
 
-  # コールバックで使用。金額に関するattributesが変更されていればtrueを返す。
-  def money_attributes_are_changed?
-    attributes = %w(amount mypay partnerpay)
-    attributes.each do |attr|
-      return true if self.send("#{attr}_changed?")
-    end
-  end
-
-  # コールバックで使用。収支バランスを計算するか判断する。
-  def set_skip_calculate_balance
-    if is_new? || is_changed_over_month? || money_attributes_are_changed?
-      self.skip_calculate_balance = false
-    else
-      self.skip_calculate_balance = true
-    end
+  # 金額に関するカラムを配列で返す。
+  def self.money_attributes
+    %w(amount mypay partnerpay)
   end
 
   # viewで出費リストを表示するために、並び替えを行うメソッド
