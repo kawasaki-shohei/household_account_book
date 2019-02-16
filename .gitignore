@@ -25,3 +25,6 @@
 # IntelliJ
 .idea
 *.iml
+
+# others
+.DS_Store

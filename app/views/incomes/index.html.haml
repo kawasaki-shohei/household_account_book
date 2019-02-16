@@ -7,25 +7,16 @@
   %table.table
     %tr
       %th 日付
-      %th 名前
       %th 金額
       %th.memo メモ
     - if @incomes
       - @incomes.each do |income|
         %tr
-          - if income.user_id == current_user.id
-            - path = edit_income_path(income)
-            %td
-              = link_to "#{income.date.strftime("%Y/%m/%d")}", path
-            %td
-              = link_to "#{income.user.name}", path
-            %td
-              = link_to "#{income.amount.to_s(:delimited)}円", path
-            %td
-              = link_to "#{truncate(income.memo, length: 10)}", path
-          -else
-            %td{style: color} #{income.date.strftime("%Y/%m/%d")}
-            %td{style: color} #{income.user.name}
-            %td{style: color} #{income.amount.to_s(:delimited)}円
-            %td{style: color} #{truncate(income.memo, length: 10)}
+          - path = edit_income_path(income)
+          %td
+            = link_to "#{income.date.strftime("%Y/%m/%d")}", path
+          %td
+            = link_to "#{income.amount.to_s(:delimited)}円", path
+          %td
+            = link_to "#{truncate(income.memo, length: 10)}", path
 %div
