@@ -8,6 +8,8 @@ class ExpensesController < ApplicationController
     @cnum = 0
     @current_user_expenses = current_user.expenses.this_month
     @partner_expenses = partner.expenses.this_month
+    @incomes = current_user.incomes.where('date >= ? AND date <= ?', Date.today.beginning_of_month, Date.today.end_of_month)
+    @balances = current_user.balances
   end
 
   def both
