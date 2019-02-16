@@ -1,5 +1,11 @@
 .whole_page
   %h3 収支バランス一覧
+  - total_amount = @balances.try(:total_amount) || 0
+  - total_amount_color = total_amount < 0 ?  "color: red" : ""
+  %h4{style: "margin-bottom: 60px; margin-right 50px; #{total_amount_color}"}
+    総額
+    %span
+      #{total_amount.to_s(:delimited)}円
   %br
   %br
 
@@ -9,9 +15,11 @@
       %th 金額
     - if @balances
       - @balances.each do |balance|
+        - amount = balance.try(:amount) || 0
+        - color = amount < 0 ?  "color: red" : ""
         %tr
-          %td
+          %td{style: "#{color}"}
             = balance.japanese_month
-          %td
+          %td{style: "#{color}"}
             #{balance.amount.to_s(:delimited)}円
 %div
