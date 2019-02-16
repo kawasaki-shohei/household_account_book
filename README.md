@@ -7,9 +7,9 @@ https://habfoc.herokuapp.com/
 簡単な出費の入力で複雑な二人の出費を計算できます。
 
 ## Requirement
-- Ruby 2.3.0
-- Rails 5.1.4
-- PostgreSQL 10.1
+- Ruby 2.5.1
+- Rails 5.2.2
+- PostgreSQL 10.6
 - Bootstrap 4
 
 ## Function
