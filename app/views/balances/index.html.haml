@@ -1,2 +1,17 @@
-%h1 Balances#index
-%p Find me in app/views/balances/index.html.haml
+.whole_page
+  %h3 収支バランス一覧
+  %br
+  %br
+
+  %table.table
+    %tr
+      %th 月
+      %th 金額
+    - if @balances
+      - @balances.each do |balance|
+        %tr
+          %td
+            = balance.japanese_month
+          %td
+            #{balance.amount.to_s(:delimited)}円
+%div

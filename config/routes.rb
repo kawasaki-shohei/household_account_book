@@ -52,6 +52,7 @@ Rails.application.routes.draw do
   get 'deposits/withdraw', to: 'deposits#withdraw', as: :withdraw_deposit
 
   resources :incomes
+  resources :balances, only: :index
 
   # get 'bought_buttons/bought/:id', to: 'bought_buttons#bought', as: :bought
   # get 'bought_buttons/want/:id', to: 'bought_buttons#want', as: :back_to_want

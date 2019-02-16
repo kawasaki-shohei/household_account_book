@@ -1,7 +1,5 @@
 class BalancesController < ApplicationController
   def index
-  end
-
-  def new
+    @balances = current_user.balances.order(month: :desc)
   end
 end
