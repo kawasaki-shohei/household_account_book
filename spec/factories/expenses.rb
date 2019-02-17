@@ -33,6 +33,9 @@
 
 FactoryBot.define do
   factory :expense do
-    
+    amount {1000}
+    date {Time.zone.today}
+    user {User.first}
+    category {user.categories.first}
   end
 end
