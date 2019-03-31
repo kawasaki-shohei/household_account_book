@@ -5,4 +5,8 @@ class FrontsController < ApplicationController
     @my_payment = -1000
     @balance = 0
   end
+
+  def new
+    @pay = Pay.new
+  end
 end

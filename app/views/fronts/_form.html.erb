@@ -1,0 +1,35 @@
+<div class="content-wrapper">
+
+  <section class="content-header">
+    <h1>精算した金額を入力</h1>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <!-- left column -->
+      <div class="col-xs-12">
+        <div class="box box-danger">
+          <div class="box-body">
+            <%= form_with(model: pay, local: true) do |f| %>
+              <div class="input-group">
+                <span class="input-group-addon">金額</span>
+                <%= f.number_field :pamount, class:"form-control", required: true %>
+                <span class="input-group-addon">円</span>
+              </div>
+              <br>
+
+              <div class="input-group">
+                <span class="input-group-addon">何ヶ月分か</span>
+                <%= f.date_select :date, discard_day: true, required: true, value: Date.today.months_ago(1), class: "form-control" %>
+              </div>
+
+            <% end %>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>

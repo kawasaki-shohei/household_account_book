@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   get 'fronts/index', to: 'fronts#index'
+  get 'fronts/new', to: 'fronts#new'
   get 'admin/' , to: 'admin#index', as: :admin
   get 'admin/insert_6_months_expenses' , to: 'admin#insert_6_months_expenses', as: :insert_6_months_expenses_admin
   get 'admin/insert_this_month_expenses' , to: 'admin#insert_this_month_expenses', as: :insert_this_month_expenses_admin
