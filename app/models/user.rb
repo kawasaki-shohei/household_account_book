@@ -56,6 +56,9 @@ class User < ApplicationRecord
     balances.where(month: month).first_or_initialize
   end
 
+  # @note admin / test で使用
+  # @param [String] year
+  # @param [String] month
   def insert_expenses_for_a_month(year: Time.zone.today.year, month: Time.zone.today.month)
     @import_expenses = []
     partner = self.partner
@@ -67,6 +70,7 @@ class User < ApplicationRecord
     Expense.import(@import_expenses) ? true :false
   end
 
+  # @note admin / test で使用
   def insert_categories
     both_kinds = %w(家賃 食費 日用品 ガス代 電気代 水道代)
     ones_kinds = %w(交通費 交際費 保険代 医療費)
@@ -80,25 +84,29 @@ class User < ApplicationRecord
     Category.import(@import_categories) ? true : false
   end
 
+  # @note admin / test で使用
   def get_category(kind:)
     categories.find_by(kind: kind)
   end
 
   private
 
+  # @note admin / test で使用
+  # @param [String] year
+  # @param [String] month
   def build_expenses_instances(year, month, category_id, count, both_flg:)
     today = Time.zone.today
     first = today.beginning_of_month.day
     last = today.end_of_month.day
     count.times do |n|
       amount = rand(100..10000)
-      percent = count == 10 ? get_percent(n) : 1
+      percent = count == 10 ? get_percent(n) : 1  # 食費の場合だけpercentを変える。
       mypay = calculate_mypay(amount, percent)
       partnerpay = amount - mypay
       @import_expenses << expenses.build(
         amount: amount,
         date: Date.parse("#{year}-#{month}-#{rand(first..last)}"),
-        note: "inserted #{today}",
+        memo: "inserted #{today}",
         category_id: category_id,
         both_flg: both_flg,
         mypay: both_flg ? mypay : nil,
@@ -108,10 +116,13 @@ class User < ApplicationRecord
     end
   end
 
+  # @note admin / test で使用
+  # @return [Integer] 食費の場合だけpercentを指定
   def get_percent(n)
     case n when 0..3 then 1 when 4..5 then 2 when 6..7 then 3 when 8..9 then 4 end
   end
 
+  # @note admin / test で使用
   def calculate_mypay(amount, percent)
     case percent
     when 1 then amount / 2
@@ -121,6 +132,8 @@ class User < ApplicationRecord
     end
   end
 
+  # @note admin / test で使用
+  # カテゴリーで何回繰り返すか指定して返す。
   def get_count(category)
     case category.kind
     when "食費" then 10 when "日用品" then 5
@@ -129,6 +142,7 @@ class User < ApplicationRecord
     end
   end
 
+  # @note admin / test で使用
   def get_categories(partner)
     foods = get_category(kind: "食費")
     foods = partner.get_category(kind: "食費") unless foods
@@ -149,6 +163,7 @@ class User < ApplicationRecord
     [foods, goods, rent, gas, electricity, water, transportation, entertainment, insurance, medical].compact
   end
 
+  # @note admin / test で使用
   def create_category_instance(kinds, user, common_flg)
     kinds.each do |kind|
       @import_categories << Category.new(

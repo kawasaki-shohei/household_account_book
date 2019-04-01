@@ -6,11 +6,12 @@ FactoryBot.define do
     password_confirmation {"000000"}
   end
 
-  factory :partner do
-    email {"partner@gmail.com"}
-    name {"partner"}
-    password {"000000"}
-    password_confirmation {"000000"}
-    partner {User.first}
-  end
+  # 以下ではパートナーは作れない。
+  # factory :partner do
+  #   email {"partner@gmail.com"}
+  #   name {"partner"}
+  #   password {"000000"}
+  #   password_confirmation {"000000"}
+  #   partner {User.first}
+  # end
 end

@@ -53,7 +53,8 @@ class Expense < ApplicationRecord
   scope :this_month, -> {where('date >= ? AND date <= ?', beginning_of_this_month, end_of_this_month)}
   scope :last_month, -> {where('date >= ? AND date <= ?', beginning_of_last_month, end_of_last_month)}
   scope :until_last_month, -> {where('date <= ?', end_of_last_month)}
-  # 引数はString。 例: "2019-01"
+  # todo: month はわかりにくいしぶつかる可能性があるため、 year_month に変更する。
+  # @param []String] month  ex: "2019-01"
   scope :one_month, -> (month) {where('date >= ? AND date <= ?', month.to_beginning_of_month, month.to_end_of_month)}
   scope :except_repeat_ones, -> {where.not()}
   scope :category, -> (category_id){unscope(:order).where(category_id: category_id).order(date: :desc, created_at: :desc)}
@@ -65,10 +66,14 @@ class Expense < ApplicationRecord
   alias_method :is_new?, :is_new
   alias_method :is_destroyed?, :is_destroyed
 
-  after_initialize { self.is_new = true unless self.id }
+  after_initialize { self.is_new = self.new_record? }
   before_save :set_differences
   before_destroy { self.is_destroyed = true }
   after_commit { go_calculate_balance(self) }
+
+  # todo: percent をenumに変更して0から始める。
+  # 現状 => { '半分' => 1, '3分の1' => 2, '3分の2' => 3, '相手100%' => 4 }
+  # enum :percent in: { 'half' => 1, 'one_third' => 2, 'two_third' => 3, 'all_for_partner' => 4 }
 
 
   # 金額に関するカラムを配列で返す。
