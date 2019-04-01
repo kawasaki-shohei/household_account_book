@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
-  get 'fronts/index', to: 'fronts#index'
-  get 'fronts/new', to: 'fronts#new'
+
+  #fixme: 削除する
+  resources :fronts
+
   get 'admin/' , to: 'admin#index', as: :admin
   get 'admin/insert_6_months_expenses' , to: 'admin#insert_6_months_expenses', as: :insert_6_months_expenses_admin
   get 'admin/insert_this_month_expenses' , to: 'admin#insert_this_month_expenses', as: :insert_this_month_expenses_admin
@@ -44,7 +46,7 @@ Rails.application.routes.draw do
     end
   end
   resources :badgets
-  resources :pays
+  resources :pays, except: [:show]
   resources :wants do
     get :change_bought_button, on: :member
   end
