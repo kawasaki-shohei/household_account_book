@@ -45,7 +45,7 @@ Rails.application.routes.draw do
       get :common
     end
   end
-  resources :badgets
+  resources :badgets, except: [:show]
   resources :pays, except: [:show]
   resources :wants do
     get :change_bought_button, on: :member

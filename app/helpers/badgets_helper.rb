@@ -22,4 +22,21 @@ module BadgetsHelper
 
     return left_categories
   end
+
+  # @param [Badget] badgets
+  # @return [String]
+  def badgets_sum(badgets)
+    if badgets
+      badgets.map(&:amount).sum.to_s(:delimited)
+    else
+      "0"
+    end
+  end
+
+  # @param [Category] category
+  # @return [Boolean]
+  def category_has_current_user_badget?(badget)
+    badget.try(:user_id) == current_user.id
+  end
+
 end

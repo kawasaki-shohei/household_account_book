@@ -3,11 +3,12 @@ class BadgetsController < ApplicationController
   before_action :set_badget, only: [:edit, :update]
 
   def index
-    @categories = current_user.categories.or(partner.categories.common_t).includes(:badgets).order(:id)
+    @categories = Category.get_user_categories_with_badgets(current_user, partner)
     @badgets = current_user.badgets.order(category_id: :asc)
   end
 
   def new
+    #fixme: helperのmake_left_categoriesでsqlがたくさん発行されている。
     @badget = Badget.new
   end
 

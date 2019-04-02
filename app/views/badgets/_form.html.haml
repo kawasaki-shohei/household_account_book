@@ -9,7 +9,7 @@
         = f.number_field :amount, placeholder: '金額を入力', class: 'form-control', required: true
   - elsif action_name == 'new'
     %div.form-group
-      = f.select :category_id, make_left_categories(categories),{include_blank: 'カテゴリを選択'}, class: 'form-control', required: true
+      = f.select :category_id, make_left_categories(categories),{include_blank: 'カテゴリを選択', selected: params[:id].try(:to_s)}, class: 'form-control', required: true
     %div.form-group
       = f.number_field :amount, placeholder: '金額を入力', class: 'form-control', required: true
   = f.submit '入力', class: "btn btn-default btn-add"

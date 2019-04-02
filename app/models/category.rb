@@ -37,4 +37,13 @@ class Category < ApplicationRecord
   def self.ones_categories(current_user, partner)
     current_user.categories.or(partner.categories.where(common: true))
   end
+
+  # @param [User] current_user
+  # @param [User] partner
+  # @return categories.*, category.badget_id, category.badget_user_id, category.badget_amount,
+  # @note current_userのカテゴリーとパートナーが共通カテゴリー登録しているものを取得。パートナーが予算を入力している同じカテゴリーは省く。
+  # @note where.not(badgets: {user: partner}) にするとbadget_user_idがnilのものが取得できなかった。
+  def self.get_user_categories_with_badgets(current_user, partner)
+    current_user.categories.or(partner.categories.common_t).includes(:badgets).where(badgets: {user: [current_user, nil]}).order(:id)
+  end
 end

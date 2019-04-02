@@ -1,0 +1,72 @@
+<div class="content-wrapper">
+
+  <section class="content-header">
+    <h1>予算一覧</h1>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <!-- left column -->
+      <div class="col-md-12">
+        <div class="box box-danger">
+
+          <div class="box-header with-border">
+            予算の合計値
+          </div>
+
+          <div class="box-body">
+            <div class="pull-right">
+              <h3><%= badgets_sum(@badgets) %> 円</h3>
+            </div>
+          </div>
+
+        </div>
+        <%= link_to '予算の追加', new_badget_path, class: "btn btn-danger btn-block" %>
+      </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="box box-danger">
+
+          <div class="box-body no-padding">
+            <div class="table-responsive">
+              <table class="table no-margin">
+                <thead>
+                <tr>
+                  <th>カテゴリ</th>
+                  <th>予算</th>
+                  <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <% @categories.each do |category| %>
+                  <tr>
+                    <td><%= category.kind %></td>
+                    <% # 1categoryにつき1badgetしかないようにsqlを作っている %>
+                    <% if badget = category.badgets.first %>
+                      <td><%= badget.amount.to_s(:delimited) %></td>
+                      <td><%= link_to '編集', edit_badget_path(badget.id), class: "btn btn-default" %></td>
+                    <% else %>
+                      <td></td>
+                      <td>
+                        <%= link_to '追加', new_badget_path(id: category.id), class: "btn btn-danger" %>
+                      </td>
+                    <% end %>
+                  </tr>
+                <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- .box box-danger -->
+    </div><!-- .col-md-12 -->
+
+  </section>
+
+</div>
