@@ -45,7 +45,7 @@
                   <tr>
                     <td><%= category.kind %></td>
                     <% # category.badgetsはcurrent_userとpartnerが両方登録している場合があり、コントローラーでは両方取得してきている。。current_userが登録している場合は、current_userだけの分をだし、partnerの分は出さない。逆にpartnerの分しか登録されていない場合は、partnerのcategoryを表示し、新たにcategoryを登録できるようにする。 %>
-                    <% if badget = category_has_current_user_badget?(category) %>
+                    <% if badget = category.current_user_badget %>
                       <td><%= badget.amount.to_s(:delimited) %></td>
                       <td><%= link_to '編集', edit_badget_path(badget.id), class: "btn btn-default" %></td>
                     <% else %>

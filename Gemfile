@@ -10,22 +10,30 @@ ruby '2.5.1'
 gem 'rails', '~> 5.2.2'
 gem 'pg', '~> 0.18'
 gem 'puma', '~> 3.7'
-gem 'sass-rails', '~> 5.0'
+
+# about assets
+gem 'sprockets-rails', '~> 3.2', '>= 3.2.1'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.2'
-gem 'jbuilder', '~> 2.5'
+gem 'bootstrap', '~> 4.1.3'
+gem 'jquery-rails'
+gem 'chart-js-rails', '~> 0.1.6'
+
+
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+
+# about views
+gem 'jbuilder', '~> 2.5'
 gem 'haml-rails'
+gem 'draper', '~> 3.1'
+
 gem 'daemons', '~> 1.2', '>= 1.2.6'
 gem 'delayed_job_active_record', '~> 4.1', '>= 4.1.3'
 gem 'bcrypt', '3.1.11'
-gem 'chart-js-rails', '~> 0.1.6'
-gem 'bootstrap', '~> 4.1.3'
-gem 'jquery-rails'
-gem 'sprockets-rails', '~> 3.2', '>= 3.2.1'
+
 gem 'settingslogic'
 gem 'activerecord-import'
 gem 'dotenv-rails'

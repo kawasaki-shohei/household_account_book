@@ -27,7 +27,7 @@ module BadgetsHelper
   # @param [Badget] badgets
   # @return [String]
   def badgets_sum(badgets)
-    if badgets
+    if badgets.any?
       badgets.map(&:amount).sum.to_s(:delimited)
     else
       "0"
