@@ -1,4 +1,5 @@
 module BadgetsHelper
+  # FIXME: sql叩きすぎ！
   # 予算が未入力のカテゴリを抽出
   def make_left_categories(categories)
     all_categories = Hash.new
@@ -34,9 +35,9 @@ module BadgetsHelper
   end
 
   # @param [Category] category
-  # @return [Boolean]
-  def category_has_current_user_badget?(badget)
-    badget.try(:user_id) == current_user.id
+  # @return [badget]
+  def category_has_current_user_badget?(category)
+    category.badgets.find{ |badget| badget.try(:user_id) == current_user.id }
   end
 
 end

@@ -1,6 +1,4 @@
 class BadgetsController < ApplicationController
-  before_action :set_all_categories, only:[:new, :edit]
-  before_action :set_badget, only: [:edit, :update]
 
   def index
     @categories = Category.get_user_categories_with_badgets(current_user, partner)
@@ -10,6 +8,7 @@ class BadgetsController < ApplicationController
   def new
     #fixme: helperのmake_left_categoriesでsqlがたくさん発行されている。
     @badget = Badget.new
+    @categories = current_user.categories.or(partner.categories.common_t)
   end
 
   def create
@@ -31,9 +30,12 @@ class BadgetsController < ApplicationController
   end
 
   def edit
+    @badget = Badget.find(params[:id])
+    @category= @badget.category
   end
 
   def update
+    @badget = Badget.find(params[:id])
     if @badget.update(badget_params)
       find_badget_category
       redirect_to badgets_path, notice: "#{@category.kind}の予算を#{@badget.amount}円に設定しました"
@@ -43,17 +45,16 @@ class BadgetsController < ApplicationController
     end
   end
 
-private
-  def set_all_categories
-    @categories = current_user.categories.or(partner.categories.common_t)
+  def destroy
+    @badget = Badget.find(params[:id])
+    @category = @badget.category
+    @badget.destroy
+    redirect_to badgets_path, notice: "#{@category.kind}の予算を削除しました。"
   end
 
+  private
   def badget_params
     params.require(:badget).permit(:category_id, :amount)
-  end
-
-  def set_badget
-    @badget = Badget.find(params[:id])
   end
 
   def find_badget_category

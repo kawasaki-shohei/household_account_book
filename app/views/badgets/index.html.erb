@@ -9,19 +9,17 @@
     <div class="row">
       <!-- left column -->
       <div class="col-md-12">
-        <div class="box box-danger">
 
-          <div class="box-header with-border">
-            予算の合計値
+        <div class="info-box">
+          <span class="info-box-icon bg-red"><i class="fa fa-star-o"></i></span>
+          <div class="info-box-content">
+            <span class="info-box-text">予算の合計値</span>
+            <span class="info-box-number">
+              <%= badgets_sum(@badgets) %> 円
+            </span>
           </div>
-
-          <div class="box-body">
-            <div class="pull-right">
-              <h3><%= badgets_sum(@badgets) %> 円</h3>
-            </div>
-          </div>
-
         </div>
+
         <%= link_to '予算の追加', new_badget_path, class: "btn btn-danger btn-block" %>
       </div>
     </div>
@@ -46,8 +44,8 @@
                 <% @categories.each do |category| %>
                   <tr>
                     <td><%= category.kind %></td>
-                    <% # 1categoryにつき1badgetしかないようにsqlを作っている %>
-                    <% if badget = category.badgets.first %>
+                    <% # category.badgetsはcurrent_userとpartnerが両方登録している場合があり、コントローラーでは両方取得してきている。。current_userが登録している場合は、current_userだけの分をだし、partnerの分は出さない。逆にpartnerの分しか登録されていない場合は、partnerのcategoryを表示し、新たにcategoryを登録できるようにする。 %>
+                    <% if badget = category_has_current_user_badget?(category) %>
                       <td><%= badget.amount.to_s(:delimited) %></td>
                       <td><%= link_to '編集', edit_badget_path(badget.id), class: "btn btn-default" %></td>
                     <% else %>
