@@ -34,10 +34,4 @@ module BadgetsHelper
     end
   end
 
-  # @param [Category] category
-  # @return [badget]
-  def category_has_current_user_badget?(category)
-    category.badgets.find{ |badget| badget.try(:user_id) == current_user.id }
-  end
-
 end

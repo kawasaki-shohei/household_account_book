@@ -11,7 +11,7 @@
       <div class="col-md-12">
 
         <div class="info-box">
-          <span class="info-box-icon bg-red"><i class="fa fa-star-o"></i></span>
+          <span class="info-box-icon bg-red"><i class="fa fa-bar-chart-o"></i></span>
           <div class="info-box-content">
             <span class="info-box-text">予算の合計値</span>
             <span class="info-box-number">
@@ -45,7 +45,7 @@
                   <tr>
                     <td><%= category.kind %></td>
                     <% # category.badgetsはcurrent_userとpartnerが両方登録している場合があり、コントローラーでは両方取得してきている。。current_userが登録している場合は、current_userだけの分をだし、partnerの分は出さない。逆にpartnerの分しか登録されていない場合は、partnerのcategoryを表示し、新たにcategoryを登録できるようにする。 %>
-                    <% if badget = category.current_user_badget %>
+                    <% if badget = category.user_badget(current_user) %>
                       <td><%= badget.amount.to_s(:delimited) %></td>
                       <td><%= link_to '編集', edit_badget_path(badget.id), class: "btn btn-default" %></td>
                     <% else %>

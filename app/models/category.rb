@@ -46,4 +46,9 @@ class Category < ApplicationRecord
   def self.get_user_categories_with_badgets(current_user, partner)
     current_user.categories.or(partner.categories.common_t).includes(:badgets).where(badgets: {user: [current_user, partner, nil]}).order(:id)
   end
+
+  # @return [badget]
+  def user_badget(user)
+    badgets.find{ |badget| badget.try(:user_id) == user.id }
+  end
 end
