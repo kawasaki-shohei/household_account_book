@@ -2,7 +2,7 @@ class DepositsController < ApplicationController
   before_action :set_deposit, only: [:edit, :update, :destroy]
 
   def index
-    @deposits = Deposit.all.where(user_id: [current_user.id, partner.id]).order(date: :desc)
+    @deposits = Deposit.where(user_id: [current_user.id, partner.id]).order(date: :desc)
   end
 
   def new

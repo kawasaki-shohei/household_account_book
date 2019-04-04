@@ -1,0 +1,110 @@
+<% provide :title, '二人の貯金' %>
+<div class="content-wrapper">
+
+  <section class="content-header">
+    <h1>二人の貯金</h1>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <!-- left column -->
+      <div class="col-md-12">
+        <div class="info-box">
+          <span class="info-box-icon bg-red"><i class="fa fa-bank"></i></span>
+          <div class="info-box-content">
+            <span class="info-box-text">総額</span>
+            <span class="info-box-number">
+              <%= @deposits.total_amount.to_s(:delimited) %> 円
+            </span>
+          </div>
+        </div>
+        <%= link_to '二人の貯金を追加', new_deposit_path, class: "btn btn-danger btn-block" %>
+        <br />
+        <% unless @deposits.empty? || @deposits.total_amount == 0 %>
+          <%= link_to '引き出した金額を追加', withdraw_deposit_path, class: "btn bg-orange btn-block" %>
+        <% end %>
+      </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="box box-danger">
+          <div class="box-header with-border">
+            <h3 class="box-title">過去の精算</h3>
+
+<!--            <div class="box-tools">-->
+<!--              <ul class="pagination pagination-sm no-margin pull-right">-->
+<!--                <li><a href="#">&laquo;</a></li>-->
+<!--                <li><a href="#">1</a></li>-->
+<!--                <li><a href="#">2</a></li>-->
+<!--                <li><a href="#">3</a></li>-->
+<!--                <li><a href="#">&raquo;</a></li>-->
+<!--              </ul>-->
+<!--            </div>-->
+          </div><!-- /.box-header -->
+
+          <div class="box-body no-padding">
+            <div class="table-responsive">
+              <table class="table no-margin">
+                <thead>
+                <tr>
+                  <th>日付</th>
+                  <th>名前</th>
+                  <th>金額</th>
+                  <th>メモ</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% if @deposits %>
+                  <% @deposits.each do |deposit| %>
+                    <tr>
+                      <% if deposit.user_id == current_user.id %>
+                        <td>
+                          <%= deposit.date_with_link  %>
+                        </td>
+                        <td>
+                          <%= deposit.username_with_link  %>
+                        </td>
+                        <td>
+                          <%= deposit.amount_link_with_plus_or_minus %>
+                        </td>
+                        <td>
+                          <%= deposit.memo_with_link  %>
+                        </td>
+                      <% else %>
+                        <td>
+                          <%= deposit.converted_date %>
+                        </td>
+                        <td>
+                          <%= deposit.user.name %>
+                        </td>
+                        <td>
+                          <%= deposit.amount_with_plus_or_minus %>
+                        </td>
+                        <td>
+                          <% deposit.truncated_memo %>
+                        </td>
+                      <% end  %>
+                    </tr>
+                  <% end  %>
+                <% end  %>
+                </tbody>
+              </table>
+            </div>
+            <!-- /.table-responsive -->
+          </div>
+          <!-- /.box-body -->
+          <div class="box-footer">
+            <%= link_to '新しい手渡し金額を追加', new_pay_path, class: "btn btn-danger btn-block" %>
+          </div><!-- /.box-footer -->
+        </div><!-- /.box box-danger -->
+
+      </div><!-- /.col-md-12  -->
+    </div><!-- /row -->
+
+  </section>
+
+</div>
