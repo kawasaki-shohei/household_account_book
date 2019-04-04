@@ -13,7 +13,7 @@
           <div class="box-body">
             <%= form_with(model: @badget, local: true) do |f| %>
               <% if @badget.errors.any? %>
-                <%=render 'layouts/error', var: @badget %>
+                <%=render 'layouts/error', object: @badget %>
               <% end %>
 
               <div class="form-group">
@@ -31,7 +31,7 @@
               </div>
 
               <div class="form-group">
-                <%= f.submit '入力', class: "btn btn-danger btn-block" %>
+                <%= f.submit submit_btn_letters, class: "btn btn-danger btn-block" %>
               </div>
             <% end %>
 

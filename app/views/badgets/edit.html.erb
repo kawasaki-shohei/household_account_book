@@ -12,9 +12,8 @@
         <div class="box box-danger">
           <div class="box-body">
             <%= form_with(model: @badget, local: true) do |f| %>
-              <% if @badget.errors.any? %>
-                <%=render 'layouts/error', var: @badget %>
-              <% end %>
+              <%=render 'layouts/error', object: @badget %>
+
 
               <div class="form-group">
                 <%= f.select :category_id, {"#{@category.kind}":  @category.id}, {}, disabled: true, class: 'form-control' %>
@@ -29,7 +28,7 @@
               </div>
 
               <div class="form-group">
-                <%= f.submit '入力', class: "btn btn-danger btn-block" %>
+                <%= f.submit submit_btn_letters, class: "btn btn-danger btn-block" %>
               </div>
 
               <%= link_to '削除する', badget_path(@badget), method: :delete, data:{confirm: "Are you sure?"}, class: 'btn btn-default btn-block' %>

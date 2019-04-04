@@ -1,9 +1,9 @@
-<!-- 変数 var -->
-<div id="error_explanation">
-  <h2><%= var.errors.count %> 件のエラーがあります。</h2>
-  <ul>
-  <% var.errors.full_messages.each do |message| %>
-    <li><%= message %></li>
-  <% end %>
-  </ul>
-</div>
+<!-- 変数 object -->
+<%#=render 'layouts/error', object: @deposit %>
+<% if object.errors.any? %>
+  <div class="form-group has-error" id="object-error">
+    <% object.errors.full_messages.each do |message| %>
+      <span class="help-block"><%= message %></span>
+    <% end %>
+  </div>
+<% end %>

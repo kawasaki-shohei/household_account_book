@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 
   resources :sessions, only: [:new, :create, :destroy]
 
+  # fixme: これはresourceのほうがいい。
   resources :users do
     put :register_partner, on: :member
     patch :register_partner, on: :member

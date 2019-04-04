@@ -1,5 +1,4 @@
 class DepositsController < ApplicationController
-  before_action :set_deposit, only: [:edit, :update, :destroy]
 
   def index
     @deposits = Deposit.where(user_id: [current_user.id, partner.id]).order(date: :desc)
@@ -23,9 +22,11 @@ class DepositsController < ApplicationController
   end
 
   def edit
+    @deposit = Deposit.find(params[:id])
   end
 
   def update
+    @deposit = Deposit.find(params[:id])
     if @deposit.update(deposit_params)
       redirect_to deposits_path, notice: "貯金を更新しました。"
     else
@@ -34,6 +35,7 @@ class DepositsController < ApplicationController
   end
 
   def destroy
+    @deposit = Deposit.find(params[:id])
     @deposit.destroy
     redirect_to deposits_path, notice: "貯金を削除しました。"
   end
@@ -43,7 +45,4 @@ class DepositsController < ApplicationController
     params.require(:deposit).permit(:is_withdrawn, :amount, :date, :memo)
   end
 
-  def set_deposit
-    @deposit = Deposit.find(params[:id])
-  end
 end
