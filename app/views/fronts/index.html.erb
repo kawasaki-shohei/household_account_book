@@ -1,102 +1,71 @@
+<% provide :title, '収入' %>
 <div class="content-wrapper">
 
   <section class="content-header">
-    <h1>
-      精算
-      <small></small>
-    </h1>
+    <h1>収入一覧</h1>
   </section>
 
   <!-- Main content -->
   <section class="content">
     <div class="row">
-      <div class="col-xs-12">
+      <!-- left column -->
+      <div class="col-md-12">
+        <%= link_to '収入を追加', new_deposit_path, class: "btn btn-danger btn-block" %>
+      </div>
+    </div>
 
+    <br />
+
+    <div class="row">
+      <div class="col-md-12">
         <div class="box box-danger">
-          <div class="box-body box-profile">
-            <ul class="list-group list-group-unbordered">
-              <li class="list-group-item">
-                <b>先月分<small class="label bg-green">確定</small></b> <p class="pull-right"><%= payment_amount_as_string(@my_last_payment) %></p>
-              </li>
-              <li class="list-group-item">
-                <b>今月分<small class="label bg-yellow">未確定</small></b> <p class="pull-right"><%= payment_amount_as_string(@my_payment) %></p>
-              </li>
-              <li class="list-group-item">
-                <b>先月までの</br>繰り越し精算金額<small class="label bg-green">確定</small></b> <p class="pull-right"><%= payment_amount_as_string(@balance) %></p>
-              </li>
-            </ul>
-          </div>
-          <!-- /.box-body -->
-        </div>
-        <!-- /.box -->
 
-        <div class="box box-danger">
-          <div class="box-header with-border">
-            <h3 class="box-title">過去の清算</h3>
-
-            <div class="box-tools">
-              <ul class="pagination pagination-sm no-margin pull-right">
-                <li><a href="#">&laquo;</a></li>
-                <li><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">&raquo;</a></li>
-              </ul>
-            </div>
-          </div>
-          <!-- /.box-header -->
-          <div class="box-body">
+          <div class="box-body no-padding">
             <div class="table-responsive">
               <table class="table no-margin">
                 <thead>
                 <tr>
-                  <th>該当月</th>
-                  <th>名前</th>
+                  <th>日付</th>
                   <th>金額</th>
                   <th>メモ</th>
+                  <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                <% @pays.each do |pay| %>
-                  <tr>
-                    <% if pay.user == current_user %>
-                      <% path = edit_pay_path(pay) %>
-                      <td>
-                        <%= link_to "#{pay.date.strftime("%Y/%m")}", path%>
-                      </td>
-                      <td>
-                        <%= link_to "#{display_name(pay.user_id).name}", path%>
-                      </td>
-                      <td>
-                        <%= link_to "¥#{pay.pamount.to_s(:delimited)}", path%>
-                      </td>
-                      <td>
-                        <%= link_to "#{pay.memo}", path %>
-                      </td>
-                    <% else %>
-                      <td><%= pay.date.strftime("%Y/%m") %></td>
-                      <td><%= display_name(pay.user_id).name %></td>
-                      <td><%= pay.pamount.to_s(:delimited) %></td>
-                      <td><% pay.memo %></td>
+                  <% if @incomes %>
+                    <% @incomes.each do |income| %>
+                      <tr>
+                        <td>
+                          <%= income.date.strftime("%Y/%m/%d") %>
+                        </td>
+                        <td>
+                          <%= income.amount.to_s(:delimited) %>
+                        </td>
+                        <td>
+                          <%= truncate(income.memo, length: 10) %>
+                        </td>
+                        <td>
+                          <%= link_to edit_income_path(self) do %>
+                            <i class="fa fa-lg fa-pencil-square-o text-red"></i>
+                          <% end %>
+                        </td>
+                      </tr>
                     <% end  %>
-                  </tr>
-                <% end  %>
+                  <% end  %>
                 </tbody>
               </table>
             </div>
             <!-- /.table-responsive -->
           </div>
           <!-- /.box-body -->
-          <div class="box-footer">
-            <%= link_to '新しい手渡し金額を追加', new_pay_path, class: "btn btn-danger btn-block" %>
-          </div>
-          <!-- /.box-footer -->
-        </div>
-        <!-- /.box -->
-        <div></div>
+          <div class="box-footer text-center">
+              <%= paginate @incomes %>
+          </div><!-- /.box-footer -->
+        </div><!-- /.box box-danger -->
 
-      </div>
-    </div>
+      </div><!-- /.col-md-12  -->
+    </div><!-- /row -->
+
   </section>
 
 </div>

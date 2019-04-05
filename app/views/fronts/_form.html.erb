@@ -1,35 +1,51 @@
-<div class="content-wrapper">
+<!-- Main content -->
+<section class="content">
+  <div class="row">
+    <!-- left column -->
+    <div class="col-xs-12">
+      <div class="box box-danger">
+        <div class="box-body">
+          <%= form_with(model: deposit, local: true) do |f| %>
+            <%=render 'layouts/error', object: deposit %>
+            <%= f.label :amount , value: '金額' %>
+            <div class="input-group">
+              <%= f.number_field :amount, class:"form-control input-lg", min: 0, max: couples_total_amount, value: deposit.amount, required: true %>
+              <span class="input-group-addon">円</span>
+            </div>
+            <br>
 
-  <section class="content-header">
-    <h1>精算した金額を入力</h1>
-  </section>
-
-  <!-- Main content -->
-  <section class="content">
-    <div class="row">
-      <!-- left column -->
-      <div class="col-xs-12">
-        <div class="box box-danger">
-          <div class="box-body">
-            <%= form_with(model: pay, local: true) do |f| %>
-              <div class="input-group">
-                <span class="input-group-addon">金額</span>
-                <%= f.number_field :pamount, class:"form-control", required: true %>
-                <span class="input-group-addon">円</span>
+            <div class="form-group">
+              <%= f.label :date, value: '日付' %>
+              <div>
+                <%= f.date_field :date, required: true, value: deposit.default_date, class: "form-control" %>
               </div>
-              <br>
+            </div>
+            <br>
 
-              <div class="input-group">
-                <span class="input-group-addon">何ヶ月分か</span>
-                <%= f.date_select :date, discard_day: true, required: true, value: Date.today.months_ago(1), class: "form-control" %>
+            <div class="form-group">
+              <%= f.label :date, value: 'メモ' %>
+              <div>
+                <%= f.text_field :memo, class: "form-control" %>
               </div>
+            </div>
+            <br>
 
+            <% if action_name == 'withdraw' %>
+              <%= f.hidden_field :is_withdrawn, value: true %>
+            <%end %>
+
+            <div class="form-group">
+              <%= f.submit submit_btn_letters, class: "btn btn-danger btn-block" %>
+            </div>
+
+            <% if action_name == 'edit' %>
+              <%= link_to '削除する', deposit_path(deposit), method: :delete, data:{confirm: "Are you sure?"}, class: 'btn btn-default btn-block' %>
             <% end %>
 
-          </div>
+          <% end %>
+
         </div>
       </div>
     </div>
-  </section>
-
-</div>
+  </div>
+</section>
