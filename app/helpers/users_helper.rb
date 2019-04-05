@@ -19,7 +19,4 @@ end
     user.partner
   end
 
-  def display_name(user_id)
-    User.find(user_id)
-  end
 end

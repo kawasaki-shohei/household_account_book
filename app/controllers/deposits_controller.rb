@@ -1,19 +1,19 @@
 class DepositsController < ApplicationController
 
   def index
-    @deposits = Deposit.where(user_id: [current_user.id, partner.id]).order(date: :desc)
+    @deposits = Deposit.get_couple_deposits(@current_user).page(params[:page]).per(10)
   end
 
   def new
-    @deposit = current_user.deposits.build
+    @deposit = @current_user.deposits.build
   end
 
   def withdraw
-    @deposit = current_user.deposits.build
+    @deposit = @current_user.deposits.build
   end
 
   def create
-    @deposit = current_user.deposits.build(deposit_params)
+    @deposit = @current_user.deposits.build(deposit_params)
     if @deposit.save
       redirect_to deposits_path, notice: "二人の貯金に#{@deposit.amount.to_s(:delimited)}円追加しました。"
     else

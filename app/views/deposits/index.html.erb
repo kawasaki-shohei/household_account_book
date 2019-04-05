@@ -58,47 +58,31 @@
                 </tr>
                 </thead>
                 <tbody>
-                <% if @deposits %>
                   <% @deposits.each do |deposit| %>
                     <tr>
-                      <% if deposit.user_id == current_user.id %>
-                        <td>
-                          <%= deposit.date_with_link  %>
-                        </td>
-                        <td>
-                          <%= deposit.username_with_link  %>
-                        </td>
-                        <td>
-                          <%= deposit.amount_link_with_plus_or_minus %>
-                        </td>
-                        <td>
-                          <%= deposit.memo_with_link  %>
-                        </td>
-                      <% else %>
-                        <td>
-                          <%= deposit.converted_date %>
-                        </td>
-                        <td>
-                          <%= deposit.user.name %>
-                        </td>
-                        <td>
-                          <%= deposit.amount_with_plus_or_minus %>
-                        </td>
-                        <td>
-                          <% deposit.truncated_memo %>
-                        </td>
-                      <% end  %>
+                      <td>
+                        <%= deposit.date.strftime("%Y/%m/%d") %>
+                      </td>
+                      <td>
+                        <%= deposit.user.name %>
+                      </td>
+                      <td>
+                        <%= deposit.amount_with_plus_or_minus %>
+                      </td>
+                      <td>
+                        <% deposit.memo.truncate(10, omission: "..") %>
+                      </td>
+                      <td><%= get_edit_link(deposit) %></td>
                     </tr>
                   <% end  %>
-                <% end  %>
                 </tbody>
               </table>
             </div>
             <!-- /.table-responsive -->
           </div>
           <!-- /.box-body -->
-          <div class="box-footer">
-            <%= link_to '新しい手渡し金額を追加', new_pay_path, class: "btn btn-danger btn-block" %>
+          <div class="box-footer text-center no-border no-padding">
+            <%= paginate @deposits %>
           </div><!-- /.box-footer -->
         </div><!-- /.box box-danger -->
 

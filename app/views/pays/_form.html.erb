@@ -7,9 +7,9 @@
           <div class="box-body">
             <%= form_with(model: pay, local: true) do |f| %>
               <%= render 'layouts/error', object: pay %>
-              <%= f.label :pamount , value: '金額' %>
+              <%= f.label :amount , value: '金額' %>
               <div class="input-group">
-                <%= f.number_field :pamount, class:"form-control input-lg", required: true %>
+                <%= f.number_field :amount, class:"form-control input-lg", required: true %>
                 <span class="input-group-addon">円</span>
               </div>
               <br>

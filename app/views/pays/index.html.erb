@@ -32,15 +32,8 @@
         <div class="box box-danger">
           <div class="box-header with-border">
             <h3 class="box-title">過去の精算</h3>
-
-            <div class="box-tools">
-              <ul class="pagination pagination-sm no-margin pull-right">
-                <li><a href="#">&laquo;</a></li>
-                <li><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">&raquo;</a></li>
-              </ul>
+            <div class="pull-right">
+              <%= link_to '手渡し金額を追加', new_pay_path, class: "btn btn-danger" %>
             </div>
           </div><!-- /.box-header -->
 
@@ -53,41 +46,27 @@
                   <th>名前</th>
                   <th>金額</th>
                   <th>メモ</th>
+                  <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                <% @pays.each do |pay| %>
-                  <tr>
-                    <% if pay.user == current_user %>
-                      <% path = edit_pay_path(pay) %>
-                      <td>
-                        <%= link_to "#{pay.date.strftime("%Y/%m")}", path%>
-                      </td>
-                      <td>
-                        <%= link_to "#{display_name(pay.user_id).name}", path%>
-                      </td>
-                      <td>
-                        <%= link_to "¥#{pay.pamount.to_s(:delimited)}", path%>
-                      </td>
-                      <td>
-                        <%= link_to "#{pay.memo}", path %>
-                      </td>
-                    <% else %>
+                  <% @pays.each do |pay| %>
+                    <tr>
                       <td><%= pay.date.strftime("%Y/%m") %></td>
-                      <td><%= display_name(pay.user_id).name %></td>
+                      <td><%= pay.user.name %></td>
                       <td><%= pay.pamount.to_s(:delimited) %></td>
-                      <td><% pay.memo %></td>
-                    <% end  %>
-                  </tr>
-                <% end  %>
+                      <td><%= pay.memo.truncate(5, omission: "..") %></td>
+                      <td><%= get_edit_link(pay) %></td>
+                    </tr>
+                  <% end  %>
                 </tbody>
               </table>
             </div>
             <!-- /.table-responsive -->
           </div>
           <!-- /.box-body -->
-          <div class="box-footer">
-            <%= link_to '新しい手渡し金額を追加', new_pay_path, class: "btn btn-danger btn-block" %>
+          <div class="box-footer text-center no-border no-padding">
+            <%= paginate @pays %>
           </div><!-- /.box-footer -->
         </div><!-- /.box -->
 

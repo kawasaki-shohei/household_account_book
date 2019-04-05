@@ -3,7 +3,7 @@ class PaysController < ApplicationController
   after_action -> {create_notification(@pay)}, only: [:create, :update]
 
   def index
-    @pays = Pay.all_payments(current_user, partner)
+    @pays = Pay.get_couple_pays(current_user).page(params[:page]).per(10)
     @balance = Pay.balance_of_gross(current_user, partner)
     @my_payment = Expense.both_this_month(current_user, partner)
     @my_last_payment = Expense.both_last_month(current_user, partner)

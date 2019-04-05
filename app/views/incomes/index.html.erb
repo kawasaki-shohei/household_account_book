@@ -1,0 +1,71 @@
+<% provide :title, '収入一覧' %>
+<div class="content-wrapper">
+
+  <section class="content-header">
+    <h1>収入一覧</h1>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <!-- left column -->
+      <div class="col-md-12">
+        <%= link_to '収入を追加', new_deposit_path, class: "btn btn-danger btn-block" %>
+      </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="box box-danger">
+
+          <div class="box-body no-padding">
+            <div class="table-responsive">
+              <table class="table no-margin">
+                <thead>
+                <tr>
+                  <th>日付</th>
+                  <th>金額</th>
+                  <th>メモ</th>
+                  <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <% if @incomes %>
+                  <% @incomes.each do |income| %>
+                    <tr>
+                      <td>
+                        <%= income.date.strftime("%Y/%m/%d") %>
+                      </td>
+                      <td>
+                        <%= income.amount.to_s(:delimited) %>
+                      </td>
+                      <td>
+                        <%= truncate(income.memo, length: 10) %>
+                      </td>
+                      <td>
+                        <%= link_to edit_income_path(income) do %>
+                          <i class="fa fa-lg fa-pencil-square-o text-red"></i>
+                        <% end %>
+                      </td>
+                    </tr>
+                  <% end  %>
+                <% end  %>
+                </tbody>
+              </table>
+            </div>
+            <!-- /.table-responsive -->
+          </div>
+          <!-- /.box-body -->
+          <div class="box-footer text-center no-border no-padding">
+            <%= paginate @incomes %>
+          </div><!-- /.box-footer -->
+        </div><!-- /.box box-danger -->
+
+      </div><!-- /.col-md-12  -->
+    </div><!-- /row -->
+
+  </section>
+
+</div>
