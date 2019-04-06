@@ -9,7 +9,7 @@
     <div class="row">
       <!-- left column -->
       <div class="col-xs-12">
-        <div class="box box-danger">
+        <div class="box box-brown">
           <div class="box-body">
             <%= form_with(model: @badget, local: true) do |f| %>
               <% if @badget.errors.any? %>
@@ -31,7 +31,7 @@
               </div>
 
               <div class="form-group">
-                <%= f.submit submit_btn_letters, class: "btn btn-danger btn-block" %>
+                <%= f.submit submit_btn_letters, class: "btn btn-orange btn-block" %>
               </div>
             <% end %>
 

@@ -3,7 +3,7 @@
   <div class="row">
     <!-- left column -->
     <div class="col-xs-12">
-      <div class="box box-danger">
+      <div class="box box-brown">
         <div class="box-body">
           <%= form_with(model: income, local: true) do |f| %>
             <%=render 'layouts/error', object: income %>
@@ -31,11 +31,11 @@
             <br>
 
             <div class="form-group">
-              <%= f.submit submit_btn_letters, class: "btn btn-danger btn-block" %>
+              <%= f.submit submit_btn_letters, class: "btn btn-orange btn-block" %>
             </div>
 
             <% if action_name == 'edit' %>
-              <%= link_to '削除する', income_path(income), method: :delete, data:{confirm: "Are you sure?"}, class: 'btn btn-default btn-block' %>
+              <%= link_to '削除する', income_path(income), method: :delete, data:{confirm: "Are you sure?"}, class: 'btn btn-brown btn-block' %>
             <% end %>
 
           <% end %>

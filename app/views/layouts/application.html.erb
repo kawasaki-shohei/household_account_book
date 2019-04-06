@@ -20,7 +20,7 @@
   <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
         page. However, you can choose any other skin. Make sure you
         apply the skin class to the body tag so the changes take effect. -->
-  <link rel="stylesheet" href="/admin_lte/dist/css/skins/skin-black.min.css">
+  <link rel="stylesheet" href="/admin_lte/dist/css/skins/skin-red.min.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -35,7 +35,7 @@
   <%= stylesheet_link_tag 'application' %>
 </head>
 
-<body class="hold-transition skin-black sidebar-mini">
+<body class="hold-transition skin-red sidebar-mini">
 <div class="wrapper">
 
   <!-- Main Header -->
@@ -116,10 +116,10 @@
                 <!-- Menu Footer-->
                 <li class="user-footer">
                   <div class="pull-left">
-                    <%= link_to 'Setting', user_settings_path(@current_user), class: "btn btn-default btn-flat" %>
+                    <%= link_to 'Setting', user_settings_path(@current_user), class: "btn btn-brown btn-flat" %>
                   </div>
                   <div class="pull-right">
-                    <%= link_to 'Logout', session_path(@current_user), class: "btn btn-default btn-flat", method: :delete %>
+                    <%= link_to 'Logout', session_path(@current_user), class: "btn btn-brown btn-flat", method: :delete %>
                   </div>
                 </li>
               </ul>
@@ -211,7 +211,7 @@
     <div class="pull-right hidden-xs">
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2019 <a href="#">Habfoc</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; 2019 <a href="#" id="company-name">Habfoc</a>.</strong> All rights reserved.
   </footer>
 </div>
 <!-- ./wrapper -->
