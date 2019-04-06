@@ -54,7 +54,7 @@
                     <tr>
                       <td><%= pay.date.strftime("%Y/%m") %></td>
                       <td><%= pay.user.name %></td>
-                      <td><%= pay.pamount.to_s(:delimited) %></td>
+                      <td><%= pay.amount.to_s(:delimited) %></td>
                       <td><%= pay.memo.truncate(5, omission: "..") %></td>
                       <td><%= get_edit_link(pay) %></td>
                     </tr>
