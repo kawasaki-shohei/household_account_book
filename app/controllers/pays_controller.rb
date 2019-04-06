@@ -1,5 +1,4 @@
 class PaysController < ApplicationController
-  before_action :set_pay, only:[:edit, :update, :destroy]
   after_action -> {create_notification(@pay)}, only: [:create, :update]
 
   def index
@@ -20,9 +19,11 @@ class PaysController < ApplicationController
   end
 
   def edit
+    @pay = Pay.find(params[:id])
   end
 
   def update
+    @pay = Pay.find(params[:id])
     if @pay.update(pay_params)
       redirect_to pays_path, notice: "#{@pay.date.strftime("%Y年%m月")}分の手渡し料金を編集しました。"
     else
@@ -31,6 +32,7 @@ class PaysController < ApplicationController
   end
 
   def destroy
+    @pay = Pay.find(params[:id])
     create_notification(@pay)
     @pay.destroy
     redirect_to pays_path, notice: "手渡し料金を削除しました。"
@@ -40,9 +42,5 @@ class PaysController < ApplicationController
   private
     def pay_params
       params.require(:pay).permit(:amount, :date, :memo).merge(user_id: current_user.id)
-    end
-
-    def set_pay
-      @pay = Pay.find(params[:id])
     end
 end
