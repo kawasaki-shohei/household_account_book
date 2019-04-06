@@ -39,7 +39,7 @@ class PaysController < ApplicationController
 
   private
     def pay_params
-      params.require(:pay).permit(:pamount, :date, :memo).merge(user_id: current_user.id)
+      params.require(:pay).permit(:amount, :date, :memo).merge(user_id: current_user.id)
     end
 
     def set_pay

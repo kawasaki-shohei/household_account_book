@@ -47,15 +47,15 @@ class Notification < ApplicationRecord
       details['カテゴリ名'] = meta['kind']
     when "pays"
       details['該当月'] = Date.parse(meta['date']).strftime("%Y年%m月")
-      details['金額'] = "#{(meta['pamount'].to_i).to_s(:delimited)}円"
+      details['金額'] = "#{(meta['amount'].to_i).to_s(:delimited)}円"
     # partnerによって通知されるからpaysとは逆の計算になる。
     when "notifications"
       details['該当月'] = Date.parse(meta['date']).strftime("%Y年%m月")
-      if meta['pamount'].to_i > 0
-        details['金額'] = "#{(meta['pamount'].to_i).abs.to_s(:delimited)}円受け取る"
-      elsif meta['pamount'].to_i < 0
-        details['金額'] = "#{(meta['pamount'].to_i).abs.to_s(:delimited)}円渡す"
-      elsif meta['pamount'].to_i == 0
+      if meta['amount'].to_i > 0
+        details['金額'] = "#{(meta['amount'].to_i).abs.to_s(:delimited)}円受け取る"
+      elsif meta['amount'].to_i < 0
+        details['金額'] = "#{(meta['amount'].to_i).abs.to_s(:delimited)}円渡す"
+      elsif meta['amount'].to_i == 0
         details['金額'] = "0円"
       end
     end
@@ -73,7 +73,7 @@ class Notification < ApplicationRecord
         my_last_payment = Expense.both_last_month(user, partner)
         Notification.create(user_id: user.id,
           notification_message_id: 18,
-          record_meta: "{\"pamount\":#{my_last_payment},\"date\":\"#{Date.today.months_ago(1)}\"}"
+          record_meta: "{\"amount\":#{my_last_payment},\"date\":\"#{Date.today.months_ago(1)}\"}"
         )
       else
         next
