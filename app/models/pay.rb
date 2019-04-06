@@ -7,9 +7,9 @@
 # Name              | Type               | Attributes
 # ----------------- | ------------------ | ---------------------------
 # **`id`**          | `bigint(8)`        | `not null, primary key`
+# **`amount`**      | `integer`          |
 # **`date`**        | `date`             |
 # **`memo`**        | `string`           |
-# **`pamount`**     | `integer`          |
 # **`created_at`**  | `datetime`         | `not null`
 # **`updated_at`**  | `datetime`         | `not null`
 # **`user_id`**     | `bigint(8)`        |
@@ -28,12 +28,12 @@
 class Pay < ApplicationRecord
   belongs_to :user
 
-  validates :pamount, :date, presence: true
+  validates :amount, :date, presence: true
 
   scope :newer, -> {order(date: :desc, created_at: :desc)}
 
   def self.ones_all_payment(user)
-    user.pays.sum(:pamount)
+    user.pays.sum(:amount)
   end
 
   def self.ones_gross(user)
