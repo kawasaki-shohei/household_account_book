@@ -15,13 +15,13 @@
           <div class="box-body box-profile">
             <ul class="list-group list-group-unbordered">
               <li class="list-group-item">
-                <b>先月分<small class="label bg-green">確定</small></b> <p class="pull-right"><%= payment_amount_as_string(@my_last_payment) %></p>
+                <b>先月分<small class="label bg-red space-left">確定</small></b> <p class="pull-right"><%= payment_amount_as_string(@my_last_payment) %></p>
               </li>
               <li class="list-group-item">
-                <b>今月分<small class="label bg-yellow">未確定</small></b> <p class="pull-right"><%= payment_amount_as_string(@my_payment) %></p>
+                <b>今月分<small class="label bg-yellow space-left">未確定</small></b> <p class="pull-right"><%= payment_amount_as_string(@my_payment) %></p>
               </li>
               <li class="list-group-item">
-                <b>先月までの</br>繰り越し精算金額<small class="label bg-green">確定</small></b> <p class="pull-right"><%= payment_amount_as_string(@balance) %></p>
+                <b>先月までの</br>繰り越し精算金額<small class="label bg-red space-left">確定</small></b> <p class="pull-right"><%= payment_amount_as_string(@balance) %></p>
               </li>
             </ul>
           </div>
@@ -52,11 +52,11 @@
                 <tbody>
                   <% @pays.each do |pay| %>
                     <tr>
-                      <td><%= pay.date.strftime("%Y/%m") %></td>
+                      <td><%= pay.date_year_month %></td>
                       <td><%= pay.user.name %></td>
-                      <td><%= pay.amount.to_s(:delimited) %></td>
-                      <td><%= pay.memo.truncate(5, omission: "..") %></td>
-                      <td><%= get_edit_link(pay) %></td>
+                      <td><%= pay.delimited_amount %></td>
+                      <td><%= pay.truncated_memo %></td>
+                      <td><%= pay.get_edit_link %></td>
                     </tr>
                   <% end  %>
                 </tbody>

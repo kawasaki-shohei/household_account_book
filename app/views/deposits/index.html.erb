@@ -61,7 +61,7 @@
                   <% @deposits.each do |deposit| %>
                     <tr>
                       <td>
-                        <%= deposit.date.strftime("%Y/%m/%d") %>
+                        <%= deposit.date_as_string %>
                       </td>
                       <td>
                         <%= deposit.user.name %>
@@ -70,9 +70,9 @@
                         <%= deposit.amount_with_plus_or_minus %>
                       </td>
                       <td>
-                        <% deposit.memo.truncate(10, omission: "..") %>
+                        <% deposit.truncated_memo %>
                       </td>
-                      <td><%= get_edit_link(deposit) %></td>
+                      <td><%= deposit.get_edit_link %></td>
                     </tr>
                   <% end  %>
                 </tbody>

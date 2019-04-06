@@ -35,20 +35,10 @@
                 <% if @incomes %>
                   <% @incomes.each do |income| %>
                     <tr>
-                      <td>
-                        <%= income.date.strftime("%Y/%m/%d") %>
-                      </td>
-                      <td>
-                        <%= income.amount.to_s(:delimited) %>
-                      </td>
-                      <td>
-                        <%= truncate(income.memo, length: 10) %>
-                      </td>
-                      <td>
-                        <%= link_to edit_income_path(income) do %>
-                          <i class="fa fa-lg fa-pencil-square-o text-red"></i>
-                        <% end %>
-                      </td>
+                      <td><%= income.date_as_string %></td>
+                      <td><%= income.delimited_amount %></td>
+                      <td><%= income.truncated_memo %></td>
+                      <td><%= income.get_edit_link %></td>
                     </tr>
                   <% end  %>
                 <% end  %>

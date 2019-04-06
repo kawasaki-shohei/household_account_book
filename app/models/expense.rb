@@ -54,6 +54,7 @@ class Expense < ApplicationRecord
   scope :last_month, -> {where('date >= ? AND date <= ?', beginning_of_last_month, end_of_last_month)}
   scope :until_last_month, -> {where('date <= ?', end_of_last_month)}
   # 引数はString。 例: "2019-01"
+  # fixme: monthは紛らわしいのでyear_monthに変更する
   scope :one_month, -> (month) {where('date >= ? AND date <= ?', month.to_beginning_of_month, month.to_end_of_month)}
   scope :except_repeat_ones, -> {where.not()}
   scope :category, -> (category_id){unscope(:order).where(category_id: category_id).order(date: :desc, created_at: :desc)}
