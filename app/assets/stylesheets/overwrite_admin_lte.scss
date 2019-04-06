@@ -63,12 +63,6 @@ body{
   color: #333;
 }
 
-
-
-.bg-red, .callout.callout-danger, .alert-danger, .alert-error, .label-danger, .modal-danger .modal-body {
-  background-color: #fd974f !important;
-}
-
 .bg-orange {
   background-color: #fd974f !important;
 }
@@ -120,6 +114,10 @@ body{
   z-index: 3;
   color: #fff;
   cursor: default;
-  background-color: #c60000;
-  border-color: #c60000;
+  background-color: #805a3b;
+  border-color: #803900;
 }
+
+.text-red{color: #c60000;}
+.text-orange{color: #fd974f;}
+.text-brown{color: #805a3b;}

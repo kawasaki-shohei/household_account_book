@@ -69,9 +69,4 @@ class Balance < ApplicationRecord
     self.sum{ |balance| balance.amount }
   end
 
-  # "2019-01" → "2019年01月"
-  def japanese_month
-    /(?<year>\d{4})-(?<_month>\d{2})/ =~ month
-    "#{year}年#{_month}月"
-  end
 end

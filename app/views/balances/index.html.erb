@@ -36,12 +36,12 @@
                 </tr>
                 </thead>
                 <tbody>
-                  <% @balances.each do |balance| %>
-                    <tr>
-                      <td><%= balance.japanese_month %></td>
-                      <td><%= balance.amount_with_plus_or_minus %></td>
-                    </tr>
-                  <% end  %>
+                <% @balances.each do |balance| %>
+                  <tr>
+                    <td><%= balance.japanese_month %></td>
+                    <td><%= balance.amount_with_plus_or_minus %></td>
+                  </tr>
+                <% end  %>
                 </tbody>
               </table>
             </div>
@@ -49,7 +49,7 @@
           </div>
           <!-- /.box-body -->
           <div class="box-footer text-center">
-              <%= paginate @balances %>
+            <%= paginate @balances %>
           </div><!-- /.box-footer -->
         </div><!-- /.box box-brown -->
 

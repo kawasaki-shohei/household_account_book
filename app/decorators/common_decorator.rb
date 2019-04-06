@@ -22,7 +22,16 @@ module CommonDecorator
     amount.to_s(:delimited)
   end
 
+  def red_amount
+    amount_str = "▲" + amount.abs.to_s(:delimited)
+    make_it_red(amount_str)
+  end
+
   def truncated_memo
     memo.truncate(5, omission: "..")
+  end
+
+  def make_it_red(str)
+    content_tag(:span, str, class: "text-red")
   end
 end

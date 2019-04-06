@@ -32,7 +32,6 @@
                 </tr>
                 </thead>
                 <tbody>
-                <% if @incomes %>
                   <% @incomes.each do |income| %>
                     <tr>
                       <td><%= income.date_as_string %></td>
@@ -41,7 +40,6 @@
                       <td><%= income.get_edit_link %></td>
                     </tr>
                   <% end  %>
-                <% end  %>
                 </tbody>
               </table>
             </div>

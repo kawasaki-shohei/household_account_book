@@ -1,10 +1,10 @@
 class FrontsController < ApplicationController
   def index
-    @incomes = current_user.incomes.order(date: :desc).page(params[:page]).per(10)
+    @balances = current_user.balances.order(month: :desc).page(params[:page]).per(10)
   end
 
   def new
-    @deposit = current_user.deposits.build
+    @income = current_user.incomes.build
   end
 
   def edit

@@ -11,7 +11,7 @@
       <!-- left column -->
       <div class="col-md-12">
         <div class="info-box">
-          <span class="info-box-icon bg-red"><i class="fa fa-bank"></i></span>
+          <span class="info-box-icon bg-orange"><i class="fa fa-bank"></i></span>
           <div class="info-box-content">
             <span class="info-box-text">総額</span>
             <span class="info-box-number">
@@ -50,18 +50,10 @@
                 <tbody>
                   <% @deposits.each do |deposit| %>
                     <tr>
-                      <td>
-                        <%= deposit.date_as_string %>
-                      </td>
-                      <td>
-                        <%= deposit.user.name %>
-                      </td>
-                      <td>
-                        <%= deposit.amount_with_plus_or_minus %>
-                      </td>
-                      <td>
-                        <% deposit.truncated_memo %>
-                      </td>
+                      <td><%= deposit.date_as_string %></td>
+                      <td><%= deposit.user.name %></td>
+                      <td><%= deposit.amount_with_plus_or_minus %></td>
+                      <td><%= deposit.truncated_memo %></td>
                       <td><%= deposit.get_edit_link %></td>
                     </tr>
                   <% end  %>
