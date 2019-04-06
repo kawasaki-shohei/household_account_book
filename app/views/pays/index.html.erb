@@ -15,13 +15,28 @@
           <div class="box-body box-profile">
             <ul class="list-group list-group-unbordered">
               <li class="list-group-item">
-                <b>先月分<small class="label bg-red space-left">確定</small></b> <p class="pull-right"><%= payment_amount_as_string(@my_last_payment) %></p>
+                <b>先月分<small class="label bg-red space-left">確定</small></b>
+                <p class="pull-right">
+                  <span class="lead"><strong>
+                    <%= payment_amount_as_string(@my_last_payment) %>
+                  </strong></span>
+                </p>
               </li>
               <li class="list-group-item">
-                <b>今月分<small class="label bg-yellow space-left">未確定</small></b> <p class="pull-right"><%= payment_amount_as_string(@my_payment) %></p>
+                <b>今月分<small class="label bg-orange space-left">未確定</small></b>
+                <p class="pull-right">
+                  <span class="lead"><strong>
+                    <%= payment_amount_as_string(@my_payment) %>
+                  </strong></span>
+                </p>
               </li>
               <li class="list-group-item">
-                <b>先月までの</br>繰り越し精算金額<small class="label bg-red space-left">確定</small></b> <p class="pull-right"><%= payment_amount_as_string(@balance) %></p>
+                <b>先月までの</br>繰り越し精算金額<small class="label bg-red space-left">確定</small></b>
+                <p class="pull-right">
+                  <span class="lead"><strong>
+                    <%= payment_amount_as_string(@balance) %>
+                  </strong></span>
+                </p>
               </li>
             </ul>
           </div>
