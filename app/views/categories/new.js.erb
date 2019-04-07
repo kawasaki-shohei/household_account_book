@@ -3,7 +3,7 @@ addCategoryBtn.disabled = true;
 //addCategoryBtn.style.pointerEvents = "none";
 target = document.querySelector('#own-categories');
 html = "<%= j(render partial: 'form', locals: { category: @category }) %>";
-NewCategoryList = document.createElement('li');
-NewCategoryList.id = "new-category-list"
-NewCategoryList.innerHTML = html
-target.appendChild(NewCategoryList);
+NewCategoryForm = document.createElement('li');
+NewCategoryForm.id = "new-category-form"
+NewCategoryForm.innerHTML = html
+target.appendChild(NewCategoryForm);

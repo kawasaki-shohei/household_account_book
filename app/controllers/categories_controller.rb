@@ -14,11 +14,7 @@ class CategoriesController < ApplicationController
 
   def create
     @category = @current_user.categories.build(category_params)
-    if @category.save
-      redirect_to new_category_path, notice: "#{@category.kind}を追加しました"
-    else
-      render 'new'
-    end
+    @category.save!  #fixme: エラーハンドリング必要
   end
 
   def edit

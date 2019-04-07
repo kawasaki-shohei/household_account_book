@@ -21,6 +21,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  #fixme: コールバックでするように移動。
   def create_notification(obj)
     unless check_need_notify(obj)
       Notification.create(user_id: current_user.id,
