@@ -104,25 +104,7 @@
             </li>
             <!-- User Account Menu -->
             <li class="dropdown user user-menu">
-              <!-- Menu Toggle Button -->
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                <!-- <span class="hidden-xs">-->
-                <span>
-                  <%= @current_user.name %>
-                </span>
-              </a>
-              <ul class="dropdown-menu">
-                <!-- Menu Footer-->
-                <li class="user-footer">
-                  <div class="pull-left">
-                    <%= link_to 'Setting', user_settings_path(@current_user), class: "btn btn-brown btn-flat" %>
-                  </div>
-                  <div class="pull-right">
-                    <%= link_to 'Logout', session_path(@current_user), class: "btn btn-brown btn-flat", method: :delete %>
-                  </div>
-                </li>
-              </ul>
+              <%= link_to @current_user.name, user_path(@current_user) %>
             </li>
           </ul>
         </div>
@@ -186,6 +168,16 @@
           <li>
             <%= link_to categories_path do %>
               <i class="fa fa-th"></i> <span>Category</span>
+            <% end %>
+          </li>
+          <li>
+            <%= link_to user_settings_path(@current_user) do %>
+              <i class="fa fa-th"></i> <span>Setting</span>
+            <% end %>
+          </li>
+          <li>
+            <%= link_to session_path(@current_user), method: :delete do %>
+              <i class="fa fa-th"></i> <span>Logout</span>
             <% end %>
           </li>
         <% else %>
