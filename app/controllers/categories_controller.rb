@@ -3,7 +3,7 @@ class CategoriesController < ApplicationController
   include CategoriesHelper
 
   def index
-    @categories = Category.where(user: [@current_user, @partner]).order(:id)
+    @categories = Category.includes(:user).where(user: [@current_user, @partner]).order(:id)
     # @my_categories = current_user.categories.oneself
     # @common_categories = Category.where('user_id = ? OR user_id = ?', current_user.id, partner.id).where(common: true)
   end

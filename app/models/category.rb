@@ -54,4 +54,9 @@ class Category < ApplicationRecord
     badgets.find{ |badget| badget.try(:user_id) == user.id }
   end
 
+  # @return
+  def only_ones_own?
+    !common
+  end
+
 end

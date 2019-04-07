@@ -18,7 +18,7 @@
           <div class="box-body no-padding">
             <!-- See node_modules/admin-lte/dist/js/pages/dashboard.js to activate the todoList plugin -->
             <ul class="todo-list" id="own-categories">
-              <% @categories.each do |category| %>
+              <% user_own_and_common_categories(@categories).each do |category| %>
                 <li id="category-list-id-<%= category.id %>">
                   <%= render 'one_category_list', category: category %>
                 </li>
@@ -49,11 +49,9 @@
           <div class="box-body no-padding">
             <!-- See node_modules/admin-lte/dist/js/pages/dashboard.js to activate the todoList plugin -->
             <ul class="todo-list">
-              <% @categories.each do |category| %>
+              <% partner_categories(@categories).each do |category| %>
                 <li>
                   <span class="text"><%= category.kind %></span>
-                  <small class="label label-danger"><i class="fa  fa-exchange"></i> 共通</small>
-                  <!-- General tools such as edit or delete-->
                   <div class="tools">
                     <%= link_to edit_category_path(category), remote: true, class: "text-red", id: "category-id-#{category.id}" do %>
                       <i class="fa fa-edit"></i>
@@ -65,10 +63,6 @@
             </ul>
 
           </div><!-- /.box-body -->
-
-          <div class="box-footer clearfix">
-            <button type="button" class="btn btn-orange pull-right"><i class="fa fa-plus"></i>カテゴリーを追加</button>
-          </div>
         </div><!-- /.box box-brown -->
 
       </div><!-- /.col-md-12  -->
