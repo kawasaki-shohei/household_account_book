@@ -1,0 +1,16 @@
+<%= form_with(model: category, remote: true) do |form| %>
+  <div class="row">
+    <div class="col-xs-10">
+      <div class="input-group input-group-sm">
+        <%= form.text_field :kind, value: category.kind, required: true, class:"form-control", max: 15 %>
+        <span class="input-group-btn">
+          <%= form.submit submit_btn_letters, class: "btn btn-brown btn-flat" %>
+        </span>
+      </div>
+    </div>
+    <div class="col-xs-1">
+      <%= category.cancel_btn %>
+    </div>
+
+  </div>
+<% end %>

@@ -32,7 +32,7 @@ class Category < ApplicationRecord
   scope :oneself, -> {where(common: false)}
   scope :common_t, -> {where(common: true)}
 
-  validates :kind, presence: true
+  validates :kind, presence: true, length: { maximum: 15 }
 
   def self.ones_categories(current_user, partner)
     current_user.categories.or(partner.categories.where(common: true))

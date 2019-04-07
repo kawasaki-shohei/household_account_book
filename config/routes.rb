@@ -42,10 +42,9 @@ Rails.application.routes.draw do
   end
 
   resources :categories do
-    collection do
-      get :common
-    end
+    get :cancel, on: :collection
   end
+  resources :common_categories, only: [:update, :destroy]
   resources :badgets, except: [:show]
   resources :pays, except: [:show]
   resources :wants do

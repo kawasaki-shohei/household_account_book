@@ -1,0 +1,6 @@
+id = "<%= @category.id %>";
+target = document.querySelector(`#category-list-id-${id}`);
+html = "<%= j(render partial: 'categories/one_category_list', locals: { category: @category }) %>";
+target.innerHTML = html;
+message = "更新しました。"
+alert(message)

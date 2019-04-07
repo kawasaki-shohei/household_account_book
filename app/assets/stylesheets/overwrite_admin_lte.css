@@ -87,6 +87,14 @@ body{
   background-color: #fd974f !important;
 }
 
+.bg-red {
+  background-color: #c60000 !important;
+}
+
+.bg-brown {
+  background-color: #805a3b !important;
+}
+
 .btn-orange {
   color: #fff;
   background-color: #fd974f;
@@ -138,6 +146,27 @@ body{
   border-color: #803900;
 }
 
-.text-red{color: #c60000;}
+.text-redpaper{color: #c60000;}
 .text-orange{color: #fd974f;}
 .text-brown{color: #805a3b;}
+
+.form-control:focus {
+  border-color: #fd974f;
+}
+
+.todo-list>li {
+  background: #fff;
+  border-left: 2px solid #fd974f;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+  color: #4d2200;
+}
+
+.todo-list>li .tools {
+  display: inline-block;
+}
+
+a:hover, a:active, a:focus {
+  outline: none;
+  text-decoration: none;
+  color: #fd974f;
+}

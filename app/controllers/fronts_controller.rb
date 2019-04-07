@@ -1,6 +1,7 @@
 class FrontsController < ApplicationController
   def index
-    @balances = current_user.balances.order(month: :desc).page(params[:page]).per(10)
+    @my_categories = current_user.categories.oneself
+    @common_categories = Category.where('user_id = ? OR user_id = ?', current_user.id, partner.id).where(common: true)
   end
 
   def new
