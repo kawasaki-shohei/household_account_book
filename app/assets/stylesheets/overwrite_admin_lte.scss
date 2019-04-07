@@ -12,8 +12,16 @@ body{
   border-bottom: 0 solid transparent;
 }
 
+.skin-red .main-header .logo:hover {
+  background-color: #b30000;
+}
+
 .skin-red .main-header .navbar {
   background-color: #c60000;
+}
+
+.skin-red .main-header .navbar .sidebar-toggle:hover {
+  background-color: #b30000;
 }
 
 .content-wrapper {

@@ -10,7 +10,6 @@ https://habfoc.herokuapp.com/
 - Ruby 2.5.1
 - Rails 5.2.2
 - PostgreSQL 10.6
-- Bootstrap 4
 
 ## Function
 - 出費のCRUD処理
