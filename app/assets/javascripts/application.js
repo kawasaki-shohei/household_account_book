@@ -11,8 +11,10 @@
 // about supported directives.
 //
 //= require rails-ujs
-//= require jquery3
-//= require popper
-//= require bootstrap
-//= require Chart.min
+// require jquery
+// require bootstrap-sprockets
+// require jquery-ui
+// require popper
+// require bootstrap
+// require Chart.min
 //= require_tree .

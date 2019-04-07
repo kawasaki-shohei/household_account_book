@@ -212,10 +212,20 @@
 
 <!-- jQuery 3 -->
 <script src="/admin_lte/bower_components/jquery/dist/jquery.min.js"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="/admin_lte/bower_components/jquery-ui/jquery-ui.min.js"></script>
+
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+  $.widget.bridge('uibutton', $.ui.button);
+</script>
 <!-- Bootstrap 3.3.7 -->
 <script src="/admin_lte/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!--todo-list-->
+<script src="/admin_lte/dist/js/pages/dashboard.js"></script>
 <!-- AdminLTE App -->
 <script src="/admin_lte/dist/js/adminlte.min.js"></script>
+
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
