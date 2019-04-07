@@ -11,10 +11,8 @@
 // about supported directives.
 //
 //= require rails-ujs
-// require jquery
-// require bootstrap-sprockets
-// require jquery-ui
-// require popper
-// require bootstrap
-// require Chart.min
+//= require jquery/dist/jquery.min
+//= require bootstrap/dist/js/bootstrap.min
+//= require admin-lte/dist/js/adminlte.min
+//= require admin-lte/plugins/jQueryUI/jquery-ui.min
 //= require_tree .

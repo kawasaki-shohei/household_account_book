@@ -15,14 +15,6 @@ gem 'puma', '~> 3.7'
 gem 'sprockets-rails', '~> 3.2', '>= 3.2.1'
 gem 'uglifier', '>= 1.3.0'
 gem 'rails-ujs', '~> 0.1.0'
-gem 'chart-js-rails', '~> 0.1.6'
-# gem 'coffee-rails', '~> 4.2'
-# gem 'bootstrap', '~> 4.1.3'
-# gem 'bootstrap-sass', '~> 3.4.1'
-# gem 'sassc-rails', '>= 2.1.0'
-# gem 'jquery-rails'
-# gem 'jquery-ui-rails', '~> 6.0', '>= 6.0.1'
-
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
