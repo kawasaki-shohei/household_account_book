@@ -1,8 +1,7 @@
 class BadgetsController < ApplicationController
 
   def index
-    @badgets = current_user.badgets.order(category_id: :asc)
-    @categories = Category.get_user_categories_with_badgets(current_user, partner)
+    @categories = Category.get_user_categories_with_badgets(current_user)
   end
 
   def new

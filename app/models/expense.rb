@@ -77,6 +77,7 @@ class Expense < ApplicationRecord
     %w(amount mypay partnerpay)
   end
 
+  # fixme: case文でsqlのwarningが出ているので、要修正
   # viewで出費リストを表示するために、並び替えを行うメソッド
   # @param [boolean] both_flg 二人のための出費ならtrue, 自分だけのためのフラグならfalse
   # @return 基本的には新しいものが上に表示されるようにしているが、繰り返し出費で入力されたものは、普通の出費が全て表示された後に表示されるように並び替えている

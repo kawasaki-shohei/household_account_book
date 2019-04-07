@@ -24,14 +24,14 @@ module BadgetsHelper
     return left_categories
   end
 
-  # @param [Badget] badgets
+  # @param [Category] categories
   # @return [String]
-  def badgets_sum(badgets)
-    if badgets.any?
-      badgets.map(&:amount).sum.to_s(:delimited)
-    else
-      "0"
-    end
+  # @note categories collectionsからuserの全てのbadgetsを取得して、合計値を算出する
+  def badgets_sum(categories)
+    return "0" if categories.blank?
+    categories.map do |category|
+      category.user_badget(@current_user)
+    end.compact.sum(&:amount).to_s(:delimited)
   end
 
 end
