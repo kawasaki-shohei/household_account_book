@@ -1,5 +1,4 @@
 module ApplicationHelper
-  include SessionsHelper, UsersHelper
 
   def submit_btn_letters
     case action_name
