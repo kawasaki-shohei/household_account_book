@@ -20,7 +20,7 @@
             <ul class="todo-list" id="own-categories">
               <% user_own_and_common_categories(@categories).each do |category| %>
                 <li id="category-list-id-<%= category.id %>">
-                  <%= render 'one_category_list', category: category %>
+                  <%= render 'a_own_category_list', category: category %>
                 </li>
               <% end  %>
             </ul>
@@ -47,17 +47,10 @@
           </div>
 
           <div class="box-body no-padding">
-            <!-- See node_modules/admin-lte/dist/js/pages/dashboard.js to activate the todoList plugin -->
-            <ul class="todo-list">
+            <ul class="todo-list" id="partner-categories">
               <% partner_categories(@categories).each do |category| %>
-                <li>
-                  <span class="text"><%= category.kind %></span>
-                  <div class="tools">
-                    <%= link_to edit_category_path(category), remote: true, class: "text-red", id: "category-id-#{category.id}" do %>
-                      <i class="fa fa-edit"></i>
-                    <% end %>
-                    <i class="fa fa-trash-o"></i>
-                  </div>
+                <li id="category-list-id-<%= category.id %>">
+                  <%= render 'a_partner_category_list', category: category %>
                 </li>
               <% end  %>
             </ul>

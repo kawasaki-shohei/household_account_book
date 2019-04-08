@@ -1,7 +1,7 @@
 id = "<%= @category.id %>";
 NewCategoryForm = document.querySelector('#new-category-form');
 NewCategoryForm.id = `category-list-id-${id}`
-html = "<%= j(render partial: 'categories/one_category_list', locals: { category: @category }) %>";
+html = "<%= j(render partial: 'categories/a_own_category_list', locals: { category: @category }) %>";
 NewCategoryForm.innerHTML = html;
 addCategoryBtn = document.querySelector(`#add-category-btn`);
 addCategoryBtn.disabled = false;

@@ -28,6 +28,14 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def users_one?(object)
+    object.user == @current_user
+  end
+
+  def partners_one?(object)
+    object.user == @partner
+  end
+
   def notification_msg
     notification_msg_id = NotificationMessage.find_by(func: controller_path, act: action_name).msg_id
     return notification_msg_id
