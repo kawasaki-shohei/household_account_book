@@ -7,7 +7,7 @@ end
 
 ruby '2.5.1'
 
-gem 'rails', '~> 5.2.2'
+gem 'rails', '~> 5.2.2.1'
 gem 'pg', '~> 0.18'
 gem 'puma', '~> 3.7'
 
@@ -31,9 +31,7 @@ gem 'daemons', '~> 1.2', '>= 1.2.6'
 gem 'delayed_job_active_record', '~> 4.1', '>= 4.1.3'
 gem 'bcrypt', '3.1.11'
 
-gem 'settingslogic'
 gem 'activerecord-import'
-gem 'dotenv-rails'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
