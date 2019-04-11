@@ -1,0 +1,6 @@
+id = "<%= @category.id %>";
+target = document.querySelector(`#category-list-id-${id}`);
+html = "<%= j(render partial: 'categories/a_own_category_list.html.erb', locals: { category: @category }) %>";
+target.innerHTML = html;
+message = `"<%= @category.kind %>"を共通のカテゴリから解除しました。`;
+alert(message);

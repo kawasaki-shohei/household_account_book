@@ -1,0 +1,59 @@
+<% provide :title, '収入一覧' %>
+<div class="content-wrapper">
+
+  <section class="content-header">
+    <h1>収入一覧</h1>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <!-- left column -->
+      <div class="col-md-12">
+        <%= link_to '収入を追加', new_deposit_path, class: "btn btn-orange btn-block" %>
+      </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="box box-brown">
+
+          <div class="box-body no-padding">
+            <div class="table-responsive">
+              <table class="table no-margin">
+                <thead>
+                <tr>
+                  <th>日付</th>
+                  <th>金額</th>
+                  <th>メモ</th>
+                  <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                  <% @incomes.each do |income| %>
+                    <tr>
+                      <td><%= income.date_as_string %></td>
+                      <td><%= income.delimited_amount %></td>
+                      <td><%= income.truncated_memo %></td>
+                      <td><%= income.get_edit_link %></td>
+                    </tr>
+                  <% end  %>
+                </tbody>
+              </table>
+            </div>
+            <!-- /.table-responsive -->
+          </div>
+          <!-- /.box-body -->
+          <div class="box-footer text-center no-border no-padding">
+            <%= paginate @incomes %>
+          </div><!-- /.box-footer -->
+        </div><!-- /.box box-brown -->
+
+      </div><!-- /.col-md-12  -->
+    </div><!-- /row -->
+
+  </section>
+
+</div>

@@ -1,0 +1,92 @@
+<div class="content-wrapper">
+
+  <section class="content-header">
+    <h1>精算</h1>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+
+    <div class="row">
+      <div class="col-md-12">
+
+        <!-- Settlement -->
+        <div class="box box-brown">
+          <div class="box-body box-profile">
+            <ul class="list-group list-group-unbordered">
+              <li class="list-group-item">
+                <b>先月分<small class="label bg-red space-left">確定</small></b>
+                <p class="pull-right">
+                  <span class="lead"><strong>
+                    <%= payment_amount_as_string(@my_last_payment) %>
+                  </strong></span>
+                </p>
+              </li>
+              <li class="list-group-item">
+                <b>今月分<small class="label bg-orange space-left">未確定</small></b>
+                <p class="pull-right">
+                  <span class="lead"><strong>
+                    <%= payment_amount_as_string(@my_payment) %>
+                  </strong></span>
+                </p>
+              </li>
+              <li class="list-group-item">
+                <b>先月までの</br>繰り越し精算金額<small class="label bg-red space-left">確定</small></b>
+                <p class="pull-right">
+                  <span class="lead"><strong>
+                    <%= payment_amount_as_string(@balance) %>
+                  </strong></span>
+                </p>
+              </li>
+            </ul>
+          </div>
+          <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+
+        <div class="box box-brown">
+          <div class="box-header with-border">
+            <h3 class="box-title">過去の精算</h3>
+            <div class="pull-right">
+              <%= link_to '手渡し金額を追加', new_pay_path, class: "btn btn-orange" %>
+            </div>
+          </div><!-- /.box-header -->
+
+          <div class="box-body no-padding">
+            <div class="table-responsive">
+              <table class="table no-margin">
+                <thead>
+                <tr>
+                  <th>該当月</th>
+                  <th>名前</th>
+                  <th>金額</th>
+                  <th>メモ</th>
+                  <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                  <% @pays.each do |pay| %>
+                    <tr>
+                      <td><%= pay.date_year_month %></td>
+                      <td><%= pay.user.name %></td>
+                      <td><%= pay.delimited_amount %></td>
+                      <td><%= pay.truncated_memo %></td>
+                      <td><%= pay.get_edit_link %></td>
+                    </tr>
+                  <% end  %>
+                </tbody>
+              </table>
+            </div>
+            <!-- /.table-responsive -->
+          </div>
+          <!-- /.box-body -->
+          <div class="box-footer text-center no-border no-padding">
+            <%= paginate @pays %>
+          </div><!-- /.box-footer -->
+        </div><!-- /.box -->
+
+      </div>
+    </div>
+  </section>
+
+</div>

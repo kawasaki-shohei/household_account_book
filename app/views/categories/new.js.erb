@@ -1,0 +1,9 @@
+addCategoryBtn = document.querySelector(`#add-category-btn`);
+addCategoryBtn.disabled = true;
+//addCategoryBtn.style.pointerEvents = "none";
+target = document.querySelector('#own-categories');
+html = "<%= j(render partial: 'form', locals: { category: @category }) %>";
+NewCategoryForm = document.createElement('li');
+NewCategoryForm.id = "new-category-form"
+NewCategoryForm.innerHTML = html
+target.appendChild(NewCategoryForm);

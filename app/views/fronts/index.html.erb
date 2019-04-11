@@ -1,0 +1,91 @@
+<% provide :title, 'カテゴリー一覧' %>
+<div class="content-wrapper">
+
+  <section class="content-header">
+    <h1>カテゴリー一覧</h1>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="box box-brown">
+
+          <div class="box-header with-border">
+            <h3 class="box-title"><%= @current_user.name %>のカテゴリー</h3>
+          </div>
+
+          <div class="box-body no-padding">
+            <!-- See node_modules/admin-lte/dist/js/pages/dashboard.js to activate the todoList plugin -->
+            <ul class="todo-list">
+              <% @my_categories.each do |category| %>
+                <li id="category-list-id-<%= category.id %>">
+                  <span class="handle ui-sortable-handle">
+                    <i class="fa fa-ellipsis-v"></i>
+                    <i class="fa fa-ellipsis-v"></i>
+                  </span>
+                  <span class="text"><%= category.kind %></span>
+                  <small class="label label-danger"><i class="fa  fa-exchange"></i> 共通</small>
+                  <!-- General tools such as edit or delete-->
+                  <div class="">
+                    <%= link_to edit_category_path(category), remote: true, class: "text-red" do %>
+                      <i class="fa fa-edit"></i>
+                    <% end %>
+                    <i class="fa fa-share"></i>
+                  </div>
+                </li>
+              <% end  %>
+            </ul>
+
+          </div><!-- /.box-body -->
+
+          <div class="box-footer clearfix">
+            <button type="button" class="btn btn-orange pull-right"><i class="fa fa-plus"></i>カテゴリーを追加</button>
+          </div>
+        </div><!-- /.box box-brown -->
+
+      </div><!-- /.col-md-12  -->
+    </div><!-- /row -->
+
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="box box-brown">
+
+          <div class="box-header with-border">
+            <h3 class="box-title">パートナーのカテゴリー</h3>
+          </div>
+
+          <div class="box-body no-padding">
+            <!-- See node_modules/admin-lte/dist/js/pages/dashboard.js to activate the todoList plugin -->
+            <ul class="todo-list">
+              <% @my_categories.each do |category| %>
+                <li>
+                  <span class="text"><%= category.kind %></span>
+                  <small class="label label-danger"><i class="fa  fa-exchange"></i> 共通</small>
+                  <!-- General tools such as edit or delete-->
+                  <div class="tools">
+                    <%= link_to edit_category_path(category), remote: true, class: "text-red", id: "category-id-#{category.id}" do %>
+                      <i class="fa fa-edit"></i>
+                    <% end %>
+                    <i class="fa fa-trash-o"></i>
+                  </div>
+                </li>
+              <% end  %>
+            </ul>
+
+          </div><!-- /.box-body -->
+
+          <div class="box-footer clearfix">
+            <button type="button" class="btn btn-orange pull-right"><i class="fa fa-plus"></i>カテゴリーを追加</button>
+          </div>
+        </div><!-- /.box box-brown -->
+
+      </div><!-- /.col-md-12  -->
+    </div><!-- /row -->
+
+
+
+  </section>
+
+</div>

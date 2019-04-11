@@ -34,6 +34,7 @@ class Income < ApplicationRecord
   validates_length_of :memo, maximum: 100
 
   scope :one_month, -> (month) {where('date >= ? AND date <= ?', month.to_beginning_of_month, month.to_end_of_month)}
+  scope :newer, -> {order(date: :desc, created_at: :desc)}
 
   attr_accessor :is_new, :is_destroyed, :differences
   alias_method :is_new?, :is_new

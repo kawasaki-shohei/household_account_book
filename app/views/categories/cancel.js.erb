@@ -1,0 +1,4 @@
+id = "<%= @category.id %>";
+target = document.querySelector(`#category-list-id-${id}`);
+html = "<%= j(render partial: 'a_own_category_list.html.erb', locals: { category: @category }) %>";
+target.innerHTML = html;

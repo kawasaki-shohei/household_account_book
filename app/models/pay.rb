@@ -40,8 +40,8 @@ class Pay < ApplicationRecord
     user.expenses.until_last_month.both_t.sum(:amount) + ones_all_payment(user)
   end
 
-  def self.all_payments(current_user, partner)
-    current_user.pays.or(partner.pays).newer
+  def self.get_couple_pays(user)
+    self.includes(:user).where(users: {id: [user, user.partner]}).newer
   end
 
   def self.must_pay(current_user, partner)

@@ -1,14 +1,11 @@
 class CategoriesController < ApplicationController
-  before_action :set_category, only:[:edit, :update]
-  before_action :set_categories, only:[:index, :common]
   after_action -> {create_notification(@category)}, only: [:create, :update]
   include CategoriesHelper
 
   def index
-  end
-
-  def common
-    @partner_categories = partner.categories.oneself
+    @categories = Category.includes(:user).where(user: [@current_user, @partner]).order(:id)
+    # @my_categories = current_user.categories.oneself
+    # @common_categories = Category.where('user_id = ? OR user_id = ?', current_user.id, partner.id).where(common: true)
   end
 
   def new
@@ -16,38 +13,30 @@ class CategoriesController < ApplicationController
   end
 
   def create
-    @category = Category.new(category_params)
-    if @category.save
-      redirect_to new_category_path, notice: "#{@category.kind}を追加しました"
-    else
-      render 'new'
-    end
+    @category = @current_user.categories.build(category_params)
+    @category.save!  #fixme: エラーハンドリング必要
   end
 
   def edit
+    @category = Category.find(params[:id])
   end
 
   def update
-    if params[:name] == "common"
-      @category.update(common: true)
-      redirect_to common_categories_path, notice: "#{@category.kind}を共通のカテゴリに登録しました！"
-    elsif @category.update(kind: params[:category][:kind])
-      redirect_to categories_path, notice: "カテゴリ名を変更しました"
+    @category = Category.find(params[:id])
+    @category.update(category_params)   #fixme: エラーハンドリング必要
+  end
+
+  def cancel
+    if params[:id]
+      @category = Category.find(params[:id])
+    else
+      render 'remove_new_category_form'
     end
   end
 
 
   private
   def category_params
-    params.require(:category).permit(:kind, :common).merge(user_id: current_user.id)
-  end
-
-  def set_category
-    @category = Category.find(params[:id])
-  end
-
-  def set_categories
-    @my_categories = current_user.categories.oneself
-    common_categories
+    params.require(:category).permit(:kind, :common)
   end
 end

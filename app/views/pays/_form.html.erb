@@ -1,0 +1,45 @@
+<!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <!-- left column -->
+      <div class="col-xs-12">
+        <div class="box box-brown">
+          <div class="box-body">
+            <%= form_with(model: pay, local: true) do |f| %>
+              <%= render 'layouts/error', object: pay %>
+              <%= f.label :amount , value: '金額' %>
+              <div class="input-group">
+                <%= f.number_field :amount, class:"form-control input-lg", required: true %>
+                <span class="input-group-addon">円</span>
+              </div>
+              <br>
+
+              <div class="form-group">
+                <label>何月分か</label>
+                <div>
+                  <%= f.date_select :date, discard_day: true, required: true, value: Date.current.months_ago(1), class: "form-control" %>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>メモ</label>
+                <div>
+                  <%= f.text_field :memo, class: "form-control input-lg" %>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <%= f.submit submit_btn_letters, class: "btn btn-orange btn-block" %>
+              </div>
+
+              <% if action_name == 'edit' %>
+                <%= link_to '削除する', pay_path(pay), method: :delete, data:{confirm: "Are you sure?"}, class: 'btn btn-brown btn-block' %>
+              <% end %>
+
+            <% end %>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>

@@ -7,6 +7,10 @@
 # Ignore bundler config.
 /.bundle
 
+# Ignore vender/bundler
+vendor/bundle/*
+vendor/bundler/*
+
 # Ignore all logfiles and tempfiles.
 /log/*
 /tmp/*
@@ -28,3 +32,5 @@
 
 # others
 .DS_Store
+# Ignore master key for decrypting credentials and more.
+/config/master.key

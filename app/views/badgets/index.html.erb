@@ -1,0 +1,70 @@
+<div class="content-wrapper">
+
+  <section class="content-header">
+    <h1>予算一覧</h1>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <!-- left column -->
+      <div class="col-md-12">
+
+        <div class="info-box">
+          <span class="info-box-icon bg-orange"><i class="fa fa-bar-chart-o"></i></span>
+          <div class="info-box-content">
+            <span class="info-box-text">予算の合計値</span>
+            <span class="info-box-number">
+              <%= badgets_sum(@categories) %> 円
+            </span>
+          </div>
+        </div>
+
+        <%= link_to '予算の追加', new_badget_path, class: "btn btn-orange btn-block" %>
+      </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="box box-brown">
+
+          <div class="box-body no-padding">
+            <div class="table-responsive">
+              <table class="table no-margin">
+                <thead>
+                <tr>
+                  <th>カテゴリ</th>
+                  <th>予算</th>
+                  <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <% @categories.each do |category| %>
+                  <tr>
+                    <td><%= category.kind %></td>
+                    <% # category.badgetsはcurrent_userとpartnerが両方登録している場合があり、コントローラーでは両方取得してきている。。current_userが登録している場合は、current_userだけの分をだし、partnerの分は出さない。逆にpartnerの分しか登録されていない場合は、partnerのcategoryを表示し、新たにcategoryを登録できるようにする。 %>
+                    <% if badget = category.user_badget(current_user) %>
+                      <td><%= badget.amount.to_s(:delimited) %></td>
+                      <td><%= link_to '編集', edit_badget_path(badget.id), class: "btn btn-brown" %></td>
+                    <% else %>
+                      <td></td>
+                      <td>
+                        <%= link_to '追加', new_badget_path(id: category.id), class: "btn btn-orange" %>
+                      </td>
+                    <% end %>
+                  </tr>
+                <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- .box box-brown -->
+    </div><!-- .col-md-12 -->
+
+  </section>
+
+</div>

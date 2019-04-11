@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  #fixme: 削除する
+  resources :fronts
+
   get 'admin/' , to: 'admin#index', as: :admin
   get 'admin/insert_6_months_expenses' , to: 'admin#insert_6_months_expenses', as: :insert_6_months_expenses_admin
   get 'admin/insert_this_month_expenses' , to: 'admin#insert_this_month_expenses', as: :insert_this_month_expenses_admin
@@ -8,6 +11,7 @@ Rails.application.routes.draw do
 
   resources :sessions, only: [:new, :create, :destroy]
 
+  # fixme: これはresourceのほうがいい。
   resources :users do
     put :register_partner, on: :member
     patch :register_partner, on: :member
@@ -38,12 +42,11 @@ Rails.application.routes.draw do
   end
 
   resources :categories do
-    collection do
-      get :common
-    end
+    get :cancel, on: :collection
   end
-  resources :badgets
-  resources :pays
+  resources :common_categories, only: [:update, :destroy]
+  resources :badgets, except: [:show]
+  resources :pays, except: [:show]
   resources :wants do
     get :change_bought_button, on: :member
   end

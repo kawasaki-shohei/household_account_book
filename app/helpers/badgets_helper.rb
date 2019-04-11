@@ -1,4 +1,5 @@
 module BadgetsHelper
+  # FIXME: sql叩きすぎ！
   # 予算が未入力のカテゴリを抽出
   def make_left_categories(categories)
     all_categories = Hash.new
@@ -22,4 +23,15 @@ module BadgetsHelper
 
     return left_categories
   end
+
+  # @param [Category] categories
+  # @return [String]
+  # @note categories collectionsからuserの全てのbadgetsを取得して、合計値を算出する
+  def badgets_sum(categories)
+    return "0" if categories.blank?
+    categories.map do |category|
+      category.user_badget(@current_user)
+    end.compact.sum(&:amount).to_s(:delimited)
+  end
+
 end
