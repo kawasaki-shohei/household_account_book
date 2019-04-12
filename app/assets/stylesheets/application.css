@@ -1,6 +1,6 @@
-@import 'font-awesome/css/font-awesome.min';
-@import 'bootstrap/dist/css/bootstrap.min';
-@import 'admin-lte/dist/css/AdminLTE.min';
-@import 'admin-lte/dist/css/skins/skin-red.min';
-@import 'overwrite_admin_lte.css';
-@import 'common';
+@import url('font-awesome/css/font-awesome.min');
+@import url('bootstrap/dist/css/bootstrap.min');
+@import url('admin-lte/dist/css/AdminLTE.min');
+@import url('admin-lte/dist/css/skins/skin-red.min');
+@import url('overwrite_admin_lte.css');
+@import url('common');
