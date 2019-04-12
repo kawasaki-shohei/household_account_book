@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "admin-lte": "2.4.5"
+    "admin-lte": "2.4.5",
+    "jquery-ui-touch-punch": "^0.2.3"
   }
 }
