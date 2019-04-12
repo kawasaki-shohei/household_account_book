@@ -1,28 +1,27 @@
-tables = %w(users, partners)
+tables = %w(users)
 tables.each do |table|
   ActiveRecord::Base.connection.reset_pk_sequence!(table)
 end
 
-users = []
-2.times do |i|
-  i += 1
-  users << User.new(
-    name: "test-user#{i}",
-    email: "user#{i}@gmail.com",
-    password: Rails.application.credentials.dummy_user_password,
-    allow_share_own: false
-  )
+def create_two_users(id=0)
+  users = []
+  2.times do
+    id += 1
+    users << User.create!(
+      name: "test-user#{id}",
+      email: "user#{id}@gmail.com",
+      password: Rails.application.credentials.dummy_user_password
+    )
+  end
+  users
 end
 
-User.import users
-
-def register_partner(user, partner)
+def make_one_couple(user, partner)
   user.update_attributes!(partner_id: partner.id)
+  partner.update_attributes!(partner_id: user.id)
 end
 
 ActiveRecord::Base.transaction do
-  user = users[0]
-  partner = users[1]
-  register_partner(user, partner)
-  register_partner(partner, user)
+  user, partner = create_two_users
+  make_one_couple(user, partner)
 end
