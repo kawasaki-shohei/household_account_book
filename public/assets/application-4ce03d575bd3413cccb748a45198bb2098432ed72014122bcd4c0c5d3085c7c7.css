@@ -1,0 +1,191 @@
+.space-left{
+  margin-left: 5px;
+}
+body{
+  color: #4d2200;
+}
+
+#company-name{
+  color: #c60000;
+}
+
+.skin-red .main-header .logo {
+  background-color: #c60000;
+  color: #fff;
+  border-bottom: 0 solid transparent;
+}
+
+.skin-red .main-header .logo:hover {
+  background-color: #b30000;
+}
+
+.skin-red .main-header .navbar {
+  background-color: #c60000;
+}
+
+.skin-red .main-header .navbar .sidebar-toggle:hover {
+  background-color: #b30000;
+}
+
+.content-wrapper {
+  min-height: 100%;
+  background-color: #ecf0f5;
+  z-index: 800;
+}
+
+.content-wrapper {
+  min-height: 100%;
+  background-color: #fef2e4;
+  z-index: 800;
+}
+
+.skin-red .main-sidebar, .skin-red .left-side {
+  background-color: #fef2e4;
+  border-right: solid 1px #4d2200;
+}
+
+.skin-red .sidebar-menu>li.header {
+  color: #805a3b;
+  background: #fef2e4;
+  border-bottom: solid 1px #fff;
+}
+
+.skin-red .sidebar-menu>li:hover>a, .skin-red .sidebar-menu>li.active>a, .skin-red .sidebar-menu>li.menu-open>a {
+  color: #805a3b;
+  background: #ffe6cc;
+}
+
+.skin-red .sidebar a {
+  color: #805a3b;
+}
+
+.sidebar-menu>li {
+  border-bottom: solid 1px #fff;
+}
+
+.skin-red .sidebar-menu>li.active>a {
+  border-left-color: #c60000;
+}
+
+.skin-red .sidebar-menu>li>.treeview-menu {
+  margin: 0 1px;
+  background: #fff;
+  border-bottom: solid 1px #fff;
+}
+
+.skin-red .sidebar-menu .treeview-menu>li {
+  background: #fff;
+}
+
+.skin-red .sidebar-menu .treeview-menu>li>a {
+  color: #803900;
+}
+
+.skin-red .sidebar-menu .treeview-menu>li.active>a, .skin-red .sidebar-menu .treeview-menu>li>a:hover {
+  color: #4d2200;
+  background: #ffe6cc;
+}
+
+.bg-orange {
+  background-color: #fd974f !important;
+}
+
+.bg-red {
+  background-color: #c60000 !important;
+}
+
+.bg-brown {
+  background-color: #805a3b !important;
+}
+
+.btn-orange {
+  color: #fff;
+  background-color: #fd974f;
+  border-color: transparent;
+}
+
+.btn-orange:hover, .btn-orange:active, .btn-orange.hover {
+  color: #fff;
+  background-color: #e68947;
+}
+
+.btn-orange.focus, .btn-orange:focus {
+  color: #fff;
+  background-color: #cc7a3f;
+  border-color: #cc7a3f;
+}
+
+.btn-brown {
+  color: #fff;
+  background-color: #805a3b;
+  border-color: transparent;
+}
+
+.btn-brown:hover, .btn-brown:active, .btn-brown.hover {
+  color: #fff;
+  background-color: #803900;
+}
+
+.btn-brown.focus, .btn-brown:focus {
+  color: #fff;
+  background-color: #662e00;
+  border-color: #4d2200;
+}
+
+.box.box-brown {
+  border-top-color: #805a3b;
+}
+
+.pagination > .active > a,
+.pagination > .active > span,
+.pagination > .active > a:hover,
+.pagination > .active > span:hover,
+.pagination > .active > a:focus,
+.pagination > .active > span:focus {
+  z-index: 3;
+  color: #fff;
+  cursor: default;
+  background-color: #805a3b;
+  border-color: #803900;
+}
+
+.text-redpaper{color: #c60000;}
+.text-orange{color: #fd974f;}
+.text-brown{color: #805a3b;}
+
+.form-control:focus {
+  border-color: #fd974f;
+}
+
+.todo-list>li {
+  background: #fff;
+  border-left: 2px solid #fd974f;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+  color: #4d2200;
+}
+
+.todo-list>li .tools {
+  display: inline-block;
+}
+
+a:hover, a:active, a:focus {
+  outline: none;
+  text-decoration: none;
+  color: #fd974f;
+}
+
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+
+
+ */
