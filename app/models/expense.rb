@@ -54,8 +54,7 @@ class Expense < ApplicationRecord
   scope :last_month, -> {where('date >= ? AND date <= ?', beginning_of_last_month, end_of_last_month)}
   scope :until_last_month, -> {where('date <= ?', end_of_last_month)}
   # 引数はString。 例: "2019-01"
-  # fixme: monthは紛らわしいのでyear_monthに変更する
-  scope :one_month, -> (month) {where('date >= ? AND date <= ?', month.to_beginning_of_month, month.to_end_of_month)}
+  scope :one_month, -> (year_month) {where('date >= ? AND date <= ?', year_month.to_beginning_of_month, year_month.to_end_of_month)}
   scope :except_repeat_ones, -> {where.not()}
   scope :category, -> (category_id){unscope(:order).where(category_id: category_id).order(date: :desc, created_at: :desc)}
   scope :both_f, -> {where(both_flg: false)}
@@ -158,8 +157,8 @@ class Expense < ApplicationRecord
   # @return Integer 支出合計額
   def self.one_month_total_expenditures(user, month)
     # 自分の一人の出費の支払い額(amount)の合計額 + 自分の二人の出費の自分の支払い分(mypay)の合計額 + パートナーの二人の出費のパートナーの支払い分(partner)の合計額
-    user_expenses = user.expenses.one_month(month)
-    user_expenses.both_f.sum(:amount) + user_expenses.both_t.sum(:mypay) + user.partner.expenses.one_month(month).both_t.sum(:partnerpay)
+    user_expenses = user.expenses.one_month(year_month)
+    user_expenses.both_f.sum(:amount) + user_expenses.both_t.sum(:mypay) + user.partner.expenses.one_month(year_month).both_t.sum(:partnerpay)
   end
 
 end
