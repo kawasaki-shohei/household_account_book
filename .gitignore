@@ -17,10 +17,7 @@ vendor/bundle/*
 !/tmp/.keep
 
 # Ignore strange node modules files
-node_modules/querystring/.History.md.un~
-node_modules/querystring/.Readme.md.un~
-node_modules/querystring/.package.json.un~
-node_modules/querystring/test/.index.js.un~
+/node_modules/*
 
 # Ignore yarn error log
 /yarn-error.log
