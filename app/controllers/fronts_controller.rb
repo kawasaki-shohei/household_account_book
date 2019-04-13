@@ -21,7 +21,7 @@ class FrontsController < ApplicationController
   private
   def year_month_params
     if params[:period].nil?
-      return Date.current.month_as_string
+      return Date.current.to_s_as_year_month
     elsif params[:period].is_invalid_year_month?
      raise 'error'
     else

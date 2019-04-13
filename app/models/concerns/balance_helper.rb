@@ -22,7 +22,7 @@ module BalanceHelper
 
   # balance_calculatorのインスタンスが生成された時点のattributesのログを出す
   def output_bc_log(object, balance_calculator)
-    message = "starting calculate balance after commit #{self.class.name} instance, id: #{object.id}, month: #{object.date.month_as_string}"
+    message = "starting calculate balance after commit #{self.class.name} instance, id: #{object.id}, month: #{object.date.to_s_as_year_month}"
     LoggerUtility.output_info_log({class_name: self.class.name, method: __method__, user: object.user, message: message})
     LoggerUtility.output_bc_log(balance_calculator)
   end
@@ -37,7 +37,7 @@ module BalanceHelper
       self.object = _object
       self.user = object.user
       self.partner = object.user.partner
-      self.month = object.date.month_as_string
+      self.month = object.date.to_s_as_year_month
       self.is_for_new = object.is_new
       self.is_for_destroyed_object = object.is_destroyed
       self.object_differences = object.differences
@@ -45,7 +45,7 @@ module BalanceHelper
         self.is_for_both_expense = true
       end
       if !is_for_new && !is_for_destroyed_object && object_differences[:date]
-        self.month_was = object_differences[:date][0].month_as_string
+        self.month_was = object_differences[:date][0].to_s_as_year_month
       end
       self.month_is_future = self.month && month.is_after_next_month?
       self.month_was_is_future = self.month_was && month_was.is_after_next_month?

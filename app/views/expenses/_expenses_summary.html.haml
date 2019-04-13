@@ -1,13 +1,13 @@
 %div.expense_month
   = link_to '前月', past_expense_path(cnum), class: 'btn btn-default choose_month'
   - if cnum == 0
-    - month = Date.today.month_as_string
+    - month = Date.today.to_s_as_year_month
     = Date.today.strftime("%Y年%m月")
   - elsif cnum < 0
-    - month = Date.today.months_ago(cnum.abs).month_as_string
+    - month = Date.today.months_ago(cnum.abs).to_s_as_year_month
     = Date.today.months_ago(cnum.abs).strftime("%Y年%m月")
   - elsif cnum > 0
-    - month = Date.today.months_since(cnum.abs).month_as_string
+    - month = Date.today.months_since(cnum.abs).to_s_as_year_month
     = Date.today.months_since(cnum.abs).strftime("%Y年%m月")
   = link_to '来月', future_expense_path(cnum), class: 'btn btn-default choose_month'
 
