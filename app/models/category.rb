@@ -34,8 +34,17 @@ class Category < ApplicationRecord
 
   validates :kind, presence: true, length: { maximum: 15 }
 
+  # fixme: partnerいらない
   def self.ones_categories(current_user, partner)
-    current_user.categories.or(partner.categories.where(common: true))
+    current_user.categories.or(partner.categories.common_t)
+  end
+
+  def self.available_categories_with_expenses(user, year_month)
+    partner = user.partner
+    self.includes(:user, expenses: :user).references(:users, :expenses)
+      .where(users: {id: [user, partner]})
+      .where(["expenses.date >= ? AND expenses.date <= ?", year_month.to_beginning_of_month, year_month.to_end_of_month])
+      .order(id: :asc)
   end
 
   # @param [User] current_user

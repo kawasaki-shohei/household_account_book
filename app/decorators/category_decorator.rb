@@ -20,4 +20,21 @@ module CategoryDecorator
       content_tag(:i, "", class: "fa fa-2x fa-times-circle")
     end
   end
+
+  def own_expenses_sum(user)
+    expenses.select{ |e| e.own_expense?(user) && e.is_only_of_own? }.sum(&:amount)
+  end
+
+  def own_both_expenses_mypay_sum(user)
+    expenses.select{ |e| e.own_expense?(user) && e.is_for_both? }.sum(&:mypay)
+  end
+
+  def partner_both_expenses_partnerpay_sum(user)
+    expenses.select{ |e| e.partner_expense?(user) && e.is_for_both? }.sum(&:partnerpay)
+  end
+
+  def expenses_sum(user)
+    own_expenses_sum(user) + own_both_expenses_mypay_sum(user) + partner_both_expenses_partnerpay_sum(user)
+  end
+
 end

@@ -58,9 +58,26 @@ module ExpensesHelper
   end
 
   # 支出合計の計算
-  def one_total_expenditures(current_user_expenses, partner_expenses)
-    current_user_expenses.both_f.sum(:amount) + current_user_expenses.both_t.sum(:mypay) + partner_expenses.sum(:partnerpay)
+  # def one_total_expenditures(current_user_expenses, partner_expenses)
+  #   current_user_expenses.both_f.sum(:amount) + current_user_expenses.both_t.sum(:mypay) + partner_expenses.sum(:partnerpay)
+  # end
+  def one_total_expenditures(categories, user)
+    "¥ #{categories.map{ |c| c.expenses_sum(user)}.sum.to_s(:delimited)}"
   end
+  alias_method(:own_total_expenditures, :one_total_expenditures)
+  alias_method(:partner_total_expenditures, :one_total_expenditures)
+
+  def one_total_both_expenditures(categories, user)
+    amount = categories.map{ |c| c.own_both_expenses_mypay_sum(user)}.sum +
+      categories.map{ |c| c.partner_both_expenses_partnerpay_sum(user)}.sum
+    "¥ #{amount.to_s(:delimited)}"
+  end
+
+  def one_total_own_expenditures(categories, user)
+    "¥ #{categories.map{ |c| c.own_expenses_sum(user)}.sum.to_s(:delimited)}"
+  end
+
+
 
   # カテゴリ別予算残高の表示順を指定する
   def ordered_badget(user)

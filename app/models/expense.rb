@@ -64,16 +64,21 @@ class Expense < ApplicationRecord
   attr_accessor :is_new, :is_destroyed, :differences
   alias_method :is_new?, :is_new
   alias_method :is_destroyed?, :is_destroyed
+  alias_attribute :is_for_both?, :both_flg
 
   after_initialize { self.is_new = true unless self.id }
   before_save :set_differences
   before_destroy { self.is_destroyed = true }
   after_commit { go_calculate_balance(self) }
 
-
   # 金額に関するカラムを配列で返す。
   def self.money_attributes
     %w(amount mypay partnerpay)
+  end
+
+  def self.all_for_one_month(user, year_month)
+    partner = user.partner
+    self.includes(:user, :category).references(:users, :categories).where(users: {id: [user, partner]}).one_month(year_month)
   end
 
   # fixme: case文でsqlのwarningが出ているので、要修正
@@ -159,6 +164,11 @@ class Expense < ApplicationRecord
     # 自分の一人の出費の支払い額(amount)の合計額 + 自分の二人の出費の自分の支払い分(mypay)の合計額 + パートナーの二人の出費のパートナーの支払い分(partner)の合計額
     user_expenses = user.expenses.one_month(year_month)
     user_expenses.both_f.sum(:amount) + user_expenses.both_t.sum(:mypay) + user.partner.expenses.one_month(year_month).both_t.sum(:partnerpay)
+  end
+
+  #todo: カラム名を変更したら削除
+  def is_only_of_own?
+    !both_flg
   end
 
 end

@@ -1,91 +1,64 @@
-<% provide :title, 'カテゴリー一覧' %>
+<% provide :title, "#{CONFIG[:site_name]} | 出費一覧" %>
 <div class="content-wrapper">
 
-  <section class="content-header">
-    <h1>カテゴリー一覧</h1>
-  </section>
-
-  <!-- Main content -->
   <section class="content">
     <div class="row">
       <div class="col-md-12">
         <div class="box box-brown">
-
-          <div class="box-header with-border">
-            <h3 class="box-title"><%= @current_user.name %>のカテゴリー</h3>
+          <div class="box-header">
+            <div>
+              <div class="pull-left">
+                <h4>出費合計</h4>
+              </div>
+              <div class="pull-right">
+                <h4><%= one_total_expenditures(@categories, @current_user) %></h4>
+              </div>
+            </div>
+            <br /><br />
+            <div>
+              <div class="pull-left">
+                <h4>二人の出費合計</h4>
+              </div>
+              <div class="pull-right">
+                <h4><%= one_total_both_expenditures(@categories, @current_user) %></h4>
+              </div>
+            </div>
+            <br /><br />
+            <div>
+              <div class="pull-left">
+                <h4>自分の出費合計</h4>
+              </div>
+              <div class="pull-right">
+                <h4><%= one_total_own_expenditures(@categories, @current_user) %></h4>
+              </div>
+            </div>
           </div>
+
 
           <div class="box-body no-padding">
-            <!-- See node_modules/admin-lte/dist/js/pages/dashboard.js to activate the todoList plugin -->
-            <ul class="todo-list">
-              <% @my_categories.each do |category| %>
-                <li id="category-list-id-<%= category.id %>">
-                  <span class="handle ui-sortable-handle">
-                    <i class="fa fa-ellipsis-v"></i>
-                    <i class="fa fa-ellipsis-v"></i>
-                  </span>
-                  <span class="text"><%= category.kind %></span>
-                  <small class="label label-danger"><i class="fa  fa-exchange"></i> 共通</small>
-                  <!-- General tools such as edit or delete-->
-                  <div class="">
-                    <%= link_to edit_category_path(category), remote: true, class: "text-red" do %>
-                      <i class="fa fa-edit"></i>
-                    <% end %>
-                    <i class="fa fa-share"></i>
-                  </div>
-                </li>
-              <% end  %>
-            </ul>
-
-          </div><!-- /.box-body -->
-
-          <div class="box-footer clearfix">
-            <button type="button" class="btn btn-orange pull-right"><i class="fa fa-plus"></i>カテゴリーを追加</button>
+            <div class="table-responsive">
+              <table class="table no-margin">
+              <tbody>
+                <% @categories.each do |cateogry| %>
+                  <tr>
+                    <td class="text-center"><i class="fa fa-cny"></i></td>
+                    <td><%= cateogry.kind %></td>
+                    <td><%= cateogry.expenses_sum(@current_user) %></td>
+                  </tr>
+                <% end  %>
+              </tbody>
+              </table>
+            </div>
+            <!-- /.table-responsive -->
           </div>
+          <!-- /.box-body -->
+          <div class="box-footer text-center no-border no-padding">
+            <%#= paginate @incomes %>
+          </div><!-- /.box-footer -->
         </div><!-- /.box box-brown -->
 
       </div><!-- /.col-md-12  -->
     </div><!-- /row -->
-
-
-    <div class="row">
-      <div class="col-md-12">
-        <div class="box box-brown">
-
-          <div class="box-header with-border">
-            <h3 class="box-title">パートナーのカテゴリー</h3>
-          </div>
-
-          <div class="box-body no-padding">
-            <!-- See node_modules/admin-lte/dist/js/pages/dashboard.js to activate the todoList plugin -->
-            <ul class="todo-list">
-              <% @my_categories.each do |category| %>
-                <li>
-                  <span class="text"><%= category.kind %></span>
-                  <small class="label label-danger"><i class="fa  fa-exchange"></i> 共通</small>
-                  <!-- General tools such as edit or delete-->
-                  <div class="tools">
-                    <%= link_to edit_category_path(category), remote: true, class: "text-red", id: "category-id-#{category.id}" do %>
-                      <i class="fa fa-edit"></i>
-                    <% end %>
-                    <i class="fa fa-trash-o"></i>
-                  </div>
-                </li>
-              <% end  %>
-            </ul>
-
-          </div><!-- /.box-body -->
-
-          <div class="box-footer clearfix">
-            <button type="button" class="btn btn-orange pull-right"><i class="fa fa-plus"></i>カテゴリーを追加</button>
-          </div>
-        </div><!-- /.box box-brown -->
-
-      </div><!-- /.col-md-12  -->
-    </div><!-- /row -->
-
-
-
   </section>
 
 </div>
