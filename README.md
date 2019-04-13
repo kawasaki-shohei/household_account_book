@@ -44,6 +44,13 @@ $ bundle install
 yarn add admin-lte@2.4.5
 ```
 
+1. jquery-ui-touch-punchのインストール
+タッチに操作に対応させるため。
+https://github.com/furf/jquery-ui-touch-punch
+```
+yarn add jquery-ui-touch-punch
+```
+
 1. データベースの構築
 ```
 $ rails db:create
