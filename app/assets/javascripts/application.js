@@ -11,5 +11,9 @@
 // about supported directives.
 //
 //= require rails-ujs
-
+//= require jquery/dist/jquery.min
+//= require bootstrap/dist/js/bootstrap.min
+//= require admin-lte/dist/js/adminlte.min
+//= require admin-lte/plugins/jQueryUI/jquery-ui.min
+//= require jquery-ui-touch-punch/jquery.ui.touch-punch.min
 //= require_tree .
