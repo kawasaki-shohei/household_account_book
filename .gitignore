@@ -16,7 +16,10 @@ vendor/bundle/*
 !/log/.keep
 !/tmp/.keep
 
-# Ignore strange node modules files
+# Ignore design files under doc
+doc/design/*
+
+# Ignore node modules files
 /node_modules/*
 
 # Ignore yarn error log
