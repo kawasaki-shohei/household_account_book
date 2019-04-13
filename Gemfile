@@ -15,6 +15,7 @@ gem 'puma', '~> 3.7'
 gem 'sprockets-rails', '~> 3.2', '>= 3.2.1'
 gem 'uglifier', '>= 1.3.0'
 gem 'rails-ujs', '~> 0.1.0'
+gem 'font-awesome-rails', '~> 4.7', '>= 4.7.0.4'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'

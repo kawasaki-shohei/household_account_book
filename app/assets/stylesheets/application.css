@@ -12,7 +12,7 @@
  * It is generally better to create a new file per style scope.
  *
  *= require_self
- *= require font-awesome/css/font-awesome.min
+ *= require font-awesome
  *= require bootstrap/dist/css/bootstrap.min
  *= require admin-lte/dist/css/AdminLTE.min
  *= require admin-lte/dist/css/skins/skin-red.min
