@@ -18,3 +18,10 @@
  *= require admin-lte/dist/css/skins/skin-red.min
  *= require_tree .
  */
+
+:root {
+  --mushroom: #fef2e4;
+  --onion: #fd974f;
+  --redpaper: #c60000;
+  --driftwood: #805a3b;
+}

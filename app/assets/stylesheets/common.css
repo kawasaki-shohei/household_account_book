@@ -1,3 +1,23 @@
 .space-left{
   margin-left: 5px;
 }
+
+.mushroom{
+  background: var(--mushroom);
+}
+
+.table>tbody>tr>td.td-middle{
+  vertical-align: middle;
+}
+.category-circle{
+  display: inline-block;
+  width: 5vw;
+  height: 100%;
+  border-radius: 50%;
+}
+.no-border-left{
+  border-left: none;
+}
+.no-border-right{
+  border-right: none;
+}
