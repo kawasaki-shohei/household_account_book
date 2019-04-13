@@ -37,4 +37,8 @@ module CategoryDecorator
     own_expenses_sum(user) + own_both_expenses_mypay_sum(user) + partner_both_expenses_partnerpay_sum(user)
   end
 
+  def percentage(user, total)
+    (expenses_sum(user) * 100).fdiv(total)
+  end
+
 end

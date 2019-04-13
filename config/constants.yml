@@ -1,5 +1,6 @@
 default: &default
   site_name: "PairMoney"
+  selection_year_term: 30
 
 development:
   <<: *default
