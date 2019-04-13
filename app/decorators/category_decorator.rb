@@ -22,15 +22,15 @@ module CategoryDecorator
   end
 
   def own_expenses_sum(user)
-    expenses.select{ |e| e.own_expense?(user) && e.is_only_of_own? }.sum(&:amount)
+    expenses.select{ |e| e.is_own_expense?(user) }.sum(&:amount)
   end
 
   def own_both_expenses_mypay_sum(user)
-    expenses.select{ |e| e.own_expense?(user) && e.is_for_both? }.sum(&:mypay)
+    expenses.select{ |e| e.is_both_expense_paid_by?(user) }.sum(&:mypay)
   end
 
   def partner_both_expenses_partnerpay_sum(user)
-    expenses.select{ |e| e.partner_expense?(user) && e.is_for_both? }.sum(&:partnerpay)
+    expenses.select{ |e| e.is_both_expense_paid_by?(user.partner) }.sum(&:partnerpay)
   end
 
   def expenses_sum(user)

@@ -166,9 +166,12 @@ class Expense < ApplicationRecord
     user_expenses.both_f.sum(:amount) + user_expenses.both_t.sum(:mypay) + user.partner.expenses.one_month(year_month).both_t.sum(:partnerpay)
   end
 
-  #todo: カラム名を変更したら削除
-  def is_only_of_own?
-    !both_flg
+  def is_own_expense?(user)
+    !is_for_both? && self.user == user
+  end
+
+  def is_both_expense_paid_by?(user)
+    is_for_both? && self.user == user
   end
 
 end
