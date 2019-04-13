@@ -1,5 +1,5 @@
 default: &default
-  sample: 0.8
+  site_name: "PairMoney"
 
 development:
   <<: *default

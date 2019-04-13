@@ -1,6 +1,6 @@
 Household Account Book For Couples
 ====
-https://habfoc.herokuapp.com/
+https://pairmoney.herokuapp.com/
 
 ## Description
 カップルの財布を別にして、カップルの出費を管理できる家計簿Webアプリです。
