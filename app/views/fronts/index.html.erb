@@ -4,11 +4,16 @@
   <section class="content">
     <div class="row">
       <div class="col-xs-12">
-        <div class="shift-month">
-          <%= to_last_month_btn %>
-          <%= select_tag :period, options_for_year_month, class: "col-xs-4" %>
-          <%= to_next_month_btn %>
-        </div><!--/.shift-month -->
+        <div class="row">
+          <div class="shift-month col-xs-12">
+            <%= to_last_month_btn %>
+            <dic class="col-xs-5 text-center year-month-selection">
+              <%= select_tag :period, options_for_year_month, class: "form-control text-center" %>
+            </dic>
+            <%= to_next_month_btn %>
+            <%= link_to '検索', expenses_path, class: "btn btn-brown col-xs-2 pull-right" %>
+          </div><!--/.shift-month -->
+        </div>
         <br />
 
         <div class="box no-border">
@@ -54,7 +59,7 @@
                       <tbody>
                       <% @categories.each do |category| %>
                         <tr class="row">
-                          <td class="text-center td-middle col-xs-2">
+                          <td class="text-center td-middle no-padding">
                             <span class="category-circle mushroom"><i class="fa fa-lg fa-shopping-cart"></i></span>
                           </td>
                           <td class="td-middle">

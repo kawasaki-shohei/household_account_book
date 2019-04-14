@@ -3,11 +3,11 @@ body{
 }
 
 #company-name{
-  color: var(--redpaper);
+  color: var(--redpepper);
 }
 
 .skin-red .main-header .logo {
-  background-color: var(--redpaper);
+  background-color: var(--redpepper);
   color: #fff;
   border-bottom: 0 solid transparent;
 }
@@ -17,7 +17,7 @@ body{
 }
 
 .skin-red .main-header .navbar {
-  background-color: var(--redpaper);
+  background-color: var(--redpepper);
 }
 
 .skin-red .main-header .navbar .sidebar-toggle:hover {
@@ -61,7 +61,7 @@ body{
 }
 
 .skin-red .sidebar-menu>li.active>a {
-  border-left-color: var(--redpaper);
+  border-left-color: var(--redpepper);
 }
 
 .skin-red .sidebar-menu>li>.treeview-menu {
@@ -88,7 +88,7 @@ body{
 }
 
 .bg-red {
-  background-color: var(--redpaper) !important;
+  background-color: var(--redpepper) !important;
 }
 
 .bg-brown {
@@ -146,7 +146,7 @@ body{
   border-color: #803900;
 }
 
-.text-redpaper{color: var(--redpaper);}
+.text-redpepper{color: var(--redpepper);}
 .text-orange{color: var(--onion);}
 .text-brown{color: var(--driftwood);}
 

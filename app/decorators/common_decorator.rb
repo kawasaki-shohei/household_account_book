@@ -1,7 +1,7 @@
 module CommonDecorator
   def get_edit_link
     self_name = self.class.table_name.singularize
-    icon = raw("<i class=\"fa fa-lg fa-pencil-square-o text-red\"></i>")
+    icon = raw("<i class=\"fa fa-lg fa-pencil-square-o text-redpepper\"></i>")
     if user == current_user
       link_to icon, self.send("edit_#{self_name}_path",self)
     else
@@ -23,7 +23,7 @@ module CommonDecorator
   end
 
   def red_amount
-    amount_str = "▲" + amount.abs.to_s(:delimited)
+    amount_str = "-" + amount.abs.to_s(:delimited)
     make_it_red(amount_str)
   end
 
@@ -32,6 +32,6 @@ module CommonDecorator
   end
 
   def make_it_red(str)
-    content_tag(:span, str, class: "text-red")
+    content_tag(:span, str, class: "text-redpepper")
   end
 end

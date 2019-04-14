@@ -29,7 +29,7 @@ module ExpensesHelper
     else
       year_month = Date.current.to_s_as_year_month.to_last_year_month
     end
-    link_to icon, expenses_path(period: year_month), class: "btn btn-orange col-xs-2"
+    link_to icon, expenses_path(period: year_month), class: "btn btn-orange col-xs-2 text-center"
   end
 
   def to_next_month_btn
@@ -39,7 +39,7 @@ module ExpensesHelper
     else
       year_month = Date.current.to_s_as_year_month.to_next_year_month
     end
-    link_to icon, expenses_path(period: year_month), class: "btn btn-orange col-xs-2"
+    link_to icon, expenses_path(period: year_month), class: "btn btn-orange col-xs-2 text-center space-right"
   end
 
   def options_for_year_month
