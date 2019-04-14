@@ -19,21 +19,15 @@ const getChangeableLinkBtns = function() {
 };
 
 // ページ遷移したときに同じタブを開くようにページを遷移させるボタンにタブパラメータを付与
-const setSpecifyTab = (element) => {
-  const targetStr = element.id.replace('-tab-link','');
-  const period = gon.current_uear_month;
-  const changeableLinkBtns = getChangeableLinkBtns();
+let setSpecifyTab = () => {
+  let targetStr = event.target.id.replace('-tab-link','');
+  let changeableLinkBtns = getChangeableLinkBtns();
   changeableLinkBtns.forEach((btn) => {
-    btn.href = `${gon.analyses_path}?period=${gon.current_year_month}&tab=${targetStr}`
+    let targetHref = `${location.search.replace(`&tab=${arg.tab}`, `&tab=${targetStr}`)}`;
+    btn.href = targetHref;
   })
 };
 
 // タブをクリックしたときに、ボタンのパラメータを変更する関数をセット
-const expensesTabLink = document.querySelector('#expenses-tab-link');
-const budgetTabLink = document.querySelector('#budgets-tab-link');
-expensesTabLink.addEventListener('click', () => {
-  setSpecifyTab(event.target)
-});
-budgetTabLink.addEventListener('click', () => {
-  setSpecifyTab(event.target)
-});
+document.querySelector('#expenses-tab-link').addEventListener('click', setSpecifyTab, false);
+document.querySelector('#budgets-tab-link').addEventListener('click', setSpecifyTab, false);

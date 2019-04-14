@@ -17,3 +17,10 @@
 //= require admin-lte/plugins/jQueryUI/jquery-ui.min
 //= require jquery-ui-touch-punch/jquery.ui.touch-punch.min
 // require_tree .
+
+let arg = new Object;
+const pair=location.search.substring(1).split('&');
+for(var i=0;pair[i];i++) {
+  let kv = pair[i].split('=');
+  arg[kv[0]]=kv[1];
+}
