@@ -16,7 +16,10 @@
         </div>
         <br />
 
-        <div class="box no-border">
+        <div class="box box-brown">
+          <div class="box-header">
+            <h4><%= current_year_month %>の出費</h4>
+          </div>
           <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
               <li class="expense-tab active"><a href="#expenses_comparison" data-toggle="tab">支出</a></li>
@@ -98,5 +101,5 @@
 </div>
 
 <%= content_for :other_javascript do %>
-  <%= javascript_include_tag 'select_year_month' %>
+  <%= javascript_include_tag 'analyses_index' %>
 <% end %>

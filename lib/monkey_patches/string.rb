@@ -38,7 +38,7 @@ class String
 
   # "2019-01" → "2019年01月"
   # @return String
-  def to_japanese_month
+  def to_japanese_year_month
     return unless self.match?(year_month_regex)
     "#{year_string}年#{month_string}月"
   end
