@@ -27,7 +27,7 @@ module AnalysesHelper
     else
       year_month = Date.current.to_s_as_year_month.to_last_year_month
     end
-    link_to icon, analyses_path(period: year_month), class: "btn btn-orange col-xs-2 text-center"
+    link_to icon, analyses_path(tab: specify_tab, period: year_month), class: "btn btn-orange col-xs-2 text-center", id: "last-month-btn"
   end
 
   def to_next_month_btn
@@ -37,7 +37,7 @@ module AnalysesHelper
     else
       year_month = Date.current.to_s_as_year_month.to_next_year_month
     end
-    link_to icon, analyses_path(period: year_month), class: "btn btn-orange col-xs-2 text-center space-right"
+    link_to icon, analyses_path(tab: specify_tab, period: year_month), class: "btn btn-orange col-xs-2 text-center space-right", id: "next-month-btn"
   end
 
   def options_for_year_month
@@ -54,11 +54,28 @@ module AnalysesHelper
   end
 
   # @return String
+  def current_japanese_year_month
+    current_year_month.to_japanese_year_month
+  end
+
+  # @return String
   def current_year_month
     if params[:period]
-      params[:period].to_japanese_year_month
+      params[:period]
     else
-      Date.current.to_japanese_year_month
+      Date.current.to_s_as_year_month
+    end
+  end
+
+  def specify_tab
+    params[:tab] || 'expenses'
+  end
+
+  def active_analyses_tab(tab_name)
+    if params[:tab]
+      params[:tab] == tab_name ? 'active' : nil
+    else
+      tab_name == 'expenses' ? 'active' : nil
     end
   end
 end

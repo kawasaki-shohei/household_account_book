@@ -1,10 +1,10 @@
-li.expense-tab {
+li.analyses-tab {
   width: 50%;
   text-align: center;
   margin-right: 0px;
 }
 
-.nav-tabs-custom>.nav-tabs>li.expense-tab {
+.nav-tabs-custom>.nav-tabs>li.analyses-tab {
   margin-right: 0px;
 }
 .year-month-selection{
