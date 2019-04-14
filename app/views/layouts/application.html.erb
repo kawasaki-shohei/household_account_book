@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <title><%= yield(:title) || CONFIG[:site_name] %></title>
+  <title><%= content_for?(:html_title) ? yield(:html_title) : CONFIG[:site_name] %></title>
   <%= favicon_link_tag('favicon.ico') %>
   <%= Gon::Base.render_data %>
   <%= stylesheet_link_tag 'application' %>
@@ -189,6 +189,6 @@
 <!-- ./wrapper -->
 
 <%= javascript_include_tag 'application' %>
-<%= yield :other_javascript %>
+<%= yield(:other_javascript) %>
 </body>
 </html>
