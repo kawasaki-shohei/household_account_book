@@ -6,6 +6,7 @@ class FrontsController < ApplicationController
     # @partner_expenses = partner.expenses.this_month
 
     @categories = Category.available_categories_with_expenses(@current_user, year_month_params)
+    gon.expenses_path = expenses_path
     # @incomes = current_user.incomes.where('date >= ? AND date <= ?', Date.current.beginning_of_month, Date.current.end_of_month)
     # @balances = current_user.balances
   end

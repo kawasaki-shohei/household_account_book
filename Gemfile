@@ -27,6 +27,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'active_decorator', '~> 1.2'
 gem 'kaminari', '~> 1.1', '>= 1.1.1'
 gem 'haml-rails' #fixme: 削除
+gem 'gon', '~> 6.2', '>= 6.2.1'
 
 gem 'daemons', '~> 1.2', '>= 1.2.6'
 gem 'delayed_job_active_record', '~> 4.1', '>= 4.1.3'

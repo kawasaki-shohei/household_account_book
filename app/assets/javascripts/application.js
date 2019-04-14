@@ -16,5 +16,4 @@
 //= require admin-lte/dist/js/adminlte.min
 //= require admin-lte/plugins/jQueryUI/jquery-ui.min
 //= require jquery-ui-touch-punch/jquery.ui.touch-punch.min
-//= require adminlte_sortable_plugin
 // require_tree .

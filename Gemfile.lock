@@ -100,6 +100,10 @@ GEM
     formatador (0.2.5)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
+    gon (6.2.1)
+      actionpack (>= 3.0)
+      multi_json
+      request_store (>= 1.0)
     guard (2.15.0)
       formatador (>= 0.2.4)
       listen (>= 2.7, < 4.0)
@@ -219,6 +223,8 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.10.0)
       ffi (~> 1.0)
+    request_store (1.4.1)
+      rack (>= 1.4)
     rspec-core (3.8.0)
       rspec-support (~> 3.8.0)
     rspec-expectations (3.8.2)
@@ -300,6 +306,7 @@ DEPENDENCIES
   factory_bot_rails (~> 5.0, >= 5.0.1)
   faker
   font-awesome-rails (~> 4.7, >= 4.7.0.4)
+  gon (~> 6.2, >= 6.2.1)
   guard-yard (~> 2.2, >= 2.2.1)
   haml-rails
   html2haml

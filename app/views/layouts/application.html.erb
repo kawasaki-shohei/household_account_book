@@ -10,6 +10,7 @@
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <title><%= yield(:title) || CONFIG[:site_name] %></title>
   <%= favicon_link_tag('favicon.ico') %>
+  <%= Gon::Base.render_data %>
   <%= stylesheet_link_tag 'application' %>
 
 </head>
@@ -188,5 +189,6 @@
 <!-- ./wrapper -->
 
 <%= javascript_include_tag 'application' %>
+<%= yield :other_javascript %>
 </body>
 </html>
