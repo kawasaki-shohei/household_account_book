@@ -11,22 +11,26 @@
               <%= select_tag :period, options_for_year_month, class: "form-control text-center", id: "year-month-select" %>
             </dic>
             <%= to_next_month_btn %>
-            <%= link_to '検索', analyses_path, class: "btn btn-brown col-xs-2 pull-right", id: "expenses-search-btn" %>
+            <%= link_to '検索', analyses_path(tab: specify_tab, period: current_year_month), class: "btn btn-brown col-xs-2 pull-right", id: "expenses-search-btn" %>
           </div><!--/.shift-month -->
         </div>
         <br />
 
         <div class="box box-brown">
           <div class="box-header">
-            <h4><%= current_year_month %>の出費</h4>
+            <h4><%= current_japanese_year_month %>の出費</h4>
           </div>
           <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
-              <li class="expense-tab active"><a href="#expenses_comparison" data-toggle="tab">支出</a></li>
-              <li class="expense-tab"><a href="#budget_comparison" data-toggle="tab">予算比</a></li>
+              <li class="analyses-tab <%= active_analyses_tab('expenses') %>" id="expenses-tab">
+                <a href="#expenses_comparison" data-toggle="tab"  id="expenses-tab-link">支出</a>
+              </li>
+              <li class="analyses-tab <%= active_analyses_tab('budgets') %>" id="budgets-tab">
+                <a href="#budgets_comparison" data-toggle="tab"  id="budgets-tab-link">予算比</a>
+              </li>
             </ul>
             <div class="tab-content no-padding">
-              <div class="tab-pane active" id="expenses_comparison">
+              <div class="tab-pane <%= active_analyses_tab('expenses') %>" id="expenses_comparison">
                 <div class="box-header">
                   <div>
                     <div class="pull-left">
@@ -86,7 +90,7 @@
 
               </div><!-- /.tab-pane active#expenses_comparison -->
 
-              <div class="tab-pane" id="budget_comparison">
+              <div class="tab-pane <%= active_analyses_tab('budgets') %>" id="budgets_comparison">
 
               </div><!-- /.tab-pane #budget_comparison -->
 
