@@ -1,6 +1,6 @@
 module BalancesHelper
   def total_balance_amount(balances)
-    amount = balances.total_amount
+    amount = balances.except(:limit, :offset).total_amount
     if amount < 0
       amount_as_string = "-"  + amount.abs.to_s(:delimited)
       text_color = 'text-redpepper'
