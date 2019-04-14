@@ -1,3 +1,6 @@
+#company-name{
+  color: var(--redpepper);
+}
 .space-left{
   margin-left: 5px;
 }
@@ -26,4 +29,31 @@
 }
 .no-border-right{
   border-right: none;
+}
+.text-redpepper{color: var(--redpepper);}
+.text-orange{color: var(--onion);}
+.text-brown{color: var(--driftwood);}
+
+.btn-brown {
+  color: #fff;
+  background-color: var(--driftwood);
+  border-color: transparent;
+}
+
+.btn-brown:hover, .btn-brown:active, .btn-brown.hover {
+  color: #fff;
+  background-color: #803900;
+}
+
+.btn-brown.focus, .btn-brown:focus {
+  color: #fff;
+  background-color: #662e00;
+  border-color: #4d2200;
+}
+
+.box.box-brown {
+  border-top-color: var(--driftwood);
+}
+.bg-brown {
+  background-color: var(--driftwood) !important;
 }

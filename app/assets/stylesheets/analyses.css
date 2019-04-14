@@ -1,0 +1,17 @@
+li.expense-tab {
+  width: 50%;
+  text-align: center;
+  margin-right: 0px;
+}
+
+.nav-tabs-custom>.nav-tabs>li.expense-tab {
+  margin-right: 0px;
+}
+.year-month-selection{
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.year-month-selection{
+  padding-left: 5px;
+  padding-right: 5px;
+}
