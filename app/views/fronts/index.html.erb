@@ -30,7 +30,7 @@
                       <h4>出費合計</h4>
                     </div>
                     <div class="pull-right">
-                      <h4><i class="fa fa-cny"></i><%=  total = own_total_expenditures(@categories, @current_user); total.to_s(:delimited) %></h4>
+                      <h4><i class="fa fa-cny"></i><%=  total = own_total_expenditures(@categories, @expenses,@current_user); total.to_s(:delimited) %></h4>
                     </div>
                   </div>
                   <br /><br />
@@ -39,7 +39,7 @@
                       <h4>二人の出費合計</h4>
                     </div>
                     <div class="pull-right">
-                      <h4><i class="fa fa-cny"></i><%= one_total_both_expenditures(@categories, @current_user).to_s(:delimited) %></h4>
+                      <h4><i class="fa fa-cny"></i><%= one_total_both_expenditures(@categories, @expenses, @current_user).to_s(:delimited) %></h4>
                     </div>
                   </div>
                   <br /><br />
@@ -48,10 +48,14 @@
                       <h4>自分の出費合計</h4>
                     </div>
                     <div class="pull-right">
-                      <h4><i class="fa fa-cny"></i><%= one_total_own_expenditures(@categories, @current_user).to_s(:delimited) %></h4>
+                      <h4><i class="fa fa-cny"></i><%= one_total_own_expenditures(@categories, @expenses, @current_user).to_s(:delimited) %></h4>
                     </div>
                   </div>
                 </div>
+
+
+
+
 
                 <div class="box-body no-padding">
                   <div class="table-responsive no-margin no-border-right no-border-left">
@@ -64,9 +68,9 @@
                           </td>
                           <td class="td-middle">
                             <div><%= category.kind %></div>
-                            <small><%= category.percentage(@current_user, total).ceil %>%</small>
+                            <small><%= category.percentage(@expenses, @current_user, total).ceil %>%</small>
                           </td>
-                          <td class="td-middle"><i class="fa fa-cny"></i><%= category.expenses_sum(@current_user).to_s(:delimited) %></td>
+                          <td class="td-middle"><i class="fa fa-cny"></i><%= category.expenses_sum(@expenses, @current_user).to_s(:delimited) %></td>
                           <td class="text-center td-middle">
                             <i class="fa fa-lg fa-info-circle"></i>
                           </td>
@@ -98,5 +102,5 @@
 </div>
 
 <%= content_for :other_javascript do %>
-  <%= javascript_include_tag 'select_year_month' %>
+  <%#= javascript_include_tag 'select_year_month' %>
 <% end %>

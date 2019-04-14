@@ -46,8 +46,7 @@ class String
   # @return String "2019"
   def year_string
     return unless self.match?(year_month_regex)
-    /(?<year>\d{4})-(?<month>\d{2})/ =~ self
-    year
+    extract_year_month[0]
   end
 
   # @return Integer 2019
@@ -58,8 +57,7 @@ class String
   # @return String "02"
   def month_string
     return unless self.match?(year_month_regex)
-    /(?<year>\d{4})-(?<month>\d{2})/ =~ self
-    month
+    extract_year_month[1]
   end
 
   # @return Integer 4
@@ -77,9 +75,20 @@ class String
     !is_valid_year_month?
   end
 
+  # @return Array
+  def date_condition_of_query
+    return unless self.match?(year_month_regex)
+    ['date >= ? AND date <= ?', to_beginning_of_month, to_end_of_month]
+  end
+
   private
   def year_month_regex
     /^\d{4}-\d{2}$/
+  end
+
+  def extract_year_month
+    /(?<year>\d{4})-(?<month>\d{2})/ =~ self
+    [year, month]
   end
 
 end

@@ -21,24 +21,24 @@ module CategoryDecorator
     end
   end
 
-  def own_expenses_sum(user)
-    expenses.select{ |e| e.is_own_expense?(user) }.sum(&:amount)
+  def own_expenses_sum(expenses, user)
+    expenses.select{ |e| e.is_own_expense?(user, self) }.sum(&:amount)
   end
 
-  def own_both_expenses_mypay_sum(user)
-    expenses.select{ |e| e.is_both_expense_paid_by?(user) }.sum(&:mypay)
+  def own_both_expenses_mypay_sum(expenses, user)
+    expenses.select{ |e| e.is_both_expense_paid_by?(user, self) }.sum(&:mypay)
   end
 
-  def partner_both_expenses_partnerpay_sum(user)
-    expenses.select{ |e| e.is_both_expense_paid_by?(user.partner) }.sum(&:partnerpay)
+  def partner_both_expenses_partnerpay_sum(expenses, user)
+    expenses.select{ |e| e.is_both_expense_paid_by?(user.partner, self) }.sum(&:partnerpay)
   end
 
-  def expenses_sum(user)
-    own_expenses_sum(user) + own_both_expenses_mypay_sum(user) + partner_both_expenses_partnerpay_sum(user)
+  def expenses_sum(expenses, user)
+    own_expenses_sum(expenses, user) + own_both_expenses_mypay_sum(expenses, user) + partner_both_expenses_partnerpay_sum(expenses, user)
   end
 
-  def percentage(user, total)
-    (expenses_sum(user) * 100).fdiv(total)
+  def percentage(expenses, user, total)
+    (expenses_sum(expenses, user) * 100).fdiv(total)
   end
 
 end

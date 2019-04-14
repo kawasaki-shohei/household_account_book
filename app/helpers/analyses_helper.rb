@@ -1,23 +1,56 @@
 module AnalysesHelper
+
+  # @return String
+  def current_japanese_year_month
+    current_year_month.to_japanese_year_month
+  end
+
+  # @return String
+  def current_year_month
+    if params[:period]
+      params[:period]
+    else
+      Date.current.to_s_as_year_month
+    end
+  end
+
+  def specify_tab
+    params[:tab] || 'expenses'
+  end
+
+  def active_analyses_tab(tab_name)
+    if params[:tab]
+      params[:tab] == tab_name ? 'active' : nil
+    else
+      tab_name == 'expenses' ? 'active' : nil
+    end
+  end
+
+  def this_month(categories)
+    categories.select do |c|
+      c.expenses.find{ |e| e.date >= current_year_month.to_beginning_of_month && e.date <= current_year_month.to_end_of_month }
+    end
+  end
+
   # 支出合計額の算出
   # @return Integer
-  def one_total_expenditures(categories, user)
-    categories.map{ |c| c.expenses_sum(user)}.sum
+  def one_total_expenditures(user)
+    @categories.map{ |c| c.expenses_sum(@expenses, user)}.sum
   end
   alias_method(:own_total_expenditures, :one_total_expenditures)
   alias_method(:partner_total_expenditures, :one_total_expenditures)
 
   # 二人の出費の合計額の算出
   # @return Integer
-  def one_total_both_expenditures(categories, user)
-    categories.map{ |c| c.own_both_expenses_mypay_sum(user)}.sum +
-      categories.map{ |c| c.partner_both_expenses_partnerpay_sum(user)}.sum
+  def one_total_both_expenditures(user)
+    @categories.map{ |c| c.own_both_expenses_mypay_sum(@expenses, user)}.sum +
+      @categories.map{ |c| c.partner_both_expenses_partnerpay_sum(@expenses, user)}.sum
   end
 
   # 自分の出費の合計額の算出
   # @return Integer
-  def one_total_own_expenditures(categories, user)
-    categories.map{ |c| c.own_expenses_sum(user)}.sum
+  def one_total_own_expenditures(user)
+    @categories.map{ |c| c.own_expenses_sum(@expenses, user)}.sum
   end
 
   def to_last_month_btn
@@ -53,29 +86,5 @@ module AnalysesHelper
     options_for_select(container, default)
   end
 
-  # @return String
-  def current_japanese_year_month
-    current_year_month.to_japanese_year_month
-  end
 
-  # @return String
-  def current_year_month
-    if params[:period]
-      params[:period]
-    else
-      Date.current.to_s_as_year_month
-    end
-  end
-
-  def specify_tab
-    params[:tab] || 'expenses'
-  end
-
-  def active_analyses_tab(tab_name)
-    if params[:tab]
-      params[:tab] == tab_name ? 'active' : nil
-    else
-      tab_name == 'expenses' ? 'active' : nil
-    end
-  end
 end

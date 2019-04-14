@@ -39,12 +39,10 @@ class Category < ApplicationRecord
     current_user.categories.or(partner.categories.common_t)
   end
 
-  def self.available_categories_with_expenses(user, year_month)
+  # @note userが使っているカテゴリーを取得
+  def self.available_categories(user)
     partner = user.partner
-    self.includes(:user, expenses: :user).references(:users, :expenses)
-      .where(users: {id: [user, partner]})
-      .where(["expenses.date >= ? AND expenses.date <= ?", year_month.to_beginning_of_month, year_month.to_end_of_month])
-      .order(id: :asc)
+    self.includes(:user).where(users: {id: [user, partner]}).order(id: :asc)
   end
 
   # @param [User] current_user
