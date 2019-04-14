@@ -1,7 +1,7 @@
 class DepositsController < ApplicationController
 
   def index
-    @deposits = Deposit.get_couple_deposits(@current_user).page(params[:page]).per(10)
+    @deposits = Deposit.get_couple_deposits(@current_user).page(params[:page])
   end
 
   def new

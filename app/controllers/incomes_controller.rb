@@ -1,7 +1,7 @@
 class IncomesController < ApplicationController
 
   def index
-    @incomes = current_user.incomes.newer.page(params[:page]).per(10)
+    @incomes = current_user.incomes.newer.page(params[:page])
   end
 
   def new
