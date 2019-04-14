@@ -6,7 +6,7 @@ const getCurrentTabStr = () => {
 const yearMonthSelect = document.querySelector('#year-month-select');
 // 月を選択するセレクトボックスを変更したときに検索ボタンのパスを変更する
 yearMonthSelect.addEventListener('change', (e) => {
-  document.querySelector('#expenses-search-btn').href = `${gon.analyses_path}?period=${e.target.value}&tab=${getCurrentTabStr()}`
+  document.querySelector('#expenses-search-btn').href = `${location.origin + location.pathname}?period=${e.target.value}&tab=${getCurrentTabStr()}`
 });
 
 // 前後月移動ボタンと検索ボタンを配列に入れて取得
@@ -19,9 +19,9 @@ const getChangeableLinkBtns = function() {
 };
 
 // ページ遷移したときに同じタブを開くようにページを遷移させるボタンにタブパラメータを付与
-let setSpecifyTab = () => {
-  let targetStr = event.target.id.replace('-tab-link','');
-  let changeableLinkBtns = getChangeableLinkBtns();
+const setSpecifyTab = () => {
+  const targetStr = event.target.id.replace('-tab-link','');
+  const changeableLinkBtns = getChangeableLinkBtns();
   changeableLinkBtns.forEach((btn) => {
     let targetHref = `${location.search.replace(`&tab=${arg.tab}`, `&tab=${targetStr}`)}`;
     btn.href = targetHref;
