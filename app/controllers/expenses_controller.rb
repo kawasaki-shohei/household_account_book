@@ -2,7 +2,6 @@ class ExpensesController < ApplicationController
   before_action :set_expense, only:[:edit, :update, :destroy]
   before_action :set_category, only:[:update, :create]
   after_action -> {create_notification(@expense)}, only: [:create, :update]
-  include CategoriesHelper
 
   def index
     @cnum = 0

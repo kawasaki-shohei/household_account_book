@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
-  #fixme: 削除する
-  resources :fronts
+  get 'analyses', to: 'analyses#index'
+  resources :fronts #fixme: 削除する
 
   get 'admin/' , to: 'admin#index', as: :admin
   get 'admin/insert_6_months_expenses' , to: 'admin#insert_6_months_expenses', as: :insert_6_months_expenses_admin
