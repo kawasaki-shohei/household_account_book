@@ -86,5 +86,29 @@ module AnalysesHelper
     options_for_select(container, default)
   end
 
+  def categories_without_only_partner_own
+    @categories.reject{ |c| c.only_ones_own?(@partner) }
+  end
+
+  def total_income
+    @incomes.sum(&:amount)
+  end
+
+  # @param [Integer] total_money 収入か予算
+  def show_balance(amount)
+    if amount >= 0
+      content_tag(:span) do
+        concat "残り "
+        concat tag.i(class: "fa fa-cny")
+        concat "#{amount.to_s(:delimited)}"
+      end
+    else
+      content_tag(:span, class: "text-redpepper") do
+        concat tag.i(class: "fa fa-cny")
+        concat " #{amount.to_s(:delimited)}"
+      end
+    end
+  end
+
 
 end

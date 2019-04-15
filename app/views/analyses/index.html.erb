@@ -34,10 +34,19 @@
                 <div class="box-header">
                   <div>
                     <div class="pull-left">
+                      <h4>収入</h4>
+                    </div>
+                    <div class="pull-right">
+                      <h4><i class="fa fa-cny"></i><%= total_income.to_s(:delimited) %></h4>
+                    </div>
+                  </div>
+                  <br /><br />
+                  <div>
+                    <div class="pull-left">
                       <h4>出費合計</h4>
                     </div>
                     <div class="pull-right">
-                      <h4><i class="fa fa-cny"></i><%=  total = own_total_expenditures(@current_user); total.to_s(:delimited) %></h4>
+                      <h4><i class="fa fa-cny"></i><%= total_expense = own_total_expenditures(@current_user); total_expense.to_s(:delimited) %></h4>
                     </div>
                   </div>
                   <br /><br />
@@ -71,9 +80,12 @@
                           </td>
                           <td class="td-middle">
                             <div><%= category.kind %></div>
-                            <small><%= category.percentage(@expenses, @current_user, total).ceil %>%</small>
+                            <small><%= category.percentage(@expenses, @current_user, total_expense).ceil %>%</small>
                           </td>
-                          <td class="td-middle"><i class="fa fa-cny"></i><%= category.expenses_sum(@expenses, @current_user).to_s(:delimited) %></td>
+                          <td class="td-middle">
+                            <i class="fa fa-cny"></i>
+                            <%= category.expenses_sum(@expenses, @current_user).to_s(:delimited) %>
+                          </td>
                           <td class="text-center td-middle">
                             <i class="fa fa-lg fa-info-circle"></i>
                           </td>
@@ -91,7 +103,51 @@
               </div><!-- /.tab-pane active#expenses_comparison -->
 
               <div class="tab-pane <%= active_analyses_tab('budgets') %>" id="budgets_comparison">
-                <%#= badgets_sum(@badget_categories).to_s(:delimited) %>
+                <div class="box-body no-padding">
+                  <div class="table-responsive no-margin no-border-right no-border-left">
+                    <table class="table" >
+                      <tbody>
+                      <tr class="row">
+                        <td class="text-center td-middle no-padding">
+                          <span class="category-circle mushroom"><i class="fa fa-lg fa-shopping-cart"></i></span>
+                        </td>
+                        <td class="td-middle">
+                          <div>収入</div>
+                          <small><%= total_expense.to_s(:delimited) %></small>
+                        </td>
+                        <td class="td-middle">
+                          <%= show_balance(total_income - total_expense) %>
+                        </td>
+                      </tr>
+                      <tr class="row">
+                        <td class="text-center td-middle no-padding">
+                          <span class="category-circle mushroom"><i class="fa fa-lg fa-shopping-cart"></i></span>
+                        </td>
+                        <td class="td-middle">
+                          <div>総予算</div>
+                          <small><%= total_expense.to_s(:delimited) %></small>
+                        </td>
+                        <td class="td-middle">
+                          <%= show_balance(total_badget(@categories) - total_expense) %>
+                        </td>
+                      </tr>
+
+                      <% categories_without_only_partner_own.each do |category| %>
+                        <tr class="row">
+                          <%= category.icon %>
+                          <td class="td-middle">
+                            <div><%= category.kind %></div>
+                            <small><%= category_expense_amount = category.expenses_sum(@expenses, @current_user); category_expense_amount.to_s(:delimited) %></small>
+                          </td>
+                          <td class="td-middle">
+                            <%= show_balance(category.badget_balance(category_expense_amount, @current_user)) %>
+                          </td>
+                        </tr>
+                      <% end  %>
+                      </tbody>
+                    </table>
+                  </div><!-- /.table-responsive -->
+                </div><!-- /.box-body -->
 
               </div><!-- /.tab-pane #budget_comparison -->
 

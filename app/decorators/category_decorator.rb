@@ -1,4 +1,16 @@
 module CategoryDecorator
+
+  # todo: カテゴリーアイコンの機能ができたら修正
+  def icon
+    content_tag(:td, class: "text-center td-middle no-padding") do
+     concat(
+       content_tag(:span, class: "category-circle mushroom") do
+         concat tag.i(class: "fa fa-lg fa-shopping-cart")
+       end
+     )
+    end
+  end
+
   def common_btn
     if common
       icon = content_tag(:i, "", class: "fa fa-lg fa-star")
@@ -39,6 +51,11 @@ module CategoryDecorator
 
   def percentage(expenses, user, total)
     (expenses_sum(expenses, user) * 100).fdiv(total)
+  end
+
+  def badget_balance(expense_amount, user)
+    balance = badgets.find{ |b| b.user == user }
+    (balance ? balance.amount : 0) - expense_amount
   end
 
 end

@@ -14,7 +14,7 @@ module CategoriesHelper
 
   def partner_categories(categories)
     categories.find_all do |category|
-      category.user == @partner && category.only_ones_own?
+      category.only_ones_own?(@partner)
     end
   end
 end

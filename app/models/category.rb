@@ -39,10 +39,10 @@ class Category < ApplicationRecord
     current_user.categories.or(partner.categories.common_t)
   end
 
-  # @note userが使っているカテゴリーを取得
-  def self.available_categories(user)
+  # @note userが使っているカテゴリーを予算と一緒に取得
+  def self.available_categories_with_badgets(user)
     partner = user.partner
-    self.includes(:user).where(users: {id: [user, partner]}).order(id: :asc)
+    self.includes(:user, badgets: :user).where(users: {id: [user, partner]}).order(id: :asc)
   end
 
   # @param [User] current_user
@@ -62,8 +62,8 @@ class Category < ApplicationRecord
   end
 
   # @return
-  def only_ones_own?
-    !common
+  def only_ones_own?(user)
+    self.user == user && !common
   end
 
 end
