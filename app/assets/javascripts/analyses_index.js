@@ -23,7 +23,7 @@ const setSpecifyTab = () => {
   const targetStr = event.target.id.replace('-tab-link','');
   const changeableLinkBtns = getChangeableLinkBtns();
   changeableLinkBtns.forEach((btn) => {
-    let targetHref = `${location.search.replace(`&tab=${arg.tab}`, `&tab=${targetStr}`)}`;
+    let targetHref = `${btn.href.replace(/tab=[a-z]+/, `tab=${targetStr}`)}`;
     btn.href = targetHref;
   })
 };
