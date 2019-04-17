@@ -31,49 +31,61 @@
             </ul>
             <div class="tab-content no-padding">
               <div class="tab-pane <%= active_analyses_tab('expenses') %>" id="expenses_comparison">
-                <div class="box-header">
+                <div class="box-header inherit-color">
                   <div>
                     <div class="pull-left">
                       <h4>収入</h4>
                     </div>
                     <div class="pull-right">
-                      <h4><i class="fa fa-cny"></i><%= total_income.to_s(:delimited) %></h4>
+                      <h4><i class="fa fa-cny"></i>
+                        <%= total_income.to_s(:delimited) %></h4>
                     </div>
                   </div>
                   <br /><br />
-                  <div>
-                    <div class="pull-left">
-                      <h4>出費合計</h4>
-                    </div>
-                    <div class="pull-right">
-                      <h4><i class="fa fa-cny"></i><%= total_expense = own_total_expenditures(@current_user); total_expense.to_s(:delimited) %></h4>
-                    </div>
-                  </div>
-                  <br /><br />
-                  <div>
-                    <div class="pull-left">
-                      <h4>二人の出費合計</h4>
-                    </div>
-                    <div class="pull-right">
-                      <h4><i class="fa fa-cny"></i><%= one_total_both_expenditures(@current_user).to_s(:delimited) %></h4>
-                    </div>
-                  </div>
-                  <br /><br />
-                  <div>
-                    <div class="pull-left">
-                      <h4>自分の出費合計</h4>
-                    </div>
-                    <div class="pull-right">
-                      <h4><i class="fa fa-cny"></i><%= one_total_own_expenditures(@current_user).to_s(:delimited) %></h4>
-                    </div>
-                  </div>
+
+                  <div class="panel-group no-margin-bottom" id="total-expense-accordion">
+                    <div class="panel disabled-panel no-border no-shadow">
+                      <div class="panel-heading no-padding" id="expense-panel-heading">
+                        <h4>
+                          <a class="no-link-decoration" data-toggle="collapse" data-parent="#total-expense-accordion" href="#total-expense-accordion-collapse">
+                            <i class="fa fa-caret-right space-right"></i>出費合計
+                            <span class="pull-right">
+                              <i class="fa fa-cny"></i>
+                              <%= total_expense = own_total_expenditures(@current_user); total_expense.to_s(:delimited) %>
+                            </span>
+                          </a>
+                        </h4>
+                      </div><!-- /.panel-heading -->
+                      <div id="total-expense-accordion-collapse" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                        <div class="panel-body no-padding-right no-padding-bottom no-padding-top no-border">
+                          <div>
+                            <div class="pull-left">
+                              <h5>二人の出費合計</h5>
+                            </div>
+                            <div class="pull-right">
+                              <h5><i class="fa fa-cny"></i><%= one_total_both_expenditures(@current_user).to_s(:delimited) %></h5>
+                            </div>
+                          </div>
+                          <br /><br />
+                          <div>
+                            <div class="pull-left">
+                              <h5 class="no-margin-top">自分の出費合計</h5>
+                            </div>
+                            <div class="pull-right">
+                              <h5 class="no-margin-top"><i class="fa fa-cny"></i><%= one_total_own_expenditures(@current_user).to_s(:delimited) %></h5>
+                            </div>
+                          </div>
+                        </div><!-- /.panel-body -->
+                      </div><!-- /.panel-collapse.collapse.in #total-expense-accordion-collapse -->
+                    </div><!-- /.panel panel-default -->
+                  </div><!-- /.panel-group #sampleAccordion -->
                 </div>
 
                 <div class="box-body no-padding">
                   <div class="table-responsive no-margin no-border-right no-border-left">
                     <table class="table" >
                       <tbody>
-                      <% @categories.each do |category| %>
+                      <% categories_without_only_partner_own.each do |category| %>
                         <tr>
                           <td class="text-center td-middle no-padding">
                             <span class="category-circle mushroom"><i class="fa fa-lg fa-shopping-cart"></i></span>

@@ -26,3 +26,10 @@ td.progress-bar-td {
 .progress-bar-orange{
   background-color: var(--onion);
 }
+.no-link-decoration, .no-link-decoration:hover, .no-link-decoration:active, .no-link-decoration:focus {
+  color: inherit;
+}
+.rotate-arrow{
+  -webkit-transform: rotate(90deg);
+  transform: rotate(90deg);
+}

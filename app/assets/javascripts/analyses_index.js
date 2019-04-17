@@ -31,3 +31,12 @@ const setSpecifyTab = () => {
 // タブをクリックしたときに、ボタンのパラメータを変更する関数をセット
 document.querySelector('#expenses-tab-link').addEventListener('click', setSpecifyTab, false);
 document.querySelector('#budgets-tab-link').addEventListener('click', setSpecifyTab, false);
+
+const expensePanelHeading = document.querySelector('#expense-panel-heading');
+const icon = document.querySelector('.fa-caret-right');
+expensePanelHeading.addEventListener('click', () => {
+  if(icon){
+    icon.classList.toggle('rotate-arrow');
+  }
+});
+

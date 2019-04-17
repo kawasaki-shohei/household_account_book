@@ -5,10 +5,25 @@
   margin-left: 5px;
 }
 .space-right{
-  margin-righ: 5px;
+  margin-right: 5px;
+}
+.no-margin-top{
+  margin-top: 0px;
 }
 .no-margin-bottom{
   margin-bottom: 0px;
+}
+.no-padding-right{
+  padding-right: 0px;
+}
+.no-padding-left{
+  padding-left: 0px;
+}
+.no-padding-bottom{
+  padding-bottom: 0px;
+}
+.no-padding-top{
+  padding-top: 0px;
 }
 .mushroom{
   background: var(--mushroom);
@@ -61,4 +76,10 @@
 }
 .bg-brown {
   background-color: var(--driftwood) !important;
+}
+.inherit-color{
+  color: inherit;
+}
+.no-shadow{
+  box-shadow: none;
 }
