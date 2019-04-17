@@ -53,9 +53,14 @@ module CategoryDecorator
     (expenses_sum(expenses, user) * 100).fdiv(total)
   end
 
+  # @return [Integer]
+  # @note 予算を設定していないときは0を返す
+  def badget_amount(user)
+    badgets.find{ |b| b.user == user }.try(:amount) || 0
+  end
+
   def badget_balance(expense_amount, user)
-    balance = badgets.find{ |b| b.user == user }
-    (balance ? balance.amount : 0) - expense_amount
+    badget_amount(user) - expense_amount
   end
 
 end

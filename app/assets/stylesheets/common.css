@@ -7,7 +7,9 @@
 .space-right{
   margin-righ: 5px;
 }
-
+.no-margin-bottom{
+  margin-bottom: 0px;
+}
 .mushroom{
   background: var(--mushroom);
 }
@@ -29,6 +31,9 @@
 }
 .no-border-right{
   border-right: none;
+}
+.with-border-top{
+  border-top: solid 1px #f4f4f4;
 }
 .text-redpepper{color: var(--redpepper);}
 .text-orange{color: var(--onion);}

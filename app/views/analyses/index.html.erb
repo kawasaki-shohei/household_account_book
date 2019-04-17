@@ -74,7 +74,7 @@
                     <table class="table" >
                       <tbody>
                       <% @categories.each do |category| %>
-                        <tr class="row">
+                        <tr>
                           <td class="text-center td-middle no-padding">
                             <span class="category-circle mushroom"><i class="fa fa-lg fa-shopping-cart"></i></span>
                           </td>
@@ -105,46 +105,86 @@
               <div class="tab-pane <%= active_analyses_tab('budgets') %>" id="budgets_comparison">
                 <div class="box-body no-padding">
                   <div class="table-responsive no-margin no-border-right no-border-left">
-                    <table class="table" >
-                      <tbody>
-                      <tr class="row">
-                        <td class="text-center td-middle no-padding">
-                          <span class="category-circle mushroom"><i class="fa fa-lg fa-shopping-cart"></i></span>
-                        </td>
-                        <td class="td-middle">
-                          <div>収入</div>
-                          <small><%= total_expense.to_s(:delimited) %></small>
-                        </td>
-                        <td class="td-middle">
-                          <%= show_balance(total_income - total_expense) %>
-                        </td>
-                      </tr>
-                      <tr class="row">
-                        <td class="text-center td-middle no-padding">
-                          <span class="category-circle mushroom"><i class="fa fa-lg fa-shopping-cart"></i></span>
-                        </td>
-                        <td class="td-middle">
-                          <div>総予算</div>
-                          <small><%= total_expense.to_s(:delimited) %></small>
-                        </td>
-                        <td class="td-middle">
-                          <%= show_balance(total_badget(@categories) - total_expense) %>
-                        </td>
-                      </tr>
+                    <table class="table no-border" >
+                    <tbody>
+                    <tr>
+                      <td class="text-center td-middle no-top-bottom-padding" rowspan="3">
+                        <span class="category-circle mushroom"><i class="fa fa-lg fa-shopping-cart"></i></span>
+                      </td>
+                      <td class="td-middle no-top-bottom-padding"><h4 class="no-margin-bottom">収入</h4></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td class="td-middle no-top-bottom-padding">
+                        <small><i class="fa fa-cny"></i><%= total_expense.to_s(:delimited) %></small>
+                      </td>
+                      <td class="td-middle no-top-bottom-padding">
+                        <%= show_balance(total_income - total_expense) %>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td colspan="2" class="progress-bar-td">
+                        <div class="progress progress-xs">
+                          <div class="progress-bar progress-bar-orange progress-bar-striped" role="progressbar" style="width: <%= balance_percentage(total_expense, total_income) %>%">
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
 
-                      <% categories_without_only_partner_own.each do |category| %>
-                        <tr class="row">
-                          <%= category.icon %>
-                          <td class="td-middle">
-                            <div><%= category.kind %></div>
-                            <small><%= category_expense_amount = category.expenses_sum(@expenses, @current_user); category_expense_amount.to_s(:delimited) %></small>
-                          </td>
-                          <td class="td-middle">
-                            <%= show_balance(category.badget_balance(category_expense_amount, @current_user)) %>
-                          </td>
-                        </tr>
-                      <% end  %>
-                      </tbody>
+                    <tr class="with-border-top">
+                      <td class="text-center td-middle" rowspan="3">
+                        <span class="category-circle mushroom"><i class="fa fa-lg fa-shopping-cart"></i></span>
+                      </td>
+                      <td class="td-middle no-top-bottom-padding"><h4 class="no-margin-bottom">総予算</h4></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td class="td-middle no-top-bottom-padding">
+                        <small><i class="fa fa-cny"></i><%= total_expense.to_s(:delimited) %></small>
+                      </td>
+                      <td class="td-middle no-top-bottom-padding">
+                        <%= show_balance(total_badget - total_expense) %>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td colspan="2" class="progress-bar-td">
+                        <div class="progress progress-xs">
+                          <div class="progress-bar progress-bar-orange progress-bar-striped" role="progressbar" style="width: <%= balance_percentage(total_expense, total_badget) %>%">
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+
+                    <% categories_without_only_partner_own.each do |category| %>
+                      <tr class="with-border-top">
+                        <td class="text-center td-middle" rowspan="3">
+                          <span class="category-circle mushroom"><i class="fa fa-lg fa-shopping-cart"></i></span>
+                        </td>
+                        <td class="td-middle no-top-bottom-padding"><h4 class="no-margin-bottom"><%= category.kind %></h4></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td class="td-middle no-top-bottom-padding">
+                          <small><i class="fa fa-cny"></i><%= category_expense_amount = category.expenses_sum(@expenses, @current_user); category_expense_amount.to_s(:delimited) %></small>
+                        </td>
+                        <td class="td-middle no-top-bottom-padding">
+                          <%= show_balance(category.badget_balance(category_expense_amount, @current_user)) %>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colspan="2" class="progress-bar-td">
+                          <div class="progress progress-xs">
+                            <% c = category.badget_amount(@current_user) %>
+                            <div class="progress-bar progress-bar-orange progress-bar-striped" role="progressbar" style="width: <%= balance_percentage(category_expense_amount, c).to_s %>%">
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    <% end %>
+
+
+                    </tbody>
                     </table>
                   </div><!-- /.table-responsive -->
                 </div><!-- /.box-body -->

@@ -27,9 +27,9 @@ module BadgetsHelper
   # @param [Category] categories
   # @return [Integer]
   # @note categories collectionsからuserの全てのbadgetsを取得して、合計値を算出する
-  def total_badget(categories)
-    return "0" if categories.blank?
-    categories.map do |category|
+  def total_badget
+    return "0" if @categories.blank?
+    @categories.map do |category|
       category.user_badget(@current_user)
     end.compact.sum(&:amount)
   end

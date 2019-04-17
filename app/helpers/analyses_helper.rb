@@ -96,18 +96,19 @@ module AnalysesHelper
 
   # @param [Integer] total_money 収入か予算
   def show_balance(amount)
-    if amount >= 0
-      content_tag(:span) do
-        concat "残り "
-        concat tag.i(class: "fa fa-cny")
-        concat "#{amount.to_s(:delimited)}"
-      end
-    else
-      content_tag(:span, class: "text-redpepper") do
-        concat tag.i(class: "fa fa-cny")
-        concat " #{amount.to_s(:delimited)}"
-      end
+    text_color = amount >= 0 ? '': 'text-redpepper'
+    content_tag(:span, class: text_color) do
+      concat "残り "
+      concat tag.i(class: "fa fa-cny")
+      concat " #{amount.to_s(:delimited)}"
     end
+  end
+
+  # @param [Integer] numerator 分子
+  # @param [Integer] denominator 分母
+  def balance_percentage(numerator, denominator)
+    return 100 if numerator >= denominator
+    numerator * 100 / denominator
   end
 
 
