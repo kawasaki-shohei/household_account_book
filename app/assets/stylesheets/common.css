@@ -75,6 +75,7 @@
   border-top-color: var(--driftwood);
 }
 .bg-brown {
+  color: white;
   background-color: var(--driftwood) !important;
 }
 .inherit-color{

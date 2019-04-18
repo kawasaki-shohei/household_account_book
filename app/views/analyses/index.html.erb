@@ -45,9 +45,9 @@
 
                   <div class="panel-group no-margin-bottom" id="total-expense-accordion">
                     <div class="panel disabled-panel no-border no-shadow">
-                      <div class="panel-heading no-padding" id="expense-panel-heading">
+                      <div class="panel-heading no-padding">
                         <h4>
-                          <a class="no-link-decoration" data-toggle="collapse" data-parent="#total-expense-accordion" href="#total-expense-accordion-collapse">
+                          <a class="no-link-decoration" id="expense-panel-heading" data-toggle="collapse" data-parent="#total-expense-accordion" href="#total-expense-accordion-collapse">
                             <i class="fa fa-caret-right space-right"></i>出費合計
                             <span class="pull-right">
                               <i class="fa fa-cny"></i>
@@ -99,7 +99,9 @@
                             <%= category.expenses_sum(@expenses, @current_user).to_s(:delimited) %>
                           </td>
                           <td class="text-center td-middle">
-                            <i class="fa fa-lg fa-info-circle"></i>
+                            <%= link_to expenses_path(period: params[:period], category_id: category.id), class: "inherit-color" do %>
+                              <i class="fa fa-lg fa-history"></i>
+                            <% end %>
                           </td>
                         </tr>
                       <% end  %>

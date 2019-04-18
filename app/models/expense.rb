@@ -76,9 +76,22 @@ class Expense < ApplicationRecord
     %w(amount mypay partnerpay)
   end
 
+  # @param [User] user
+  # @param [String] year_month "2019-02"
+  # @return [Expense]
   def self.all_for_one_month(user, year_month)
     partner = user.partner
     self.includes(:user, :category).references(:users, :categories).where(users: {id: [user, partner]}).one_month(year_month)
+  end
+
+  # @note 該当月と引数のカテゴリの出費でユーザーの全ての出費とパートナーの二人の出費を取得
+  # @param [User] user
+  # @param [Integer] category_id
+  # @param [String] year_month "2019-02"
+  # @return [Expense]
+  def self.specified_category_for_one_month(user, category_id, year_month)
+    partner = user.partner
+    self.includes(:user, :category).references(:users, :categories).where(categories: {id: category_id}).one_month(year_month).where("users.id = ? OR (users.id = ? AND both_flg = ?)", user.id, partner.id, true).order(date: :desc, created_at: :desc)
   end
 
   # fixme: case文でsqlのwarningが出ているので、要修正

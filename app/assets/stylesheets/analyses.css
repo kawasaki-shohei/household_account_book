@@ -33,3 +33,11 @@ td.progress-bar-td {
   -webkit-transform: rotate(90deg);
   transform: rotate(90deg);
 }
+.timeline>li>.timeline-item>.go-edit {
+  color: #999;
+  float: right;
+  padding: 10px;
+}
+.other-expense-details{
+  padding: 0 0 5px 10px;
+}
