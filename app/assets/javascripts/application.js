@@ -18,6 +18,9 @@
 //= require jquery-ui-touch-punch/jquery.ui.touch-punch.min
 // require_tree .
 
+// arg.period => "2018-08"
+// arg.tab => "expenses"
+// arg.category => "1"
 let arg = new Object;
 const pair=location.search.substring(1).split('&');
 for(var i=0;pair[i];i++) {

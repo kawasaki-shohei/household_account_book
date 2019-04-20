@@ -40,3 +40,13 @@ expensePanelHeading.addEventListener('click', () => {
   }
 });
 
+// ページ読み込み後にパラメーターでしてしたカテゴリーまでスクロールする。
+window.onload = function(){
+  if(arg.tab === 'expenses' && arg.category){
+    const category_id = arg.category;
+    const target = document.querySelector(`#expenses-comparison-category-id-${category_id}`);
+    const rect = target.getBoundingClientRect();
+    window.scrollBy({top: rect.top, behavior: "smooth"});
+  }
+};
+
