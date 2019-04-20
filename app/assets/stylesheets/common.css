@@ -93,3 +93,6 @@
 .no-shadow{
   box-shadow: none;
 }
+.label-orange{
+  background-color: var(--onion);
+}

@@ -100,64 +100,66 @@
 
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">Menu</li>
+        <li class="header">メニュー</li>
         <!-- Optionally, you can add icons to the links -->
         <% if logged_in? %>
           <li class="treeview active">
-            <a href="#"><i class="fa fa-link"></i> <span>Record</span>
+            <a href="#"><i class="fa fa-check space-right"></i><span>記録</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
             </span>
             </a>
             <ul class="treeview-menu">
               <li>
-                <%= link_to 'Expense', expenses_path  %>
+                <%= link_to analyses_path do %>
+                  <i class="fa fa-shopping-cart space-right"></i>出費
+                <% end %>
               </li>
               <li>
-                <%= link_to 'Income', incomes_path %>
+                <%= link_to incomes_path do %>
+                  <i class="fa fa-money space-right"></i>収入
+                <% end %>
               </li>
               <li>
-                <%= link_to 'Deposit', deposits_path %>
+                <%= link_to deposits_path do %>
+                  <i class="fa fa-bank space-right"></i>貯金
+                <% end %>
               </li>
             </ul>
           </li>
           <li>
             <%= link_to pays_path do %>
-              <i class="fa fa-th"></i> <span>Pay</span>
-              <!-- 項目の横にアイコンみたいなのを表示-->
-              <!-- <span class="pull-right-container">-->
-              <!--   <small class="label pull-right bg-green">new</small>-->
-              <!-- </span>-->
+              <i class="fa fa-yen"></i> <span>精算</span>
             <% end %>
           </li>
           <li>
             <%= link_to balances_path do %>
-              <i class="fa fa-th"></i> <span>Balance</span>
+              <i class="fa fa-balance-scale"></i> <span>収支バランス</span>
             <% end %>
           </li>
           <li class="active">
             <%= link_to repeat_expenses_path do %>
-              <i class="fa fa-th"></i> <span>Repeat</span>
+              <i class="fa fa-repeat"></i> <span>繰り返し出費</span>
             <% end %>
           </li>
           <li>
             <%= link_to badgets_path do %>
-              <i class="fa fa-th"></i> <span>Badget</span>
+              <i class="fa fa-list-alt"></i> <span>予算</span>
             <% end %>
           </li>
           <li>
             <%= link_to categories_path do %>
-              <i class="fa fa-th"></i> <span>Category</span>
+              <i class="fa fa-list-ul"></i> <span>カテゴリー</span>
             <% end %>
           </li>
           <li>
             <%= link_to user_settings_path(@current_user) do %>
-              <i class="fa fa-th"></i> <span>Setting</span>
+              <i class="fa fa-cog"></i> <span>アカウント設定</span>
             <% end %>
           </li>
           <li>
             <%= link_to session_path(@current_user), method: :delete do %>
-              <i class="fa fa-th"></i> <span>Logout</span>
+              <i class="fa fa-sign-out"></i> <span>ログアウト</span>
             <% end %>
           </li>
         <% else %>
