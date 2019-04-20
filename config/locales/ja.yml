@@ -7,6 +7,16 @@ ja:
         restrict_dependent_destroy:
           has_one: "%{record}が存在しているので削除できません"
           has_many: "%{record}が存在しているので削除できません"
+    model:
+      expense: 出費
+    enum:
+      expense:
+        percent:
+          pay_all: 全額
+          pay_half: 半分
+          pay_one_third: ３分の１
+          pay_two_thirds: ３分の２
+          pay_nothing: 相手100%
   date:
     abbr_day_names:
     - 日

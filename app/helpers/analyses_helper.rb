@@ -43,8 +43,7 @@ module AnalysesHelper
   # 二人の出費の合計額の算出
   # @return Integer
   def one_total_both_expenditures(user)
-    @categories.map{ |c| c.own_both_expenses_mypay_sum(@expenses, user)}.sum +
-      @categories.map{ |c| c.partner_both_expenses_partnerpay_sum(@expenses, user)}.sum
+    @categories.map{ |c| c.both_expenses_sum(@expenses, user)}.sum
   end
 
   # 自分の出費の合計額の算出
@@ -110,6 +109,5 @@ module AnalysesHelper
     return 100 if numerator >= denominator
     numerator * 100 / denominator
   end
-
 
 end

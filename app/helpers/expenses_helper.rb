@@ -1,6 +1,41 @@
 # 出費一覧・入力画面で使うヘルパー
 module ExpensesHelper
 
+  def back_to_analyses_link
+    link_to '一覧に戻る', analyses_path(analyses_params_with_category), class: "btn btn-brown space-bottom"
+  end
+
+  def analyses_params
+    parameters = {}
+    conditions = %w(period tab category)
+    expenses_list_params = session[:expenses_list_params]
+    expenses_list_params.each do |key, value|
+      if conditions.include?(key)
+        parameters[key.to_sym] = value
+      end
+    end
+    parameters
+  end
+
+  def analyses_params_with_category
+    analyses_params.merge(category:  @category.id)
+  end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  # todo: 改修前 たぶん全部不要
   # 出費入力のときに割合の選択肢
   def percent_selection
     selection = { '半分' => 1, '3分の1' => 2, '3分の2' => 3, '相手100%' => 4 }

@@ -33,20 +33,37 @@ module CategoryDecorator
     end
   end
 
+  def history_title(period)
+    period.to_japanese_year_month + kind + "の履歴"
+  end
+
+  # @return [Integer]
   def own_expenses_sum(expenses, user)
     expenses.select{ |e| e.is_own_expense?(user, self) }.sum(&:amount)
   end
 
+  # @note 二人の出費の内、mypayの合計額
+  # @return [Integer]
   def own_both_expenses_mypay_sum(expenses, user)
     expenses.select{ |e| e.is_both_expense_paid_by?(user, self) }.sum(&:mypay)
   end
 
+  # @note 二人の出費の内、partnerのpartnerpayの合計額
+  # @return [Integer]
   def partner_both_expenses_partnerpay_sum(expenses, user)
     expenses.select{ |e| e.is_both_expense_paid_by?(user.partner, self) }.sum(&:partnerpay)
   end
 
+  # @note 二人の出費の合計額
+  # @return [Integer]
+  def both_expenses_sum(expenses, user)
+    own_both_expenses_mypay_sum(expenses, user) + partner_both_expenses_partnerpay_sum(expenses, user)
+  end
+
+  # @note 自分の出費の合計額と二人の出費の合計額の和
+  # @return [Integer]
   def expenses_sum(expenses, user)
-    own_expenses_sum(expenses, user) + own_both_expenses_mypay_sum(expenses, user) + partner_both_expenses_partnerpay_sum(expenses, user)
+    own_expenses_sum(expenses, user) + both_expenses_sum(expenses, user)
   end
 
   def percentage(expenses, user, total)

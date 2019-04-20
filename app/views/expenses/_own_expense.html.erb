@@ -1,0 +1,19 @@
+<li>
+  <i class="fa fa-user bg-gray"></i>
+
+  <div class="timeline-item">
+    <span class="go-edit"><i class="fa fa-lg fa-edit text-redpepper"></i></span>
+
+    <h3 class="timeline-header no-border">
+      <strong><i class="fa fa-cny"></i><%= expense.amount.to_s(:delimited) %></strong>
+    </h3>
+    <div class="other-expense-details">
+                  <span class="space-right">
+                    <%= expense.category.kind %>
+                  </span>
+      <span class="space-right">
+                    <%= expense.memo %>
+                  </span>
+    </div>
+  </div><!-- /div.timeline item -->
+</li>

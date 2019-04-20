@@ -4,11 +4,14 @@ class ExpensesController < ApplicationController
   after_action -> {create_notification(@expense)}, only: [:create, :update]
 
   def index
-    @cnum = 0
-    @current_user_expenses = current_user.expenses.this_month
-    @partner_expenses = partner.expenses.this_month
-    @incomes = current_user.incomes.where('date >= ? AND date <= ?', Date.today.beginning_of_month, Date.today.end_of_month)
-    @balances = current_user.balances
+    # @cnum = 0
+    # @current_user_expenses = current_user.expenses.this_month
+    # @partner_expenses = partner.expenses.this_month
+    # @incomes = current_user.incomes.where('date >= ? AND date <= ?', Date.today.beginning_of_month, Date.today.end_of_month)
+    # @balances = current_user.balances
+    @category = Category.find(params[:category_id])
+    @period =  params[:period]
+    @expenses = Expense.specified_category_for_one_month(@current_user, @category, @period)
   end
 
   def both

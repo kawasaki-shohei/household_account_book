@@ -6,26 +6,8 @@
       <div class="col-xs-12">
         <ul class="timeline">
           <% @expenses.each_with_index do |expense, i| %>
-            <%= expense.show_date(@expenses, i) %>
-            <li>
-              <i class="fa fa-user bg-gray"></i>
-
-              <div class="timeline-item">
-                <span class="go-edit"><i class="fa fa-lg fa-edit text-redpepper"></i></span>
-
-                <h3 class="timeline-header no-border">
-                  <i class="fa fa-cny"></i><%= expense.amount.to_s(:delimited) %>
-                </h3>
-                <div class="other-expense-details">
-                  <span class="space-right">
-                    <%= expense.category.kind %>
-                  </span>
-                  <span class="space-right">
-                    <%= expense.memo %>
-                  </span>
-                </div>
-              </div><!-- /div.timeline item -->
-            </li>
+            <%= expense.show_date(@expenses, @current_user, i) %>
+            <%= render 'own_expense' %>
           <% end %>
         </ul>
       </div><!-- /.col-xs-12  -->

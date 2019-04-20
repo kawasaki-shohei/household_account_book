@@ -3,7 +3,10 @@ li.analyses-tab {
   text-align: center;
   margin-right: 0px;
 }
-
+small.sum-of-the-date {
+  margin-left: 10px;
+  color: gray;
+}
 .nav-tabs-custom>.nav-tabs>li.analyses-tab {
   margin-right: 0px;
 }

@@ -5,7 +5,16 @@
   margin-left: 5px;
 }
 .space-right{
-  margin-right: 5px;
+ margin-right: 5px;
+}
+.space-top{
+  margin-top: 5px;
+}
+.space-bottom{
+  margin-bottom: 5px;
+}
+.inside-space-left{
+  padding-left: 10px;
 }
 .no-margin-top{
   margin-top: 0px;

@@ -36,15 +36,14 @@ class Expense < ApplicationRecord
 
   belongs_to :user
   belongs_to :category
+
   validates :amount, :date, presence: true
   validates_length_of :amount, maximum: 10
   validates_length_of :memo, maximum: 100
   validate :calculate_amount
-  def calculate_amount
-    if mypay != nil && partnerpay != nil && mypay + partnerpay != amount
-      errors[:base] << "入力した金額の合計が支払い金額と一致しません"
-    end
-  end
+
+  # todo: これはテーブルを作ってユーザーが自由に変更できるようにする。
+  enum percent: { pay_all: 0, pay_half: 1, pay_one_third: 2, pay_two_thirds: 3, pay_nothing: 4 }
 
   end_of_this_month = Date.today.end_of_month
   beginning_of_this_month = Date.today.beginning_of_month
@@ -86,12 +85,12 @@ class Expense < ApplicationRecord
 
   # @note 該当月と引数のカテゴリの出費でユーザーの全ての出費とパートナーの二人の出費を取得
   # @param [User] user
-  # @param [Integer] category_id
+  # @param [Category] category
   # @param [String] year_month "2019-02"
   # @return [Expense]
-  def self.specified_category_for_one_month(user, category_id, year_month)
+  def self.specified_category_for_one_month(user, category, year_month)
     partner = user.partner
-    self.includes(:user, :category).references(:users, :categories).where(categories: {id: category_id}).one_month(year_month).where("users.id = ? OR (users.id = ? AND both_flg = ?)", user.id, partner.id, true).order(date: :desc, created_at: :desc)
+    self.includes(:user, :category).references(:users, :categories).where(categories: {id: category}).one_month(year_month).where("users.id = ? OR (users.id = ? AND both_flg = ?)", user.id, partner.id, true).order(date: :desc, created_at: :desc)
   end
 
   # fixme: case文でsqlのwarningが出ているので、要修正
@@ -168,6 +167,12 @@ class Expense < ApplicationRecord
     future_expenses.destroy_all
     past_expenses = user.expenses.where('repeat_expense_id = ? AND date <= ?', repeat_expense_id, Date.today.beginning_of_month)
     past_expenses.update(repeat_expense_id: nil)
+  end
+
+  def calculate_amount
+    if mypay != nil && partnerpay != nil && mypay + partnerpay != amount
+      errors[:base] << "入力した金額の合計が支払い金額と一致しません"
+    end
   end
 
   # ユーザーと該当月からその月の支出合計額を算出
