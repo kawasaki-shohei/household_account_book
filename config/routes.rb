@@ -24,11 +24,6 @@ Rails.application.routes.draw do
 
   resources :notifications, only: [:index, :create, :destroy]
 
-  get 'category_expenses/:category_id/:cnum', to: 'expenses#each_category', as: :each_category_expense
-
-  get 'shift_months/past/:id', to: 'shift_months#past', as: :past_expense
-  get 'shift_months/future/:id', to: 'shift_months#future', as: :future_expense
-
   resources :repeat_expenses do
     collection do
       get :both
