@@ -7,10 +7,12 @@
         <div class="box-body">
           <%= form_with(model: income, local: true) do |f| %>
             <%=render 'layouts/error', object: income %>
-            <%= f.label :amount , value: '金額' %>
-            <div class="input-group">
-              <%= f.number_field :amount, class:"form-control input-lg", min: 0, max: 9999999999, value: income.amount, required: true %>
-              <span class="input-group-addon">円</span>
+            <div class="form-group">
+              <%= f.label :amount , value: '金額' %>
+              <div class="input-group">
+                <%= f.number_field :amount, class:"form-control input-lg", min: 0, max: 9999999999, value: income.amount, required: true %>
+                <span class="input-group-addon">円</span>
+              </div>
             </div>
             <br>
 
