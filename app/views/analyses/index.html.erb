@@ -4,6 +4,8 @@
   <section class="content">
     <div class="row">
       <div class="col-xs-12">
+        <%= render 'shared/notice_flash_message' %>
+
         <div class="row">
           <div class="shift-month col-xs-12">
             <%= to_last_month_btn %>
@@ -13,7 +15,7 @@
             <%= to_next_month_btn %>
             <%= link_to '検索', analyses_path(tab: specify_tab, period: current_year_month), class: "btn btn-brown col-xs-2 pull-right", id: "expenses-search-btn" %>
           </div><!--/.shift-month -->
-        </div>
+        </div><!-- row -->
         <br />
 
         <div class="box box-brown">
