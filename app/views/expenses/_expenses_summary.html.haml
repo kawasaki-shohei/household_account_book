@@ -34,11 +34,11 @@
           カテゴリ別予算残金
     #collapseTwo.collapse{"aria-labelledby" => "headingTwo", "data-parent" => "#accordion"}
       .card-body
-        - ordered_badget(current_user).each do |badget|
+        - ordered_budget(current_user).each do |budget|
           %div
-            = badget.category.kind
+            = budget.category.kind
             %span.details
-              ¥#{category_balance(badget, badget.category, current_user_expenses, partner_expenses.both_t).to_s(:delimited)}
+              ¥#{category_balance(budget, budget.category, current_user_expenses, partner_expenses.both_t).to_s(:delimited)}
 
   .card
     #headingThree.card-header
@@ -80,11 +80,11 @@
             パートナーのカテゴリ別予算残金
       #collapseFive.collapse{"aria-labelledby" => "headingFive", "data-parent" => "#accordion"}
         .card-body
-          - ordered_badget(partner).each do |badget|
+          - ordered_budget(partner).each do |budget|
             %div
-              = badget.category.kind
+              = budget.category.kind
               %span.details
-                ¥#{category_balance(badget, badget.category, partner_expenses, current_user_expenses.both_t).to_s(:delimited)}
+                ¥#{category_balance(budget, budget.category, partner_expenses, current_user_expenses.both_t).to_s(:delimited)}
 
 #category_expense_parent
   = render 'expenses/expenses_list', current_user_expenses: current_user_expenses, partner_expenses: partner_expenses

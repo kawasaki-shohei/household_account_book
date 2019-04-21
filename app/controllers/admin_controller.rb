@@ -40,7 +40,7 @@ class AdminController < ApplicationController
 
   def delete_all_data
     current_user.notifications.try(:destroy_all)
-    current_user.badgets.try(:destroy_all)
+    current_user.budgets.try(:destroy_all)
     current_user.wants.try(:destroy_all)
     current_user.pays.try(:destroy_all)
     current_user.deposits.try(:destroy_all)

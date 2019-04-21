@@ -26,7 +26,7 @@
 
 class Category < ApplicationRecord
   belongs_to :user
-  has_many :badgets, dependent: :destroy
+  has_many :budgets, dependent: :destroy
   has_many :expenses
 
   scope :oneself, -> {where(common: false)}

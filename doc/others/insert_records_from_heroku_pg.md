@@ -6,7 +6,7 @@
 4. cat ファイル名で中身を確認できる
 
 ```bash
-tables=("categories" "badgets" "expenses" "repeat_expenses" "pays" "wants" "notification_messages" "notifications" "deleted_records")
+tables=("categories" "budgets" "expenses" "repeat_expenses" "pays" "wants" "notification_messages" "notifications" "deleted_records")
 
 i=0
 for table in ${tables[@]}; do
@@ -14,7 +14,7 @@ heroku pg:psql --app habfoc -c "\copy (select * from ${table}) to db/${table}.cs
 let i++
 done
 
-heroku pg:psql -c "\copy (select * from badgets) to db/badgets.csv with csv header"
+heroku pg:psql -c "budgets"
 heroku pg:psql -c "\copy (select * from expenses) to db/expenses.csv with csv header"
 heroku pg:psql -c "\copy (select * from repeat_expenses) to db/repeat_expenses.csv with csv header"
 heroku pg:psql -c "\copy (select * from categories) to db/categories.csv with csv header"
@@ -32,7 +32,7 @@ ActiveRecord::Base.connection.execute("SELECT setval('expenses_id_seq', coalesce
 
 ■ローカルデータの削除  
 ```rb
-tables = [Badget, RepeatExpense, Expense, Category, Pay, Want, Notification, NotificationMessage, DeletedRecord]
+tables = [budget, RepeatExpense, Expense, Category, Pay, Want, Notification, NotificationMessage, DeletedRecord]
 tables.each do |table|
   a = table.all
   a.destroy_all
@@ -46,7 +46,7 @@ http://sakura-bird1.hatenablog.com/entry/2017/02/26/214648
 ```rb
 require 'csv'
 
-tables=["categories", "badgets", "repeat_expenses", "expenses", "pays", "wants", "notification_messages", "notifications", "deleted_records"]
+tables=["categories", "budgets", "repeat_expenses", "expenses", "pays", "wants", "notification_messages", "notifications", "deleted_records"]
 tables.each do |t|
   csv_data = CSV.read("db/#{t}.csv", headers: true)
   csv_data.each do |data|
@@ -54,7 +54,7 @@ tables.each do |t|
   end
 end
 
-tables = [Badget, RepeatExpense, Expense, Category, Pay, Want, Notification, NotificationMessage, DeletedRecord]
+tables = [budget, RepeatExpense, Expense, Category, Pay, Want, Notification, NotificationMessage, DeletedRecord]
 tables.each do |t|
   csv_data = CSV.read("db/#{t.table_name}.csv", headers: true)
   csv_data.each do |data|

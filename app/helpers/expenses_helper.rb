@@ -63,8 +63,8 @@ module ExpensesHelper
   end
 
   # カテゴリ別予算残高の表示順を指定する
-  def ordered_badget(user)
-    user.badgets.order(category_id: :asc)
+  def ordered_budget(user)
+    user.budgets.order(category_id: :asc)
   end
 
   # カテゴリ別支出合計を計算
@@ -84,14 +84,14 @@ module ExpensesHelper
   end
 
   # カテゴリ別予算残高の計算
-  def category_balance(badget, category, user_expenses, partner_expenses)
+  def category_balance(budget, category, user_expenses, partner_expenses)
     # そのカテゴリの自分の出費の合計
     user_category_expenses_sum = user_expenses.both_f.where(category_id: category.id).sum(:amount)
     # 二人の出費の内、そのカテゴリの自分の払う金額の合計
     mypays_sum_of_both = user_expenses.both_t.where(category_id: category.id).sum(:mypay)
     # 相手が記入した二人の出費の内、そのカテゴリの自分の払う金額の合計
     partnerpays_sum_of_both = partner_expenses.where(category_id: category.id).sum(:partnerpay)
-    badget.amount.to_i - user_category_expenses_sum - mypays_sum_of_both - partnerpays_sum_of_both
+    budget.amount.to_i - user_category_expenses_sum - mypays_sum_of_both - partnerpays_sum_of_both
   end
 
 end

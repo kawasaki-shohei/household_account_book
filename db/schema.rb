@@ -10,20 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_06_000013) do
+ActiveRecord::Schema.define(version: 2019_04_21_130214) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "badgets", force: :cascade do |t|
-    t.integer "amount"
-    t.bigint "user_id"
-    t.bigint "category_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["category_id"], name: "index_badgets_on_category_id"
-    t.index ["user_id"], name: "index_badgets_on_user_id"
-  end
 
   create_table "balances", force: :cascade do |t|
     t.bigint "user_id"
@@ -33,6 +23,16 @@ ActiveRecord::Schema.define(version: 2019_04_06_000013) do
     t.datetime "updated_at", null: false
     t.index ["user_id", "month"], name: "index_balances_on_user_id_and_month", unique: true
     t.index ["user_id"], name: "index_balances_on_user_id"
+  end
+
+  create_table "budgets", force: :cascade do |t|
+    t.integer "amount"
+    t.bigint "user_id"
+    t.bigint "category_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_budgets_on_category_id"
+    t.index ["user_id"], name: "index_budgets_on_user_id"
   end
 
   create_table "categories", force: :cascade do |t|
@@ -160,9 +160,9 @@ ActiveRecord::Schema.define(version: 2019_04_06_000013) do
     t.index ["user_id"], name: "index_wants_on_user_id"
   end
 
-  add_foreign_key "badgets", "categories"
-  add_foreign_key "badgets", "users"
   add_foreign_key "balances", "users"
+  add_foreign_key "budgets", "categories"
+  add_foreign_key "budgets", "users"
   add_foreign_key "categories", "users"
   add_foreign_key "deleted_records", "users", column: "deleted_by"
   add_foreign_key "deposits", "users"
