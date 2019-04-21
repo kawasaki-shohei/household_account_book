@@ -44,7 +44,7 @@
             <li class="dropdown notifications-menu">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <i class="fa fa-bell-o"></i>
-                <span class="label label-warning"><%= @notification_count %></span>
+                <span class="label label-orange"><%= 10 %></span>
               </a>
               <ul class="dropdown-menu">
                 <li class="header">You have <%= @notification_count %> notifications</li>
@@ -81,13 +81,19 @@
                 </li>
                 <li class="footer"><a href="#">View all</a></li>
               </ul>
-            </li>
-            <!-- User Account Menu -->
+            </li><!--/.dropdown.notifications-menu -->
+
+            <li class="">
+              <%= link_to new_expense_path do %>
+                <i class="fa fa-lg fa-pencil"></i>
+              <% end  %>
+            </li><!-- /.dropdown.user.user-menu -->
+
             <li class="dropdown user user-menu">
               <%= link_to @current_user.name, user_path(@current_user) %>
-            </li>
-          </ul>
-        </div>
+            </li><!-- /.dropdown.user.user-menu -->
+          </ul><!-- /.nav.navbar-nav -->
+        </div><!-- /.navbar-custom-menu -->
       <% end %>
     </nav>
   </header>

@@ -5,9 +5,8 @@ class BadgetsController < ApplicationController
   end
 
   def new
-    #fixme: helperのmake_left_categoriesでsqlがたくさん発行されている。
     @badget = Badget.new
-    @categories = current_user.categories.or(partner.categories.common_t)
+    @categories = Category.get_user_categories_with_badgets(current_user)
   end
 
   def create

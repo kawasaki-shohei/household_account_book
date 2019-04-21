@@ -70,10 +70,15 @@ module CategoryDecorator
     (expenses_sum(expenses, user) * 100).fdiv(total)
   end
 
+  def is_set_own_badget?(user)
+    badgets.find{ |b| b.user == user }
+  end
+  alias_method :get_own_badget, :is_set_own_badget?
+
   # @return [Integer]
   # @note 予算を設定していないときは0を返す
   def badget_amount(user)
-    badgets.find{ |b| b.user == user }.try(:amount) || 0
+    get_own_badget(user).try(:amount) || 0
   end
 
   def badget_balance(expense_amount, user)

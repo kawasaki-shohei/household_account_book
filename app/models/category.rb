@@ -34,9 +34,9 @@ class Category < ApplicationRecord
 
   validates :kind, presence: true, length: { maximum: 15 }
 
-  # fixme: partnerいらない
-  def self.ones_categories(current_user, partner)
-    current_user.categories.or(partner.categories.common_t)
+  def self.ones_categories(user)
+    partner = user.partner
+    user.categories.or(partner.categories.common_t)
   end
 
   # @note userが使っているカテゴリーを予算と一緒に取得
@@ -47,12 +47,10 @@ class Category < ApplicationRecord
 
   # @param [User] current_user
   # @param [User] partner
-  # @return categories.*, category.badget_id, category.badget_user_id, category.badget_amount,
-  # @note current_userのカテゴリーとパートナーが共通カテゴリー登録しているものを取得し、badgetsをleft outer joinしている。current_userがまだ登録していない場合があるため、パートナーのbadgetsも取得する。
-  # @note where.not(badgets: {user: partner}) にするとbadget_user_idがnilのものが取得できなかった。
+  # @return [Category::ActiveRecord_AssociationRelation]
   def self.get_user_categories_with_badgets(user)
     partner = user.partner
-    user.categories.or(partner.categories.common_t).includes(:badgets).where(badgets: {user: [user, partner, nil]}).order(:id)
+    user.categories.or(partner.categories.common_t).includes(badgets: :user).where(badgets: {user: [user, nil]}).order(:id)
   end
 
     # @return [Badget]
