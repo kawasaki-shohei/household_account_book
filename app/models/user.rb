@@ -31,16 +31,9 @@
 
 class User < ApplicationRecord
   include ExpensesHelper
-  before_save { email.downcase! }
-  validates :name,  presence: true, length: { maximum: 10 }
-  validates :email, presence: true, uniqueness: true,
-                    length: { maximum: 255 },
-                    format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i }
-  validates :partner_id, uniqueness: { scope: [:id, :partner_id] }
-  has_secure_password
-  validates :password, presence: true, length: { minimum: 6 }
 
-  belongs_to :partner, class_name: 'User', optional: true
+  has_one :couple
+  has_one :partner, through: :couple
   has_many :expenses, dependent: :destroy
   has_many :repeat_expenses, dependent: :destroy
   has_many :budgets, dependent: :destroy
@@ -51,6 +44,16 @@ class User < ApplicationRecord
   has_many :deposits, dependent: :destroy
   has_many :incomes, dependent: :destroy
   has_many :balances, dependent: :destroy
+
+  before_save { email.downcase! }
+  validates :name,  presence: true, length: { maximum: 10 }
+  validates :email, presence: true, uniqueness: true,
+            length: { maximum: 255 },
+            format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i }
+  validates :partner_id, uniqueness: { scope: [:id, :partner_id] }
+  has_secure_password
+  validates :password, presence: true, length: { minimum: 6 }
+
 
   def get_applicable_balance(month)
     balances.where(month: month).first_or_initialize

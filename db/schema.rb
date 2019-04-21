@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_21_130214) do
+ActiveRecord::Schema.define(version: 2019_04_21_215856) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,6 +42,15 @@ ActiveRecord::Schema.define(version: 2019_04_21_130214) do
     t.bigint "user_id"
     t.boolean "common", default: false
     t.index ["user_id"], name: "index_categories_on_user_id"
+  end
+
+  create_table "couples", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "partner_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["partner_id"], name: "index_couples_on_partner_id", unique: true
+    t.index ["user_id"], name: "index_couples_on_user_id", unique: true
   end
 
   create_table "deleted_records", force: :cascade do |t|
@@ -144,10 +153,8 @@ ActiveRecord::Schema.define(version: 2019_04_21_130214) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "allow_share_own", default: false
-    t.bigint "partner_id"
     t.boolean "sys_admin", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["partner_id"], name: "index_users_on_partner_id", unique: true
   end
 
   create_table "wants", force: :cascade do |t|
@@ -164,6 +171,8 @@ ActiveRecord::Schema.define(version: 2019_04_21_130214) do
   add_foreign_key "budgets", "categories"
   add_foreign_key "budgets", "users"
   add_foreign_key "categories", "users"
+  add_foreign_key "couples", "users"
+  add_foreign_key "couples", "users", column: "partner_id"
   add_foreign_key "deleted_records", "users", column: "deleted_by"
   add_foreign_key "deposits", "users"
   add_foreign_key "expenses", "repeat_expenses"
@@ -173,6 +182,5 @@ ActiveRecord::Schema.define(version: 2019_04_21_130214) do
   add_foreign_key "pays", "users"
   add_foreign_key "repeat_expenses", "categories"
   add_foreign_key "repeat_expenses", "users"
-  add_foreign_key "users", "users", column: "partner_id"
   add_foreign_key "wants", "users"
 end
