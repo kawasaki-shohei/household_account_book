@@ -1,2 +1,68 @@
-<h1>Users#edit</h1>
-<p>Find me in app/views/users/edit.html.erb</p>
+<%= render partial: 'shared/html_title', locals: {subtitle: "アカウント設定"} %>
+<div class="content-wrapper">
+
+  <section class="content-header">
+    <h1>アカウント設定</h1>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="box box-brown">
+
+          <div class="box-body">
+            <%= form_with(model: @user, local: true) do |f| %>
+              <%=render 'layouts/error', object: @user %>
+              <div class="form-group">
+                <%= f.label :name , value: '名前' %>
+                <div>
+                  <%= f.text_field :amount, maxlength: 10, class:"form-control", value: @user.name, required: true %>
+                </div>
+              </div>
+              <br />
+
+              <div class="form-group">
+                <%= f.label :email , value: 'メールアドレス' %>
+                <div>
+                  <%= f.email_field :email, class:"form-control", value: @user.email, required: true %>
+                </div>
+              </div>
+              <br />
+
+              <% if @user.partner %>
+                <div class="form-group">
+                  <p><b>パートナー</b></p>
+                  <table class="table-responsive no-border space-left">
+                  <tbody>
+                    <tr>
+                      <th>名前</th>
+                      <td><%= @partner.name %></td>
+                    </tr>
+                    <tr>
+                      <th>メールアドレス</th>
+                      <td><%= @partner.email %></td>
+                    </tr>
+                  </tbody>
+                  </table>
+              <% end %>
+
+              <div class="form-group">
+                <%= f.submit submit_btn_letters, class: "btn btn-orange btn-block" %>
+              </div>
+
+            <% end %>
+          </div><!-- /.box-body -->
+
+          <div class="box-footer">
+
+          </div><!-- /.box-footer -->
+
+        </div><!-- /.box box-brown -->
+
+      </div><!-- /.col-md-12  -->
+    </div><!-- /row -->
+
+  </section><!-- /.content -->
+
+</div>

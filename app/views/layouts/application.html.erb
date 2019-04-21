@@ -90,7 +90,7 @@
             </li><!-- /.dropdown.user.user-menu -->
 
             <li class="dropdown user user-menu">
-              <%= link_to @current_user.name, user_path(@current_user) %>
+              <%= link_to @current_user.name, edit_user_path %>
             </li><!-- /.dropdown.user.user-menu -->
           </ul><!-- /.nav.navbar-nav -->
         </div><!-- /.navbar-custom-menu -->
@@ -159,9 +159,9 @@
             <% end %>
           </li>
           <li>
-            <%= link_to user_settings_path(@current_user) do %>
-              <i class="fa fa-cog"></i> <span>アカウント設定</span>
-            <% end %>
+            <%#= link_to user_settings_path(@current_user) do %>
+<!--              <i class="fa fa-cog"></i> <span>アカウント設定</span>-->
+            <%# end %>
           </li>
           <li>
             <%= link_to session_path(@current_user), method: :delete do %>

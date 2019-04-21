@@ -1,7 +1,6 @@
 class UsersController < ApplicationController
   skip_before_action :check_logging_in, only: [:new, :create]
-  skip_before_action :check_partner, only: [:new, :create, :show, :register_partner]
-  before_action :set_user, only: [:show, :register_partner]
+  skip_before_action :check_partner, only: [:new, :create, :register_partner]
   include UsersHelper
 
   def new
@@ -18,7 +17,9 @@ class UsersController < ApplicationController
     end
   end
 
-  def show
+  def edit
+    @user = @current_user
+    @partner = @user.partner
   end
 
   def register_partner
@@ -34,16 +35,8 @@ class UsersController < ApplicationController
     end
   end
 
-
-  def edit
-  end
-
   private
    def user_params
      params.require(:user).permit(:name, :email, :password, :password_confirmation)
    end
-
-  def set_user
-    @user = User.find(params[:id])
-  end
 end
