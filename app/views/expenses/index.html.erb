@@ -8,7 +8,7 @@
   <section class="content">
     <div class="row">
       <div class="col-xs-12">
-        <%= back_to_analyses_link %>
+        <%= back_btn_to_analyses_page %>
         <div class="box box-brown">
           <div class="box-body">
             <div>
@@ -53,3 +53,8 @@
   </section>
 
 </div>
+
+
+<%= content_for :other_javascript do %>
+  <%= javascript_include_tag 'expenses_index' %>
+<% end %>

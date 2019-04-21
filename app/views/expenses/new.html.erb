@@ -1,4 +1,4 @@
-<%= render partial: 'shared/html_title', locals: {subtitle: "収入を入力"} %>
+<%= render partial: 'shared/html_title', locals: {subtitle: "出費を入力"} %>
 <div class="content-wrapper">
 
   <section class="content-header">
@@ -22,115 +22,14 @@
             <div class="tab-pane active" id="own-expense-form">
 
               <div class="box-body">
-                <%= form_with(model: @expense, local: true) do |f| %>
-                  <%=render 'layouts/error', object: @expense %>
-                  <div class="form-group">
-                    <%= f.label :amount , value: '支払い金額' %>
-                    <div class="input-group">
-                      <%= f.number_field :amount, class:"form-control input-lg", min: 0, max: 9999999999, value: @expense.amount, required: true %>
-                      <span class="input-group-addon">円</span>
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <%= f.label :category_id , value: 'カテゴリー' %>
-                    <div>
-                      <%= f.collection_select :category_id, @categories, :id, :kind, {}, class: 'form-control', required: true %>
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <%= f.label :date, value: '日付' %>
-                    <div>
-                      <%= f.date_field :date, required: true, value: @expense.default_date, class: "form-control" %>
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <%= f.label :date, value: 'メモ' %>
-                    <div>
-                      <%= f.text_field :memo, maxlength: 100, class: "form-control" %>
-                    </div>
-                  </div>
-                  <br>
-
-                  <div class="form-group">
-                    <%= f.submit submit_btn_letters, class: "btn btn-orange btn-block" %>
-                  </div>
-
-                <% end %>
+                <%= render 'own_expense_form' %>
               </div><!-- /.box-body -->
-
-              <div class="box-footer text-center no-border no-padding">
-
-              </div><!-- /.box-footer -->
 
             </div><!-- /.tab-pane active#expenses_comparison -->
 
             <div class="tab-pane" id="both-expense-form">
               <div class="box-body">
-                <%= form_with(model: @expense, local: true) do |f| %>
-                  <%=render 'layouts/error', object: @expense %>
-                  <%= f.hidden_field :both_flg, value: true %>
-                  <div class="form-group">
-                    <%= f.label :amount , value: '支払い金額' %>
-                    <div class="input-group">
-                      <%= f.number_field :amount, class:"form-control input-lg", id: "paid_amount", min: 0, max: 9999999999, value: @expense.amount, required: true %>
-                      <span class="input-group-addon">円</span>
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <%= f.radio_button :percent, :percent, {checked: true, id: 'percent_radio'} %>
-                    <%= f.label :percent, for: :percent_radio, value: "割合で入力"%>
-                    <div class="input-group">
-                      <span class="input-group-addon">自分の割合</span>
-                      <%= f.select :percent, options_for_select(percent_selection, Expense.percents[:pay_half]), {}, class:'form-control', id: 'percent_input' %>
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <%= f.radio_button :percent, Expense.percents[:manual_amount], {id: 'amount_radio'} %>
-                    <%= f.label :percent, for: :amount_radio, value: "金額で入力"%>
-                    <div class="input-group space-bottom">
-                      <span class="input-group-addon"><%= @current_user.name %>の金額</span>
-                      <%= f.number_field :mypay, class: "form-control input-lg", id:"mypay_input", min: 0, disabled: "disabled" %>
-                      <span class="input-group-addon">円</span>
-                    </div>
-                    <div class="input-group">
-                      <span class="input-group-addon"><%= @partner.name %>の金額</span>
-                      <%= f.number_field :mypay, class: "form-control input-lg", id:"partnerpay_input", min: 0, disabled: "disabled" %>
-                      <span class="input-group-addon">円</span>
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <%= f.label :category_id , value: 'カテゴリー' %>
-                    <div>
-                      <%= f.collection_select :category_id, categories_without_only_own, :id, :kind, {}, class: 'form-control', required: true %>
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <%= f.label :date, value: '日付' %>
-                    <div>
-                      <%= f.date_field :date, required: true, value: @expense.default_date, class: "form-control" %>
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <%= f.label :date, value: 'メモ' %>
-                    <div>
-                      <%= f.text_field :memo,  maxlength: 100, class: "form-control" %>
-                    </div>
-                  </div>
-                  <br>
-
-                  <div class="form-group">
-                    <%= f.submit submit_btn_letters, class: "btn btn-orange btn-block" %>
-                  </div>
-
-                <% end %>
+                <%= render 'both_expense_form' %>
               </div><!-- /.box-body -->
 
             </div><!-- /.tab-pane #budget_comparison -->

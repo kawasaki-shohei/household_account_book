@@ -17,6 +17,12 @@ module ExpenseDecorator
     end
   end
 
+  def show_percent
+    #todo: percentにデフォルト値をつけたら、percent.nil?は不要
+    return if manual_amount? || percent.nil?
+    I18n.t("activerecord.enum.expense.percent.#{percent}")
+  end
+
   def necessary_pay_of(user)
     self.user == user ? mypay : partnerpay
   end

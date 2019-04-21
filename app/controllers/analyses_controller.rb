@@ -6,7 +6,7 @@ class AnalysesController < ApplicationController
     @categories = Category.available_categories_with_badgets(@current_user)
     @expenses = Expense.all_for_one_month(@current_user, year_month_params)
     @incomes = @current_user.incomes.where(income_params)
-    @balance = @current_user.balances.find_by!(month: year_month_params)
+    @balance = @current_user.balances.find_by(month: year_month_params)
     session[:expenses_list_params] = params
   end
 

@@ -1,8 +1,12 @@
 # 出費一覧・入力画面で使うヘルパー
 module ExpensesHelper
 
-  def back_to_analyses_link
-    link_to '一覧に戻る', analyses_path(analyses_params_with_category), class: "btn btn-brown space-bottom"
+  def back_btn_to_analyses_page
+    link_to '出費概要へ', analyses_path(analyses_params_with_category), class: "btn btn-brown space-bottom"
+  end
+
+  def back_btn_to_expenses_list
+    link_to '出費一覧へ', expenses_path(period: @expense.date.to_s_as_year_month, category_id: @expense.category.id, expense: @expense.id), class: "btn btn-brown space-bottom"
   end
 
   def analyses_params

@@ -1,0 +1,35 @@
+<%= render partial: 'shared/html_title', locals: {subtitle: "出費を編集"} %>
+<div class="content-wrapper">
+
+  <section class="content-header">
+    <h1>出費を編集</h1>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <div class="col-md-12">
+        <%= back_btn_to_expenses_list %>
+
+        <div class="box box-brown">
+          <div class="box-body">
+            <% if @expense.is_for_both? %>
+              <%= render 'both_expense_form' %>
+            <% else %>
+              <%= render 'own_expense_form' %>
+            <% end %>
+          </div><!-- /.box-body -->
+        </div><!-- /.box.box-brown -->
+
+      </div><!-- /.col-md-12  -->
+    </div><!-- /row -->
+
+  </section><!-- /.content -->
+
+  <%#= render 'form', income: @income %>
+
+</div>
+
+<%= content_for :other_javascript do %>
+  <%= javascript_include_tag 'expenses' %>
+<% end %>

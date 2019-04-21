@@ -46,7 +46,7 @@ window.onload = function(){
     const category_id = arg.category;
     const target = document.querySelector(`#expenses-comparison-category-id-${category_id}`);
     const rect = target.getBoundingClientRect();
-    window.scrollBy({top: rect.top, behavior: "smooth"});
+    window.scrollBy({top: rect.top - 30, behavior: "smooth"});
   }
 };
 

@@ -55,5 +55,5 @@ Rails.application.routes.draw do
   # get 'bought_buttons/bought/:id', to: 'bought_buttons#bought', as: :bought
   # get 'bought_buttons/want/:id', to: 'bought_buttons#want', as: :back_to_want
 
-  root to: "expenses#index"
+  root to: "analyses#index"
 end
