@@ -1,7 +1,7 @@
-li.analyses-tab {
+li.analyses-tab, li.expense-form-tab {
   width: 50%;
   text-align: center;
-  margin-right: 0px;
+  margin-right: 0px !important;
 }
 small.sum-of-the-date {
   margin-left: 10px;

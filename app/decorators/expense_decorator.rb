@@ -1,4 +1,5 @@
 module ExpenseDecorator
+  include CommonDecorator
   def show_date(expenses, current_user, index)
     if index == 0 || date != expenses[index - 1].date
       expenses_of_the_date = expenses.select{ |e| e.date == date }

@@ -37,13 +37,15 @@ class Expense < ApplicationRecord
   belongs_to :user
   belongs_to :category
 
+  before_validation :set_mypay_and_partnerpay
+
   validates :amount, :date, presence: true
-  validates_length_of :amount, maximum: 10
+  validates_length_of :amount, :mypay, :partnerpay, maximum: 10
   validates_length_of :memo, maximum: 100
   validate :calculate_amount
 
   # todo: これはテーブルを作ってユーザーが自由に変更できるようにする。
-  enum percent: { pay_all: 0, pay_half: 1, pay_one_third: 2, pay_two_thirds: 3, pay_nothing: 4 }
+  enum percent: { manual_amount: -1, pay_all: 0, pay_half: 1, pay_one_third: 2, pay_two_thirds: 3, pay_nothing: 4 }
 
   end_of_this_month = Date.today.end_of_month
   beginning_of_this_month = Date.today.beginning_of_month
@@ -93,6 +95,67 @@ class Expense < ApplicationRecord
     self.includes(:user, :category).references(:users, :categories).where(categories: {id: category}).one_month(year_month).where("users.id = ? OR (users.id = ? AND both_flg = ?)", user.id, partner.id, true).order(date: :desc, created_at: :desc)
   end
 
+  def set_mypay_and_partnerpay
+    return if !is_for_both?
+    case percent
+    when "pay_all"
+      self.mypay = amount
+      self.partnerpay = 0
+    when "pay_half"
+      self.mypay = (amount / 2).round
+      self.partnerpay = (amount - mypay)
+    when "pay_one_third"
+      self.mypay = (amount / 3).round
+      self.partnerpay = (amount - mypay)
+    when "pay_two_thirds"
+      self.mypay = (amount * 2 / 3).round
+      self.partnerpay = (amount - mypay)
+    when "pay_nothing"
+      self.mypay = 0
+      self.partnerpay = amount
+    end
+  end
+
+  def calculate_amount
+    return unless is_for_both?
+    if mypay.nil? || partnerpay.nil? || mypay + partnerpay != amount
+      errors[:base] << "入力した金額の合計が支払い金額と一致しません"
+    end
+  end
+
+  # ユーザーと該当月からその月の支出合計額を算出
+  # @param user: Userクラス, month: Stringクラス "2019-01"
+  # @return Integer 支出合計額
+  def self.one_month_total_expenditures(user, year_month)
+    # 自分の一人の出費の支払い額(amount)の合計額 + 自分の二人の出費の自分の支払い分(mypay)の合計額 + パートナーの二人の出費のパートナーの支払い分(partner)の合計額
+    user_expenses = user.expenses.one_month(year_month)
+    user_expenses.both_f.sum(:amount) + user_expenses.both_t.sum(:mypay) + user.partner.expenses.one_month(year_month).both_t.sum(:partnerpay)
+  end
+
+  def is_own_expense?(user, category)
+    !is_for_both? && self.user == user && self.category == category
+  end
+
+  def is_both_expense_paid_by?(user, category)
+    is_for_both? && self.user == user && self.category == category
+  end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   # fixme: case文でsqlのwarningが出ているので、要修正
   # viewで出費リストを表示するために、並び替えを行うメソッド
   # @param [boolean] both_flg 二人のための出費ならtrue, 自分だけのためのフラグならfalse
@@ -116,11 +179,13 @@ class Expense < ApplicationRecord
     end
   end
 
+  # fixme: this occur n+1
   # 手渡し料金表示画面で今月の料金を計算するメソッド
   def self.both_this_month(current_user, partner)
     current_user.expenses.this_month.both_t.sum(:mypay) + partner.expenses.this_month.both_t.sum(:partnerpay) - current_user.expenses.this_month.both_t.sum(:amount)
   end
 
+  # fixme: this occur n+1
   # 手渡し料金表示画面で先月の料金を計算するメソッド
   def self.both_last_month(current_user, partner)
     current_user.expenses.last_month.both_t.sum(:mypay) + partner.expenses.last_month.both_t.sum(:partnerpay) - current_user.expenses.last_month.both_t.sum(:amount)
@@ -167,29 +232,6 @@ class Expense < ApplicationRecord
     future_expenses.destroy_all
     past_expenses = user.expenses.where('repeat_expense_id = ? AND date <= ?', repeat_expense_id, Date.today.beginning_of_month)
     past_expenses.update(repeat_expense_id: nil)
-  end
-
-  def calculate_amount
-    if mypay != nil && partnerpay != nil && mypay + partnerpay != amount
-      errors[:base] << "入力した金額の合計が支払い金額と一致しません"
-    end
-  end
-
-  # ユーザーと該当月からその月の支出合計額を算出
-  # @param user: Userクラス, month: Stringクラス "2019-01"
-  # @return Integer 支出合計額
-  def self.one_month_total_expenditures(user, month)
-    # 自分の一人の出費の支払い額(amount)の合計額 + 自分の二人の出費の自分の支払い分(mypay)の合計額 + パートナーの二人の出費のパートナーの支払い分(partner)の合計額
-    user_expenses = user.expenses.one_month(year_month)
-    user_expenses.both_f.sum(:amount) + user_expenses.both_t.sum(:mypay) + user.partner.expenses.one_month(year_month).both_t.sum(:partnerpay)
-  end
-
-  def is_own_expense?(user, category)
-    !is_for_both? && self.user == user && self.category == category
-  end
-
-  def is_both_expense_paid_by?(user, category)
-    is_for_both? && self.user == user && self.category == category
   end
 
 end

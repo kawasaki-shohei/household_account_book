@@ -20,12 +20,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :expenses do
-    collection do
-      get :both
-      post :confirm
-    end
-  end
+  resources :expenses, except: :show
 
   resources :notifications, only: [:index, :create, :destroy]
 

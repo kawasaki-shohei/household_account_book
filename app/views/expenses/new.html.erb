@@ -49,7 +49,7 @@
                   <div class="form-group">
                     <%= f.label :date, value: 'メモ' %>
                     <div>
-                      <%= f.text_field :memo, class: "form-control" %>
+                      <%= f.text_field :memo, maxlength: 100, class: "form-control" %>
                     </div>
                   </div>
                   <br>
@@ -71,6 +71,7 @@
               <div class="box-body">
                 <%= form_with(model: @expense, local: true) do |f| %>
                   <%=render 'layouts/error', object: @expense %>
+                  <%= f.hidden_field :both_flg, value: true %>
                   <div class="form-group">
                     <%= f.label :amount , value: '支払い金額' %>
                     <div class="input-group">
@@ -83,13 +84,13 @@
                     <%= f.radio_button :percent, :percent, {checked: true, id: 'percent_radio'} %>
                     <%= f.label :percent, for: :percent_radio, value: "割合で入力"%>
                     <div class="input-group">
-                      <span class="input-group-addon expense-form-addon">自分の割合</span>
-                      <%= f.select :percent, percent_selection, {}, class:'form-control', id: 'percent_input' %>
+                      <span class="input-group-addon">自分の割合</span>
+                      <%= f.select :percent, options_for_select(percent_selection, Expense.percents[:pay_half]), {}, class:'form-control', id: 'percent_input' %>
                     </div>
                   </div>
 
                   <div class="form-group">
-                    <%= f.radio_button :percent, :percent, {id: 'amount_radio'} %>
+                    <%= f.radio_button :percent, Expense.percents[:manual_amount], {id: 'amount_radio'} %>
                     <%= f.label :percent, for: :amount_radio, value: "金額で入力"%>
                     <div class="input-group space-bottom">
                       <span class="input-group-addon"><%= @current_user.name %>の金額</span>
@@ -120,7 +121,7 @@
                   <div class="form-group">
                     <%= f.label :date, value: 'メモ' %>
                     <div>
-                      <%= f.text_field :memo, class: "form-control" %>
+                      <%= f.text_field :memo,  maxlength: 100, class: "form-control" %>
                     </div>
                   </div>
                   <br>

@@ -36,7 +36,7 @@ class Category < ApplicationRecord
 
   def self.ones_categories(user)
     partner = user.partner
-    user.categories.or(partner.categories.common_t)
+    user.categories.or(partner.categories.common_t).order(:id)
   end
 
   # @note userが使っているカテゴリーを予算と一緒に取得

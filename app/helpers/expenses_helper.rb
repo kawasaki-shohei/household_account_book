@@ -38,8 +38,10 @@ module ExpensesHelper
   # todo: 改修前 たぶん全部不要
   # 出費入力のときに割合の選択肢
   def percent_selection
-    selection = { '半分' => 1, '3分の1' => 2, '3分の2' => 3, '相手100%' => 4 }
-    return selection
+    Expense.percents.map do |k, v|
+      next if k == "manual_amount"
+      [t("activerecord.enum.expense.percent.#{k}"), v]
+    end.compact
   end
 
   def which_percent(val)

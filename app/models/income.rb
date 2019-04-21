@@ -46,7 +46,7 @@ class Income < ApplicationRecord
   after_commit { go_calculate_balance(self) }
 
   # 該当付きの収入の合計値を算出
-  def self.one_month_total_income(user, month)
+  def self.one_month_total_income(user, year_month)
     user.incomes.one_month(year_month).sum(:amount)
   end
 

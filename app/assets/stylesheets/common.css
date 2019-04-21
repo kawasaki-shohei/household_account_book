@@ -22,6 +22,12 @@
 .no-margin-bottom{
   margin-bottom: 0px;
 }
+.no-margin-right{
+  margin-right: 0px;
+}
+.no-margin-left{
+  margin-left: 0px;
+}
 .no-padding-right{
   padding-right: 0px;
 }
@@ -62,6 +68,7 @@
 .text-redpepper{color: var(--redpepper);}
 .text-orange{color: var(--onion);}
 .text-brown{color: var(--driftwood);}
+.text-white{color: white;}
 
 .btn-brown {
   color: #fff;
@@ -94,5 +101,8 @@
   box-shadow: none;
 }
 .label-orange{
+  background-color: var(--onion);
+}
+.alert-orange{
   background-color: var(--onion);
 }

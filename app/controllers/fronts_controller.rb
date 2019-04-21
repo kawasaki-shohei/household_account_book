@@ -4,7 +4,8 @@ class FrontsController < ApplicationController
   end
 
   def new
-    @income = current_user.incomes.build
+    @expense = Expense.new
+    @categories = Category.ones_categories(@current_user)
   end
 
   def edit

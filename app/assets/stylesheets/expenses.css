@@ -1,0 +1,5 @@
+select#percent_input{
+  border-left: solid 1px inherit !important;
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}

@@ -12,6 +12,7 @@ ja:
     enum:
       expense:
         percent:
+          manual_amount: 手動入力
           pay_all: 全額
           pay_half: 半分
           pay_one_third: ３分の１
