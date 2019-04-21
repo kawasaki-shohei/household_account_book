@@ -37,18 +37,15 @@ Rails.application.routes.draw do
   resources :common_categories, only: [:update, :destroy]
   resources :badgets, except: [:show]
   resources :pays, except: [:show]
-  resources :wants do
-    get :change_bought_button, on: :member
-  end
-
   resources :deposits, except: [:show]
   get 'deposits/withdraw', to: 'deposits#withdraw', as: :withdraw_deposit
 
-  resources :incomes
+  resources :incomes, except: [:show]
   resources :balances, only: :index
 
-  # get 'bought_buttons/bought/:id', to: 'bought_buttons#bought', as: :bought
-  # get 'bought_buttons/want/:id', to: 'bought_buttons#want', as: :back_to_want
+  # resources :wants do
+  #   get :change_bought_button, on: :member
+  # end
 
   root to: "analyses#index"
 end
