@@ -129,7 +129,7 @@
                         <small><i class="fa fa-cny"></i><%= total_expense.to_s(:delimited) %></small>
                       </td>
                       <td class="td-middle no-top-bottom-padding">
-                        <%= show_balance(total_income - total_expense) %>
+                        <%= show_balance(@balance.try(:amount) || (total_income - total_expense)) %>
                       </td>
                     </tr>
                     <tr>
@@ -153,7 +153,7 @@
                         <small><i class="fa fa-cny"></i><%= total_expense.to_s(:delimited) %></small>
                       </td>
                       <td class="td-middle no-top-bottom-padding">
-                        <%= show_balance(@balance.amount) unless @balance.nil? %>
+                        <%= show_balance(total_badget - total_expense) %>
                       </td>
                     </tr>
                     <tr>
