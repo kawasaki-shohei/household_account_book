@@ -11,8 +11,8 @@
       <div class="col-xs-12">
         <div class="box box-brown">
           <div class="box-body">
-            <%= form_with(model: @badget, local: true) do |f| %>
-              <%=render 'layouts/error', object: @badget %>
+            <%= form_with(model: @budget, local: true) do |f| %>
+              <%=render 'layouts/error', object: @budget %>
 
 
               <div class="form-group">
@@ -31,7 +31,7 @@
                 <%= f.submit submit_btn_letters, class: "btn btn-orange btn-block" %>
               </div>
 
-              <%= link_to '削除する', badget_path(@badget), method: :delete, data:{confirm: "Are you sure?"}, class: 'btn btn-brown btn-block' %>
+              <%= link_to '削除する', budget_path(@budget), method: :delete, data:{confirm: "Are you sure?"}, class: 'btn btn-brown btn-block' %>
 
             <% end %>
 

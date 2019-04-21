@@ -3,7 +3,7 @@ class AnalysesController < ApplicationController
     unless params[:tab] == 'expenses' || params[:tab] == 'budgets'
       params[:tab] = 'expenses'
     end
-    @categories = Category.available_categories_with_badgets(@current_user)
+    @categories = Category.available_categories_with_budgets(@current_user)
     @expenses = Expense.all_for_one_month(@current_user, year_month_params)
     @incomes = @current_user.incomes.where(income_params)
     @balance = @current_user.balances.find_by(month: year_month_params)

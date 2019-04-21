@@ -26,7 +26,7 @@
 
 class Category < ApplicationRecord
   belongs_to :user
-  has_many :badgets, dependent: :destroy
+  has_many :budgets, dependent: :destroy
   has_many :expenses
 
   scope :oneself, -> {where(common: false)}
@@ -40,23 +40,23 @@ class Category < ApplicationRecord
   end
 
   # @note userが使っているカテゴリーを予算と一緒に取得
-  def self.available_categories_with_badgets(user)
+  def self.available_categories_with_budgets(user)
     partner = user.partner
-    self.includes(:user, badgets: :user).where(users: {id: [user, partner]}).order(id: :asc)
+    self.includes(:user, budgets: :user).where(users: {id: [user, partner]}).order(id: :asc)
   end
 
   # @param [User] current_user
   # @param [User] partner
   # @return [Category::ActiveRecord_AssociationRelation]
-  def self.get_user_categories_with_badgets(user)
+  def self.get_user_categories_with_budgets(user)
     partner = user.partner
-    user.categories.or(partner.categories.common_t).includes(badgets: :user).where(badgets: {user: [user, nil]}).order(:id)
+    user.categories.or(partner.categories.common_t).includes(budgets: :user).where(budgets: {user: [user, nil]}).order(:id)
   end
 
-    # @return [Badget]
-  # @note すでに取得しているactiverecord collectionsからsqlを叩かないで、そのユーザーのbadgetを取得する。
-  def user_badget(user)
-    badgets.find{ |badget| badget.try(:user_id) == user.id }
+    # @return [Budget]
+  # @note すでに取得しているactiverecord collectionsからsqlを叩かないで、そのユーザーのbudgetを取得する。
+  def user_budget(user)
+    budgets.find{ |budget| budget.try(:user_id) == user.id }
   end
 
   # @return

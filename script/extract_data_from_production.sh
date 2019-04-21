@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-tables=("categories" "badgets" "expenses" "repeat_expenses" "pays" "wants" "notification_messages" "notifications" "incomes" "deposits" "balances" "deleted_records")
+tables=("categories" "budgets" "expenses" "repeat_expenses" "pays" "wants" "notification_messages" "notifications" "incomes" "deposits" "balances" "deleted_records")
 
 i=0
 for table in ${tables[@]}; do

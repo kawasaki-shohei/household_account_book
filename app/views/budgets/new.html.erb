@@ -11,9 +11,9 @@
       <div class="col-xs-12">
         <div class="box box-brown">
           <div class="box-body">
-            <%= form_with(model: @badget, local: true) do |f| %>
-              <% if @badget.errors.any? %>
-                <%=render 'layouts/error', object: @badget %>
+            <%= form_with(model: @budget, local: true) do |f| %>
+              <% if @budget.errors.any? %>
+                <%=render 'layouts/error', object: @budget %>
               <% end %>
 
               <div class="form-group">

@@ -1,6 +1,6 @@
 # ## Schema Information
 #
-# Table name: `badgets`
+# Table name: `budgets`
 #
 # ### Columns
 #
@@ -15,9 +15,9 @@
 #
 # ### Indexes
 #
-# * `index_badgets_on_category_id`:
+# * `index_budgets_on_category_id`:
 #     * **`category_id`**
-# * `index_badgets_on_user_id`:
+# * `index_budgets_on_user_id`:
 #     * **`user_id`**
 #
 # ### Foreign Keys
@@ -28,7 +28,7 @@
 #     * **`user_id => users.id`**
 #
 
-class Badget < ApplicationRecord
+class Budget < ApplicationRecord
   belongs_to :user
   belongs_to :category
 

@@ -14,9 +14,9 @@ end
 
 # データを入れたいテーブルを選択。ほとんどのテーブルがユーザーにネスとしているため、user_idが1と2のユーザーが必要。
 # 全てのテーブル
-# tables = [Category, Badget, Balance, RepeatExpense, Expense, Pay, Income, Deposit, Want, NotificationMessage, Notification, DeletedRecord]
+# tables = [Category, Budget, Balance, RepeatExpense, Expense, Pay, Income, Deposit, Want, NotificationMessage, Notification, DeletedRecord]
 puts "starting - #{__FILE__}"
-tables = [Category, Badget, Balance, RepeatExpense, Expense, Pay, Income, Deposit, Want, NotificationMessage, Notification]
+tables = [Category, Budget, Balance, RepeatExpense, Expense, Pay, Income, Deposit, Want, NotificationMessage, Notification]
 
 # 全テーブルの全てのレコードを削除し、プライマリーキーのシーケンスをリセットする。
 ActiveRecord::Base.transaction do

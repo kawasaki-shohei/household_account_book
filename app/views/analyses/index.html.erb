@@ -153,13 +153,13 @@
                         <small><i class="fa fa-cny"></i><%= total_expense.to_s(:delimited) %></small>
                       </td>
                       <td class="td-middle no-top-bottom-padding">
-                        <%= show_balance(total_badget - total_expense) %>
+                        <%= show_balance(total_budget - total_expense) %>
                       </td>
                     </tr>
                     <tr>
                       <td colspan="2" class="progress-bar-td">
                         <div class="progress progress-xs">
-                          <div class="progress-bar progress-bar-orange progress-bar-striped" role="progressbar" style="width: <%= balance_percentage(total_expense, total_badget) %>%">
+                          <div class="progress-bar progress-bar-orange progress-bar-striped" role="progressbar" style="width: <%= balance_percentage(total_expense, total_budget) %>%">
                           </div>
                         </div>
                       </td>
@@ -179,13 +179,13 @@
                           <small><i class="fa fa-cny"></i><%= category_expense_amount = category.expenses_sum(@expenses, @current_user); category_expense_amount.to_s(:delimited) %></small>
                         </td>
                         <td class="td-middle no-top-bottom-padding">
-                          <%= show_balance(category.badget_balance(category_expense_amount, @current_user)) %>
+                          <%= show_balance(category.budget_balance(category_expense_amount, @current_user)) %>
                         </td>
                       </tr>
                       <tr>
                         <td colspan="2" class="progress-bar-td">
                           <div class="progress progress-xs">
-                            <% c = category.badget_amount(@current_user) %>
+                            <% c = category.budget_amount(@current_user) %>
                             <div class="progress-bar progress-bar-orange progress-bar-striped" role="progressbar" style="width: <%= balance_percentage(category_expense_amount, c).to_s %>%">
                             </div>
                           </div>

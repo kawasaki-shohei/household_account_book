@@ -35,7 +35,7 @@ Rails.application.routes.draw do
     get :cancel, on: :collection
   end
   resources :common_categories, only: [:update, :destroy]
-  resources :badgets, except: [:show]
+  resources :budgets, except: [:show]
   resources :pays, except: [:show]
   resources :deposits, except: [:show]
   get 'deposits/withdraw', to: 'deposits#withdraw', as: :withdraw_deposit
