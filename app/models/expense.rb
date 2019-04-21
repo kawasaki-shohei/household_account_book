@@ -42,6 +42,7 @@ class Expense < ApplicationRecord
   validates :amount, :date, presence: true
   validates_length_of :amount, :mypay, :partnerpay, maximum: 10
   validates_length_of :memo, maximum: 100
+  validates :percent, presence: true
   validate :calculate_amount
 
   # todo: これはテーブルを作ってユーザーが自由に変更できるようにする。
