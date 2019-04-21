@@ -42,7 +42,7 @@ Rails.application.routes.draw do
       get :common
     end
   end
-  resources :badgets
+  resources :budgets
   resources :pays
   resources :wants do
     get :change_bought_button, on: :member

@@ -43,7 +43,7 @@ class User < ApplicationRecord
   belongs_to :partner, class_name: 'User', optional: true
   has_many :expenses, dependent: :destroy
   has_many :repeat_expenses, dependent: :destroy
-  has_many :badgets, dependent: :destroy
+  has_many :budgets, dependent: :destroy
   has_many :categories, dependent: :destroy
   has_many :pays, dependent: :destroy
   has_many :wants, dependent: :destroy

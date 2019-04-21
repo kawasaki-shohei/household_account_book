@@ -13,7 +13,7 @@ end
 
 # tables = [Category, RepeatExpense, Expense]
 puts "starding - #{__FILE__}"
-tables = [Category, Badget, RepeatExpense, Expense, Pay, Want, NotificationMessage, Notification, DeletedRecord]
+tables = [Category, Budget, RepeatExpense, Expense, Pay, Want, NotificationMessage, Notification, DeletedRecord]
 
 tables.map(&:table_name).reverse.each do |table|
   delete_all_and_reset_pk_sequence(table)
@@ -40,9 +40,9 @@ end
 #   Category.create!(data.to_hash)
 # end
 #
-# csv_data = CSV.read('db/badgets.csv', headers: true)
+# csv_data = CSV.read('db/budgets.csv', headers: true)
 # csv_data.each do |data|
-#   Badget.create!(data.to_hash)
+#   Budget.create!(data.to_hash)
 # end
 #
 # csv_data = CSV.read('db/repeat_expenses.csv', headers: true)
