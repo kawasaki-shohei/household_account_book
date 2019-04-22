@@ -141,3 +141,11 @@ a:hover, a:active, a:focus {
 .nav-tabs-custom>.nav-tabs>li.active {
   border-top-color: var(--driftwood);
 }
+
+.login-page, .register-page {
+  background: var(--mushroom);
+}
+.login-box-body, .register-box-body{
+  color: #4d2200;
+  border: solid 1px #4d2200;
+}

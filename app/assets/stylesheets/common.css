@@ -13,6 +13,9 @@
 .space-bottom{
   margin-bottom: 5px;
 }
+.inside-space-top{
+  padding-top: 10px;
+}
 .inside-space-left{
   padding-left: 10px;
 }

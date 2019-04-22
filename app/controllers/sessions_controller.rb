@@ -1,6 +1,7 @@
 class SessionsController < ApplicationController
   skip_before_action :check_logging_in
   skip_before_action :check_partner
+
   def new
   end
 
@@ -10,15 +11,14 @@ class SessionsController < ApplicationController
       session[:user_id] = user.id
       redirect_to root_path
     else
-      flash[:danger] = 'ログインに失敗しました'
-      redirect_to new_session_path
+      redirect_to login_path, alert: 'メールアドレスまたはパスワードが違います。'
     end
   end
 
   def destroy
     session.delete(:user_id)
     flash[:notice] = 'ログアウトしました'
-    redirect_to new_session_path
+    redirect_to login_path
   end
 
 end

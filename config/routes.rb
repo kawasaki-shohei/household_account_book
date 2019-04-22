@@ -9,7 +9,9 @@ Rails.application.routes.draw do
   get 'admin/insert_categories' , to: 'admin#insert_categories', as: :insert_categories_admin
   get 'admin/delete_all_data' , to: 'admin#delete_all_data', as: :delete_all_data_admin
 
-  resources :sessions, only: [:new, :create, :destroy]
+  get 'login', to: 'sessions#new'
+  post 'login', to: 'sessions#create'
+  delete 'logout', to: 'sessions#destroy'
 
   resource :user, except: [:show, :destroy]
   # resources :users, only: [:new, :create, :show, :edit] do

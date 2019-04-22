@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   skip_before_action :check_logging_in, only: [:new, :create]
   skip_before_action :check_partner, only: [:new, :create, :register_partner]
-  include UsersHelper
+  # include UsersHelper
 
   def new
     @user = User.new

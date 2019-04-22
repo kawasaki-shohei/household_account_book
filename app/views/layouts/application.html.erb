@@ -164,23 +164,21 @@
             <%# end %>
           </li>
           <li>
-            <%= link_to session_path(@current_user), method: :delete do %>
+            <%= link_to logout_path, method: :delete do %>
               <i class="fa fa-sign-out"></i> <span>ログアウト</span>
             <% end %>
           </li>
         <% else %>
           <% if controller.controller_name != 'errors' %>
             <li class="active">
-              <a href="<%= new_session_path %>">
+              <a href="<%= login_path %>">
                 <i class="fa fa-link"></i> <span>Login</span>
               </a>
             </li>
           <% end %>
         <% end %>
-      </ul>
-      <!-- /.sidebar-menu -->
-    </section>
-    <!-- /.sidebar -->
+      </ul><!-- /.sidebar-menu -->
+    </section> <!-- /.sidebar -->
   </aside>
 
   <%= yield %>
@@ -193,8 +191,7 @@
     <!-- Default to the left -->
     <strong>Copyright &copy; 2019 <a href="#" id="company-name"><%= CONFIG[:site_name] %></a>.</strong> All rights reserved.
   </footer>
-</div>
-<!-- ./wrapper -->
+</div><!-- ./wrapper -->
 
 <%= javascript_include_tag 'application' %>
 <%= yield(:other_javascript) %>
