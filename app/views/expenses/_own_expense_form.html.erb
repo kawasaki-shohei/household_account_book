@@ -1,5 +1,5 @@
 <%= form_with(model: @expense, local: true) do |f| %>
-  <%=render 'layouts/error', object: @expense %>
+  <%=render 'shared/error', object: @expense %>
   <div class="form-group">
     <%= f.label :amount , value: '支払い金額' %>
     <div class="input-group">

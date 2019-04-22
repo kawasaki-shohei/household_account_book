@@ -6,7 +6,7 @@
         <div class="box box-brown">
           <div class="box-body">
             <%= form_with(model: pay, local: true) do |f| %>
-              <%= render 'layouts/error', object: pay %>
+              <%= render 'shared/error', object: pay %>
               <%= f.label :amount , value: '金額' %>
               <div class="input-group">
                 <%= f.number_field :amount, class:"form-control input-lg", required: true %>

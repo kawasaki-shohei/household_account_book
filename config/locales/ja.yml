@@ -9,6 +9,7 @@ ja:
           has_many: "%{record}が存在しているので削除できません"
     model:
       expense: 出費
+      user: ユーザー
     enum:
       expense:
         percent:
@@ -18,6 +19,12 @@ ja:
           pay_one_third: ３分の１
           pay_two_thirds: ３分の２
           pay_nothing: 相手100%
+    attributes:
+      user:
+        name: 名前
+        email: メールアドレス
+        password: パスワード
+        password_confirmation: パスワード確認
   date:
     abbr_day_names:
     - 日

@@ -6,7 +6,7 @@
       <div class="box box-brown">
         <div class="box-body">
           <%= form_with(model: deposit, local: true) do |f| %>
-            <%=render 'layouts/error', object: deposit %>
+            <%=render 'shared/error', object: deposit %>
 
             <%= f.label :amount , value: '金額' %>
             <div class="input-group">

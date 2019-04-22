@@ -52,7 +52,7 @@ class User < ApplicationRecord
             format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i }
   # validates :partner_id, uniqueness: { scope: [:id, :partner_id] }
   has_secure_password
-  validates :password, presence: true, length: { minimum: 6 }
+  validates :password, presence: true, length: { minimum: 8 }
 
 
   def get_applicable_balance(month)

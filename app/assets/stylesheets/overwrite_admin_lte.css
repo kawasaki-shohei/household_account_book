@@ -145,6 +145,9 @@ a:hover, a:active, a:focus {
 .login-page, .register-page {
   background: var(--mushroom);
 }
+.login-logo, .register-logo{
+  margin-bottom: 80px;
+}
 .login-box-body, .register-box-body{
   color: #4d2200;
   border: solid 1px #4d2200;

@@ -14,7 +14,7 @@
 
           <div class="box-body">
             <%= form_with(model: @current_user, local: true) do |f| %>
-              <%=render 'layouts/error', object: @current_user %>
+              <%=render 'shared/error', object: @current_user %>
 
               <div class="form-group">
                 <%= f.label :name , value: '名前' %>
@@ -63,6 +63,8 @@
                   </tbody>
                   </table>
                 </div>
+              <% else %>
+                <p><b>パートナーを登録</b></p>
               <% end %>
               <br /><br />
 

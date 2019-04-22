@@ -13,17 +13,19 @@
       <div class="form-group has-feedback">
         <%= f.email_field :email, placeholder: "メールアドレス", required: true, class: "form-control" %>
       </div>
+      <br />
 
       <div class="form-group has-feedback">
         <%= f.password_field :password, placeholder: "パスワード", required: true, class: "form-control" %>
       </div>
+      <br /><br />
 
       <div class="button-panel">
         <%= f.submit "ログイン", class:"btn btn-orange btn-block btn-flat" %>
       </div>
 
       <div class="form-footer text-center" style="margin-top: 20px">
-        <%= link_to '新規登録', new_user_path, class: "inherit-color" %>
+        <%= link_to '新規登録', signup_path, class: "inherit-color" %>
       </div>
 
     <% end %>

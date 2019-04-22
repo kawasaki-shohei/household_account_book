@@ -1,19 +1,20 @@
 class UsersController < ApplicationController
   skip_before_action :check_logging_in, only: [:new, :create]
-  skip_before_action :check_partner, only: [:new, :create, :register_partner]
+  skip_before_action :check_partner, only: [:new, :create, :register_partner, :edit]
   # include UsersHelper
 
   def new
     @user = User.new
+    render layout: 'sessions'
   end
 
   def create
     @user = User.new(user_params)
     if @user.save
       session[:user_id] = @user.id
-      redirect_to user_path(@user)
+      redirect_to edit_user_path, notice: '登録ありがとうございます。パートナーをご登録ください。'
     else
-      render 'new'
+      render 'new', layout: 'sessions'
     end
   end
 

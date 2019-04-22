@@ -13,7 +13,9 @@ Rails.application.routes.draw do
   post 'login', to: 'sessions#create'
   delete 'logout', to: 'sessions#destroy'
 
-  resource :user, except: [:show, :destroy]
+  resource :user, except: [:new, :create, :show, :destroy]
+  get 'signup', to: 'users#new'
+  post 'signup', to: 'users#create'
   # resources :users, only: [:new, :create, :show, :edit] do
   #   put :register_partner, on: :member
   #   patch :register_partner, on: :member

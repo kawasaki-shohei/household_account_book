@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
 
   def check_logging_in
     unless logged_in?
-      redirect_to new_session_path
+      redirect_to login_path
     end
   end
 
@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
 
   def check_partner
     unless have_partner?
-      redirect_to user_path(current_user)
+      redirect_to edit_user_path, notice: 'パートナーを登録してください。'
     end
   end
 

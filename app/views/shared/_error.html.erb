@@ -1,5 +1,5 @@
 <!-- 変数 object -->
-<%#=render 'layouts/error', object: @deposit %>
+<%#=render 'shared/error', object: @deposit %>
 <% if object.errors.any? %>
   <div class="form-group has-error" id="object-error">
     <% object.errors.full_messages.each do |message| %>

@@ -1,36 +1,58 @@
-<div class="whole_page container-fluid">
-  <div class="form-wrapper">
-    <h1>Sign up</h1>
+<%= render partial: 'shared/html_title', locals: {subtitle: "ログイン"} %>
+<div class="register-box">
+  <div class="register-logo">
+    <%= image_tag 'icon.png', width: 42, height: 42 %>
+    <b>PairMoney</b>
+    <%= image_tag 'icon.png', width: 42, height: 42 %>
+  </div><!--/.register-logo -->
 
-    <%= form_with(model: @user, local: true) do |f| %>
-      <% if @user.errors.any? %>
-        <%= render 'layouts/error', var: @user %>
+
+  <div class="register-box-body">
+    <% if flash[:alert] %>
+      <% flash[:alert].each do |message| %>
+        <p class="text-red"><%= message %></p>
       <% end %>
-      <div class="form-item">
-        <%= f.text_field :name, placeholder: "Name", required: true %>
+    <% end %>
+    <%= form_with(model: @user, url: signup_path, local: true) do |f| %>
+      <%=render 'shared/error', object: @user %>
+      <div class="form-group has-feedback">
+        <%= f.label :name , value: '名前（最大10文字）' %>
+        <div>
+          <%= f.text_field :name, maxlength: 10, class:"form-control", value: @user.name, required: true %>
+        </div>
       </div>
 
-      <div class="form-item">
-        <%= f.email_field :email, placeholder: "Email Address", required: true %>
+      <div class="form-group has-feedback">
+        <%= f.label :email , value: 'メールアドレス' %>
+        <div>
+          <%= f.email_field :email, class:"form-control", value: @user.email, required: true %>
+        </div>
       </div>
 
-      <div class="form-item">
-        <%= f.password_field :password, placeholder: "Password 6文字以上", required: true, autocomplete: "off" %><br />
+      <div class="form-group has-feedback">
+        <%= f.label :password , value: 'パスワード（8文字以上）' %>
+        <div>
+          <%= f.password_field :password, class:"form-control", required: true %>
+        </div>
       </div>
 
-      <div class="form-item">
-        <%= f.password_field :password_confirmation, placeholder: "Password confirmation", required: true, autocomplete: "off" %>
+      <div class="form-group has-feedback">
+        <%= f.label :password_confirmation , value: 'パスワード確認（8文字以上）' %>
+        <div>
+          <%= f.password_field :password_confirmation, class:"form-control", required: true %>
+        </div>
       </div>
+      <br />
 
       <div class="button-panel">
-        <%= f.submit "Sign up", class:"button", title: "Sign In" %>
+        <%= f.submit "新規登録", class:"btn btn-orange btn-block btn-flat" %>
       </div>
 
-      <div class="form-footer">
-        <%= link_to 'Log in', new_session_path %>
+      <div class="form-footer text-center" style="margin-top: 20px">
+        <%= link_to 'ログイン', login_path, class: "inherit-color" %>
       </div>
 
     <% end %>
+  </div><!-- /.register-box-body -->
 
-  </div>
-</div>
+</div><!-- /.register-box -->
