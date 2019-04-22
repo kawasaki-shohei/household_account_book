@@ -2,6 +2,7 @@
 <div class="content-wrapper">
 
   <section class="content-header">
+    <%= render 'shared/notice_flash_message' %>
     <h1>アカウント設定</h1>
   </section>
 
@@ -12,12 +13,13 @@
         <div class="box box-brown">
 
           <div class="box-body">
-            <%= form_with(model: @user, local: true) do |f| %>
-              <%=render 'layouts/error', object: @user %>
+            <%= form_with(model: @current_user, local: true) do |f| %>
+              <%=render 'layouts/error', object: @current_user %>
+
               <div class="form-group">
                 <%= f.label :name , value: '名前' %>
                 <div>
-                  <%= f.text_field :amount, maxlength: 10, class:"form-control", value: @user.name, required: true %>
+                  <%= f.text_field :name, maxlength: 10, class:"form-control", value: @current_user.name, required: true %>
                 </div>
               </div>
               <br />
@@ -25,12 +27,27 @@
               <div class="form-group">
                 <%= f.label :email , value: 'メールアドレス' %>
                 <div>
-                  <%= f.email_field :email, class:"form-control", value: @user.email, required: true %>
+                  <%= f.email_field :email, class:"form-control", value: @current_user.email, required: true %>
                 </div>
               </div>
               <br />
 
-              <% if @user.partner %>
+              <div class="form-group">
+                <%= f.label :password , value: 'パスワード' %>
+                <div>
+                  <%= f.password_field :password, class:"form-control", required: true %>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <%= f.label :password_confirmation , value: 'パスワード確認' %>
+                <div>
+                  <%= f.password_field :password_confirmation, class:"form-control", required: true %>
+                </div>
+              </div>
+              <br />
+
+              <% if @partner.present? %>
                 <div class="form-group">
                   <p><b>パートナー</b></p>
                   <table class="table-responsive no-border space-left">
@@ -45,7 +62,9 @@
                     </tr>
                   </tbody>
                   </table>
+                </div>
               <% end %>
+              <br /><br />
 
               <div class="form-group">
                 <%= f.submit submit_btn_letters, class: "btn btn-orange btn-block" %>
@@ -53,16 +72,9 @@
 
             <% end %>
           </div><!-- /.box-body -->
-
-          <div class="box-footer">
-
-          </div><!-- /.box-footer -->
-
         </div><!-- /.box box-brown -->
-
       </div><!-- /.col-md-12  -->
     </div><!-- /row -->
-
   </section><!-- /.content -->
 
 </div>

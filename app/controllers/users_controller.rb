@@ -22,6 +22,14 @@ class UsersController < ApplicationController
     @partner = @user.partner
   end
 
+  def update
+    if @current_user.update(user_params)
+      redirect_to edit_user_path, notice: 'アカウントを更新しました。'
+    else
+      render 'edit'
+    end
+  end
+
   def register_partner
     if @partner = User.find_by(email: params[:user][:partner_email])
       @user.assign_attributes(partner_id: @partner.id)
@@ -36,7 +44,7 @@ class UsersController < ApplicationController
   end
 
   private
-   def user_params
-     params.require(:user).permit(:name, :email, :password, :password_confirmation)
-   end
+  def user_params
+   params.require(:user).permit(:name, :email, :password, :password_confirmation)
+  end
 end
