@@ -1,7 +1,6 @@
 class UsersController < ApplicationController
   skip_before_action :check_logging_in, only: [:new, :create]
-  skip_before_action :check_partner, only: [:new, :create, :register_partner, :edit]
-  # include UsersHelper
+  skip_before_action :check_partner, only: [:new, :create, :register_partner, :edit, :update]
 
   def new
     @user = User.new
@@ -25,27 +24,21 @@ class UsersController < ApplicationController
 
   def update
     if @current_user.update(user_params)
+      if @current_user.partner_email_to_register
+        @current_user.partner.build_couple.register_partner!(@current_user.email)
+      end
       redirect_to edit_user_path, notice: 'アカウントを更新しました。'
     else
       render 'edit'
     end
   end
 
-  def register_partner
-    if @partner = User.find_by(email: params[:user][:partner_email])
-      @user.assign_attributes(partner_id: @partner.id)
-      @user.save(validate: false)
-      @partner.assign_attributes(partner_id: @user.id)
-      @partner.save(validate: false)
-      redirect_to root_path, notice: "#{@partner.name}さんをパートナーとして登録しました。"
-    else
-      @user.errors[:base] << 'パートナーが登録されていません。'
-      render 'show'
-    end
-  end
-
   private
   def user_params
-   params.require(:user).permit(:name, :email, :password, :password_confirmation)
+   parameters = params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    if params[:user][:partner_email_to_register] != ""
+      parameters[:partner_email_to_register] = params[:user][:partner_email_to_register]
+    end
+   parameters
   end
 end

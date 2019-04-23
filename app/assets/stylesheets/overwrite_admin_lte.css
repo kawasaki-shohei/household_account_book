@@ -104,6 +104,10 @@ body{
   border-color: #cc7a3f;
 }
 
+.alert-danger{
+  background-color: var(--redpepper) !important;
+}
+
 .pagination > .active > a,
 .pagination > .active > span,
 .pagination > .active > a:hover,

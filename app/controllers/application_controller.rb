@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
 
   def check_partner
     unless have_partner?
-      redirect_to edit_user_path, notice: 'パートナーを登録してください。'
+      redirect_to edit_user_path
     end
   end
 

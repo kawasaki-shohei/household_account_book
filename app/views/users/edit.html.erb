@@ -2,6 +2,12 @@
 <div class="content-wrapper">
 
   <section class="content-header">
+    <% if @partner.nil? %>
+      <div class="alert alert-danger alert-dismissible text-white">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <h5>パートナーを登録してください。</h5>
+      </div>
+    <% end %>
     <%= render 'shared/notice_flash_message' %>
     <h1>アカウント設定</h1>
   </section>
@@ -35,14 +41,14 @@
               <div class="form-group">
                 <%= f.label :password , value: 'パスワード' %>
                 <div>
-                  <%= f.password_field :password, class:"form-control", required: true %>
+                  <%= f.password_field :password, class:"form-control" %>
                 </div>
               </div>
 
               <div class="form-group">
                 <%= f.label :password_confirmation , value: 'パスワード確認' %>
                 <div>
-                  <%= f.password_field :password_confirmation, class:"form-control", required: true %>
+                  <%= f.password_field :password_confirmation, class:"form-control" %>
                 </div>
               </div>
               <br />
@@ -64,7 +70,15 @@
                   </table>
                 </div>
               <% else %>
-                <p><b>パートナーを登録</b></p>
+                <p><b>パートナーの登録</b></p>
+                <div>パートナーのメールアドレスを入力してください。</div>
+                <div>パートナーは登録されているユーザーである必要があります。</div>
+                <br />
+                <div class="form-group">
+                  <div>
+                    <%= f.email_field :partner_email_to_register, class:"form-control", placeholder: "partner@partner.com" %>
+                  </div>
+                </div>
               <% end %>
               <br /><br />
 

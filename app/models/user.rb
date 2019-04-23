@@ -30,7 +30,8 @@
 #
 
 class User < ApplicationRecord
-  include ExpensesHelper
+
+  attr_accessor :partner_email_to_register
 
   has_one :couple
   has_one :partner, through: :couple
@@ -50,9 +51,23 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true,
             length: { maximum: 255 },
             format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i }
-  # validates :partner_id, uniqueness: { scope: [:id, :partner_id] }
   has_secure_password
-  validates :password, presence: true, length: { minimum: 8 }
+  validates :password, presence: true, length: { minimum: 8 }, allow_nil: true
+  with_options if: :partner_email_to_register do
+    validate :check_valid_partner
+  end
+
+  after_update { build_couple.register_partner!(partner_email_to_register) if partner_email_to_register }
+
+  def check_valid_partner
+    unless pre_partner = User.find_by(email: partner_email_to_register)
+      errors[:base] << '入力いただいたメールアドレスのユーザーはご登録されていないため、パートナーとして登録できません。'
+      return
+    end
+    if pre_partner.partner
+      errors[:base] << '入力いただいたメールアドレスのユーザーは、すでにあなた以外のパートナーが登録されているため、パートナーとして登録できません。'
+    end
+  end
 
 
   def get_applicable_balance(month)

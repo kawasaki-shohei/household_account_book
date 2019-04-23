@@ -17,8 +17,6 @@ Rails.application.routes.draw do
   get 'signup', to: 'users#new'
   post 'signup', to: 'users#create'
   # resources :users, only: [:new, :create, :show, :edit] do
-  #   put :register_partner, on: :member
-  #   patch :register_partner, on: :member
   #   resources :settings, only: [:index] do
   #     get :change_allow_share_own, on: :collection
   #   end

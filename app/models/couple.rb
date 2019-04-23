@@ -28,6 +28,17 @@
 #
 
 class Couple < ApplicationRecord
+
+  attr_accessor :new_record
+
   belongs_to :user
   belongs_to :partner, class_name: 'User'
+  validates_uniqueness_of :user_id, :partner_id
+
+  def register_partner!(partner_email)
+    partner = User.find_by!(email: partner_email)
+    assign_attributes(partner: partner)
+    save!
+  end
+
 end
