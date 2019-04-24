@@ -34,6 +34,8 @@ class Category < ApplicationRecord
 
   validates :kind, presence: true, length: { maximum: 15 }
 
+  alias_attribute :is_common?, :common
+
   def self.ones_categories(user)
     partner = user.partner
     user.categories.or(partner.categories.common_t).order(:id)

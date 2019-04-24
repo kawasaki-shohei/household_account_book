@@ -45,6 +45,8 @@ class RepeatExpense < ApplicationRecord
   scope :both_t, -> {where(both_flg: true)}
   scope :newer, -> {order(updated_at: :desc)}
 
+  alias_attribute :is_for_both?, :both_flg
+
   def self.ones_expenses(user)
     user.repeat_expenses.both_f.newer
   end
