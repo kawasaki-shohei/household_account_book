@@ -1,5 +1,18 @@
 ---
 ja:
+  notification:
+    func:
+      expenses: 二人の出費
+      repeat_expenses: 二人の繰り返し出費
+      categories: 共通のカテゴリー
+      pays: 手渡し記録
+      deposits: 二人の貯金
+    act:
+      create: 追加
+      update: 更新
+      destroy: 削除
+      bought: 購入
+      want: 未購入に戻
   activerecord:
     errors:
       messages:
@@ -9,6 +22,10 @@ ja:
           has_many: "%{record}が存在しているので削除できません"
     model:
       expense: 出費
+      repeat_expense: 繰り返し出費
+      category: カテゴリー
+      pay: 手渡し記録
+      deposit: 二人の貯金
       user: ユーザー
     enum:
       expense:

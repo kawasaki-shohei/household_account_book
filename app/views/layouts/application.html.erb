@@ -44,42 +44,24 @@
             <li class="dropdown notifications-menu">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <i class="fa fa-bell-o"></i>
-                <span class="label label-orange"><%= 10 %></span>
+                <span class="label label-orange"><%= @notification_count %></span>
               </a>
               <ul class="dropdown-menu">
-                <li class="header">You have <%= @notification_count %> notifications</li>
+                <li class="header"><%= @notification_count %>件の通知があります。</li>
                 <li>
-                  <!-- inner menu: contains the actual data -->
                   <ul class="menu">
-                    <li>
-                      <a href="#">
-                        <i class="fa fa-users text-aqua"></i> 5 new members joined today
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <i class="fa fa-warning text-yellow"></i> Very long description here that may not fit into the
-                        page and may cause design problems
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <i class="fa fa-users text-redpepper"></i> 5 new members joined
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <i class="fa fa-shopping-cart text-green"></i> 25 sales made
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <i class="fa fa-user text-redpepper"></i> You changed your username
-                      </a>
-                    </li>
+                    <% @notifications.each_with_index do |notification, i| %>
+                      <% break if i == 5 %>
+                      <li>
+                        <%= link_to notification.link do %>
+                          <%= notification.icon %> <%= notification.heading %>
+                        <% end %>
+                      </li>
+                    <% end %>
+
                   </ul>
                 </li>
-                <li class="footer"><a href="#">View all</a></li>
+                <li class="footer"><%= link_to '通知一覧を見る', notifications_path %></li>
               </ul>
             </li><!--/.dropdown.notifications-menu -->
 

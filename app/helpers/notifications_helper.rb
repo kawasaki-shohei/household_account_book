@@ -1,4 +1,5 @@
 module NotificationsHelper
+  # fixme: decoratorへ移動
   def notifying_func(msg)
     case msg.func
     when "expenses"
@@ -19,6 +20,7 @@ module NotificationsHelper
     return func
   end
 
+  # fixme: decoratorへ移動。というか不要かも
   def notifying_act(msg)
     case msg.act
     when "create"
@@ -35,6 +37,7 @@ module NotificationsHelper
     return act
   end
 
+  # fixme: decoratorへ移動。というか不要かも
   def notification_link(msg)
     case msg.func
     when "expenses"

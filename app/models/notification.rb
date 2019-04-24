@@ -35,6 +35,8 @@ class Notification < ApplicationRecord
   belongs_to :notification_message
 
   # fixme: @note コントローラーから移動しただけで使っていない
+  # fixme: notified_by_id → object_id_created_by に変更
+  # fixme: record_meta → object_attributes_made_notification に変更
   def self.create_notification(obj)
     return if is_unnecessary?(obj)
     Notification.create(user_id: current_user.id,
@@ -44,8 +46,13 @@ class Notification < ApplicationRecord
     )
   end
 
+  # @return [Hash]
+  def record_meta
+    JSON.parse(self[:record_meta])
+  end
+
   def details
-    meta = JSON.parse(self.record_meta)
+    meta = self.record_meta
     details = Hash.new
     case self.notification_message.func
     when "expenses", "repeat_expenses"
@@ -92,7 +99,7 @@ class Notification < ApplicationRecord
   end
 
   private
-  # fixme: @note コントローラーから移動しただけで使っていない
+  # fixme: @note コントローラーから移動しただけでまだ使っていない
   # @return [Boolean]
   def is_unnecessary?(obj)
     if obj.class == Expense && !obj.is_for_both?
@@ -108,7 +115,7 @@ class Notification < ApplicationRecord
     end
   end
 
-  # fixme: @note コントローラーから移動しただけで使っていない
+  # fixme: @note コントローラーから移動しただけでまだ使っていない
   def notification_msg
     notification_msg_id = NotificationMessage.find_by(func: controller_path, act: action_name).msg_id
     return notification_msg_id
