@@ -2,11 +2,14 @@
 ja:
   notification:
     func:
+      notifications: 【お知らせ】今月の手渡し料金をお知らせします。
       expenses: 二人の出費
       repeat_expenses: 二人の繰り返し出費
       categories: 共通のカテゴリー
       pays: 手渡し記録
       deposits: 二人の貯金
+      wants: 欲しい物を
+      bought_buttons: 欲しい物を
     act:
       create: 追加
       update: 更新

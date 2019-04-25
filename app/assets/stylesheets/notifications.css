@@ -1,0 +1,9 @@
+.each-notification{
+  padding: 10px !important;
+}
+.notification-unread{
+  background-color: white;
+}
+.notification-read{
+  background-color: #f7f7f7;
+}

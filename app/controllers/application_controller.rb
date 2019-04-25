@@ -31,7 +31,7 @@ class ApplicationController < ActionController::Base
 
   # fixme: 通知カウントはテーブルで持つようにするとsql打たなくてもいい。
   def count_notifications
-    @notifications = @partner.notifications.where(read_flg: false).order(created_at: :desc)
+    @notifications = @partner.notifications.includes(:user, :notification_message).where(read_flg: false).order(created_at: :desc)
     @notification_count ||= @notifications.size
   end
 

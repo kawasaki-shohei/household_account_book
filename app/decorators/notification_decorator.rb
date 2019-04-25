@@ -1,17 +1,17 @@
 module NotificationDecorator
 
-  def object_made_notification
-    object_attributes = record_meta
-    notification_message.func.classify.constantize.new(object_attributes)
-  end
+  # def object_made_notification
+  #   object_attributes = record_meta
+  #   notification_message.func.classify.constantize.new(object_attributes)
+  # end
 
   def link
     case notification_message.func
     when "expenses"
       expenses_path(
-        category_id: object_made_notification.category_id,
-        period: object_made_notification.date.to_s_as_year_month,
-        expense: object_made_notification.id
+        category_id: record_meta["category_id"],
+        period: Date.parse(record_meta["date"]).to_s_as_year_month,
+        expense: record_meta["id"]
       )
     when "repeat_expenses"
       repeat_expenses_path
@@ -41,7 +41,11 @@ module NotificationDecorator
   end
 
   def heading
-    "#{user.name}さんが#{translate_func}を#{translate_act}しました。"
+    if notification_message.func == "notifications"
+      translate_func
+    else
+      "#{user.name}さんが#{translate_func}を#{translate_act}しました。"
+    end
   end
 
   def translate_func
@@ -50,6 +54,10 @@ module NotificationDecorator
 
   def translate_act
     t("notification.act.#{notification_message.act}")
+  end
+
+  def read_or_unread
+    read_flg ? "notification-read" : "notification-unread"
   end
 
 end

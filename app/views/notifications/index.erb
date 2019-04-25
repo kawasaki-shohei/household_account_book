@@ -1,0 +1,50 @@
+<%= render partial: 'shared/html_title', locals: {subtitle: "通知一覧"} %>
+<div class="content-wrapper">
+
+  <section class="content-header">
+    <h1>通知一覧</h1>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="box box-brown">
+
+          <div class="box-body box-comments no-padding">
+            <% @notifications.each do |notification| %>
+              <div class="box-comment each-notification <%= notification.read_or_unread %>">
+                <%= image_tag "icon.png", class: "img-circle img-sm", alt: "User Image" %>
+                <div class="comment-text">
+                  <span class="username">
+                    <%= notification.user.name %>
+                    <span class="text-muted pull-right">
+                      <%= l(notification.created_at, format: :long) %>
+                      <%= link_to notification.link, class: "space-left text-redpepper" do %>
+                        <i class="fa fa-lg fa-external-link"></i>
+                      <% end %>
+                    </span>
+                  </span><!-- /.username -->
+                  <%# msg = notification.notification_message %>
+                  <%= notification.icon %> <%= notification.heading %>
+                  <% notification.details.each do |key, value| %>
+                    <div><%= "#{key}: #{value}" %></div>
+                  <% end %>
+                </div><!-- /.comment-text -->
+              </div><!-- /.box-comment -->
+            <% end %>
+
+          </div><!-- /.box-body -->
+
+          <div class="box-footer text-center no-border no-padding">
+            <%= paginate @notifications %>
+          </div><!-- /.box-footer -->
+
+        </div><!-- /.box box-brown -->
+
+      </div><!-- /.col-md-12  -->
+    </div><!-- /row -->
+
+  </section><!-- /.content -->
+
+</div>

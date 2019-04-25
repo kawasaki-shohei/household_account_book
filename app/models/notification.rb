@@ -56,6 +56,7 @@ class Notification < ApplicationRecord
     details = Hash.new
     case self.notification_message.func
     when "expenses", "repeat_expenses"
+      # fixme: 【N+1】Category.find
       details['カテゴリ'] = Category.find(meta['category_id'].to_i).kind
       details['金額'] = "#{(meta['amount'].to_i).to_s(:delimited)}円"
     when "categories"
