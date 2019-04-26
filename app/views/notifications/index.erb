@@ -12,7 +12,7 @@
         <div class="box box-brown">
 
           <div class="box-body box-comments no-padding">
-            <%= form_with(scope: :notifications, url: notification_path(@current_user.id), method: :patch, id: "update-read-status-form") do |f| %>
+            <%= form_with(scope: :notifications, url: bulk_update_notifications_path, method: :patch, id: "update-read-status-form") do |f| %>
               <%= f.hidden_field :ids, value: unread_notifications, id: "hidden-unread-ids-field" %>
             <% end %>
             <% @notifications.each do |notification| %>

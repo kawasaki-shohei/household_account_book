@@ -7,7 +7,35 @@ class NotificationsController < ApplicationController
   end
 
   def update
+    notification = Notification.find(params[:id])
+    notification.update!(read_flg: true)
+    redirect_to redirect_path(notification)
+  end
+
+  def bulk_update
     ids = params[:notifications][:ids].split(/\s/).to_a
     @partner.notifications.where(id: ids).update_all(read_flg: true)
+  end
+
+  private
+  # todo: decoratorのlinkメソッドと同じロジック。共通化したい。
+  def redirect_path(notification)
+    record_meta = notification.record_meta
+    case notification.notification_message.func
+    when "expenses"
+      expenses_path(
+        category_id: record_meta["category_id"],
+        period: Date.parse(record_meta["date"]).to_s_as_year_month,
+        expense: record_meta["id"]
+      )
+    when "repeat_expenses"
+      repeat_expenses_path
+    when "categories"
+      categories_path
+    when "pays"
+      pays_path
+      # when "wants", "bought_buttons"
+      #   wants_path
+    end
   end
 end

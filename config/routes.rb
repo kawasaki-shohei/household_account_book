@@ -24,7 +24,9 @@ Rails.application.routes.draw do
 
   resources :expenses, except: :show
 
-  resources :notifications, only: [:index, :update]
+  resources :notifications, only: [:index, :update] do
+    patch :bulk_update, on: :collection
+  end
 
   resources :repeat_expenses do
     collection do
