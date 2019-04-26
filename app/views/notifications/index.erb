@@ -10,6 +10,10 @@
   <section class="content">
     <div class="row">
       <div class="col-md-12">
+        <div class="space-bottom text-right">
+          <%= page_entries_info(@notifications) %>
+        </div>
+
         <div class="box box-brown">
 
           <div class="box-body box-comments no-padding">
@@ -26,7 +30,7 @@
                       <%= notification.user.name %>
                       <span class="text-muted pull-right">
                         <%= l(notification.created_at, format: :long) %>
-                        <%= link_to notification.link, class: "space-left text-redpepper" do %>
+                        <%= link_to notification_path(notification.id), method: :patch, class: "space-left text-redpepper" do %>
                           <i class="fa fa-lg fa-external-link"></i>
                         <% end %>
                       </span>

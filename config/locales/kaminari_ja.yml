@@ -1,0 +1,17 @@
+ja:
+  views:
+    pagination:
+      first: "« 最初"
+      last: "最後 »"
+      previous: "‹ 前"
+      next: "次 ›"
+      truncate: "..."
+  helpers:
+    page_entries_info:
+      one_page:
+        display_entries:
+          zero: ""
+          one: "1-1/1件中"
+          other: "1-%{count}/%{count}件中"
+      more_pages:
+        display_entries: "%{first}件 〜 %{last}件 / %{total}件中"
