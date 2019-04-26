@@ -24,7 +24,7 @@ Rails.application.routes.draw do
 
   resources :expenses, except: :show
 
-  resources :notifications, only: [:index, :create, :destroy]
+  resources :notifications, only: [:index, :update]
 
   resources :repeat_expenses do
     collection do
