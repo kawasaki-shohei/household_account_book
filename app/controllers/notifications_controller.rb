@@ -14,7 +14,11 @@ class NotificationsController < ApplicationController
 
   def bulk_update
     ids = params[:notifications][:ids].split(/\s/).to_a
-    @partner.notifications.where(id: ids).update_all(read_flg: true)
+    checked_ids = ids.select do |id|
+      params[:notifications][id.to_s]
+    end
+    @partner.notifications.where(id: checked_ids).update_all(read_flg: true)
+    redirect_to notifications_path, notice: "既読にしました。"
   end
 
   private

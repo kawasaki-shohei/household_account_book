@@ -7,3 +7,11 @@
 .notification-read{
   background-color: #f7f7f7;
 }
+.notification-checkbox{
+  float: left;
+  width: 15px;
+  height: 15px;
+}
+.notification-submit-btn{
+  padding: 20px 20px;
+}
