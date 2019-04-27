@@ -47,20 +47,27 @@
                   <span class="label label-orange"><%= @notification_count %></span>
                 </a>
                 <ul class="dropdown-menu">
-                  <li class="header"><%= @notification_count %>件の通知があります。</li>
-                  <li>
-                    <ul class="menu">
-                      <% @notifications.each_with_index do |notification, i| %>
-                        <% break if i == 5 %>
-                        <li>
-                          <%= link_to notification_path(notification.id), method: :patch do %>
-                            <%= notification.icon %> <%= notification.heading %>
-                          <% end %>
-                        </li>
-                      <% end %>
+                  <% if @notifications.present? %>
+                    <li class="header">
+                      <%= @notification_count %>件の通知があります。
+                    </li>
+                    <li>
+                      <ul class="menu">
+                        <% @notifications.each_with_index do |notification, i| %>
+                          <% break if i == 5 %>
+                          <li>
+                            <%= link_to notification_path(notification.id), method: :patch do %>
+                              <%= notification.icon %> <%= notification.heading %>
+                            <% end %>
+                          </li>
+                        <% end %>
+                      </ul>
+                    </li>
+                  <% else %>
+                    <li class="header">通知はありません。</li>
+                  <% end %>
 
-                    </ul>
-                  </li>
+
                   <li class="footer"><%= link_to '通知一覧を見る', notifications_path %></li>
                 </ul>
               </li><!--/.dropdown.notifications-menu -->
