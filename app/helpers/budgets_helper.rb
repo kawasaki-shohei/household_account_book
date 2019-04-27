@@ -4,7 +4,7 @@ module BudgetsHelper
     left_categories = {}
     @categories.each do |category|
       next if category.is_set_own_budget?(user)
-      left_categories[category.kind] = category.id
+      left_categories[category.name] = category.id
     end
     left_categories
   end

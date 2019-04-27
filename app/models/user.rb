@@ -90,8 +90,8 @@ class User < ApplicationRecord
     Category.import(@import_categories) ? true : false
   end
 
-  def get_category(kind:)
-    categories.find_by(kind: kind)
+  def get_category(name:)
+    categories.find_by(name: name)
   end
 
   private
@@ -132,7 +132,7 @@ class User < ApplicationRecord
   end
 
   def get_count(category)
-    case category.kind
+    case category.name
     when "食費" then 10 when "日用品" then 5
     when "交通費", "交際費", "保険代", "医療費" then 2
     else 1
@@ -140,29 +140,29 @@ class User < ApplicationRecord
   end
 
   def get_categories(partner)
-    foods = get_category(kind: "食費")
-    foods = partner.get_category(kind: "食費") unless foods
-    goods = get_category(kind: "日用品")
-    goods = partner.get_category(kind: "日用品") unless goods
-    rent = get_category(kind: "家賃")
-    rent = partner.get_category(kind: "家賃") unless rent
-    gas = get_category(kind: "ガス代")
-    gas = partner.get_category(kind: "ガス代") unless gas
-    electricity = get_category(kind: "電気代")
-    electricity = partner.get_category(kind: "電気代") unless electricity
-    water = get_category(kind: "水道代")
-    water = partner.get_category(kind: "水道代") unless water
-    transportation = categories.find_by(kind: "交通費")
-    entertainment = categories.find_by(kind: "交際費")
-    insurance = categories.find_by(kind: "保険代")
-    medical = categories.find_by(kind: "医療費")
+    foods = get_category(name: "食費")
+    foods = partner.get_category(name: "食費") unless foods
+    goods = get_category(name: "日用品")
+    goods = partner.get_category(name: "日用品") unless goods
+    rent = get_category(name: "家賃")
+    rent = partner.get_category(name: "家賃") unless rent
+    gas = get_category(name: "ガス代")
+    gas = partner.get_category(name: "ガス代") unless gas
+    electricity = get_category(name: "電気代")
+    electricity = partner.get_category(name: "電気代") unless electricity
+    water = get_category(name: "水道代")
+    water = partner.get_category(name: "水道代") unless water
+    transportation = categories.find_by(name: "交通費")
+    entertainment = categories.find_by(name: "交際費")
+    insurance = categories.find_by(name: "保険代")
+    medical = categories.find_by(name: "医療費")
     [foods, goods, rent, gas, electricity, water, transportation, entertainment, insurance, medical].compact
   end
 
   def create_category_instance(kinds, user, common_flg)
     kinds.each do |kind|
       @import_categories << Category.new(
-        kind: kind,
+        name: kind,
         user_id: user.id,
         common: common_flg
       )

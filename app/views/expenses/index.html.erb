@@ -12,7 +12,7 @@
         <div class="box box-brown">
           <div class="box-body">
             <div>
-              <h4 class="pull-left"><%= @category.kind %>の合計</h4>
+              <h4 class="pull-left"><%= @category.name %>の合計</h4>
               <h4 class="pull-right">
                 <i class="fa fa-cny space-right"></i>
                 <%= @category.expenses_sum(@expenses, @current_user).to_s(:delimited) %>

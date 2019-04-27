@@ -17,7 +17,7 @@ class ExpensesController < ApplicationController
     if @expense.save
       category = @expense.category
       set_expenses_list_params(category)
-      redirect_to expenses_path(session[:expenses_list_params]), notice: "出費を保存しました。#{category.kind}: #{@expense.amount.to_s(:delimited)}円"
+      redirect_to expenses_path(session[:expenses_list_params]), notice: "出費を保存しました。#{category.name}: #{@expense.amount.to_s(:delimited)}円"
     else
       @categories = Category.ones_categories(@current_user)
       render :new
@@ -34,7 +34,7 @@ class ExpensesController < ApplicationController
     if @expense.update(expense_params)
       category = @expense.category
       set_expenses_list_params(category)
-      redirect_to expenses_path(session[:expenses_list_params]), notice: "出費を保存しました。#{category.kind}: #{@expense.amount.to_s(:delimited)}円"
+      redirect_to expenses_path(session[:expenses_list_params]), notice: "出費を保存しました。#{category.name}: #{@expense.amount.to_s(:delimited)}円"
     else
       @categories = Category.ones_categories(@current_user)
       render :edit

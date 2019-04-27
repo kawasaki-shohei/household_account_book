@@ -8,7 +8,7 @@
 # ----------------- | ------------------ | ---------------------------
 # **`id`**          | `bigint(8)`        | `not null, primary key`
 # **`common`**      | `boolean`          | `default(FALSE)`
-# **`kind`**        | `string`           |
+# **`name`**        | `string`           |
 # **`created_at`**  | `datetime`         | `not null`
 # **`updated_at`**  | `datetime`         | `not null`
 # **`user_id`**     | `bigint(8)`        |

@@ -57,10 +57,10 @@ class Notification < ApplicationRecord
     case self.notification_message.func
     when "expenses", "repeat_expenses"
       # fixme: 【N+1】Category.find
-      details['カテゴリ'] = Category.find(meta['category_id'].to_i).kind
+      details['カテゴリ'] = Category.find(meta['category_id'].to_i).name
       details['金額'] = "#{(meta['amount'].to_i).to_s(:delimited)}円"
     when "categories"
-      details['カテゴリ名'] = meta['kind']
+      details['カテゴリ名'] = meta['name']
     when "pays"
       details['該当月'] = Date.parse(meta['date']).strftime("%Y年%m月")
       details['金額'] = "#{(meta['amount'].to_i).to_s(:delimited)}円"

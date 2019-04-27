@@ -20,7 +20,7 @@ class BudgetsController < ApplicationController
 
     if @budget.save
       find_budget_category
-      redirect_to budgets_path, notice: "#{@category.kind}の予算を#{@budget.amount}円に設定しました"
+      redirect_to budgets_path, notice: "#{@category.name}の予算を#{@budget.amount}円に設定しました"
     else
       set_all_categories
       render 'new'
@@ -36,7 +36,7 @@ class BudgetsController < ApplicationController
     @budget = Budget.find(params[:id])
     if @budget.update(budget_params)
       find_budget_category
-      redirect_to budgets_path, notice: "#{@category.kind}の予算を#{@budget.amount}円に設定しました"
+      redirect_to budgets_path, notice: "#{@category.name}の予算を#{@budget.amount}円に設定しました"
     else
       set_all_categories
       render 'edit'
@@ -47,7 +47,7 @@ class BudgetsController < ApplicationController
     @budget = Budget.find(params[:id])
     @category = @budget.category
     @budget.destroy
-    redirect_to budgets_path, notice: "#{@category.kind}の予算を削除しました。"
+    redirect_to budgets_path, notice: "#{@category.name}の予算を削除しました。"
   end
 
   private

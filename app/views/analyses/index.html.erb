@@ -93,7 +93,7 @@
                             <span class="category-circle mushroom"><i class="fa fa-lg fa-shopping-cart"></i></span>
                           </td>
                           <td class="td-middle">
-                            <div><%= category.kind %></div>
+                            <div><%= category.name %></div>
                             <small><%= category.percentage(@expenses, @current_user, total_expense).ceil %>%</small>
                           </td>
                           <td class="td-middle">
@@ -173,7 +173,7 @@
                         <td class="text-center td-middle" rowspan="3">
                           <span class="category-circle mushroom"><i class="fa fa-lg fa-shopping-cart"></i></span>
                         </td>
-                        <td class="td-middle no-top-bottom-padding"><h4 class="no-margin-bottom"><%= category.kind %></h4></td>
+                        <td class="td-middle no-top-bottom-padding"><h4 class="no-margin-bottom"><%= category.name %></h4></td>
                         <td></td>
                       </tr>
                       <tr>

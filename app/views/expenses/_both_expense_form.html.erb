@@ -36,7 +36,7 @@
   <div class="form-group">
     <%= f.label :category_id , value: 'カテゴリー' %>
     <div>
-      <%= f.collection_select :category_id, categories_without_only_own, :id, :kind, {}, class: 'form-control', required: true %>
+      <%= f.collection_select :category_id, categories_without_only_own, :id, :name, {}, class: 'form-control', required: true %>
     </div>
   </div>
 
