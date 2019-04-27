@@ -44,7 +44,7 @@
               <li class="dropdown notifications-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   <i class="fa fa-bell-o"></i>
-                  <% if @notification_count > 0 %>
+                  <% if @notification.present? && @notification_count > 0 %>
                     <span class="label label-orange"><%= @notification_count %></span>
                   <% end %>
                 </a>
