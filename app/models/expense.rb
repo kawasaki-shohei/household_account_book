@@ -157,29 +157,6 @@ class Expense < ApplicationRecord
 
 
 
-  # fixme: case文でsqlのwarningが出ているので、要修正
-  # viewで出費リストを表示するために、並び替えを行うメソッド
-  # @param [boolean] both_flg 二人のための出費ならtrue, 自分だけのためのフラグならfalse
-  # @return 基本的には新しいものが上に表示されるようにしているが、繰り返し出費で入力されたものは、普通の出費が全て表示された後に表示されるように並び替えている
-  def self.arrange(both_flg)
-    expenses = both_flg ? self.both_t : self.both_f
-    ids = expenses.where(repeat_expense_id: nil).newer.map{|i| i.id}
-    repeat_ones = expenses.where.not(repeat_expense_id: nil).newer.map{|i| i.id}
-    unless repeat_ones[0] == nil
-      ids += repeat_ones
-    end
-    order_condition = "CASE id "
-    ids.each_with_index do |id, index|
-      order_condition << sanitize_sql_array(["WHEN ? THEN ? ", id, index])
-    end
-    order_condition << sanitize_sql_array(["ELSE ? END", ids.length])
-    if ids.empty?
-      self.where(id: ids)
-    else
-      self.where(id: ids).order(order_condition)
-    end
-  end
-
   # fixme: this occur n+1
   # 手渡し料金表示画面で今月の料金を計算するメソッド
   def self.both_this_month(current_user, partner)
