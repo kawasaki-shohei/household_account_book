@@ -82,7 +82,7 @@ module ExpensesHelper
 
   # 出費リストのリンクをコントローラによって変更するもの
   def edit_link(expense)
-    if controller.controller_name == 'expenses' || controller.controller_name == 'shift_months'
+    if controller.controller_name == 'expenses'
       edit_expense_path(expense.id)
     elsif controller.controller_name == 'repeat_expenses'
       edit_repeat_expense_path(expense.id)
