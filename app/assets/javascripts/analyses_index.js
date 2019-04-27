@@ -3,9 +3,9 @@ const getCurrentTabStr = () => {
   return `${document.querySelector('ul.nav-tabs>li.active').id.replace('-tab', '')}`
 };
 
-const yearMonthSelect = document.querySelector('#year-month-select');
+const periodSelect = document.querySelector('#period-select');
 // 月を選択するセレクトボックスを変更したときに検索ボタンのパスを変更する
-yearMonthSelect.addEventListener('change', (e) => {
+periodSelect.addEventListener('change', (e) => {
   document.querySelector('#expenses-search-btn').href = `${location.origin + location.pathname}?period=${e.target.value}&tab=${getCurrentTabStr()}`
 });
 

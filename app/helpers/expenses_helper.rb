@@ -6,7 +6,7 @@ module ExpensesHelper
   end
 
   def back_btn_to_expenses_list
-    link_to '出費一覧へ', expenses_path(period: @expense.date.to_s_as_year_month, category_id: @expense.category.id, expense: @expense.id), class: "btn btn-brown space-bottom"
+    link_to '出費一覧へ', expenses_path(period: @expense.date.to_s_as_period, category_id: @expense.category.id, expense: @expense.id), class: "btn btn-brown space-bottom"
   end
 
   def analyses_params

@@ -33,7 +33,7 @@ class Income < ApplicationRecord
   validates :amount, format: { with: /[0-9]+/ }, length: { maximum: 10 }
   validates_length_of :memo, maximum: 100
 
-  scope :one_month, -> (year_month) {where('date >= ? AND date <= ?', year_month.to_beginning_of_month, year_month.to_end_of_month)}
+  scope :one_month, -> (period) {where('date >= ? AND date <= ?', period.to_beginning_of_month, period.to_end_of_month)}
   scope :newer, -> {order(date: :desc, created_at: :desc)}
 
   attr_accessor :is_new, :is_destroyed, :differences

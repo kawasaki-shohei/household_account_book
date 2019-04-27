@@ -43,7 +43,7 @@ class LoggerUtility
     lists.each do |list|
       @logger.info "-------------------------------------"
       @logger.info "user : id: #{list[:user].id}, name: #{list[:user].name}"
-      @logger.info "month: #{list[:month]}"
+      @logger.info "period: #{list[:period]}"
       @logger.info "amount: #{list[:amount]}"
       @logger.info "-------------------------------------"
     end

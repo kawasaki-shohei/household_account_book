@@ -38,7 +38,7 @@
                 <tbody>
                 <% @balances.each do |balance| %>
                   <tr>
-                    <td><%= balance.month.to_japanese_year_month %></td>
+                    <td><%= balance.period.to_japanese_period %></td>
                     <td><%= balance.amount_with_plus_or_minus %></td>
                   </tr>
                 <% end  %>

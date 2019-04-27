@@ -34,7 +34,7 @@ module CategoryDecorator
   end
 
   def history_title(period)
-    period.to_japanese_year_month + kind + "の履歴"
+    period.to_japanese_period + kind + "の履歴"
   end
 
   # @return [Integer]

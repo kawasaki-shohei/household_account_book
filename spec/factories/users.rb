@@ -14,19 +14,11 @@
 # **`sys_admin`**        | `boolean`          | `default(FALSE)`
 # **`created_at`**       | `datetime`         | `not null`
 # **`updated_at`**       | `datetime`         | `not null`
-# **`partner_id`**       | `bigint(8)`        |
 #
 # ### Indexes
 #
 # * `index_users_on_email` (_unique_):
 #     * **`email`**
-# * `index_users_on_partner_id` (_unique_):
-#     * **`partner_id`**
-#
-# ### Foreign Keys
-#
-# * `fk_rails_...`:
-#     * **`partner_id => users.id`**
 #
 
 FactoryBot.define do

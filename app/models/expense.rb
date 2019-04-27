@@ -56,7 +56,7 @@ class Expense < ApplicationRecord
   scope :last_month, -> {where('date >= ? AND date <= ?', beginning_of_last_month, end_of_last_month)}
   scope :until_last_month, -> {where('date <= ?', end_of_last_month)}
   # 引数はString。 例: "2019-01"
-  scope :one_month, -> (year_month) {where('date >= ? AND date <= ?', year_month.to_beginning_of_month, year_month.to_end_of_month)}
+  scope :one_month, -> (period) {where('date >= ? AND date <= ?', period.to_beginning_of_month, period.to_end_of_month)}
   scope :except_repeat_ones, -> {where.not()}
   scope :category, -> (category_id){unscope(:order).where(category_id: category_id).order(date: :desc, created_at: :desc)}
   scope :both_f, -> {where(both_flg: false)}
@@ -79,21 +79,21 @@ class Expense < ApplicationRecord
   end
 
   # @param [User] user
-  # @param [String] year_month "2019-02"
+  # @param [String] period "2019-02"
   # @return [Expense]
-  def self.all_for_one_month(user, year_month)
+  def self.all_for_one_month(user, period)
     partner = user.partner
-    self.includes(:user, :category).references(:users, :categories).where(users: {id: [user, partner]}).one_month(year_month)
+    self.includes(:user, :category).references(:users, :categories).where(users: {id: [user, partner]}).one_month(period)
   end
 
   # @note 該当月と引数のカテゴリの出費でユーザーの全ての出費とパートナーの二人の出費を取得
   # @param [User] user
   # @param [Category] category
-  # @param [String] year_month "2019-02"
+  # @param [String] period "2019-02"
   # @return [Expense]
-  def self.specified_category_for_one_month(user, category, year_month)
+  def self.specified_category_for_one_month(user, category, period)
     partner = user.partner
-    self.includes(:user, :category).references(:users, :categories).where(categories: {id: category}).one_month(year_month).where("users.id = ? OR (users.id = ? AND both_flg = ?)", user.id, partner.id, true).order(date: :desc, created_at: :desc)
+    self.includes(:user, :category).references(:users, :categories).where(categories: {id: category}).one_month(period).where("users.id = ? OR (users.id = ? AND both_flg = ?)", user.id, partner.id, true).order(date: :desc, created_at: :desc)
   end
 
   def set_mypay_and_partnerpay
@@ -127,10 +127,10 @@ class Expense < ApplicationRecord
   # ユーザーと該当月からその月の支出合計額を算出
   # @param user: Userクラス, month: Stringクラス "2019-01"
   # @return Integer 支出合計額
-  def self.one_month_total_expenditures(user, year_month)
+  def self.one_month_total_expenditures(user, period)
     # 自分の一人の出費の支払い額(amount)の合計額 + 自分の二人の出費の自分の支払い分(mypay)の合計額 + パートナーの二人の出費のパートナーの支払い分(partner)の合計額
-    user_expenses = user.expenses.one_month(year_month)
-    user_expenses.both_f.sum(:amount) + user_expenses.both_t.sum(:mypay) + user.partner.expenses.one_month(year_month).both_t.sum(:partnerpay)
+    user_expenses = user.expenses.one_month(period)
+    user_expenses.both_f.sum(:amount) + user_expenses.both_t.sum(:mypay) + user.partner.expenses.one_month(period).both_t.sum(:partnerpay)
   end
 
   def is_own_expense?(user, category)

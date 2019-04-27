@@ -29,7 +29,7 @@ class NotificationsController < ApplicationController
     when "expenses"
       expenses_path(
         category_id: record_meta["category_id"],
-        period: Date.parse(record_meta["date"]).to_s_as_year_month,
+        period: Date.parse(record_meta["date"]).to_s_as_period,
         expense: record_meta["id"]
       )
     when "repeat_expenses"

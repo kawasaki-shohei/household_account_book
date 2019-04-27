@@ -68,7 +68,7 @@
                 <tbody>
                   <% @pays.each do |pay| %>
                     <tr>
-                      <td><%= pay.date_year_month %></td>
+                      <td><%= pay.date_period %></td>
                       <td><%= pay.user.name %></td>
                       <td><%= pay.delimited_amount %></td>
                       <td><%= pay.truncated_memo %></td>

@@ -3,7 +3,7 @@ class ExpensesController < ApplicationController
 
   def index
     @category = Category.find(params[:category_id])
-    @period =  params[:period] || Date.current.to_s_as_year_month
+    @period =  params[:period] || Date.current.to_s_as_period
     @expenses = Expense.specified_category_for_one_month(@current_user, @category, @period)
   end
 
@@ -56,7 +56,7 @@ class ExpensesController < ApplicationController
   end
 
   def set_expenses_list_params(category)
-    session[:expenses_list_params] = { category_id: category.id, period: @expense.date.to_s_as_year_month }
+    session[:expenses_list_params] = { category_id: category.id, period: @expense.date.to_s_as_period }
   end
 
 end

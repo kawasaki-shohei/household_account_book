@@ -7,20 +7,20 @@
         <%= render 'shared/notice_flash_message' %>
 
         <div class="row">
-          <div class="shift-month col-xs-12">
+          <div class="shift-period col-xs-12">
             <%= to_last_month_btn %>
-            <dic class="col-xs-5 text-center year-month-selection">
-              <%= select_tag :period, options_for_year_month, class: "form-control text-center", id: "year-month-select" %>
+            <dic class="col-xs-5 text-center period-selection">
+              <%= select_tag :period, options_for_year_month, class: "form-control text-center", id: "period-select" %>
             </dic>
             <%= to_next_month_btn %>
-            <%= link_to '検索', analyses_path(tab: specify_tab, period: current_year_month), class: "btn btn-brown col-xs-2 pull-right", id: "expenses-search-btn" %>
-          </div><!--/.shift-month -->
+            <%= link_to '検索', analyses_path(tab: specify_tab, period: current_period), class: "btn btn-brown col-xs-2 pull-right", id: "expenses-search-btn" %>
+          </div><!--/.shift-period -->
         </div><!-- row -->
         <br />
 
         <div class="box box-brown">
           <div class="box-header">
-            <h4><%= current_japanese_year_month %>の出費</h4>
+            <h4><%= current_japanese_period %>の出費</h4>
           </div>
           <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">

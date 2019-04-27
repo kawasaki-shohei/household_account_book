@@ -14,19 +14,11 @@
 # **`sys_admin`**        | `boolean`          | `default(FALSE)`
 # **`created_at`**       | `datetime`         | `not null`
 # **`updated_at`**       | `datetime`         | `not null`
-# **`partner_id`**       | `bigint(8)`        |
 #
 # ### Indexes
 #
 # * `index_users_on_email` (_unique_):
 #     * **`email`**
-# * `index_users_on_partner_id` (_unique_):
-#     * **`partner_id`**
-#
-# ### Foreign Keys
-#
-# * `fk_rails_...`:
-#     * **`partner_id => users.id`**
 #
 
 class User < ApplicationRecord
@@ -70,8 +62,8 @@ class User < ApplicationRecord
   end
 
 
-  def get_applicable_balance(month)
-    balances.where(month: month).first_or_initialize
+  def get_applicable_balance(period)
+    balances.where(period: period).first_or_initialize
   end
 
   def insert_expenses_for_a_month(year: Time.zone.today.year, month: Time.zone.today.month)
