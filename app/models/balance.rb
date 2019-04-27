@@ -8,7 +8,7 @@
 # ----------------- | ------------------ | ---------------------------
 # **`id`**          | `bigint(8)`        | `not null, primary key`
 # **`amount`**      | `integer`          |
-# **`month`**       | `string`           |
+# **`period`**      | `string`           |
 # **`created_at`**  | `datetime`         | `not null`
 # **`updated_at`**  | `datetime`         | `not null`
 # **`user_id`**     | `bigint(8)`        |
@@ -17,9 +17,9 @@
 #
 # * `index_balances_on_user_id`:
 #     * **`user_id`**
-# * `index_balances_on_user_id_and_month` (_unique_):
+# * `index_balances_on_user_id_and_period` (_unique_):
 #     * **`user_id`**
-#     * **`month`**
+#     * **`period`**
 #
 # ### Foreign Keys
 #
