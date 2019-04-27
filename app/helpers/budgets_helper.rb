@@ -13,7 +13,7 @@ module BudgetsHelper
   # @return [Integer]
   # @note categories collectionsからuserの全てのbudgetsを取得して、合計値を算出する
   def total_budget
-    return "0" if @categories.blank?
+    return 0 if @categories.blank?
     @categories.map do |category|
       category.user_budget(@current_user)
     end.compact.sum(&:amount)

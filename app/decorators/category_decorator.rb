@@ -67,7 +67,8 @@ module CategoryDecorator
   end
 
   def percentage(expenses, user, total)
-    (expenses_sum(expenses, user) * 100).fdiv(total)
+    ans = (expenses_sum(expenses, user) * 100).fdiv(total)
+    ans.nan? ? 0 : ans
   end
 
   def is_set_own_budget?(user)

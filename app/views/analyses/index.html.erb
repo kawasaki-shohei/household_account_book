@@ -161,7 +161,7 @@
                     <tr>
                       <td colspan="2" class="progress-bar-td">
                         <div class="progress progress-xs">
-                          <div class="progress-bar progress-bar-orange progress-bar-striped" role="progressbar" style="width: <%= balance_percentage(total_expense, total_budget) %>%">
+                          <div class="progress-bar progress-bar-orange progress-bar-striped" role="progressbar" style="width: <%= balance_percentage(total_expense, total_budget).to_s %>%">
                           </div>
                         </div>
                       </td>
