@@ -11,4 +11,8 @@ module ApplicationHelper
     end
   end
 
+  def active_side_menu(*keyword)
+    keyword.include?(controller_name) ? "active" : ""
+  end
+
 end

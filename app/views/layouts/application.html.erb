@@ -97,76 +97,77 @@
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">メニュー</li>
-        <!-- Optionally, you can add icons to the links -->
-        <% if logged_in? %>
-          <li class="treeview active">
-            <a href="#"><i class="fa fa-check space-right"></i><span>記録</span>
-              <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-            </span>
-            </a>
-            <ul class="treeview-menu">
-              <li>
-                <%= link_to analyses_path do %>
-                  <i class="fa fa-shopping-cart space-right"></i>出費
-                <% end %>
-              </li>
-              <li>
-                <%= link_to incomes_path do %>
-                  <i class="fa fa-money space-right"></i>収入
-                <% end %>
-              </li>
-              <li>
-                <%= link_to deposits_path do %>
-                  <i class="fa fa-bank space-right"></i>貯金
-                <% end %>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <%= link_to pays_path do %>
-              <i class="fa fa-yen"></i> <span>精算</span>
-            <% end %>
-          </li>
-          <li>
-            <%= link_to balances_path do %>
-              <i class="fa fa-balance-scale"></i> <span>収支バランス</span>
-            <% end %>
-          </li>
-          <li class="active">
-            <%= link_to repeat_expenses_path do %>
-              <i class="fa fa-repeat"></i> <span>繰り返し出費</span>
-            <% end %>
-          </li>
-          <li>
-            <%= link_to budgets_path do %>
-              <i class="fa fa-list-alt"></i> <span>予算</span>
-            <% end %>
-          </li>
-          <li>
-            <%= link_to categories_path do %>
-              <i class="fa fa-list-ul"></i> <span>カテゴリー</span>
-            <% end %>
-          </li>
-          <li>
-            <%#= link_to user_settings_path(@current_user) do %>
-<!--              <i class="fa fa-cog"></i> <span>アカウント設定</span>-->
-            <%# end %>
-          </li>
-          <li>
-            <%= link_to logout_path, method: :delete do %>
-              <i class="fa fa-sign-out"></i> <span>ログアウト</span>
-            <% end %>
-          </li>
-        <% else %>
-          <% if controller.controller_name != 'errors' %>
-            <li class="active">
-              <a href="<%= login_path %>">
-                <i class="fa fa-link"></i> <span>Login</span>
-              </a>
+        <li class="treeview <%= active_side_menu("expenses", "incomes", "deposits") %>">
+          <a href="#"><i class="fa fa-check space-right"></i><span>記録</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+          </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="<%= active_side_menu("expenses") %>">
+              <%= link_to new_expense_path do %>
+                <i class="fa fa-shopping-cart space-right"></i>出費
+              <% end %>
             </li>
+            <li class="<%= active_side_menu("incomes") %>">
+              <%= link_to incomes_path do %>
+                <i class="fa fa-money space-right"></i>収入
+              <% end %>
+            </li>
+            <li class="<%= active_side_menu("deposits") %>">
+              <%= link_to deposits_path do %>
+                <i class="fa fa-bank space-right"></i>貯金
+              <% end %>
+            </li>
+          </ul>
+        </li>
+
+        <li class="<%= active_side_menu("analyses") %>">
+          <%= link_to analyses_path do %>
+            <i class="fa fa-bar-chart"></i> <span>分析</span>
           <% end %>
-        <% end %>
+        </li>
+
+        <li class="<%= active_side_menu("pays") %>">
+          <%= link_to pays_path do %>
+            <i class="fa fa-yen"></i> <span>精算</span>
+          <% end %>
+        </li>
+        <li class="<%= active_side_menu("balances") %>">
+          <%= link_to balances_path do %>
+            <i class="fa fa-balance-scale"></i> <span>収支バランス</span>
+          <% end %>
+        </li>
+<!--          <li>-->
+            <%#= link_to repeat_expenses_path do %>
+<!--              <i class="fa fa-repeat"></i> <span>繰り返し出費</span>-->
+            <%# end %>
+<!--          </li>-->
+        <li class="<%= active_side_menu("budgets") %>">
+          <%= link_to budgets_path do %>
+            <i class="fa fa-list-alt"></i> <span>予算</span>
+          <% end %>
+        </li>
+        <li class="<%= active_side_menu("categories") %>">
+          <%= link_to categories_path do %>
+            <i class="fa fa-list-ul"></i> <span>カテゴリー</span>
+          <% end %>
+        </li>
+        <li>
+          <%#= link_to user_settings_path(@current_user) do %>
+<!--              <i class="fa fa-cog"></i> <span>カップル設定</span>-->
+          <%# end %>
+        </li>
+        <li class="<%= active_side_menu("users") %>">
+          <%= link_to edit_user_path do %>
+            <i class="fa fa-user"></i> <span>アカウント設定</span>
+          <% end %>
+        </li>
+        <li>
+          <%= link_to logout_path, method: :delete do %>
+            <i class="fa fa-sign-out"></i> <span>ログアウト</span>
+          <% end %>
+        </li>
       </ul><!-- /.sidebar-menu -->
     </section> <!-- /.sidebar -->
   </aside>
