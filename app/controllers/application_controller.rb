@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :check_logging_in
   before_action :check_partner
-  before_action :count_notifications, if: :logged_in?
+  before_action { count_notifications if logged_in? && @partner.present? }
   helper_method :current_user, :partner, :logged_in?
 
   def current_user
