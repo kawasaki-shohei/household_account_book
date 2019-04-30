@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :check_logging_in
   before_action :check_partner
-  before_action { count_notifications if logged_in? && @partner.present? }
+  before_action { count_header_notifications if logged_in? && @partner.present? }
   helper_method :current_user, :partner, :logged_in?
 
   def current_user
@@ -30,9 +30,9 @@ class ApplicationController < ActionController::Base
   end
 
   # fixme: 通知カウントはテーブルで持つようにするとsql打たなくてもいい。
-  def count_notifications
-    @notifications = @partner.notifications.includes(:user, :notification_message).where(read_flg: false).order(created_at: :desc)
-    @notification_count ||= @notifications.size
+  def count_header_notifications
+    @header_notifications = @partner.notifications.includes(:user, :notification_message).where(read_flg: false).order(created_at: :desc)
+    @header_notification_count ||= @header_notifications.size
   end
 
   def users_one?(object)

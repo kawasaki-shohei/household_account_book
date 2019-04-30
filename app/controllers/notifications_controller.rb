@@ -1,5 +1,5 @@
 class NotificationsController < ApplicationController
-  skip_before_action :count_notifications, raise: false
+  skip_before_action :count_header_notifications, raise: false
 
   def index
     @notifications = @partner.notifications.includes(:user, :notification_message).order(created_at: :desc).page(params[:page])
