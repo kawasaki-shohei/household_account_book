@@ -21,6 +21,7 @@ https://pairmoney.herokuapp.com/
 - 手渡し料金のCRUD処理
 - 繰り返し出費のCRUD処理
 - ほしい物リストCRUD処理
+- パートナーレコード閲覧モード
 - 設定管理機能
 - 管理画面機能
 詳しくは[こちらのWiki](https://github.com/shoooohei/household_account_book/wiki/%E3%82%A2%E3%83%97%E3%83%AA%E3%81%AE%E6%A6%82%E8%A6%81)を参照
