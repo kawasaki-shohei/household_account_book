@@ -15,4 +15,12 @@ module ApplicationHelper
     keyword.include?(controller_name) ? "active" : ""
   end
 
+  def partner_mode
+    session[:patner_mode] ? 'active' : ''
+  end
+
+  def partner_mode_http_method
+    session[:patner_mode] ? :delete : :post
+  end
+
 end

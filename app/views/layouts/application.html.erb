@@ -82,7 +82,17 @@
             </li><!-- /.dropdown.user.user-menu -->
 
             <li class="dropdown user user-menu">
-              <%= link_to @current_user.name, edit_user_path %>
+              <div id="partner-mode-switch-part">
+                <button type="button" class="btn btn-secondary btn-sm btn-toggle stretched-link <%= partner_mode %>" id="partner-mode-switch-btn" data-toggle="button" aria-pressed="false" autocomplete="off" onclick="document.querySelector('#partner-mode-hidden-btn').click();">
+                  <div class="handle partner-mode-switch-handle"></div>
+                </button>
+
+                <%= link_to 'partner_mode_hidden_btn', partner_mode_path, id: "partner-mode-hidden-btn", style:'display: none;', method: partner_mode_http_method %>
+
+                <span class="text-white" id="partner-mode-user-name">
+                  <%= @current_user.name %>
+                </span>
+              </div>
             </li><!-- /.dropdown.user.user-menu -->
           </ul><!-- /.nav.navbar-nav -->
         </div><!-- /.navbar-custom-menu -->

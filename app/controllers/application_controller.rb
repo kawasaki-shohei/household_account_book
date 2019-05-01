@@ -6,7 +6,12 @@ class ApplicationController < ActionController::Base
   helper_method :current_user, :partner, :logged_in?
 
   def current_user
-    @current_user ||= User.find_by(id: session[:user_id])
+    user = User.find_by(id: session[:user_id])
+    if @current_user.present? && session[:patner_mode]
+      @current_user = user.partner
+    else
+      @current_user = user
+    end
   end
 
   def logged_in?
