@@ -1,0 +1,1 @@
+$(function(){"use strict";$(".todo-list").sortable({placeholder:"sort-highlight",handle:".handle",forcePlaceholderSize:!0,zIndex:999999})});
