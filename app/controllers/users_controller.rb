@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   skip_before_action :check_logging_in, only: [:new, :create]
   skip_before_action :check_partner, only: [:new, :create, :register_partner, :edit, :update]
+  skip_before_action :check_access_right, only: [:new, :create], raise: false
 
   def new
     @user = User.new

@@ -1,4 +1,5 @@
 class PartnerModesController < ApplicationController
+  skip_before_action :check_access_right, raise: false
   skip_before_action :count_header_notifications, raise: false
 
   def create
