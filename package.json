@@ -1,6 +1,16 @@
 {
   "dependencies": {
+    "@babel/preset-react": "^7.0.0",
+    "@rails/webpacker": "^4.0.2",
     "admin-lte": "2.4.5",
-    "jquery-ui-touch-punch": "^0.2.3"
+    "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
+    "jquery-ui-touch-punch": "^0.2.3",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react_ujs": "^2.5.0"
+  },
+  "devDependencies": {
+    "webpack-dev-server": "^3.4.1"
   }
 }
