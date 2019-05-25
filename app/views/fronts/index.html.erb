@@ -1,17 +1,1 @@
-<%= render partial: 'shared/html_title', locals: {subtitle: "#{params[:period].to_japanese_period}の出費"} %>
-<div class="content-wrapper">
-
-  <section class="content">
-    <div class="row">
-      <div class="col-xs-12">
-        <ul class="timeline">
-          <% @expenses.each_with_index do |expense, i| %>
-            <%= expense.show_date(@expenses, @current_user, i) %>
-            <%= render 'own_expense' %>
-          <% end %>
-        </ul>
-      </div><!-- /.col-xs-12  -->
-    </div><!-- /row -->
-  </section>
-
-</div>
+<%= render_react_component('Calculator') %>
