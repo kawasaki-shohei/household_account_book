@@ -6,6 +6,7 @@
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "babel-polyfill": "^6.26.0",
     "decimal.js": "^10.2.0",
+    "jquery": "3.4.0",
     "jquery-ui-touch-punch": "^0.2.3",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
