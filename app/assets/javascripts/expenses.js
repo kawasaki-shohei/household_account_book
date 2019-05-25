@@ -58,17 +58,6 @@ $(function(){
     $('input#mypay_input').val("");
     $('input#partnerpay_input').val("");
   });
-
-  // $('form#both_form').on('submit', function(){
-  //   var chk_status = $('input#amount_checkbox').prop("checked");
-  //   var mypay = $('input#mypay_input').val();
-  //   var partnerpay = $('input#partnerpay_input').val();
-  //   var paid_amount = $('input#paid_amount').val();
-  //   var chk_amount = mypay + partnerpay
-  //   if (chk_status && chk_amount != paid_amount){
-  //     alert('支払金額と一致しません');
-  //     $('input#mypay_input').focus();
-  //     return false;
-  //   }
-  // });
 });
+
+

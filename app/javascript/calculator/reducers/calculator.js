@@ -82,7 +82,7 @@ const INITIAL_STATE = {
   currentExpression: "",
   currentNumber: 0,
   currentResult: 0,
-  displayResult: ""
+  displayResult: 0
 };
 
 export default (state = INITIAL_STATE, action) => {
