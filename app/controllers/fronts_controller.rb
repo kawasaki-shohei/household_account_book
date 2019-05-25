@@ -1,6 +1,6 @@
 class FrontsController < ApplicationController
   def index
-    @expenses = Expense.specified_category_for_one_month(@current_user, params[:category_id], params[:period])
+
   end
 
   def new

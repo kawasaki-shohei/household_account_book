@@ -12,6 +12,7 @@
   <%= favicon_link_tag('favicon.ico') %>
   <%= Gon::Base.render_data %>
   <%= stylesheet_link_tag 'application' %>
+  <%= yield :webpacker_assets %>
 
 </head>
 
