@@ -131,7 +131,7 @@ export default (state = INITIAL_STATE, action) => {
         displayResult: currentResult
       };
 
-    case actionTypes.ADD_HISTORY_ITEM:
+    case actionTypes.SHOW_SOLUTION:
       currentResult = calculateResult(state.currentExpression).toString();
       return {
         ...state,

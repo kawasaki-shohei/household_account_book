@@ -105,7 +105,7 @@ const Calculator = ({ calculator, actions }) => {
               </td>
               <td className="text-right">
                 <NeutralBtn
-                  onClick={() => actions.addHistoryItem(currentExpression)}
+                  onClick={() => actions.showSolution(currentExpression)}
                 />
               </td>
             </tr>
