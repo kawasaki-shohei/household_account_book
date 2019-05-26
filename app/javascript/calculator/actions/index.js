@@ -17,8 +17,8 @@ export const restoreExpression = payload => ({
   payload
 });
 
-export const addHistoryItem = expression => ({
-  type: actionTypes.ADD_HISTORY_ITEM,
+export const showSolution = expression => ({
+  type: actionTypes.SHOW_SOLUTION,
   payload: {
     expression,
     result: calculateResult(expression)
