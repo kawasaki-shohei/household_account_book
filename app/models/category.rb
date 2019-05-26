@@ -52,13 +52,13 @@ class Category < ApplicationRecord
   # @return [Category::ActiveRecord_AssociationRelation]
   def self.get_user_categories_with_budgets(user)
     partner = user.partner
-    user.categories.or(partner.categories.common_t).includes(budgets: :user).where(budgets: {user: [user, nil]}).order(:id)
+    user.categories.or(partner.categories.common_t).includes(budgets: :user).references(budgets: :users).order(:id)
   end
 
     # @return [Budget]
   # @note すでに取得しているactiverecord collectionsからsqlを叩かないで、そのユーザーのbudgetを取得する。
   def user_budget(user)
-    budgets.find{ |budget| budget.try(:user_id) == user.id }
+    budgets.find{ |budget| budget.try(:user) == user }
   end
 
   # @return
