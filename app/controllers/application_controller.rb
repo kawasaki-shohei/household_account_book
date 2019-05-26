@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
 
   def current_user
     user = User.find_by(id: session[:user_id])
-    if @current_user.present? && session[:patner_mode]
+    if @current_user.present? && session[:partner_mode]
       @current_user = user.partner
     else
       @current_user = user
@@ -36,7 +36,7 @@ class ApplicationController < ActionController::Base
   end
 
   def check_access_right
-    return unless session[:patner_mode]
+    return unless session[:partner_mode]
     if action_name != 'index'
       redirect_to root_path
     end

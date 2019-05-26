@@ -44,7 +44,7 @@
                   <tr>
                     <td><%= category.name %></td>
                     <% # category.budgetsはcurrent_userとpartnerが両方登録している場合があり、コントローラーでは両方取得してきている。。current_userが登録している場合は、current_userだけの分をだし、partnerの分は出さない。逆にpartnerの分しか登録されていない場合は、partnerのcategoryを表示し、新たにcategoryを登録できるようにする。 %>
-                    <% if budget = category.user_budget(current_user) %>
+                    <% if budget = category.user_budget(@current_user) %>
                       <td><%= budget.amount.to_s(:delimited) %></td>
                       <td><%= link_to '編集', edit_budget_path(budget.id), class: "btn btn-brown" %></td>
                     <% else %>
