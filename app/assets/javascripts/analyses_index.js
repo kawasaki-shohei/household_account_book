@@ -40,7 +40,7 @@ expensePanelHeading.addEventListener('click', () => {
   }
 });
 
-// ページ読み込み後にパラメーターでしてしたカテゴリーまでスクロールする。
+// ページ読み込み後にパラメーターで指定したカテゴリーまでスクロールする。
 window.onload = function(){
   if(arg.tab === 'expenses' && arg.category){
     const category_id = arg.category;

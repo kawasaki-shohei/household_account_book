@@ -101,7 +101,7 @@
                             <%= category.expenses_sum(@expenses, @current_user).to_s(:delimited) %>
                           </td>
                           <td class="text-center td-middle">
-                            <%= link_to expenses_path(period: params[:period], category_id: category.id), class: "inherit-color" do %>
+                            <%= link_to expenses_path(period: params[:period], category: category.id), class: "inherit-color" do %>
                               <i class="fa fa-lg fa-history"></i>
                             <% end %>
                           </td>

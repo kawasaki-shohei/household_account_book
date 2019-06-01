@@ -21,6 +21,7 @@
 // arg.period => "2018-08"
 // arg.tab => "expenses"
 // arg.category => "1"
+// arg.expense => "1805" (expenseのid)
 let arg = new Object;
 const pair=location.search.substring(1).split('&');
 for(var i=0;pair[i];i++) {

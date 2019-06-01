@@ -1,8 +1,8 @@
-<%= render partial: 'shared/html_title', locals: {subtitle: "#{ index_page_tile}"} %>
+<%= render partial: 'shared/html_title', locals: {subtitle: "#{ @category.history_title(@period)}"} %>
 <div class="content-wrapper">
   <section class="content-header">
     <%= render 'shared/notice_flash_message' %>
-    <h3><%= index_page_tile %></h3>
+    <h3><%= @category.history_title(@period) %></h3>
   </section>
 
   <section class="content">
@@ -12,24 +12,24 @@
         <div class="box box-brown">
           <div class="box-body">
             <div>
-              <h4 class="pull-left"><%= @period.to_japanese_period + 'の出費合計' %></h4>
+              <h4 class="pull-left"><%= @category.name %>の合計</h4>
               <h4 class="pull-right">
                 <i class="fa fa-cny space-right"></i>
-                <%= one_total_expenditures(@current_user).to_s(:delimited) %>
+                <%= @category.expenses_sum(@expenses, @current_user).to_s(:delimited) %>
               </h4>
             </div>
             <br/><br/>
             <div class="inside-space-left">
               <h5 class="pull-left">二人の出費の合計</h5>
               <h5 class="pull-right">
-                <i class="fa fa-cny space-right"></i><%= one_total_both_expenditures(@current_user).to_s(:delimited) %>
+                <i class="fa fa-cny space-right"></i><%= @category.both_expenses_sum(@expenses, @current_user).to_s(:delimited) %>
               </h5>
             </div>
             <br/><br/>
             <div class="inside-space-left">
               <h5 class="pull-left  no-margin-top">自分の出費の合計</h5>
               <h5 class="pull-right  no-margin-top">
-                <i class="fa fa-cny space-right"></i><%= one_total_own_expenditures(@current_user).to_s(:delimited) %>
+                <i class="fa fa-cny space-right"></i><%= @category.own_expenses_sum(@expenses, @current_user).to_s(:delimited) %>
               </h5>
             </div>
           </div><!-- /.box-body -->
