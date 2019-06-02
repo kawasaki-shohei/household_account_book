@@ -8,11 +8,11 @@
 
         <div class="row">
           <div class="shift-period col-xs-12">
-            <%= to_last_month_btn %>
+            <%= to_analyses_last_month_btn %>
             <dic class="col-xs-5 text-center period-selection">
               <%= select_tag :period, options_for_year_month, class: "form-control text-center", id: "period-select" %>
             </dic>
-            <%= to_next_month_btn %>
+            <%= to_analyses_next_month_btn %>
             <%= link_to '検索', analyses_path(tab: specify_tab, period: current_period), class: "btn btn-brown col-xs-2 pull-right", id: "expenses-search-btn" %>
           </div><!--/.shift-period -->
         </div><!-- row -->
@@ -101,7 +101,7 @@
                             <%= category.expenses_sum(@expenses, @current_user).to_s(:delimited) %>
                           </td>
                           <td class="text-center td-middle">
-                            <%= link_to expenses_path(period: params[:period], category_id: category.id), class: "inherit-color" do %>
+                            <%= link_to expenses_path(period: params[:period], category: category.id), class: "inherit-color" do %>
                               <i class="fa fa-lg fa-history"></i>
                             <% end %>
                           </td>

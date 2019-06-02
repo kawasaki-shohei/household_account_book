@@ -1,1 +1,0 @@
-window.onload=function(){if(arg.expense){const e=arg.expense,o=document.querySelector(`#expense-list-id-${e}`).getBoundingClientRect();window.scrollBy({top:o.top-30,behavior:"smooth"})}};

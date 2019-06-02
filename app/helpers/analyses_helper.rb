@@ -52,17 +52,19 @@ module AnalysesHelper
     @categories.map{ |c| c.own_expenses_sum(@expenses, user)}.sum
   end
 
-  def to_last_month_btn
+  # 前月の分析ページへ遷移するボタン
+  def to_analyses_last_month_btn
     icon = tag.i(class: "fa fa-lg fa-angle-double-left")
     if params[:period]
-      year_month = params[:period].to_last_period
+      period = params[:period].to_last_period
     else
-      year_month = Date.current.to_s_as_period.to_last_period
+      period = Date.current.to_s_as_period.to_last_period
     end
-    link_to icon, analyses_path(tab: specify_tab, period: year_month), class: "btn btn-orange col-xs-2 text-center", id: "last-month-btn"
+    link_to icon, analyses_path(tab: specify_tab, period: period), class: "btn btn-orange col-xs-2 text-center", id: "last-month-btn"
   end
 
-  def to_next_month_btn
+  # 来月の分析ページへ遷移するボタン
+  def to_analyses_next_month_btn
     icon = tag.i(class: "fa fa-lg fa-angle-double-right")
     if params[:period]
       period = params[:period].to_next_period

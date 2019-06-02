@@ -133,7 +133,7 @@ class Expense < ApplicationRecord
     user_expenses.both_f.sum(:amount) + user_expenses.both_t.sum(:mypay) + user.partner.expenses.one_month(period).both_t.sum(:partnerpay)
   end
 
-  def is_own_expense?(user, category)
+  def is_own_expense?(user, category=self.category)
     !is_for_both? && self.user == user && self.category == category
   end
 

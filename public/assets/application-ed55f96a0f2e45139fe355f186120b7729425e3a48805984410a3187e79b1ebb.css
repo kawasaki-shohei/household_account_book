@@ -2580,6 +2580,13 @@ button#calculator-btn {
   z-index: 1049;
 }
 
+
+.expense-category-selection-part{
+  margin-top: 5px;
+  margin-right: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
+}
 .notifications-display-entries{
  margin-bottom: 30px;
 }
