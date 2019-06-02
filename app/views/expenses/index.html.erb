@@ -36,7 +36,7 @@
         </div><!-- /.box box-brown -->
 
         <ul class="timeline">
-          <% @expenses.each_with_index do |expense, i| %>
+          <% expenses_without_only_partner_own.each_with_index do |expense, i| %>
             <%= expense.show_date(@expenses, @current_user, i) %>
             <% if expense.is_for_both? %>
               <%= render 'both_expense', expense: expense %>

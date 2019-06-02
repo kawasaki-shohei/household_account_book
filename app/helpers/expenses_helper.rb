@@ -25,6 +25,10 @@ module ExpensesHelper
     parameters
   end
 
+  def expenses_without_only_partner_own
+    @expenses.reject{ |e| e.is_own_expense?(@partner) }
+  end
+
   # 出費入力のときに割合の選択肢
   def percent_selection
     Expense.percents.map do |k, v|
