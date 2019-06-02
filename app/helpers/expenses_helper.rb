@@ -1,6 +1,28 @@
 # 出費一覧・入力画面で使うヘルパー
 module ExpensesHelper
 
+  # 前月の出費履歴ページへ遷移するボタン
+  def to_expenses_last_month_btn
+    icon = tag.i(class: "fa fa-lg fa-angle-double-left")
+    if params[:period]
+      period = params[:period].to_last_period
+    else
+      period = Date.current.to_s_as_period.to_last_period
+    end
+    link_to icon,  expenses_path(period: period), class: "btn btn-orange col-xs-2 text-center", id: "last-month-btn"
+  end
+
+  # 来月の出費履歴ページへ遷移するボタン
+  def to_expenses_next_month_btn
+    icon = tag.i(class: "fa fa-lg fa-angle-double-right")
+    if params[:period]
+      period = params[:period].to_next_period
+    else
+      period = Date.current.to_s_as_period.to_next_period
+    end
+    link_to icon, expenses_path(period: period), class: "btn btn-orange col-xs-2 text-center space-right", id: "next-month-btn"
+  end
+
   def index_page_tile
     @period.to_japanese_period + "の出費の履歴"
   end
