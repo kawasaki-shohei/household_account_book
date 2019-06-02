@@ -48,15 +48,11 @@ module ExpensesHelper
   end
 
   def analyses_params
-    parameters = {}
-    conditions = %w(period tab category)
-    analyses_params = session['analyses_params']
-    analyses_params.each do |key, value|
-      if conditions.include?(key)
-        parameters[key.to_sym] = value
-      end
-    end
-    parameters
+    {
+      tab: session[:analyses_params][:tab],
+      period: session[:analyses_params][:period],
+      category: session[:analyses_params][:category]
+    }
   end
 
   def expenses_without_only_partner_own

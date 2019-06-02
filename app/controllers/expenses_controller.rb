@@ -5,23 +5,25 @@ class ExpensesController < ApplicationController
 
   def index
     @period =  params[:period] || Date.current.to_s_as_period
-    session[:analyses_params][:period] = @period
-    session[:expenses_list_params][:period] = @period
+    analyses_params_hash = {period: @period}
+    expenses_list_params_hash = {period: @period}
     @categories = Category.available_categories_with_budgets(@current_user)
     if params[:category]
       @category = @categories.find{ |c| c.id == params[:category].to_i }
       @expenses = Expense.specified_category_for_one_month(@current_user, @category, @period)
-      session[:analyses_params][:category] = params[:category]
-      render 'index_specified_category'
+      analyses_params_hash[:category] = params[:category]
     else
       @expenses = Expense.all_for_one_month(@current_user, period_params)
-      session[:analyses_params].delete('category')
+      analyses_params_hash.delete('category')
     end
     if @category.present?
-      session[:expenses_list_params][:category] = @category.id
+      expenses_list_params_hash[:category] = @category.id
     else
-      session[:expenses_list_params].delete('category')
+      expenses_list_params_hash.delete('category')
     end
+    session[:analyses_params] = analyses_params_hash
+    session[:expenses_list_params] = expenses_list_params_hash
+    render 'index_specified_category' if params[:category]
   end
 
   def new
