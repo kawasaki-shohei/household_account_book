@@ -35,15 +35,23 @@ module ExpensesHelper
     link_to '分析へ', analyses_path(analyses_params), class: "btn btn-brown space-bottom"
   end
 
+  def expenses_list_params
+    {
+      period: session['expenses_list_params']['period'],
+      category: session['expenses_list_params']['category'],
+      expense: @expense.id
+    }
+  end
+
   def back_btn_to_expenses_list
-    link_to '出費履歴へ', expenses_path(period: @expense.date.to_s_as_period, category_id: @expense.category.id, expense: @expense.id), class: "btn btn-brown space-bottom"
+    link_to '出費履歴へ', expenses_path(expenses_list_params), class: "btn btn-brown space-bottom"
   end
 
   def analyses_params
     parameters = {}
     conditions = %w(period tab category)
-    expenses_list_params = session['analyses_params']
-    expenses_list_params.each do |key, value|
+    analyses_params = session['analyses_params']
+    analyses_params.each do |key, value|
       if conditions.include?(key)
         parameters[key.to_sym] = value
       end
