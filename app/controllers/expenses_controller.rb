@@ -6,13 +6,13 @@ class ExpensesController < ApplicationController
   def index
     @period =  params[:period] || Date.current.to_s_as_period
     session['analyses_params']['period'] = @period
+    @categories = Category.available_categories_with_budgets(@current_user)
     if params[:category]
-      @category = Category.find(params[:category])
+      @category = @categories.find(&:id)
       @expenses = Expense.specified_category_for_one_month(@current_user, @category, @period)
       session['analyses_params']['category'] = params[:category]
       render 'index_specified_category'
     else
-      @categories = Category.available_categories_with_budgets(@current_user)
       @expenses = Expense.all_for_one_month(@current_user, period_params)
       session['analyses_params'].delete('category')
     end

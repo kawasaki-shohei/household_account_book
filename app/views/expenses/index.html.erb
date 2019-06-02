@@ -2,18 +2,7 @@
 <div class="content-wrapper">
   <section class="content-header">
     <%= render 'shared/notice_flash_message' %>
-    <div class="row">
-      <div class="shift-period col-xs-12">
-        <%= to_expenses_last_month_btn %>
-        <dic class="col-xs-5 text-center period-selection">
-          <%= select_tag :period, options_for_year_month, class: "form-control text-center", id: "period-select" %>
-        </dic>
-        <%= to_expenses_next_month_btn %>
-        <%= link_to '検索', expenses_path(period: current_period), class: "btn btn-brown col-xs-2 pull-right", id: "expenses-search-btn" %>
-      </div><!--/.shift-period -->
-    </div><!-- row -->
-    <br />
-
+    <%= render 'expenses_narrow_down_area' %>
     <h3><%= index_page_tile %></h3>
   </section>
 

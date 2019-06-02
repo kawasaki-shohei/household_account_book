@@ -3,3 +3,9 @@ select#percent_input{
   border-top-left-radius: 0 !important;
   border-bottom-left-radius: 0 !important;
 }
+.expense-category-selection-part{
+  margin-top: 5px;
+  margin-right: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
+}
