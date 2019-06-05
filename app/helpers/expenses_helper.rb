@@ -13,7 +13,11 @@ module ExpensesHelper
     else
       period = Date.current.to_s_as_period.to_last_period
     end
-    link_to icon,  expenses_path(period: period), class: "btn btn-orange col-xs-2 text-center", id: "last-month-btn"
+    parameters = {period: period}
+    if @category.present?
+      parameters[:category] = @category.id
+    end
+    link_to icon,  expenses_path(parameters), class: "btn btn-orange col-xs-2 text-center", id: "last-month-btn"
   end
 
   # 来月の出費履歴ページへ遷移するボタン
@@ -24,11 +28,25 @@ module ExpensesHelper
     else
       period = Date.current.to_s_as_period.to_next_period
     end
-    link_to icon, expenses_path(period: period), class: "btn btn-orange col-xs-2 text-center space-right", id: "next-month-btn"
+    parameters = {period: period}
+    if @category.present?
+      parameters[:category] = @category.id
+    end
+    link_to icon, expenses_path(parameters), class: "btn btn-orange col-xs-2 text-center space-right", id: "next-month-btn"
   end
 
   def category_selection_without_only_partner_own
     categories_without_only_partner_own.map{ |c| [c.name, c.id] }
+  end
+
+  def analyses_params
+    # analyses#indexに行かず、expenses#indexを初めて開く場合はsession[:analyses_params]がない場合がある。
+    return if session[:analyses_params].nil?
+    parameters = session[:analyses_params]
+    if @category.present?
+      parameters[:category] = @category.id
+    end
+    parameters
   end
 
   def back_btn_to_analyses_page
@@ -36,23 +54,15 @@ module ExpensesHelper
   end
 
   def expenses_list_params
-    {
-      period: session['expenses_list_params']['period'],
-      category: session['expenses_list_params']['category'],
-      expense: @expense.id
-    }
+    parameters = {period: @expense.date.to_s_as_period, expense: @expense.id}
+    if session[:expenses_list_category].present?
+      parameters[:category] = session[:expenses_list_category]
+    end
+    parameters
   end
 
   def back_btn_to_expenses_list
     link_to '出費履歴へ', expenses_path(expenses_list_params), class: "btn btn-brown space-bottom"
-  end
-
-  def analyses_params
-    {
-      tab: session[:analyses_params][:tab],
-      period: session[:analyses_params][:period],
-      category: session[:analyses_params][:category]
-    }
   end
 
   def expenses_without_only_partner_own
