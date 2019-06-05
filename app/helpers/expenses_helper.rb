@@ -13,7 +13,11 @@ module ExpensesHelper
     else
       period = Date.current.to_s_as_period.to_last_period
     end
-    link_to icon,  expenses_path(period: period), class: "btn btn-orange col-xs-2 text-center", id: "last-month-btn"
+    parameters = {period: period}
+    if @category.present?
+      parameters[:category] = @category.id
+    end
+    link_to icon,  expenses_path(parameters), class: "btn btn-orange col-xs-2 text-center", id: "last-month-btn"
   end
 
   # 来月の出費履歴ページへ遷移するボタン
@@ -24,7 +28,11 @@ module ExpensesHelper
     else
       period = Date.current.to_s_as_period.to_next_period
     end
-    link_to icon, expenses_path(period: period), class: "btn btn-orange col-xs-2 text-center space-right", id: "next-month-btn"
+    parameters = {period: period}
+    if @category.present?
+      parameters[:category] = @category.id
+    end
+    link_to icon, expenses_path(parameters), class: "btn btn-orange col-xs-2 text-center space-right", id: "next-month-btn"
   end
 
   def category_selection_without_only_partner_own
