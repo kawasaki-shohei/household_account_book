@@ -1,28 +1,19 @@
 class ExpensesController < ApplicationController
-  include AdjustPeriod
+  include PeriodAdjuster
 
   after_action -> {create_notification(@expense)}, only: [:create, :update]
 
   def index
     @period =  params[:period] || Date.current.to_s_as_period
-    analyses_params_hash = {period: @period}
-    expenses_list_params_hash = {period: @period}
     @categories = Category.available_categories_with_budgets(@current_user)
     if params[:category]
       @category = @categories.find{ |c| c.id == params[:category].to_i }
       @expenses = Expense.specified_category_for_one_month(@current_user, @category, @period)
-      analyses_params_hash[:category] = params[:category]
+      session[:expenses_list_category] = @category.id
     else
       @expenses = Expense.all_for_one_month(@current_user, period_params)
-      analyses_params_hash.delete('category')
+      session.delete(:expenses_list_category)
     end
-    if @category.present?
-      expenses_list_params_hash[:category] = @category.id
-    else
-      expenses_list_params_hash.delete('category')
-    end
-    session[:analyses_params] = analyses_params_hash
-    session[:expenses_list_params] = expenses_list_params_hash
     render 'index_specified_category' if params[:category]
   end
 
@@ -74,7 +65,7 @@ class ExpensesController < ApplicationController
   end
 
   def set_expenses_list_params
-    session['analyses_params'] = { period: @expense.date.to_s_as_period, tab: 'expenses' }
+    session[:analyses_params] = {period: @expense.date.to_s_as_period, tab: 'expenses'}
   end
 
 end

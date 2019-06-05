@@ -1,4 +1,4 @@
-module AdjustPeriod
+module PeriodAdjuster
   private
   def period_params
     if params[:period].nil?
