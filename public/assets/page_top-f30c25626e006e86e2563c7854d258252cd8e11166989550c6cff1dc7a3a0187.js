@@ -1,0 +1,1 @@
+$(function(){$("#page-top").click(function(){$("html,body").animate({scrollTop:0},"300")}),$("#page-top").hide(),$(window).scroll(function(){$(window).scrollTop()>0?$("#page-top").slideDown(600):$("#page-top").slideUp(600)})});

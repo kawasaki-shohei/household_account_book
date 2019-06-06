@@ -53,6 +53,7 @@
         </ul>
       </div><!-- /.col-xs-12  -->
     </div><!-- /row -->
+    <%= image_tag 'page_top.png', size: '40x40', id: 'page-top' %>
   </section>
 
 </div>
@@ -60,4 +61,5 @@
 
 <%= content_for :other_javascript do %>
   <%= javascript_include_tag 'expenses_index' %>
+  <%= javascript_include_tag 'page_top' %>
 <% end %>

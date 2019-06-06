@@ -10,11 +10,11 @@ class ExpensesController < ApplicationController
       @category = @categories.find{ |c| c.id == params[:category].to_i }
       @expenses = Expense.specified_category_for_one_month(@current_user, @category, @period)
       session[:expenses_list_category] = @category.id
+      render 'index_specified_category'
     else
       @expenses = Expense.all_for_one_month(@current_user, period_params)
       session.delete(:expenses_list_category)
     end
-    render 'index_specified_category' if params[:category]
   end
 
   def new

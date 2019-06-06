@@ -2587,6 +2587,13 @@ button#calculator-btn {
   padding-left: 0px;
   padding-right: 0px;
 }
+#page-top{
+  position:fixed;
+  right: 20px;
+  bottom:60px;
+  cursor:pointer;
+  display: none;
+}
 .notifications-display-entries{
  margin-bottom: 30px;
 }

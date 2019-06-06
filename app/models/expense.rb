@@ -83,7 +83,7 @@ class Expense < ApplicationRecord
   # @return [Expense]
   def self.all_for_one_month(user, period)
     partner = user.partner
-    self.includes(:user, :category).references(:users, :categories).where(users: {id: [user, partner]}).one_month(period)
+    self.includes(:user, :category).references(:users, :categories).where(users: {id: [user, partner]}).one_month(period).order(date: :desc, created_at: :desc)
   end
 
   # @note 該当月と引数のカテゴリの出費でユーザーの全ての出費とパートナーの二人の出費を取得
