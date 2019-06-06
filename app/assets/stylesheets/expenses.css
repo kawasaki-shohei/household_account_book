@@ -9,3 +9,10 @@ select#percent_input{
   padding-left: 0px;
   padding-right: 0px;
 }
+#page-top{
+  position:fixed;
+  right: 20px;
+  bottom:60px;
+  cursor:pointer;
+  display: none;
+}
