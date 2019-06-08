@@ -5,6 +5,7 @@ import BackspaceBtn from "./BackspaceBtn";
 import AllClearBtn from "./AllClearBtn";
 import NeutralBtn from "./NeutralBtn";
 import DecimalPointBtn from "./DecimalPointBtn";
+import DisplayResultForm from "./DisplayResultForm";
 
 const Calculator = ({ calculator, actions }) => {
   const { currentExpression, displayResult } = calculator;
@@ -13,7 +14,7 @@ const Calculator = ({ calculator, actions }) => {
       <div id="calculator-content">
         <div id="display-body">
           <input disabled="disabled" id="current-expression" value={currentExpression} ></input>
-          <input disabled="disabled" id="display-result" className="text-right" value={displayResult} ></input>
+          <DisplayResultForm displayResult={displayResult} currentExpression={currentExpression}/>
         </div>
 
         <div id="calculator-btn-section">

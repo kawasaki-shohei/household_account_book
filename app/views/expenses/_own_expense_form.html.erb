@@ -3,7 +3,8 @@
   <div class="form-group">
     <%= f.label :amount , value: '支払い金額' %>
     <div class="input-group">
-      <%= f.number_field :amount, class:"form-control input-lg", min: 0, max: 9999999999, value: @expense.amount, required: true %>
+      <%= render 'calculator_input_addon', { data_calculator_for: "own-expense-paid-amount", disabled: false } %>
+      <%= f.number_field :amount, class:"form-control input-lg", id: "own-expense-paid-amount", min: 0, max: 9999999999, value: @expense.amount, required: true %>
       <span class="input-group-addon">円</span>
     </div>
   </div>
