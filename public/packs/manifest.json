@@ -1,24 +1,32 @@
 {
-  "application.js": "/packs/js/application-2271818f591213e89fea.js",
-  "application.js.map": "/packs/js/application-2271818f591213e89fea.js.map",
+  "application.css": "/packs/css/application-e5deb296.css",
+  "application.js": "/packs/js/application-0b4574bea43df806f73c.js",
+  "application.js.map": "/packs/js/application-0b4574bea43df806f73c.js.map",
   "entrypoints": {
     "application": {
+      "css": [
+        "/packs/css/application-e5deb296.css"
+      ],
       "js": [
-        "/packs/js/application-2271818f591213e89fea.js"
+        "/packs/js/application-0b4574bea43df806f73c.js"
       ],
       "js.map": [
-        "/packs/js/application-2271818f591213e89fea.js.map"
+        "/packs/js/application-0b4574bea43df806f73c.js.map"
       ]
     },
     "server_rendering": {
+      "css": [
+        "/packs/css/server_rendering-e5deb296.css"
+      ],
       "js": [
-        "/packs/js/server_rendering-6f0cabf01efea3b6ef77.js"
+        "/packs/js/server_rendering-e4ebef1b6e12d2ad4f75.js"
       ],
       "js.map": [
-        "/packs/js/server_rendering-6f0cabf01efea3b6ef77.js.map"
+        "/packs/js/server_rendering-e4ebef1b6e12d2ad4f75.js.map"
       ]
     }
   },
-  "server_rendering.js": "/packs/js/server_rendering-6f0cabf01efea3b6ef77.js",
-  "server_rendering.js.map": "/packs/js/server_rendering-6f0cabf01efea3b6ef77.js.map"
+  "server_rendering.css": "/packs/css/server_rendering-e5deb296.css",
+  "server_rendering.js": "/packs/js/server_rendering-e4ebef1b6e12d2ad4f75.js",
+  "server_rendering.js.map": "/packs/js/server_rendering-e4ebef1b6e12d2ad4f75.js.map"
 }

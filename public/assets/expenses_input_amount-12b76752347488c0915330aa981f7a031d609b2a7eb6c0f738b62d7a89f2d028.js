@@ -1,0 +1,1 @@
+window.onload=function(){document.querySelectorAll(".calculator-input-addon").forEach(t=>{t.addEventListener("click",t=>{document.querySelector("#calculator-wrapper").setAttribute("data-calculator-for",t.currentTarget.getAttribute("data-calculator-for"))})})};
