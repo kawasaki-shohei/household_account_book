@@ -4,7 +4,8 @@
   <div class="form-group">
     <%= f.label :amount , value: '支払い金額' %>
     <div class="input-group">
-      <%= f.number_field :amount, class:"form-control input-lg", id: "paid_amount", min: 0, max: 9999999999, value: @expense.amount, required: true %>
+      <%= render 'calculator_input_addon', { data_calculator_for: "both-expense-paid-amount", disabled: false } %>
+      <%= f.number_field :amount, class:"form-control input-lg", id: "both-expense-paid-amount", min: 0, max: 9999999999, value: @expense.amount, required: true %>
       <span class="input-group-addon">円</span>
     </div>
   </div>
@@ -22,13 +23,15 @@
     <%= f.radio_button :percent, Expense.percents[:manual_amount], {id: 'amount_radio'} %>
     <%= f.label :percent, for: :amount_radio, value: "金額で入力"%>
     <div class="input-group space-bottom">
-      <span class="input-group-addon"><%= @current_user.name %>の金額</span>
-      <%= f.number_field :mypay, class: "form-control input-lg", id:"mypay_input", min: 0, disabled: "disabled" %>
+      <%= render 'calculator_input_addon', { data_calculator_for: "mypay-input", disabled: true } %>
+      <span class="input-group-addon"><%= @current_user.name %></span>
+      <%= f.number_field :mypay, class: "form-control input-lg", id:"mypay-input", min: 0, disabled: "disabled" %>
       <span class="input-group-addon">円</span>
     </div>
     <div class="input-group">
-      <span class="input-group-addon"><%= @partner.name %>の金額</span>
-      <%= f.number_field :partnerpay, class: "form-control input-lg", id:"partnerpay_input", min: 0, disabled: "disabled" %>
+      <%= render 'calculator_input_addon', { data_calculator_for: "partnerpay-input", disabled: true } %>
+      <span class="input-group-addon"><%= @partner.name %></span>
+      <%= f.number_field :partnerpay, class: "form-control input-lg", id:"partnerpay-input", min: 0, disabled: "disabled" %>
       <span class="input-group-addon">円</span>
     </div>
   </div>

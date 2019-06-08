@@ -1,10 +1,6 @@
 <%= render partial: 'shared/html_title', locals: {subtitle: "出費を編集"} %>
 <div class="content-wrapper">
 
-  <button type="button" id="calculator-btn" data-toggle="modal" data-target="#modal-default">
-    <i class="fa fa-calculator"></i>
-  </button>
-
   <section class="content-header">
     <h1>出費を編集</h1>
   </section>
@@ -35,5 +31,6 @@
 </div>
 
 <%= content_for :other_javascript do %>
-  <%= javascript_include_tag 'expenses' %>
+  <%= javascript_include_tag 'both_expenses_form' %>
+  <%= javascript_include_tag 'expenses_input_amount' %>
 <% end %>
