@@ -28,6 +28,7 @@ const checkAndReplaceDecimalPoint = (expression, currentNumber) => {
   }
 };
 
+// 四則演算(÷×+-)と括弧()をcurrentExpressionに加える
 const addOperationToExpression = (expression, addtionalLetter) => {
   const lastLetter = expression.slice(-1);
   // const isLastLetterNumber = /[\d]/.test(lastLetter);
@@ -38,7 +39,14 @@ const addOperationToExpression = (expression, addtionalLetter) => {
     if (isAddtionalLetterArithmeticOperator) {
       return getCurrentNumber(expression).toString() + addtionalLetter;
     } else {
-      return getCurrentNumber(expression).toString();
+      switch (addtionalLetter) {
+        case "(":
+          return "(";
+        case ")":
+          return "";
+        default:
+          return getCurrentNumber(expression).toString();
+      }
     }
   } else if (
     isLastLetterArithmeticOperator &&
