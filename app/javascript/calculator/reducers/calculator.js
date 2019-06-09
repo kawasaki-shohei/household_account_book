@@ -5,7 +5,13 @@ const hasNeutral = expression => {
   return expression.includes("=");
 };
 
-const checkAndReplaceDicimalPoint = expression => {
+// @params [String] stringNumber
+// @return [Boolean]
+const hasDecimalPoint = stringNumber => {
+  return /[.]/.test(stringNumber);
+};
+
+const checkAndReplaceDecimalPoint = (expression, currentNumber) => {
   if (hasNeutral(expression)) {
     return "0.";
   } else {
@@ -14,12 +20,15 @@ const checkAndReplaceDicimalPoint = expression => {
       return expression;
     } else if (!/[\d]/.test(lastLetter)) {
       return expression + "0.";
+    } else if (hasDecimalPoint(String(currentNumber))) {
+      return expression;
     } else {
       return expression + ".";
     }
   }
 };
 
+// 四則演算(÷×+-)と括弧()をcurrentExpressionに加える
 const addOperationToExpression = (expression, addtionalLetter) => {
   const lastLetter = expression.slice(-1);
   // const isLastLetterNumber = /[\d]/.test(lastLetter);
@@ -30,7 +39,14 @@ const addOperationToExpression = (expression, addtionalLetter) => {
     if (isAddtionalLetterArithmeticOperator) {
       return getCurrentNumber(expression).toString() + addtionalLetter;
     } else {
-      return getCurrentNumber(expression).toString();
+      switch (addtionalLetter) {
+        case "(":
+          return "(";
+        case ")":
+          return "";
+        default:
+          return getCurrentNumber(expression).toString();
+      }
     }
   } else if (
     isLastLetterArithmeticOperator &&
@@ -47,8 +63,10 @@ const getDecimalDisplay = (expression, currentNumber) => {
   const lastLetter = expression.slice(-1);
   if (/[.]/.test(lastLetter)) {
     return currentNumber + ".";
-  } else if (!/[\d]/.test(lastLetter)) {
+  } else if (hasNeutral(expression) || !/[\d]/.test(Number(lastLetter))) {
     return "0.";
+  } else if (hasDecimalPoint(String(currentNumber))) {
+    return currentNumber;
   } else {
     return currentNumber + ".";
   }
@@ -106,7 +124,8 @@ export default (state = INITIAL_STATE, action) => {
       };
 
     case actionTypes.ADD_DECIMAL_POINT:
-      expression = checkAndReplaceDicimalPoint(state.currentExpression);
+      expression = checkAndReplaceDecimalPoint(state.currentExpression,
+        state.currentNumber);
       return {
         ...state,
         currentExpression: expression,
@@ -117,7 +136,6 @@ export default (state = INITIAL_STATE, action) => {
       };
 
     case actionTypes.ADD_OPERATION:
-      console.log(state.currentNumber);
       expression = addOperationToExpression(
         state.currentExpression,
         action.payload
