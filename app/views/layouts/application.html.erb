@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <title><%= content_for?(:html_title) ? yield(:html_title) : CONFIG[:site_name] %></title>
+  <%= favicon_link_tag('favicon.ico') %>
+  <%= Gon::Base.render_data %>
+  <%= stylesheet_link_tag 'application' %>
+  <%= yield :webpacker_assets %>
+
+</head>
+
+<body class="hold-transition skin-red sidebar-mini">
+<div class="wrapper">
+
+  <!-- Main Header -->
+  <header class="main-header">
+
+    <!-- Logo -->
+    <a href="/" class="logo">
+      <!-- mini logo for sidebar mini 50x50 pixels -->
+      <span class="logo-mini"><b>P</b></span>
+      <!-- logo for regular state and mobile devices -->
+      <span class="logo-lg"><b><%= CONFIG[:site_name] %></b></span>
+    </a>
+
+    <!-- Header Navbar -->
+    <nav class="navbar navbar-static-top" role="navigation">
+      <!-- Sidebar toggle button-->
+      <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+        <span class="sr-only">Toggle navigation</span>
+      </a>
+
+      <% if logged_in? %>
+        <!-- Navbar Right Menu -->
+        <div class="navbar-custom-menu">
+          <ul class="nav navbar-nav">
+            <% if @partner.present? %>
+              <li class="dropdown notifications-menu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <i class="fa fa-bell-o"></i>
+                  <% if @header_notifications.present? && @header_notification_count > 0 %>
+                    <span class="label label-orange"><%= @header_notification_count %></span>
+                  <% end %>
+                </a>
+                <ul class="dropdown-menu">
+                  <% if @header_notifications.present? %>
+                    <li class="header">
+                      <%= @header_notification_count %>件の通知があります。
+                    </li>
+                    <li>
+                      <ul class="menu">
+                        <% @header_notifications.each_with_index do |notification, i| %>
+                          <% break if i == 5 %>
+                          <li>
+                            <%= link_to notification_path(notification.id), method: :patch do %>
+                              <%= notification.icon %> <%= notification.heading %>
+                            <% end %>
+                          </li>
+                        <% end %>
+                      </ul>
+                    </li>
+                  <% else %>
+                    <li class="header">通知はありません。</li>
+                  <% end %>
+
+
+                  <li class="footer"><%= link_to '通知一覧を見る', notifications_path %></li>
+                </ul>
+              </li><!--/.dropdown.notifications-menu -->
+            <% end %>
+
+            <li class="">
+              <%= link_to new_expense_path do %>
+                <i class="fa fa-lg fa-pencil"></i>
+              <% end  %>
+            </li><!-- /.dropdown.user.user-menu -->
+
+            <li class="dropdown user user-menu">
+              <div id="partner-mode-switch-part">
+                <button type="button" class="btn btn-secondary btn-sm btn-toggle stretched-link <%= partner_mode %>" id="partner-mode-switch-btn" data-toggle="button" aria-pressed="false" autocomplete="off" onclick="document.querySelector('#partner-mode-hidden-btn').click();">
+                  <div class="handle partner-mode-switch-handle"></div>
+                </button>
+
+                <%= link_to 'partner_mode_hidden_btn', partner_mode_path, id: "partner-mode-hidden-btn", style:'display: none;', method: partner_mode_http_method %>
+
+                <span class="text-white" id="partner-mode-user-name">
+                  <%= @current_user.name %>
+                </span>
+              </div>
+            </li><!-- /.dropdown.user.user-menu -->
+          </ul><!-- /.nav.navbar-nav -->
+        </div><!-- /.navbar-custom-menu -->
+      <% end %>
+    </nav>
+  </header>
+
+  <!-- Left side column. contains the logo and sidebar -->
+  <aside class="main-sidebar">
+
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+
+      <!-- Sidebar Menu -->
+      <ul class="sidebar-menu" data-widget="tree">
+        <li class="header">メニュー</li>
+        <li class="treeview <%= active_side_menu("expenses", "incomes", "deposits") %>">
+          <a href="#"><i class="fa fa-check space-right"></i><span>記録</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+          </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="<%= active_side_menu("expenses") %>">
+              <%= link_to expenses_path do %>
+                <i class="fa fa-shopping-cart space-right"></i>出費
+              <% end %>
+            </li>
+            <li class="<%= active_side_menu("incomes") %>">
+              <%= link_to incomes_path do %>
+                <i class="fa fa-money space-right"></i>収入
+              <% end %>
+            </li>
+            <li class="<%= active_side_menu("deposits") %>">
+              <%= link_to deposits_path do %>
+                <i class="fa fa-bank space-right"></i>貯金
+              <% end %>
+            </li>
+          </ul>
+        </li>
+
+        <li class="<%= active_side_menu("analyses") %>">
+          <%= link_to analyses_path do %>
+            <i class="fa fa-bar-chart"></i> <span>分析</span>
+          <% end %>
+        </li>
+
+        <li class="<%= active_side_menu("pays") %>">
+          <%= link_to pays_path do %>
+            <i class="fa fa-yen"></i> <span>精算</span>
+          <% end %>
+        </li>
+        <li class="<%= active_side_menu("balances") %>">
+          <%= link_to balances_path do %>
+            <i class="fa fa-balance-scale"></i> <span>収支バランス</span>
+          <% end %>
+        </li>
+<!--          <li>-->
+            <%#= link_to repeat_expenses_path do %>
+<!--              <i class="fa fa-repeat"></i> <span>繰り返し出費</span>-->
+            <%# end %>
+<!--          </li>-->
+        <li class="<%= active_side_menu("budgets") %>">
+          <%= link_to budgets_path do %>
+            <i class="fa fa-list-alt"></i> <span>予算</span>
+          <% end %>
+        </li>
+        <li class="<%= active_side_menu("categories") %>">
+          <%= link_to categories_path do %>
+            <i class="fa fa-list-ul"></i> <span>カテゴリー</span>
+          <% end %>
+        </li>
+        <li>
+          <%#= link_to user_settings_path(@current_user) do %>
+<!--              <i class="fa fa-cog"></i> <span>カップル設定</span>-->
+          <%# end %>
+        </li>
+        <li class="<%= active_side_menu("users") %>">
+          <%= link_to edit_user_path do %>
+            <i class="fa fa-user"></i> <span>アカウント設定</span>
+          <% end %>
+        </li>
+        <li>
+          <%= link_to logout_path, method: :delete do %>
+            <i class="fa fa-sign-out"></i> <span>ログアウト</span>
+          <% end %>
+        </li>
+      </ul><!-- /.sidebar-menu -->
+    </section> <!-- /.sidebar -->
+  </aside>
+
+  <%= yield %>
+
+  <!-- Main Footer -->
+  <footer class="main-footer">
+    <!-- To the right -->
+    <div class="pull-right hidden-xs">
+    </div>
+    <!-- Default to the left -->
+    <strong>Copyright &copy; 2019 <a href="#" id="company-name"><%= CONFIG[:site_name] %></a>.</strong> All rights reserved.
+  </footer>
+</div><!-- ./wrapper -->
+
+<%= javascript_include_tag 'application' %>
+<%= yield(:other_javascript) %>
+</body>
+</html>

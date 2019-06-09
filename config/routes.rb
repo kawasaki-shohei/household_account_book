@@ -1,35 +1,37 @@
 Rails.application.routes.draw do
 
-  get 'admin/' , to: 'admin#index', as: :admin
-  get 'admin/insert_6_months_expenses' , to: 'admin#insert_6_months_expenses', as: :insert_6_months_expenses_admin
-  get 'admin/insert_this_month_expenses' , to: 'admin#insert_this_month_expenses', as: :insert_this_month_expenses_admin
-  get 'admin/insert_categories' , to: 'admin#insert_categories', as: :insert_categories_admin
-  get 'admin/delete_all_data' , to: 'admin#delete_all_data', as: :delete_all_data_admin
+  resources :fronts #fixme: 削除する
 
-  resources :sessions, only: [:new, :create, :destroy]
+  resource :user, except: [:new, :create, :show, :destroy]
+  get 'signup', to: 'users#new'
+  post 'signup', to: 'users#create'
+  # resources :users, only: [:new, :create, :show, :edit] do
+  #   resources :settings, only: [:index] do
+  #     get :change_allow_share_own, on: :collection
+  #   end
+  # end
+  get 'login', to: 'sessions#new'
+  post 'login', to: 'sessions#create'
+  delete 'logout', to: 'sessions#destroy'
 
-  resources :users do
-    put :register_partner, on: :member
-    patch :register_partner, on: :member
-    resources :settings, only: [:index] do
-      get :change_allow_share_own, on: :collection
-    end
+  resources :notifications, only: [:index, :update] do
+    patch :bulk_update, on: :collection
   end
 
-  resources :expenses do
-    collection do
-      get :both
-      post :confirm
-    end
+  resource :partner_mode, only: [:create, :destroy]
+
+  resources :categories do
+    get :cancel, on: :collection
   end
+  resources :common_categories, only: [:update, :destroy]
+  resources :budgets, except: [:show]
+  resources :pays, except: [:show]
+  resources :deposits, except: [:show]
+  get 'deposits/withdraw', to: 'deposits#withdraw', as: :withdraw_deposit
 
-  resources :notifications, only: [:index, :create, :destroy]
-
-  get 'category_expenses/:category_id/:cnum', to: 'expenses#each_category', as: :each_category_expense
-
-  get 'shift_months/past/:id', to: 'shift_months#past', as: :past_expense
-  get 'shift_months/future/:id', to: 'shift_months#future', as: :future_expense
-
+  resources :incomes, except: [:show]
+  resources :balances, only: :index
+  resources :expenses, except: :show
   resources :repeat_expenses do
     collection do
       get :both
@@ -37,25 +39,17 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :categories do
-    collection do
-      get :common
-    end
-  end
-  resources :badgets
-  resources :pays
-  resources :wants do
-    get :change_bought_button, on: :member
-  end
+  get 'analyses', to: 'analyses#index'
 
-  resources :deposits, except: [:show]
-  get 'deposits/withdraw', to: 'deposits#withdraw', as: :withdraw_deposit
+  # resources :wants do
+  #   get :change_bought_button, on: :member
+  # end
 
-  resources :incomes
-  resources :balances, only: :index
+  get 'admin/' , to: 'admin#index', as: :admin
+  get 'admin/insert_6_months_expenses' , to: 'admin#insert_6_months_expenses', as: :insert_6_months_expenses_admin
+  get 'admin/insert_this_month_expenses' , to: 'admin#insert_this_month_expenses', as: :insert_this_month_expenses_admin
+  get 'admin/insert_categories' , to: 'admin#insert_categories', as: :insert_categories_admin
+  get 'admin/delete_all_data' , to: 'admin#delete_all_data', as: :delete_all_data_admin
 
-  # get 'bought_buttons/bought/:id', to: 'bought_buttons#bought', as: :bought
-  # get 'bought_buttons/want/:id', to: 'bought_buttons#want', as: :back_to_want
-
-  root to: "expenses#index"
+  root to: "analyses#index"
 end

@@ -1,0 +1,220 @@
+<%= render partial: 'shared/html_title', locals: {subtitle: "分析"} %>
+<div class="content-wrapper">
+
+  <section class="content">
+    <div class="row">
+      <div class="col-xs-12">
+        <%= render 'shared/notice_flash_message' %>
+
+        <div class="row">
+          <div class="shift-period col-xs-12">
+            <%= to_analyses_last_month_btn %>
+            <dic class="col-xs-5 text-center period-selection">
+              <%= select_tag :period, options_for_year_month, class: "form-control text-center", id: "period-select" %>
+            </dic>
+            <%= to_analyses_next_month_btn %>
+            <%= link_to '検索', analyses_path(tab: specify_tab, period: current_period), class: "btn btn-brown col-xs-2 pull-right", id: "expenses-search-btn" %>
+          </div><!--/.shift-period -->
+        </div><!-- row -->
+        <br />
+
+        <div class="box box-brown">
+          <div class="box-header">
+            <h4><%= current_japanese_period %>の出費</h4>
+          </div>
+          <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+              <li class="analyses-tab <%= active_analyses_tab('expenses') %>" id="expenses-tab">
+                <a href="#expenses_comparison" data-toggle="tab"  id="expenses-tab-link">支出</a>
+              </li>
+              <li class="analyses-tab <%= active_analyses_tab('budgets') %>" id="budgets-tab">
+                <a href="#budgets_comparison" data-toggle="tab"  id="budgets-tab-link">予算比</a>
+              </li>
+            </ul>
+            <div class="tab-content no-padding">
+              <div class="tab-pane <%= active_analyses_tab('expenses') %>" id="expenses_comparison">
+                <div class="box-header inherit-color">
+                  <div>
+                    <div class="pull-left">
+                      <h4>収入</h4>
+                    </div>
+                    <div class="pull-right">
+                      <h4><i class="fa fa-cny"></i>
+                        <%= total_income.to_s(:delimited) %></h4>
+                    </div>
+                  </div>
+                  <br /><br />
+
+                  <div class="panel-group no-margin-bottom" id="total-expense-accordion">
+                    <div class="panel disabled-panel no-border no-shadow">
+                      <div class="panel-heading no-padding">
+                        <h4>
+                          <a class="no-link-decoration" id="expense-panel-heading" data-toggle="collapse" data-parent="#total-expense-accordion" href="#total-expense-accordion-collapse">
+                            <i class="fa fa-caret-right space-right"></i>出費合計
+                            <span class="pull-right">
+                              <i class="fa fa-cny"></i>
+                              <%= total_expense = own_total_expenditures(@current_user); total_expense.to_s(:delimited) %>
+                            </span>
+                          </a>
+                        </h4>
+                      </div><!-- /.panel-heading -->
+                      <div id="total-expense-accordion-collapse" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                        <div class="panel-body no-padding-right no-padding-bottom no-padding-top no-border">
+                          <div>
+                            <div class="pull-left">
+                              <h5>二人の出費合計</h5>
+                            </div>
+                            <div class="pull-right">
+                              <h5><i class="fa fa-cny"></i><%= one_total_both_expenditures(@current_user).to_s(:delimited) %></h5>
+                            </div>
+                          </div>
+                          <br /><br />
+                          <div>
+                            <div class="pull-left">
+                              <h5 class="no-margin-top">自分の出費合計</h5>
+                            </div>
+                            <div class="pull-right">
+                              <h5 class="no-margin-top"><i class="fa fa-cny"></i><%= one_total_own_expenditures(@current_user).to_s(:delimited) %></h5>
+                            </div>
+                          </div>
+                        </div><!-- /.panel-body -->
+                      </div><!-- /.panel-collapse.collapse.in #total-expense-accordion-collapse -->
+                    </div><!-- /.panel panel-default -->
+                  </div><!-- /.panel-group #sampleAccordion -->
+                </div>
+
+                <div class="box-body no-padding">
+                  <div class="table-responsive no-margin no-border-right no-border-left">
+                    <table class="table" >
+                      <tbody>
+                      <% categories_without_only_partner_own.each do |category| %>
+                        <tr id="expenses-comparison-category-id-<%= category.id %>">
+                          <td class="text-center td-middle no-padding">
+                            <span class="category-circle mushroom"><i class="fa fa-lg fa-shopping-cart"></i></span>
+                          </td>
+                          <td class="td-middle">
+                            <div><%= category.name %></div>
+                            <small><%= category.percentage(@expenses, @current_user, total_expense).ceil %>%</small>
+                          </td>
+                          <td class="td-middle">
+                            <i class="fa fa-cny"></i>
+                            <%= category.expenses_sum(@expenses, @current_user).to_s(:delimited) %>
+                          </td>
+                          <td class="text-center td-middle">
+                            <%= link_to expenses_path(period: params[:period], category: category.id), class: "inherit-color" do %>
+                              <i class="fa fa-lg fa-history"></i>
+                            <% end %>
+                          </td>
+                        </tr>
+                      <% end  %>
+                      </tbody>
+                    </table>
+                  </div><!-- /.table-responsive -->
+                </div><!-- /.box-body -->
+
+              </div><!-- /.tab-pane active#expenses_comparison -->
+
+              <div class="tab-pane <%= active_analyses_tab('budgets') %>" id="budgets_comparison">
+                <div class="box-body no-padding">
+                  <div class="table-responsive no-margin no-border-right no-border-left">
+                    <table class="table no-border" >
+                    <tbody>
+                    <tr>
+                      <td class="text-center td-middle no-top-bottom-padding" rowspan="3">
+                        <span class="category-circle mushroom"><i class="fa fa-lg fa-shopping-cart"></i></span>
+                      </td>
+                      <td class="td-middle no-top-bottom-padding"><h5 class="no-margin-bottom">収入</h5></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td class="td-middle no-top-bottom-padding">
+                        <small><i class="fa fa-cny"></i><%= total_expense.to_s(:delimited) %></small>
+                      </td>
+                      <td class="td-middle no-top-bottom-padding">
+                        <%= show_balance(@balance.try(:amount) || (total_income - total_expense)) %>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td colspan="2" class="progress-bar-td">
+                        <div class="progress progress-xs">
+                          <div class="progress-bar progress-bar-orange progress-bar-striped" role="progressbar" style="width: <%= balance_percentage(total_expense, total_income) %>%">
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr class="with-border-top">
+                      <td class="text-center td-middle" rowspan="3">
+                        <span class="category-circle mushroom"><i class="fa fa-lg fa-shopping-cart"></i></span>
+                      </td>
+                      <td class="td-middle no-top-bottom-padding"><h5 class="no-margin-bottom">総予算</h5></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td class="td-middle no-top-bottom-padding">
+                        <small><i class="fa fa-cny"></i><%= total_expense.to_s(:delimited) %></small>
+                      </td>
+                      <td class="td-middle no-top-bottom-padding">
+                        <%= show_balance(total_budget - total_expense) %>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td colspan="2" class="progress-bar-td">
+                        <div class="progress progress-xs">
+                          <div class="progress-bar progress-bar-orange progress-bar-striped" role="progressbar" style="width: <%= balance_percentage(total_expense, total_budget).to_s %>%">
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+
+                    <% categories_without_only_partner_own.each do |category| %>
+                      <tr class="with-border-top"  id="budgets-comparison-category-id-<%= category.id %>">
+                        <td class="text-center td-middle" rowspan="3">
+                          <span class="category-circle mushroom"><i class="fa fa-lg fa-shopping-cart"></i></span>
+                        </td>
+                        <td class="td-middle no-top-bottom-padding"><h5 class="no-margin-bottom"><%= category.name %></h5></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td class="td-middle no-top-bottom-padding">
+                          <small><i class="fa fa-cny"></i><%= category_expense_amount = category.expenses_sum(@expenses, @current_user); category_expense_amount.to_s(:delimited) %></small>
+                        </td>
+                        <td class="td-middle no-top-bottom-padding">
+                          <%= show_balance(category.budget_balance(category_expense_amount, @current_user)) %>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colspan="2" class="progress-bar-td">
+                          <div class="progress progress-xs">
+                            <% c = category.budget_amount(@current_user) %>
+                            <div class="progress-bar progress-bar-orange progress-bar-striped" role="progressbar" style="width: <%= balance_percentage(category_expense_amount, c).to_s %>%">
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    <% end %>
+
+
+                    </tbody>
+                    </table>
+                  </div><!-- /.table-responsive -->
+                </div><!-- /.box-body -->
+
+              </div><!-- /.tab-pane #budget_comparison -->
+
+            </div><!-- /.tab-content -->
+          </div><!-- /.nav-tabs-custom -->
+        </div><!-- /.box box-brown -->
+
+      </div><!-- /.col-xs-12  -->
+    </div><!-- /row -->
+    <%= image_tag 'page_top.png', size: '40x40', id: 'page-top' %>
+  </section>
+
+</div>
+
+<%= content_for :other_javascript do %>
+  <%= javascript_include_tag 'analyses_index' %>
+  <%= javascript_include_tag 'page_top' %>
+<% end %>

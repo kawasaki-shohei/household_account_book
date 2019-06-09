@@ -1,0 +1,30 @@
+<li id="expense-list-id-<%= expense.id %>">
+  <i class="fa fa-users bg-gray"></i>
+
+  <div class="timeline-item">
+    <% unless expense.user == partner %>
+      <%= link_to edit_expense_path(expense), class: "go-edit" do %>
+        <i class="fa fa-lg fa-edit text-redpepper"></i>
+      <% end %>
+    <% end %>
+
+    <h3 class="timeline-header no-border">
+      <strong><i class="fa fa-cny"></i><%= expense.amount.to_s(:delimited) %></strong><small class="space-left"><%= expense.show_percent %></small>
+    </h3>
+
+    <div class="other-expense-details">
+      <span><%= expense.check_mark(@current_user) %><%= @current_user.name %>の支払い</span>
+      <span class="space-left"><i class="fa fa-cny space-left text-"></i><%= expense.necessary_pay_of(@current_user).to_s(:delimited) %></span>
+    </div>
+
+    <div class="other-expense-details">
+      <span><%= expense.check_mark(@partner) %><%= @partner.name %>の支払い</span>
+      <span class="space-left"><i class="fa fa-cny space-left"></i><%= expense.necessary_pay_of(@partner).to_s(:delimited) %></span>
+    </div>
+
+    <div class="other-expense-details">
+      <span class="space-right"><%= expense.category.name %></span>
+      <span class="space-right"><%= expense.memo %></span>
+    </div>
+  </div><!-- /div.timeline item -->
+</li>

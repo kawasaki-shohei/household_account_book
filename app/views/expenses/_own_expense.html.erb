@@ -1,0 +1,21 @@
+<li id="expense-list-id-<%= expense.id %>">
+  <i class="fa fa-user bg-gray"></i>
+
+  <div class="timeline-item">
+    <%= link_to edit_expense_path(expense), class: "go-edit" do %>
+      <i class="fa fa-lg fa-edit text-redpepper"></i>
+    <% end %>
+
+    <h3 class="timeline-header no-border">
+      <strong><i class="fa fa-cny"></i><%= expense.amount.to_s(:delimited) %></strong>
+    </h3>
+    <div class="other-expense-details">
+                  <span class="space-right">
+                    <%= expense.category.name %>
+                  </span>
+      <span class="space-right">
+                    <%= expense.memo %>
+                  </span>
+    </div>
+  </div><!-- /div.timeline item -->
+</li>

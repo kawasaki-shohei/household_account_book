@@ -1,0 +1,151 @@
+<%= render partial: 'shared/html_title', locals: {subtitle: "収入を入力"} %>
+<div class="content-wrapper">
+
+  <section class="content-header">
+    <h1>出費を入力</h1>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="nav-tabs-custom">
+          <ul class="nav nav-tabs">
+            <li class="expense-form-tab active">
+              <a href="#own-expense-form" data-toggle="tab"><i class="fa fa-user space-right"></i>自分の出費</a>
+            </li>
+            <li class="expense-form-tab">
+              <a href="#both-expense-form" data-toggle="tab"><i class="fa fa-users space-right"></i>二人の出費</a>
+            </li>
+          </ul>
+          <div class="tab-content no-padding">
+            <div class="tab-pane active" id="own-expense-form">
+
+              <div class="box-body">
+                <%= form_with(model: @expense, local: true) do |f| %>
+                  <%=render 'shared/error', object: @expense %>
+                  <div class="form-group">
+                    <%= f.label :amount , value: '支払い金額' %>
+                    <div class="input-group">
+                      <%= f.number_field :amount, class:"form-control input-lg", min: 0, max: 9999999999, value: @expense.amount, required: true %>
+                      <span class="input-group-addon">円</span>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <%= f.label :category_id , value: 'カテゴリー' %>
+                    <div>
+                      <%= f.collection_select :category_id, @categories, :id, :name, {}, class: 'form-control', required: true %>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <%= f.label :date, value: '日付' %>
+                    <div>
+                      <%= f.date_field :date, required: true, value: @expense.default_date, class: "form-control" %>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <%= f.label :date, value: 'メモ' %>
+                    <div>
+                      <%= f.text_field :memo, class: "form-control" %>
+                    </div>
+                  </div>
+                  <br>
+
+                  <div class="form-group">
+                    <%= f.submit submit_btn_letters, class: "btn btn-orange btn-block" %>
+                  </div>
+
+                <% end %>
+              </div><!-- /.box-body -->
+
+              <div class="box-footer text-center no-border no-padding">
+
+              </div><!-- /.box-footer -->
+
+            </div><!-- /.tab-pane active#expenses_comparison -->
+
+            <div class="tab-pane" id="both-expense-form">
+              <div class="box-body">
+                <%= form_with(model: @expense, local: true) do |f| %>
+                  <%=render 'shared/error', object: @expense %>
+                  <div class="form-group">
+                    <%= f.label :amount , value: '支払い金額' %>
+                    <div class="input-group">
+                      <%= f.number_field :amount, class:"form-control input-lg", id: "paid_amount", min: 0, max: 9999999999, value: @expense.amount, required: true %>
+                      <span class="input-group-addon">円</span>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <%= f.radio_button :percent, :percent, {checked: true, id: 'percent_radio'} %>
+                    <%= f.label :percent, for: :percent_radio, value: "割合で入力"%>
+                    <div class="input-group">
+                      <span class="input-group-addon expense-form-addon">自分の割合</span>
+                      <%= f.select :percent, percent_selection, {}, class:'form-control', id: 'percent_input' %>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <%= f.radio_button :percent, :percent, {id: 'amount_radio'} %>
+                    <%= f.label :percent, for: :amount_radio, value: "金額で入力"%>
+                    <div class="input-group space-bottom">
+                      <span class="input-group-addon"><%= @current_user.name %>の金額</span>
+                      <%= f.number_field :mypay, class: "form-control input-lg", id:"mypay_input", min: 0, disabled: "disabled" %>
+                      <span class="input-group-addon">円</span>
+                    </div>
+                    <div class="input-group">
+                      <span class="input-group-addon"><%= @partner.name %>の金額</span>
+                      <%= f.number_field :mypay, class: "form-control input-lg", id:"partnerpay_input", min: 0, disabled: "disabled" %>
+                      <span class="input-group-addon">円</span>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <%= f.label :category_id , value: 'カテゴリー' %>
+                    <div>
+                      <%= f.collection_select :category_id, categories_without_only_own, :id, :name, {}, class: 'form-control', required: true %>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <%= f.label :date, value: '日付' %>
+                    <div>
+                      <%= f.date_field :date, required: true, value: @expense.default_date, class: "form-control" %>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <%= f.label :date, value: 'メモ' %>
+                    <div>
+                      <%= f.text_field :memo, class: "form-control" %>
+                    </div>
+                  </div>
+                  <br>
+
+                  <div class="form-group">
+                    <%= f.submit submit_btn_letters, class: "btn btn-orange btn-block" %>
+                  </div>
+
+                <% end %>
+              </div><!-- /.box-body -->
+
+            </div><!-- /.tab-pane #budget_comparison -->
+
+          </div><!-- /.tab-content -->
+        </div><!-- /.nav-tabs-custom -->
+
+      </div><!-- /.col-md-12  -->
+    </div><!-- /row -->
+
+  </section><!-- /.content -->
+
+  <%#= render 'form', income: @income %>
+
+</div>
+
+<%= content_for :other_javascript do %>
+  <%= javascript_include_tag 'expenses' %>
+<% end %>

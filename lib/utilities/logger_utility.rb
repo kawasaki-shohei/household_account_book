@@ -23,7 +23,7 @@ class LoggerUtility
 
   def self.output_bc_log(balance_calculator)
     @logger.info "========================================================================"
-    @logger.info "******** balance_calculator_summary ********"
+    @logger.info "******** BALANCE_CALCULATOR_SUMMARY ********"
     attributes = BalanceHelper::BalanceCalculator.attributes
     attributes.each do |attr|
       message = "#{attr.to_s}: #{balance_calculator.try(attr)}"
@@ -39,11 +39,11 @@ class LoggerUtility
     return unless balance_lists
     lists = balance_lists
     @logger.info "========================================================================"
-    @logger.info "******** balance_lists ********"
+    @logger.info "******** BALANCE_LISTS ********"
     lists.each do |list|
       @logger.info "-------------------------------------"
       @logger.info "user : id: #{list[:user].id}, name: #{list[:user].name}"
-      @logger.info "month: #{list[:month]}"
+      @logger.info "period: #{list[:period]}"
       @logger.info "amount: #{list[:amount]}"
       @logger.info "-------------------------------------"
     end

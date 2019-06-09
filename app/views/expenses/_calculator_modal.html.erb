@@ -1,0 +1,12 @@
+<div class="modal fade" id="modal-default" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" id="close-calculator-btn" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+        <%= render_react_component('Calculator', {}, {id: "calculator-wrapper", "data-calculator-for": "own-expense-paid-amount"}) %>
+      </div>
+    </div> <!-- /.modal-content -->
+  </div> <!-- /.modal-dialog -->
+</div>

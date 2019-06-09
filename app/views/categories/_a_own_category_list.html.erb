@@ -1,0 +1,12 @@
+<span class="handle ui-sortable-handle">
+  <i class="fa fa-ellipsis-v"></i>
+  <i class="fa fa-ellipsis-v"></i>
+</span>
+<span class="text"><%= category.name %></span>
+<%= category.common_mark %>
+<div class="tools">
+  <%= link_to edit_category_path(category), remote: true, class: "text-redpepper space-left" do %>
+    <i class="fa fa-lg fa-edit"></i>
+  <% end %>
+  <%= category.common_btn %>
+</div>

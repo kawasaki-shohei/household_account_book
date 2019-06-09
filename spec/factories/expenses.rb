@@ -13,7 +13,7 @@
 # **`memo`**               | `string`           |
 # **`mypay`**              | `integer`          |
 # **`partnerpay`**         | `integer`          |
-# **`percent`**            | `integer`          |
+# **`percent`**            | `integer`          | `not null`
 # **`created_at`**         | `datetime`         | `not null`
 # **`updated_at`**         | `datetime`         | `not null`
 # **`category_id`**        | `integer`          |

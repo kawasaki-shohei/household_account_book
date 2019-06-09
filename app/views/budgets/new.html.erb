@@ -1,0 +1,44 @@
+<div class="content-wrapper">
+
+  <section class="content-header">
+    <h1>予算を入力</h1>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <!-- left column -->
+      <div class="col-xs-12">
+        <div class="box box-brown">
+          <div class="box-body">
+            <%= form_with(model: @budget, local: true) do |f| %>
+              <% if @budget.errors.any? %>
+                <%=render 'shared/error', object: @budget %>
+              <% end %>
+
+              <div class="form-group">
+                <div>
+                  <%= f.select :category_id, make_left_categories(@current_user),{include_blank: 'カテゴリを選択', selected: params[:id].try(:to_s)}, class: 'form-control', required: true %>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon">金額</span>
+                  <%= f.number_field :amount, class:"form-control input-lg", required: true %>
+                  <span class="input-group-addon">円</span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <%= f.submit submit_btn_letters, class: "btn btn-orange btn-block" %>
+              </div>
+            <% end %>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>

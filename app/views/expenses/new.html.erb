@@ -1,0 +1,52 @@
+<%= render partial: 'shared/html_title', locals: {subtitle: "出費を入力"} %>
+<div class="content-wrapper">
+
+  <section class="content-header">
+    <h1>出費を入力</h1>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="nav-tabs-custom">
+          <ul class="nav nav-tabs">
+            <li class="expense-form-tab active">
+              <a href="#own-expense-form" data-toggle="tab"><i class="fa fa-user space-right"></i>自分の出費</a>
+            </li>
+            <li class="expense-form-tab">
+              <a href="#both-expense-form" data-toggle="tab"><i class="fa fa-users space-right"></i>二人の出費</a>
+            </li>
+          </ul>
+          <div class="tab-content no-padding">
+            <div class="tab-pane active" id="own-expense-form">
+
+              <div class="box-body">
+                <%= render 'own_expense_form' %>
+              </div><!-- /.box-body -->
+
+            </div><!-- /.tab-pane active#expenses_comparison -->
+
+            <div class="tab-pane" id="both-expense-form">
+              <div class="box-body">
+                <%= render 'both_expense_form' %>
+              </div><!-- /.box-body -->
+
+            </div><!-- /.tab-pane #budget_comparison -->
+
+          </div><!-- /.tab-content -->
+        </div><!-- /.nav-tabs-custom -->
+
+      </div><!-- /.col-md-12  -->
+    </div><!-- /row -->
+
+  </section><!-- /.content -->
+
+  <%= render 'calculator_modal' %>
+
+</div>
+
+<%= content_for :other_javascript do %>
+  <%= javascript_include_tag 'both_expenses_form' %>
+  <%= javascript_include_tag 'expenses_input_amount' %>
+<% end %>

@@ -1,0 +1,65 @@
+<%= render partial: 'shared/html_title', locals: {subtitle: "#{ @category.history_title(@period)}"} %>
+<div class="content-wrapper">
+  <section class="content-header">
+    <%= render 'shared/notice_flash_message' %>
+    <%= render 'expenses_narrow_down_area' %>
+    <h3><%= @category.history_title(@period) %></h3>
+  </section>
+
+  <section class="content">
+    <div class="row">
+      <div class="col-xs-12">
+        <%= back_btn_to_analyses_page %>
+        <div class="box box-brown">
+          <div class="box-body">
+            <div>
+              <h4 class="pull-left"><%= @category.name %>の合計</h4>
+              <h4 class="pull-right">
+                <i class="fa fa-cny space-right"></i>
+                <%= @category.expenses_sum(@expenses, @current_user).to_s(:delimited) %>
+              </h4>
+            </div>
+            <br/><br/>
+            <div class="inside-space-left">
+              <h5 class="pull-left">二人の出費の合計</h5>
+              <h5 class="pull-right">
+                <i class="fa fa-cny space-right"></i><%= @category.both_expenses_sum(@expenses, @current_user).to_s(:delimited) %>
+              </h5>
+            </div>
+            <br/><br/>
+            <div class="inside-space-left">
+              <h5 class="pull-left  no-margin-top">自分の出費の合計</h5>
+              <h5 class="pull-right  no-margin-top">
+                <i class="fa fa-cny space-right"></i><%= @category.own_expenses_sum(@expenses, @current_user).to_s(:delimited) %>
+              </h5>
+            </div>
+          </div><!-- /.box-body -->
+        </div><!-- /.box box-brown -->
+
+        <ul class="timeline">
+          <% @expenses.each_with_index do |expense, i| %>
+            <%= expense.show_date(@expenses, @current_user, i) %>
+            <% if expense.is_for_both? %>
+              <%= render 'both_expense', expense: expense %>
+            <% else %>
+              <%= render 'own_expense', expense: expense %>
+            <% end %>
+          <% end %>
+          <% if @expenses.present? %>
+            <li>
+              <i class="fa fa-clock-o bg-gray"></i>
+            </li>
+          <% end %>
+        </ul>
+      </div><!-- /.col-xs-12  -->
+    </div><!-- /row -->
+    <%= image_tag 'page_top.png', size: '40x40', id: 'page-top' %>
+  </section>
+
+</div>
+
+
+<%= content_for :other_javascript do %>
+  <%= javascript_include_tag 'expenses_index' %>
+  <%= javascript_include_tag 'page_top' %>
+<% end %>

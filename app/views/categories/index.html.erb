@@ -1,0 +1,72 @@
+<%= render partial: 'shared/html_title', locals: {subtitle: "カテゴリー一覧"} %>
+<div class="content-wrapper">
+
+  <section class="content-header">
+    <h1>カテゴリー一覧</h1>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="box box-brown">
+
+          <div class="box-header with-border">
+            <h3 class="box-title"><%= @current_user.name %>のカテゴリー</h3>
+          </div>
+
+          <div class="box-body no-padding">
+            <!-- See node_modules/admin-lte/dist/js/pages/dashboard.js to activate the todoList plugin -->
+            <ul class="todo-list" id="own-categories">
+              <% user_own_and_common_categories(@categories).each do |category| %>
+                <li id="category-list-id-<%= category.id %>">
+                  <%= render 'a_own_category_list', category: category %>
+                </li>
+              <% end  %>
+            </ul>
+
+          </div><!-- /.box-body -->
+
+          <div class="box-footer clearfix">
+            <%= link_to new_category_path, remote: true, class: "btn btn-orange pull-right", id: "add-category-btn" do %>
+              <i class="fa fa-lg fa-plus"></i> カテゴリーを追加
+            <% end %>
+          </div>
+        </div><!-- /.box box-brown -->
+
+      </div><!-- /.col-md-12  -->
+    </div><!-- /row -->
+
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="box box-brown">
+
+          <div class="box-header with-border">
+            <h3 class="box-title"><%= @partner.name %>のカテゴリー</h3>
+          </div>
+
+          <div class="box-body no-padding">
+            <ul class="todo-list" id="partner-categories">
+              <% partner_categories(@categories).each do |category| %>
+                <li id="category-list-id-<%= category.id %>">
+                  <%= render 'a_partner_category_list', category: category %>
+                </li>
+              <% end  %>
+            </ul>
+
+          </div><!-- /.box-body -->
+        </div><!-- /.box box-brown -->
+
+      </div><!-- /.col-md-12  -->
+    </div><!-- /row -->
+
+
+
+  </section>
+
+</div>
+
+<%= content_for :other_javascript do %>
+  <%= javascript_include_tag 'adminlte_sortable_plugin' %>
+<% end %>

@@ -22,7 +22,7 @@ class RepeatExpensesController < ApplicationController
     else
       @expense = RepeatExpense.new
     end
-    @categories = Category.ones_categories(current_user, partner)
+    @categories = Category.ones_categories(current_user)
   end
 
   def confirm
@@ -36,7 +36,7 @@ class RepeatExpensesController < ApplicationController
       Expense.creat_repeat_expenses(@repeat_expense, expense_params)
       redirect_to repeat_expenses_path, notice: "繰り返し出費を保存しました。"
     else
-      @categories = Category.ones_categories(current_user, partner)
+      @categories = Category.ones_categories(current_user)
       render 'index'
     end
   end
@@ -44,7 +44,7 @@ class RepeatExpensesController < ApplicationController
   def edit
     @expense = RepeatExpense.find(params[:id])
     if @expense.both_flg == false
-      @categories = Category.ones_categories(current_user, partner)
+      @categories = Category.ones_categories(current_user)
     else
       @common_categories = common_categories
     end

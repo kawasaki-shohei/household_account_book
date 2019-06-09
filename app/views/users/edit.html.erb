@@ -1,2 +1,96 @@
-<h1>Users#edit</h1>
-<p>Find me in app/views/users/edit.html.erb</p>
+<%= render partial: 'shared/html_title', locals: {subtitle: "アカウント設定"} %>
+<div class="content-wrapper">
+
+  <section class="content-header">
+    <% if @partner.nil? %>
+      <div class="alert alert-danger alert-dismissible text-white">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <h5>パートナーを登録してください。</h5>
+      </div>
+    <% end %>
+    <%= render 'shared/notice_flash_message' %>
+    <h1>アカウント設定</h1>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="box box-brown">
+
+          <div class="box-body">
+            <%= form_with(model: @current_user, local: true) do |f| %>
+              <%=render 'shared/error', object: @current_user %>
+
+              <div class="form-group">
+                <%= f.label :name , value: '名前' %>
+                <div>
+                  <%= f.text_field :name, maxlength: 10, class:"form-control", value: @current_user.name, required: true %>
+                </div>
+              </div>
+              <br />
+
+              <div class="form-group">
+                <%= f.label :email , value: 'メールアドレス' %>
+                <div>
+                  <%= f.email_field :email, class:"form-control", value: @current_user.email, required: true %>
+                </div>
+              </div>
+              <br />
+
+              <div class="form-group">
+                <%= f.label :password , value: 'パスワード' %>
+                <div>
+                  <%= f.password_field :password, class:"form-control" %>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <%= f.label :password_confirmation , value: 'パスワード確認' %>
+                <div>
+                  <%= f.password_field :password_confirmation, class:"form-control" %>
+                </div>
+              </div>
+              <br />
+
+              <% if @partner.present? %>
+                <div class="form-group">
+                  <p><b>パートナー</b></p>
+                  <table class="table-responsive no-border space-left">
+                  <tbody>
+                    <tr>
+                      <th>名前</th>
+                      <td><%= @partner.name %></td>
+                    </tr>
+                    <tr>
+                      <th>メールアドレス</th>
+                      <td><%= @partner.email %></td>
+                    </tr>
+                  </tbody>
+                  </table>
+                </div>
+              <% else %>
+                <p><b>パートナーの登録</b></p>
+                <div>パートナーのメールアドレスを入力してください。</div>
+                <div>パートナーは登録されているユーザーである必要があります。</div>
+                <br />
+                <div class="form-group">
+                  <div>
+                    <%= f.email_field :partner_email_to_register, class:"form-control", placeholder: "partner@partner.com" %>
+                  </div>
+                </div>
+              <% end %>
+              <br /><br />
+
+              <div class="form-group">
+                <%= f.submit submit_btn_letters, class: "btn btn-orange btn-block" %>
+              </div>
+
+            <% end %>
+          </div><!-- /.box-body -->
+        </div><!-- /.box box-brown -->
+      </div><!-- /.col-md-12  -->
+    </div><!-- /row -->
+  </section><!-- /.content -->
+
+</div>

@@ -1,121 +1,71 @@
 class ExpensesController < ApplicationController
-  before_action :set_expense, only:[:edit, :update, :destroy]
-  before_action :set_category, only:[:update, :create]
+  include PeriodAdjuster
+
   after_action -> {create_notification(@expense)}, only: [:create, :update]
-  include CategoriesHelper
 
   def index
-    @cnum = 0
-    @current_user_expenses = current_user.expenses.this_month
-    @partner_expenses = partner.expenses.this_month
-    @incomes = current_user.incomes.where('date >= ? AND date <= ?', Date.today.beginning_of_month, Date.today.end_of_month)
-    @balances = current_user.balances
-  end
-
-  def both
-    if params[:back]
-      @expense = Expense.new(expense_params)
+    @period =  params[:period] || Date.current.to_s_as_period
+    @categories = Category.available_categories_with_budgets(@current_user)
+    if params[:category]
+      @category = @categories.find{ |c| c.id == params[:category].to_i }
+      @expenses = Expense.specified_category_for_one_month(@current_user, @category, @period)
+      session[:expenses_list_category] = @category.id
+      render 'index_specified_category'
     else
-      @expense = Expense.new
+      @expenses = Expense.all_for_one_month(@current_user, period_params)
+      session.delete(:expenses_list_category)
     end
-    @common_categories = common_categories
   end
 
   def new
-    if params[:back]
-      @expense = Expense.new(expense_params)
-    else
-      @expense = Expense.new
-    end
-    @categories = Category.ones_categories(current_user, partner)
+    @expense = Expense.new
+    @categories = Category.ones_categories(@current_user)
   end
 
-
-  def confirm
-    @expense = Expense.new(expense_params)
-    if @expense.invalid? && @expense.mypay != nil
-      @common_categories = common_categories
-      render :both
-    elsif @expense.invalid?
+  def create
+    @expense = @current_user.expenses.build(expense_params)
+    if @expense.save
+      category = @expense.category
+      set_expenses_list_params
+      redirect_to expenses_path(period: @expense.date.to_s_as_period, expense: @expense.id), notice: "出費を保存しました。#{category.name}: #{@expense.amount.to_s(:delimited)}円"
+    else
+      @categories = Category.ones_categories(@current_user)
       render :new
     end
   end
 
-  def create
-    @expense = Expense.new(expense_params)
-    if @expense.save
-      redirect_to expenses_path, notice: "出費を保存しました。#{@category.kind}: #{@expense.amount.to_s(:delimited)}円"
-    else
-      set_expenses_categories
-      render 'index'
-    end
-  end
-
   def edit
-    if @expense.both_flg == false
-      set_expenses_categories
-    else
-      common_categories
-    end
+    @expense = Expense.find(params[:id])
+    @categories = Category.ones_categories(@current_user)
   end
 
   def update
+    @expense = Expense.find(params[:id])
     if @expense.update(expense_params)
-      redirect_to expenses_path, notice: "出費を保存しました。#{@category.kind}: #{@expense.amount}円"
+      category = @expense.category
+      set_expenses_list_params
+      redirect_to expenses_path(period: @expense.date.to_s_as_period, expense: @expense.id), notice: "出費を保存しました。#{category.name}: #{@expense.amount.to_s(:delimited)}円"
     else
-      render 'edit'
+      @categories = Category.ones_categories(@current_user)
+      render :edit
     end
   end
 
   def destroy
+    @expense = Expense.find(params[:id])
+    set_expenses_list_params
     @expense.destroy
     create_notification(@expense)
-    redirect_to expenses_path, notice: "削除しました"
-  end
-
-  def each_category
-    cnum = params[:cnum].to_i
-    @category = Category.find(params[:category_id].to_i)
-    @current_user_expenses = ShiftMonth.ones_expenses(current_user, cnum).category(@category.id)
-    @partner_expenses = ShiftMonth.ones_expenses(partner, cnum).category(@category.id)
+    redirect_to expenses_path(period: @expense.date.to_s_as_period), notice: "出費を削除しました"
   end
 
   private
-  def mypay_amount
-    whole_payment = params[:expense][:amount].to_i
-    case params[:expense][:percent].to_i
-    when 1
-      mypay = (whole_payment / 2).round
-    when 2
-      mypay = (whole_payment / 3).round
-    when 3
-      mypay = (whole_payment * 2 / 3).round
-    when 4
-      mypay = 0
-    end
-    return mypay
-  end
-
   def expense_params
-    if params[:expense][:both_flg] == "true" && params[:expense][:percent] == "false"
-      params.require(:expense).permit(:amount, :date, :memo, :category_id, :both_flg, :mypay, :partnerpay).merge(user_id: current_user.id, percent: nil, repeat_expense_id: nil)
-    elsif params[:expense][:both_flg] == "true"
-      partnerpay = params[:expense][:amount].to_i - mypay_amount
-      params.require(:expense).permit(:amount, :date, :memo, :category_id, :both_flg, :percent).merge(user_id: current_user.id, mypay: mypay_amount, partnerpay: partnerpay, repeat_expense_id: nil)
-    else
-      params.require(:expense).permit(:amount, :date, :memo, :category_id, :both_flg, :percent).merge(user_id: current_user.id, repeat_expense_id: nil)
-    end
+    params.require(:expense).permit(:amount, :category_id, :date, :memo, :both_flg, :mypay, :partnerpay).merge(percent: params[:expense][:percent].to_i)
   end
 
-  def set_expenses_categories
-    @categories = current_user.categories.or(partner.categories.where(common: true))
+  def set_expenses_list_params
+    session[:analyses_params] = {period: @expense.date.to_s_as_period, tab: 'expenses'}
   end
 
-  def set_expense
-    @expense = Expense.find(params[:id])
-  end
-
-  def set_category
-    @category = Category.find(params[:expense][:category_id])
-  end
 end

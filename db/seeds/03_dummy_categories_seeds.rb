@@ -6,7 +6,7 @@ partner = user.partner
 def create_category_instance(kinds, user, common_flg)
   kinds.each do |kind|
     @categories << Category.new(
-      kind: kind,
+      name: kind,
       user_id: user.id,
       common: common_flg
     )

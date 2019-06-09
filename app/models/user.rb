@@ -14,36 +14,22 @@
 # **`sys_admin`**        | `boolean`          | `default(FALSE)`
 # **`created_at`**       | `datetime`         | `not null`
 # **`updated_at`**       | `datetime`         | `not null`
-# **`partner_id`**       | `bigint(8)`        |
 #
 # ### Indexes
 #
 # * `index_users_on_email` (_unique_):
 #     * **`email`**
-# * `index_users_on_partner_id` (_unique_):
-#     * **`partner_id`**
-#
-# ### Foreign Keys
-#
-# * `fk_rails_...`:
-#     * **`partner_id => users.id`**
 #
 
 class User < ApplicationRecord
-  include ExpensesHelper
-  before_save { email.downcase! }
-  validates :name,  presence: true, length: { maximum: 30 }
-  validates :email, presence: true, uniqueness: true,
-                    length: { maximum: 255 },
-                    format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i }
-  validates :partner_id, uniqueness: { scope: [:id, :partner_id] }
-  has_secure_password
-  validates :password, presence: true, length: { minimum: 6 }
 
-  belongs_to :partner, class_name: 'User', optional: true
+  attr_accessor :partner_email_to_register
+
+  has_one :couple
+  has_one :partner, through: :couple
   has_many :expenses, dependent: :destroy
   has_many :repeat_expenses, dependent: :destroy
-  has_many :badgets, dependent: :destroy
+  has_many :budgets, dependent: :destroy
   has_many :categories, dependent: :destroy
   has_many :pays, dependent: :destroy
   has_many :wants, dependent: :destroy
@@ -52,13 +38,34 @@ class User < ApplicationRecord
   has_many :incomes, dependent: :destroy
   has_many :balances, dependent: :destroy
 
-  def get_applicable_balance(month)
-    balances.where(month: month).first_or_initialize
+  before_save { email.downcase! }
+  validates :name,  presence: true, length: { maximum: 10 }
+  validates :email, presence: true, uniqueness: true,
+            length: { maximum: 255 },
+            format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i }
+  has_secure_password
+  validates :password, presence: true, length: { minimum: 8 }, allow_nil: true
+  with_options if: :partner_email_to_register do
+    validate :check_valid_partner
   end
 
-  # @note admin / test で使用
-  # @param [String] year
-  # @param [String] month
+  after_update { build_couple.register_partner!(partner_email_to_register) if partner_email_to_register }
+
+  def check_valid_partner
+    unless pre_partner = User.find_by(email: partner_email_to_register)
+      errors[:base] << '入力いただいたメールアドレスのユーザーはご登録されていないため、パートナーとして登録できません。'
+      return
+    end
+    if pre_partner.partner
+      errors[:base] << '入力いただいたメールアドレスのユーザーは、すでにあなた以外のパートナーが登録されているため、パートナーとして登録できません。'
+    end
+  end
+
+
+  def get_applicable_balance(period)
+    balances.where(period: period).first_or_initialize
+  end
+
   def insert_expenses_for_a_month(year: Time.zone.today.year, month: Time.zone.today.month)
     @import_expenses = []
     partner = self.partner
@@ -70,7 +77,6 @@ class User < ApplicationRecord
     Expense.import(@import_expenses) ? true :false
   end
 
-  # @note admin / test で使用
   def insert_categories
     both_kinds = %w(家賃 食費 日用品 ガス代 電気代 水道代)
     ones_kinds = %w(交通費 交際費 保険代 医療費)
@@ -84,29 +90,25 @@ class User < ApplicationRecord
     Category.import(@import_categories) ? true : false
   end
 
-  # @note admin / test で使用
-  def get_category(kind:)
-    categories.find_by(kind: kind)
+  def get_category(name:)
+    categories.find_by(name: name)
   end
 
   private
 
-  # @note admin / test で使用
-  # @param [String] year
-  # @param [String] month
   def build_expenses_instances(year, month, category_id, count, both_flg:)
     today = Time.zone.today
     first = today.beginning_of_month.day
     last = today.end_of_month.day
     count.times do |n|
       amount = rand(100..10000)
-      percent = count == 10 ? get_percent(n) : 1  # 食費の場合だけpercentを変える。
+      percent = count == 10 ? get_percent(n) : 1
       mypay = calculate_mypay(amount, percent)
       partnerpay = amount - mypay
       @import_expenses << expenses.build(
         amount: amount,
         date: Date.parse("#{year}-#{month}-#{rand(first..last)}"),
-        memo: "inserted #{today}",
+        note: "inserted #{today}",
         category_id: category_id,
         both_flg: both_flg,
         mypay: both_flg ? mypay : nil,
@@ -116,13 +118,10 @@ class User < ApplicationRecord
     end
   end
 
-  # @note admin / test で使用
-  # @return [Integer] 食費の場合だけpercentを指定
   def get_percent(n)
     case n when 0..3 then 1 when 4..5 then 2 when 6..7 then 3 when 8..9 then 4 end
   end
 
-  # @note admin / test で使用
   def calculate_mypay(amount, percent)
     case percent
     when 1 then amount / 2
@@ -132,42 +131,38 @@ class User < ApplicationRecord
     end
   end
 
-  # @note admin / test で使用
-  # カテゴリーで何回繰り返すか指定して返す。
   def get_count(category)
-    case category.kind
+    case category.name
     when "食費" then 10 when "日用品" then 5
     when "交通費", "交際費", "保険代", "医療費" then 2
     else 1
     end
   end
 
-  # @note admin / test で使用
   def get_categories(partner)
-    foods = get_category(kind: "食費")
-    foods = partner.get_category(kind: "食費") unless foods
-    goods = get_category(kind: "日用品")
-    goods = partner.get_category(kind: "日用品") unless goods
-    rent = get_category(kind: "家賃")
-    rent = partner.get_category(kind: "家賃") unless rent
-    gas = get_category(kind: "ガス代")
-    gas = partner.get_category(kind: "ガス代") unless gas
-    electricity = get_category(kind: "電気代")
-    electricity = partner.get_category(kind: "電気代") unless electricity
-    water = get_category(kind: "水道代")
-    water = partner.get_category(kind: "水道代") unless water
-    transportation = categories.find_by(kind: "交通費")
-    entertainment = categories.find_by(kind: "交際費")
-    insurance = categories.find_by(kind: "保険代")
-    medical = categories.find_by(kind: "医療費")
+    foods = get_category(name: "食費")
+    foods = partner.get_category(name: "食費") unless foods
+    goods = get_category(name: "日用品")
+    goods = partner.get_category(name: "日用品") unless goods
+    rent = get_category(name: "家賃")
+    rent = partner.get_category(name: "家賃") unless rent
+    gas = get_category(name: "ガス代")
+    gas = partner.get_category(name: "ガス代") unless gas
+    electricity = get_category(name: "電気代")
+    electricity = partner.get_category(name: "電気代") unless electricity
+    water = get_category(name: "水道代")
+    water = partner.get_category(name: "水道代") unless water
+    transportation = categories.find_by(name: "交通費")
+    entertainment = categories.find_by(name: "交際費")
+    insurance = categories.find_by(name: "保険代")
+    medical = categories.find_by(name: "医療費")
     [foods, goods, rent, gas, electricity, water, transportation, entertainment, insurance, medical].compact
   end
 
-  # @note admin / test で使用
   def create_category_instance(kinds, user, common_flg)
     kinds.each do |kind|
       @import_categories << Category.new(
-        kind: kind,
+        name: kind,
         user_id: user.id,
         common: common_flg
       )

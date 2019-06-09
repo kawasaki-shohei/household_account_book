@@ -1,0 +1,69 @@
+<%= form_with(model: @expense, local: true) do |f| %>
+  <%=render 'shared/error', object: @expense %>
+  <%= f.hidden_field :both_flg, value: true %>
+  <div class="form-group">
+    <%= f.label :amount , value: '支払い金額' %>
+    <div class="input-group">
+      <%= render 'calculator_input_addon', { data_calculator_for: "both-expense-paid-amount", disabled: false } %>
+      <%= f.number_field :amount, class:"form-control input-lg", id: "both-expense-paid-amount", min: 0, max: 9999999999, value: @expense.amount, required: true %>
+      <span class="input-group-addon">円</span>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.radio_button :percent, :percent, {checked: true, id: 'percent_radio'} %>
+    <%= f.label :percent, for: :percent_radio, value: "割合で入力"%>
+    <div class="input-group">
+      <span class="input-group-addon">自分の割合</span>
+      <%= f.select :percent, options_for_select(percent_selection, Expense.percents[:pay_half]), {}, class:'form-control', id: 'percent_input' %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.radio_button :percent, Expense.percents[:manual_amount], {id: 'amount_radio'} %>
+    <%= f.label :percent, for: :amount_radio, value: "金額で入力"%>
+    <div class="input-group space-bottom">
+      <%= render 'calculator_input_addon', { data_calculator_for: "mypay-input", disabled: true } %>
+      <span class="input-group-addon"><%= @current_user.name %></span>
+      <%= f.number_field :mypay, class: "form-control input-lg", id:"mypay-input", min: 0, disabled: "disabled" %>
+      <span class="input-group-addon">円</span>
+    </div>
+    <div class="input-group">
+      <%= render 'calculator_input_addon', { data_calculator_for: "partnerpay-input", disabled: true } %>
+      <span class="input-group-addon"><%= @partner.name %></span>
+      <%= f.number_field :partnerpay, class: "form-control input-lg", id:"partnerpay-input", min: 0, disabled: "disabled" %>
+      <span class="input-group-addon">円</span>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :category_id , value: 'カテゴリー' %>
+    <div>
+      <%= f.collection_select :category_id, categories_without_only_own, :id, :name, {}, class: 'form-control', required: true %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :date, value: '日付' %>
+    <div>
+      <%= f.date_field :date, required: true, value: @expense.default_date, class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :date, value: 'メモ' %>
+    <div>
+      <%= f.text_field :memo,  maxlength: 100, class: "form-control" %>
+    </div>
+  </div>
+  <br>
+
+  <div class="form-group">
+    <%= f.submit submit_btn_letters, class: "btn btn-orange btn-block" %>
+  </div>
+
+  <% if action_name == 'edit' %>
+    <%= link_to '削除する', expense_path(@expense), method: :delete, data:{confirm: "Are you sure?"}, class: 'btn btn-brown btn-block' %>
+  <% end %>
+
+<% end %>

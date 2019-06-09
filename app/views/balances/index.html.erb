@@ -1,0 +1,61 @@
+<%= render partial: 'shared/html_title', locals: {subtitle: "収支バランス"} %>
+<div class="content-wrapper">
+
+  <section class="content-header">
+    <h1>収支バランス</h1>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <!-- left column -->
+      <div class="col-md-12">
+        <div class="info-box">
+          <span class="info-box-icon bg-orange"><i class="fa fa-bank"></i></span>
+          <div class="info-box-content">
+            <span class="info-box-text">総収支バランス</span>
+            <%= total_balance_amount(@balances) %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="box box-brown">
+
+          <div class="box-body no-padding">
+            <div class="table-responsive">
+              <table class="table no-margin">
+                <thead>
+                <tr>
+                  <th>該当月</th>
+                  <th>金額</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% @balances.each do |balance| %>
+                  <tr>
+                    <td><%= balance.period.to_japanese_period %></td>
+                    <td><%= balance.amount_with_plus_or_minus %></td>
+                  </tr>
+                <% end  %>
+                </tbody>
+              </table>
+            </div>
+            <!-- /.table-responsive -->
+          </div>
+          <!-- /.box-body -->
+          <div class="box-footer text-center">
+            <%= paginate @balances %>
+          </div><!-- /.box-footer -->
+        </div><!-- /.box box-brown -->
+
+      </div><!-- /.col-md-12  -->
+    </div><!-- /row -->
+
+  </section>
+
+</div>

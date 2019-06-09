@@ -1,0 +1,9 @@
+<!-- 変数 object -->
+<%#=render 'shared/error', object: @deposit %>
+<% if object.errors.any? %>
+  <div class="form-group has-error" id="object-error">
+    <% object.errors.full_messages.each do |message| %>
+      <span class="help-block"><%= message %></span>
+    <% end %>
+  </div>
+<% end %>

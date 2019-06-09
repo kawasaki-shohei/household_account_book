@@ -1,0 +1,64 @@
+<%= render partial: 'shared/html_title', locals: {subtitle: "通知一覧"} %>
+<div class="content-wrapper">
+
+  <section class="content-header">
+    <%= render 'shared/notice_flash_message' %>
+    <h1>通知一覧</h1>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="space-bottom text-right">
+          <%= page_entries_info(@notifications) %>
+        </div>
+
+        <div class="box box-brown">
+
+          <div class="box-body box-comments no-padding">
+
+            <%= form_with(scope: :notifications, url: bulk_update_notifications_path, method: :patch, id: "update-read-status-form", local: true) do |f| %>
+              <%= f.hidden_field :ids, value: unread_notifications, id: "hidden-unread-ids-field" %>
+              <% @notifications.each do |notification| %>
+                <div class="box-comment each-notification <%= notification.read_or_unread %>">
+                  <%#= image_tag "icon.png", class: "img-circle img-sm", alt: "User Image" %>
+                  <%= f.check_box notification.id, {class: "notification-checkbox", disabled: notification.read_flg}, true, false %>
+
+                  <div class="comment-text">
+                    <span class="username">
+                      <%= notification.user.name %>
+                      <span class="text-muted pull-right">
+                        <%= l(notification.created_at, format: :long) %>
+                        <%= link_to notification_path(notification.id), method: :patch, class: "space-left text-redpepper" do %>
+                          <i class="fa fa-lg fa-external-link"></i>
+                        <% end %>
+                      </span>
+                    </span><!-- /.username -->
+                    <%# msg = notification.notification_message %>
+                    <%= notification.icon %> <%= notification.heading %>
+                    <% notification.details.each do |key, value| %>
+                      <div><%= "#{key}: #{value}" %></div>
+                    <% end %>
+                  </div><!-- /.comment-text -->
+                </div><!-- /.box-comment -->
+              <% end %>
+
+              <div class="text-center notification-submit-btn">
+                <%= f.submit '既読にする', class: "btn btn-orange  btn-block" %>
+              </div>
+            <% end %><!-- /form_with -->
+          </div><!-- /.box-body -->
+
+          <div class="box-footer text-center no-border no-padding">
+            <%= paginate @notifications %>
+          </div><!-- /.box-footer -->
+
+        </div><!-- /.box box-brown -->
+
+      </div><!-- /.col-md-12  -->
+    </div><!-- /row -->
+
+  </section><!-- /.content -->
+
+</div>

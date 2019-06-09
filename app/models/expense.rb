@@ -13,7 +13,7 @@
 # **`memo`**               | `string`           |
 # **`mypay`**              | `integer`          |
 # **`partnerpay`**         | `integer`          |
-# **`percent`**            | `integer`          |
+# **`percent`**            | `integer`          | `not null`
 # **`created_at`**         | `datetime`         | `not null`
 # **`updated_at`**         | `datetime`         | `not null`
 # **`category_id`**        | `integer`          |
@@ -36,15 +36,17 @@ class Expense < ApplicationRecord
 
   belongs_to :user
   belongs_to :category
+
+  before_validation :set_mypay_and_partnerpay
+
   validates :amount, :date, presence: true
-  validates_length_of :amount, maximum: 10
+  validates_length_of :amount, :mypay, :partnerpay, maximum: 10
   validates_length_of :memo, maximum: 100
+  validates :percent, presence: true
   validate :calculate_amount
-  def calculate_amount
-    if mypay != nil && partnerpay != nil && mypay + partnerpay != amount
-      errors[:base] << "入力した金額の合計が支払い金額と一致しません"
-    end
-  end
+
+  # todo: これはテーブルを作ってユーザーが自由に変更できるようにする。
+  enum percent: { manual_amount: -1, pay_all: 0, pay_half: 1, pay_one_third: 2, pay_two_thirds: 3, pay_nothing: 4 }
 
   end_of_this_month = Date.today.end_of_month
   beginning_of_this_month = Date.today.beginning_of_month
@@ -53,9 +55,8 @@ class Expense < ApplicationRecord
   scope :this_month, -> {where('date >= ? AND date <= ?', beginning_of_this_month, end_of_this_month)}
   scope :last_month, -> {where('date >= ? AND date <= ?', beginning_of_last_month, end_of_last_month)}
   scope :until_last_month, -> {where('date <= ?', end_of_last_month)}
-  # todo: month はわかりにくいしぶつかる可能性があるため、 year_month に変更する。
-  # @param []String] month  ex: "2019-01"
-  scope :one_month, -> (month) {where('date >= ? AND date <= ?', month.to_beginning_of_month, month.to_end_of_month)}
+  # 引数はString。 例: "2019-01"
+  scope :one_month, -> (period) {where('date >= ? AND date <= ?', period.to_beginning_of_month, period.to_end_of_month)}
   scope :except_repeat_ones, -> {where.not()}
   scope :category, -> (category_id){unscope(:order).where(category_id: category_id).order(date: :desc, created_at: :desc)}
   scope :both_f, -> {where(both_flg: false)}
@@ -65,49 +66,104 @@ class Expense < ApplicationRecord
   attr_accessor :is_new, :is_destroyed, :differences
   alias_method :is_new?, :is_new
   alias_method :is_destroyed?, :is_destroyed
+  alias_attribute :is_for_both?, :both_flg
 
-  after_initialize { self.is_new = self.new_record? }
+  after_initialize { self.is_new = true unless self.id }
   before_save :set_differences
   before_destroy { self.is_destroyed = true }
   after_commit { go_calculate_balance(self) }
-
-  # todo: percent をenumに変更して0から始める。
-  # 現状 => { '半分' => 1, '3分の1' => 2, '3分の2' => 3, '相手100%' => 4 }
-  # enum :percent in: { 'half' => 1, 'one_third' => 2, 'two_third' => 3, 'all_for_partner' => 4 }
-
 
   # 金額に関するカラムを配列で返す。
   def self.money_attributes
     %w(amount mypay partnerpay)
   end
 
-  # viewで出費リストを表示するために、並び替えを行うメソッド
-  # @param [boolean] both_flg 二人のための出費ならtrue, 自分だけのためのフラグならfalse
-  # @return 基本的には新しいものが上に表示されるようにしているが、繰り返し出費で入力されたものは、普通の出費が全て表示された後に表示されるように並び替えている
-  def self.arrange(both_flg)
-    expenses = both_flg ? self.both_t : self.both_f
-    ids = expenses.where(repeat_expense_id: nil).newer.map{|i| i.id}
-    repeat_ones = expenses.where.not(repeat_expense_id: nil).newer.map{|i| i.id}
-    unless repeat_ones[0] == nil
-      ids += repeat_ones
-    end
-    order_condition = "CASE id "
-    ids.each_with_index do |id, index|
-      order_condition << sanitize_sql_array(["WHEN ? THEN ? ", id, index])
-    end
-    order_condition << sanitize_sql_array(["ELSE ? END", ids.length])
-    if ids.empty?
-      self.where(id: ids)
-    else
-      self.where(id: ids).order(order_condition)
+  # @param [User] user
+  # @param [String] period "2019-02"
+  # @return [Expense]
+  def self.all_for_one_month(user, period)
+    partner = user.partner
+    self.includes(:user, :category).references(:users, :categories).where(users: {id: [user, partner]}).one_month(period).order(date: :desc, created_at: :desc)
+  end
+
+  # @note 該当月と引数のカテゴリの出費でユーザーの全ての出費とパートナーの二人の出費を取得
+  # @param [User] user
+  # @param [Category] category
+  # @param [String] period "2019-02"
+  # @return [Expense]
+  def self.specified_category_for_one_month(user, category, period)
+    partner = user.partner
+    self.includes(:user, :category).references(:users, :categories).where(categories: {id: category}).one_month(period).where("users.id = ? OR (users.id = ? AND both_flg = ?)", user.id, partner.id, true).order(date: :desc, created_at: :desc)
+  end
+
+  def set_mypay_and_partnerpay
+    return if !is_for_both?
+    case percent
+    when "pay_all"
+      self.mypay = amount
+      self.partnerpay = 0
+    when "pay_half"
+      self.mypay = (amount / 2).round
+      self.partnerpay = (amount - mypay)
+    when "pay_one_third"
+      self.mypay = (amount / 3).round
+      self.partnerpay = (amount - mypay)
+    when "pay_two_thirds"
+      self.mypay = (amount * 2 / 3).round
+      self.partnerpay = (amount - mypay)
+    when "pay_nothing"
+      self.mypay = 0
+      self.partnerpay = amount
     end
   end
 
+  def calculate_amount
+    return unless is_for_both?
+    if mypay.nil? || partnerpay.nil? || mypay + partnerpay != amount
+      errors[:base] << "入力した金額の合計が支払い金額と一致しません"
+    end
+  end
+
+  # ユーザーと該当月からその月の支出合計額を算出
+  # @param user: Userクラス, month: Stringクラス "2019-01"
+  # @return Integer 支出合計額
+  def self.one_month_total_expenditures(user, period)
+    # 自分の一人の出費の支払い額(amount)の合計額 + 自分の二人の出費の自分の支払い分(mypay)の合計額 + パートナーの二人の出費のパートナーの支払い分(partner)の合計額
+    user_expenses = user.expenses.one_month(period)
+    user_expenses.both_f.sum(:amount) + user_expenses.both_t.sum(:mypay) + user.partner.expenses.one_month(period).both_t.sum(:partnerpay)
+  end
+
+  def is_own_expense?(user, category=self.category)
+    !is_for_both? && self.user == user && self.category == category
+  end
+
+  def is_both_expense_paid_by?(user, category)
+    is_for_both? && self.user == user && self.category == category
+  end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  # fixme: this occur n+1
   # 手渡し料金表示画面で今月の料金を計算するメソッド
   def self.both_this_month(current_user, partner)
     current_user.expenses.this_month.both_t.sum(:mypay) + partner.expenses.this_month.both_t.sum(:partnerpay) - current_user.expenses.this_month.both_t.sum(:amount)
   end
 
+  # fixme: this occur n+1
   # 手渡し料金表示画面で先月の料金を計算するメソッド
   def self.both_last_month(current_user, partner)
     current_user.expenses.last_month.both_t.sum(:mypay) + partner.expenses.last_month.both_t.sum(:partnerpay) - current_user.expenses.last_month.both_t.sum(:amount)
@@ -154,15 +210,6 @@ class Expense < ApplicationRecord
     future_expenses.destroy_all
     past_expenses = user.expenses.where('repeat_expense_id = ? AND date <= ?', repeat_expense_id, Date.today.beginning_of_month)
     past_expenses.update(repeat_expense_id: nil)
-  end
-
-  # ユーザーと該当月からその月の支出合計額を算出
-  # @param user: Userクラス, month: Stringクラス "2019-01"
-  # @return Integer 支出合計額
-  def self.one_month_total_expenditures(user, month)
-    # 自分の一人の出費の支払い額(amount)の合計額 + 自分の二人の出費の自分の支払い分(mypay)の合計額 + パートナーの二人の出費のパートナーの支払い分(partner)の合計額
-    user_expenses = user.expenses.one_month(month)
-    user_expenses.both_f.sum(:amount) + user_expenses.both_t.sum(:mypay) + user.partner.expenses.one_month(month).both_t.sum(:partnerpay)
   end
 
 end

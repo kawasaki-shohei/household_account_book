@@ -11,7 +11,20 @@
 // about supported directives.
 //
 //= require rails-ujs
-//= require jquery3
-//= require popper
-//= require bootstrap
-//= require_tree .
+//= require jquery/dist/jquery.min
+//= require bootstrap/dist/js/bootstrap.min
+//= require admin-lte/dist/js/adminlte.min
+//= require admin-lte/plugins/jQueryUI/jquery-ui.min
+//= require jquery-ui-touch-punch/jquery.ui.touch-punch.min
+// require_tree .
+
+// arg.period => "2018-08"
+// arg.tab => "expenses"
+// arg.category => "1"
+// arg.expense => "1805" (expenseのid)
+let arg = new Object;
+const pair=location.search.substring(1).split('&');
+for(var i=0;pair[i];i++) {
+  let kv = pair[i].split('=');
+  arg[kv[0]]=kv[1];
+}

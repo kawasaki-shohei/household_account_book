@@ -33,7 +33,8 @@ class Income < ApplicationRecord
   validates :amount, format: { with: /[0-9]+/ }, length: { maximum: 10 }
   validates_length_of :memo, maximum: 100
 
-  scope :one_month, -> (month) {where('date >= ? AND date <= ?', month.to_beginning_of_month, month.to_end_of_month)}
+  scope :one_month, -> (period) {where('date >= ? AND date <= ?', period.to_beginning_of_month, period.to_end_of_month)}
+  scope :newer, -> {order(date: :desc, created_at: :desc)}
 
   attr_accessor :is_new, :is_destroyed, :differences
   alias_method :is_new?, :is_new
@@ -45,8 +46,8 @@ class Income < ApplicationRecord
   after_commit { go_calculate_balance(self) }
 
   # 該当付きの収入の合計値を算出
-  def self.one_month_total_income(user, month)
-    user.incomes.one_month(month).sum(:amount)
+  def self.one_month_total_income(user, year_month)
+    user.incomes.one_month(year_month).sum(:amount)
   end
 
   # 金額に関するカラムを配列で返す。

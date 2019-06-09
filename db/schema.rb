@@ -10,38 +10,47 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_03_054539) do
+ActiveRecord::Schema.define(version: 2019_04_27_005202) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "badgets", force: :cascade do |t|
+  create_table "balances", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "period"
+    t.integer "amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id", "period"], name: "index_balances_on_user_id_and_period", unique: true
+    t.index ["user_id"], name: "index_balances_on_user_id"
+  end
+
+  create_table "budgets", force: :cascade do |t|
     t.integer "amount"
     t.bigint "user_id"
     t.bigint "category_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["category_id"], name: "index_badgets_on_category_id"
-    t.index ["user_id"], name: "index_badgets_on_user_id"
-  end
-
-  create_table "balances", force: :cascade do |t|
-    t.bigint "user_id"
-    t.string "month"
-    t.integer "amount"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id", "month"], name: "index_balances_on_user_id_and_month", unique: true
-    t.index ["user_id"], name: "index_balances_on_user_id"
+    t.index ["category_id"], name: "index_budgets_on_category_id"
+    t.index ["user_id"], name: "index_budgets_on_user_id"
   end
 
   create_table "categories", force: :cascade do |t|
-    t.string "kind"
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
     t.boolean "common", default: false
     t.index ["user_id"], name: "index_categories_on_user_id"
+  end
+
+  create_table "couples", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "partner_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["partner_id"], name: "index_couples_on_partner_id", unique: true
+    t.index ["user_id"], name: "index_couples_on_user_id", unique: true
   end
 
   create_table "deleted_records", force: :cascade do |t|
@@ -75,7 +84,7 @@ ActiveRecord::Schema.define(version: 2019_02_03_054539) do
     t.boolean "both_flg", default: false
     t.integer "mypay"
     t.integer "partnerpay"
-    t.integer "percent"
+    t.integer "percent", limit: 2, null: false
     t.bigint "repeat_expense_id"
     t.index ["repeat_expense_id"], name: "index_expenses_on_repeat_expense_id"
   end
@@ -110,7 +119,7 @@ ActiveRecord::Schema.define(version: 2019_02_03_054539) do
   end
 
   create_table "pays", force: :cascade do |t|
-    t.integer "pamount"
+    t.integer "amount"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -144,10 +153,8 @@ ActiveRecord::Schema.define(version: 2019_02_03_054539) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "allow_share_own", default: false
-    t.bigint "partner_id"
     t.boolean "sys_admin", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["partner_id"], name: "index_users_on_partner_id", unique: true
   end
 
   create_table "wants", force: :cascade do |t|
@@ -160,10 +167,12 @@ ActiveRecord::Schema.define(version: 2019_02_03_054539) do
     t.index ["user_id"], name: "index_wants_on_user_id"
   end
 
-  add_foreign_key "badgets", "categories"
-  add_foreign_key "badgets", "users"
   add_foreign_key "balances", "users"
+  add_foreign_key "budgets", "categories"
+  add_foreign_key "budgets", "users"
   add_foreign_key "categories", "users"
+  add_foreign_key "couples", "users"
+  add_foreign_key "couples", "users", column: "partner_id"
   add_foreign_key "deleted_records", "users", column: "deleted_by"
   add_foreign_key "deposits", "users"
   add_foreign_key "expenses", "repeat_expenses"
@@ -173,6 +182,5 @@ ActiveRecord::Schema.define(version: 2019_02_03_054539) do
   add_foreign_key "pays", "users"
   add_foreign_key "repeat_expenses", "categories"
   add_foreign_key "repeat_expenses", "users"
-  add_foreign_key "users", "users", column: "partner_id"
   add_foreign_key "wants", "users"
 end

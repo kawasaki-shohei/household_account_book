@@ -1,0 +1,10 @@
+id = "<%= @category.id %>";
+removeList = document.querySelector(`#category-list-id-${id}`);
+parentElementId = '#own-categories';
+html = "<%= j(render partial: 'categories/a_own_category_list', locals: { category: @category }) %>";
+parentElement = document.querySelector(parentElementId);
+list = document.createElement('li');
+list.id = `category-list-id-${id}`;
+list.innerHTML = html;
+parentElement.appendChild(list);
+removeList.outerHTML = '';

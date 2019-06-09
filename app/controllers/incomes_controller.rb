@@ -1,8 +1,7 @@
 class IncomesController < ApplicationController
-  before_action :set_income, only: [:edit, :update, :destroy]
 
   def index
-    @incomes = current_user.incomes.order(date: :desc)
+    @incomes = current_user.incomes.newer.page(params[:page])
   end
 
   def new
@@ -19,9 +18,11 @@ class IncomesController < ApplicationController
   end
 
   def edit
+    @income = Income.find(params[:id])
   end
 
   def update
+    @income = Income.find(params[:id])
     if @income.update(income_params)
       redirect_to incomes_path, notice: "収入を更新しました。"
     else
@@ -30,6 +31,7 @@ class IncomesController < ApplicationController
   end
 
   def destroy
+    @income = Income.find(params[:id])
     @income.destroy
     redirect_to incomes_path, notice: "収入を削除しました。"
   end
@@ -37,9 +39,5 @@ class IncomesController < ApplicationController
   private
   def income_params
     params.require(:income).permit(:amount, :date, :memo)
-  end
-
-  def set_income
-    @income = Income.find(params[:id])
   end
 end
