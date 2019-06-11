@@ -101,7 +101,7 @@
                             <%= category.expenses_sum(@expenses, @current_user).to_s(:delimited) %>
                           </td>
                           <td class="text-center td-middle">
-                            <%= link_to expenses_path(period: params[:period], category: category.id), class: "inherit-color" do %>
+                            <%= link_to expenses_path(period: params[:period], category: category.id, tab: 'expenses'), class: "inherit-color" do %>
                               <i class="fa fa-lg fa-history"></i>
                             <% end %>
                           </td>
@@ -116,7 +116,7 @@
 
               <div class="tab-pane <%= active_analyses_tab('budgets') %>" id="budgets_comparison">
                 <div class="box-body no-padding">
-                  <div class="table-responsive no-margin no-border-right no-border-left">
+                  <div class="table-responsive budgets-comparison-table">
                     <table class="table no-border" >
                     <tbody>
                     <tr>
@@ -130,7 +130,7 @@
                       <td class="td-middle no-top-bottom-padding">
                         <small><i class="fa fa-cny"></i><%= total_expense.to_s(:delimited) %></small>
                       </td>
-                      <td class="td-middle no-top-bottom-padding">
+                      <td class="td-middle no-top-bottom-padding text-right">
                         <%= show_balance(@balance.try(:amount) || (total_income - total_expense)) %>
                       </td>
                     </tr>
@@ -154,7 +154,7 @@
                       <td class="td-middle no-top-bottom-padding">
                         <small><i class="fa fa-cny"></i><%= total_expense.to_s(:delimited) %></small>
                       </td>
-                      <td class="td-middle no-top-bottom-padding">
+                      <td class="td-middle no-top-bottom-padding text-right">
                         <%= show_balance(total_budget - total_expense) %>
                       </td>
                     </tr>
@@ -174,13 +174,17 @@
                           <span class="category-circle mushroom"><i class="fa fa-lg fa-shopping-cart"></i></span>
                         </td>
                         <td class="td-middle no-top-bottom-padding"><h5 class="no-margin-bottom"><%= category.name %></h5></td>
-                        <td></td>
+                        <td class="text-right">
+                          <%= link_to expenses_path(period: params[:period], category: category.id, tab: 'budgets'), class: "inherit-color" do %>
+                            <i class="fa fa-lg fa-history"></i>
+                          <% end %>
+                        </td>
                       </tr>
                       <tr>
                         <td class="td-middle no-top-bottom-padding">
                           <small><i class="fa fa-cny"></i><%= category_expense_amount = category.expenses_sum(@expenses, @current_user); category_expense_amount.to_s(:delimited) %></small>
                         </td>
-                        <td class="td-middle no-top-bottom-padding">
+                        <td class="td-middle no-top-bottom-padding text-right">
                           <%= show_balance(category.budget_balance(category_expense_amount, @current_user)) %>
                         </td>
                       </tr>
