@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_27_005202) do
+ActiveRecord::Schema.define(version: 2019_06_11_215728) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -84,7 +84,7 @@ ActiveRecord::Schema.define(version: 2019_04_27_005202) do
     t.boolean "both_flg", default: false
     t.integer "mypay"
     t.integer "partnerpay"
-    t.integer "percent", limit: 2, null: false
+    t.integer "percent", limit: 2, default: 0, null: false
     t.bigint "repeat_expense_id"
     t.index ["repeat_expense_id"], name: "index_expenses_on_repeat_expense_id"
   end
