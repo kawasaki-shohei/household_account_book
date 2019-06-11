@@ -101,7 +101,7 @@
                             <%= category.expenses_sum(@expenses, @current_user).to_s(:delimited) %>
                           </td>
                           <td class="text-center td-middle">
-                            <%= link_to expenses_path(period: params[:period], category: category.id), class: "inherit-color" do %>
+                            <%= link_to expenses_path(period: params[:period], category: category.id, tab: 'expenses'), class: "inherit-color" do %>
                               <i class="fa fa-lg fa-history"></i>
                             <% end %>
                           </td>
@@ -174,7 +174,11 @@
                           <span class="category-circle mushroom"><i class="fa fa-lg fa-shopping-cart"></i></span>
                         </td>
                         <td class="td-middle no-top-bottom-padding"><h5 class="no-margin-bottom"><%= category.name %></h5></td>
-                        <td></td>
+                        <td class="text-right">
+                          <%= link_to expenses_path(period: params[:period], category: category.id, tab: 'budgets'), class: "inherit-color" do %>
+                            <i class="fa fa-lg fa-history"></i>
+                          <% end %>
+                        </td>
                       </tr>
                       <tr>
                         <td class="td-middle no-top-bottom-padding">

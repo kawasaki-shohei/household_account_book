@@ -42,7 +42,9 @@ module ExpensesHelper
   def analyses_params
     # analyses#indexに行かず、expenses#indexを初めて開く場合はsession[:analyses_params]がない場合がある。
     return if session[:analyses_params].nil?
-    parameters = session[:analyses_params]
+    parameters = {}
+    parameters[:period] = params[:period] if params[:period]
+    parameters[:tab] = params[:tab] if params[:tab]
     if @category.present?
       parameters[:category] = @category.id
     end
