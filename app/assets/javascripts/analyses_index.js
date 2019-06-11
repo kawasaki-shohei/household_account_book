@@ -41,7 +41,7 @@ expensePanelHeading.addEventListener('click', () => {
 });
 
 // ページ読み込み後にパラメーターで指定したカテゴリーまでスクロールする。
-// todo: スクロールしたあとに、指定したカテゴリーを強調する処理を入れないとわかりにくいためコメントアウト。
+// todo: スクロールしたあとに、指定したカテゴリーを強調する処理を入れないとわかりにくい。
 window.onload = function(){
   if(arg.category){
     const category_id = arg.category;
