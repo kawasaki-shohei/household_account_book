@@ -9,7 +9,6 @@ class AnalysesController < ApplicationController
     @expenses = Expense.all_for_one_month(@current_user, period_params)
     @incomes = @current_user.incomes.where(income_params)
     @balance = @current_user.balances.find_by(period: period_params)
-    session[:analyses_params] = {tab: params[:tab], period: period_params}
   end
 
   private
