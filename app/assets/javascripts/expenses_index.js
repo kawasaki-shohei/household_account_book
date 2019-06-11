@@ -30,6 +30,6 @@ window.onload = function(){
     const expense_id = arg.expense;
     const target = document.querySelector(`#expense-list-id-${expense_id}`);
     const rect = target.getBoundingClientRect();
-    window.scrollBy({top: rect.top - 30, behavior: "smooth"});
+    window.scrollBy({top: rect.top - 50, behavior: "smooth"});
   }
 };
