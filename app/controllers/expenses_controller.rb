@@ -26,7 +26,6 @@ class ExpensesController < ApplicationController
     @expense = @current_user.expenses.build(expense_params)
     if @expense.save
       category = @expense.category
-      set_expenses_list_params
       redirect_to expenses_path(period: @expense.date.to_s_as_period, expense: @expense.id), notice: "出費を保存しました。#{category.name}: #{@expense.amount.to_s(:delimited)}円"
     else
       @categories = Category.ones_categories(@current_user)
@@ -43,7 +42,6 @@ class ExpensesController < ApplicationController
     @expense = Expense.find(params[:id])
     if @expense.update(expense_params)
       category = @expense.category
-      set_expenses_list_params
       redirect_to expenses_path(period: @expense.date.to_s_as_period, expense: @expense.id), notice: "出費を保存しました。#{category.name}: #{@expense.amount.to_s(:delimited)}円"
     else
       @categories = Category.ones_categories(@current_user)
@@ -53,7 +51,6 @@ class ExpensesController < ApplicationController
 
   def destroy
     @expense = Expense.find(params[:id])
-    set_expenses_list_params
     @expense.destroy
     create_notification(@expense)
     redirect_to expenses_path(period: @expense.date.to_s_as_period), notice: "出費を削除しました"
@@ -62,10 +59,6 @@ class ExpensesController < ApplicationController
   private
   def expense_params
     params.require(:expense).permit(:amount, :category_id, :date, :memo, :both_flg, :mypay, :partnerpay).merge(percent: params[:expense][:percent].to_i)
-  end
-
-  def set_expenses_list_params
-    session[:analyses_params] = {period: @expense.date.to_s_as_period, tab: 'expenses'}
   end
 
 end
