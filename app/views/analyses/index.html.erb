@@ -116,7 +116,7 @@
 
               <div class="tab-pane <%= active_analyses_tab('budgets') %>" id="budgets_comparison">
                 <div class="box-body no-padding">
-                  <div class="table-responsive no-margin no-border-right no-border-left">
+                  <div class="table-responsive budgets-comparison-table">
                     <table class="table no-border" >
                     <tbody>
                     <tr>
@@ -130,7 +130,7 @@
                       <td class="td-middle no-top-bottom-padding">
                         <small><i class="fa fa-cny"></i><%= total_expense.to_s(:delimited) %></small>
                       </td>
-                      <td class="td-middle no-top-bottom-padding">
+                      <td class="td-middle no-top-bottom-padding text-right">
                         <%= show_balance(@balance.try(:amount) || (total_income - total_expense)) %>
                       </td>
                     </tr>
@@ -154,7 +154,7 @@
                       <td class="td-middle no-top-bottom-padding">
                         <small><i class="fa fa-cny"></i><%= total_expense.to_s(:delimited) %></small>
                       </td>
-                      <td class="td-middle no-top-bottom-padding">
+                      <td class="td-middle no-top-bottom-padding text-right">
                         <%= show_balance(total_budget - total_expense) %>
                       </td>
                     </tr>
@@ -180,7 +180,7 @@
                         <td class="td-middle no-top-bottom-padding">
                           <small><i class="fa fa-cny"></i><%= category_expense_amount = category.expenses_sum(@expenses, @current_user); category_expense_amount.to_s(:delimited) %></small>
                         </td>
-                        <td class="td-middle no-top-bottom-padding">
+                        <td class="td-middle no-top-bottom-padding text-right">
                           <%= show_balance(category.budget_balance(category_expense_amount, @current_user)) %>
                         </td>
                       </tr>
