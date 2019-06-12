@@ -51,7 +51,7 @@ RSpec.describe Expense, type: :model do
         expect(expense).to be_valid
       end
 
-      it "is invalid with without a amount" do
+      it "is invalid without a amount" do
         expense = Expense.new(
           user: @user,
           category: @category,
@@ -61,7 +61,7 @@ RSpec.describe Expense, type: :model do
         expect(expense).to be_invalid
       end
 
-      it "is invalid with without a date" do
+      it "is invalid without a date" do
         expense = Expense.new(
           user: @user,
           category: @category,
@@ -71,7 +71,7 @@ RSpec.describe Expense, type: :model do
         expect(expense).to be_invalid
       end
 
-      it "is invalid with without a category_id" do
+      it "is invalid without a category_id" do
         expense = Expense.new(
           user: @user,
           category: nil,
@@ -81,7 +81,7 @@ RSpec.describe Expense, type: :model do
         expect(expense).to be_invalid
       end
 
-      it "is invalid with without a user_id" do
+      it "is invalid without a user_id" do
         expense = Expense.new(
           user: nil,
           category: @category,
@@ -96,11 +96,68 @@ RSpec.describe Expense, type: :model do
 
     context "when both expenses" do
       it "is valid with a amount, user_id, category_id, date, true both_flg, percent, mypay and partnerpay" do
+        expense = Expense.new(
+          user: @user,
+          category: @category,
+          amount: 1000,
+          date: Time.zone.today,
+          both_flg: true,
+          percent: 1,
+          mypay: 500,
+          partnerpay: 500
+        )
+        expect(expense).to be_valid
+      end
 
+      it "is invalid without mypay" do
+        expense = Expense.new(
+          user: @user,
+          category: @category,
+          amount: 1000,
+          date: Time.zone.today,
+          both_flg: true,
+          percent: -1,
+          mypay: nil,
+          partnerpay: 500
+        )
+        expect(expense).to be_invalid
+        expect(expense.errors.full_messages.size).to eq(1)
+        expect(expense.errors.full_messages.first).to eq("入力した金額の合計が支払い金額と一致しません")
+      end
+
+      it "is invalid without partnerpay" do
+        expense = Expense.new(
+          user: @user,
+          category: @category,
+          amount: 1000,
+          date: Time.zone.today,
+          both_flg: true,
+          percent: -1,
+          mypay: 500,
+          partnerpay: nil
+        )
+        expect(expense).to be_invalid
+        expect(expense.errors.full_messages.size).to eq(1)
+        expect(expense.errors.full_messages.first).to eq("入力した金額の合計が支払い金額と一致しません")
+      end
+
+      it "is invalid when additions of mypay and partnerpay is wrong with amount" do
+        expense = Expense.new(
+          user: @user,
+          category: @category,
+          amount: 1000,
+          date: Time.zone.today,
+          both_flg: true,
+          percent: -1,
+          mypay: 400,
+          partnerpay: 500
+        )
+        expect(expense).to be_invalid
+        expect(expense.errors.full_messages.size).to eq(1)
+        expect(expense.errors.full_messages.first).to eq("入力した金額の合計が支払い金額と一致しません")
       end
 
     end
-
   end
 
 end
