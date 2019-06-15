@@ -1,6 +1,6 @@
 <div class="expenses-narrow-down-area">
   <div class="row">
-    <div class="shift-period col-xs-12">
+    <div class="shift-period col-md-8 col-xs-12">
       <%= to_expenses_last_month_btn %>
       <div class="col-xs-5 text-center period-selection">
         <%= select_tag :period, options_for_year_month, class: "form-control text-center", id: "period-select" %>
@@ -8,7 +8,7 @@
       <%= to_expenses_next_month_btn %>
     </div><!--/.shift-period -->
 
-    <div class="col-xs-12">
+    <div class="col-md-8 col-xs-12">
       <div class="col-xs-9 expense-category-selection-part">
         <%= select_tag 'expenses[category]', options_for_select(category_selection_without_only_partner_own, params[:category]), include_blank: "全てのカテゴリー", class: 'form-control', id: 'expense-category-selection' %>
       </div>

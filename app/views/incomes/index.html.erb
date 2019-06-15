@@ -1,16 +1,20 @@
 <%= render partial: 'shared/html_title', locals: {subtitle: "収入一覧"} %>
 <div class="content-wrapper">
 
-  <section class="content-header">
-    <%= render 'shared/notice_flash_message' %>
-    <h1>収入一覧</h1>
+   <section class="content-header">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2 col-xs-12">
+        <%= render 'shared/notice_flash_message' %>
+        <h3>収入一覧</h3>
+      </div>
+    </div>
   </section>
 
   <!-- Main content -->
   <section class="content">
     <div class="row">
       <!-- left column -->
-      <div class="col-md-12">
+      <div class="col-md-8 col-md-offset-2 col-xs-12">
         <%= link_to '収入を追加', new_income_path, class: "btn btn-orange btn-block" %>
       </div>
     </div>
@@ -18,7 +22,7 @@
     <br />
 
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-8 col-md-offset-2 col-xs-12">
         <div class="box box-brown">
 
           <div class="box-body no-padding">

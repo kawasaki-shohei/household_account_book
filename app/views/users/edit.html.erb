@@ -2,20 +2,24 @@
 <div class="content-wrapper">
 
   <section class="content-header">
-    <% if @partner.nil? %>
-      <div class="alert alert-danger alert-dismissible text-white">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-        <h5>パートナーを登録してください。</h5>
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2 col-xs-12">
+        <% if @partner.nil? %>
+          <div class="alert alert-danger alert-dismissible text-white">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h5>パートナーを登録してください。</h5>
+          </div>
+        <% end %>
+        <%= render 'shared/notice_flash_message' %>
+        <h3>アカウント設定</h3>
       </div>
-    <% end %>
-    <%= render 'shared/notice_flash_message' %>
-    <h1>アカウント設定</h1>
+    </div>
   </section>
 
   <!-- Main content -->
   <section class="content">
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-8 col-md-offset-2 col-xs-12">
         <div class="box box-brown">
 
           <div class="box-body">
