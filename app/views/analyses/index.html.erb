@@ -7,7 +7,7 @@
         <%= render 'shared/notice_flash_message' %>
 
         <div class="row">
-          <div class="shift-period col-md-8 col-md-offset-2 col-xs-12">
+          <div class="shift-period col-md-8 col-xs-12">
             <%= to_analyses_last_month_btn %>
             <dic class="col-xs-5 text-center period-selection">
               <%= select_tag :period, options_for_year_month, class: "form-control text-center", id: "period-select" %>
