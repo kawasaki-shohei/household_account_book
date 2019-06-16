@@ -4,7 +4,7 @@ class FrontsController < ApplicationController
   end
 
   def new
-    @expense = Expense.new
+    @repeat_expense = RepeatExpense.new
     @categories = Category.ones_categories(@current_user)
   end
 

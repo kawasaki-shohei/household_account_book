@@ -33,16 +33,16 @@
 
 class Expense < ApplicationRecord
   include BalanceHelper
+  include PercentCalculator
 
   belongs_to :user
   belongs_to :category
 
   before_validation :set_mypay_and_partnerpay
 
-  validates :amount, :date, presence: true
+  validates :amount, :date, :percent, presence: true
   validates_length_of :amount, :mypay, :partnerpay, maximum: 10
   validates_length_of :memo, maximum: 100
-  validates :percent, presence: true
   validate :calculate_amount
 
   # todo: これはテーブルを作ってユーザーが自由に変更できるようにする。
@@ -96,34 +96,6 @@ class Expense < ApplicationRecord
     self.includes(:user, :category).references(:users, :categories).where(categories: {id: category}).one_month(period).where("users.id = ? OR (users.id = ? AND both_flg = ?)", user.id, partner.id, true).order(date: :desc, created_at: :desc)
   end
 
-  def set_mypay_and_partnerpay
-    return if !is_for_both?
-    case percent
-    when "pay_all"
-      self.mypay = amount
-      self.partnerpay = 0
-    when "pay_half"
-      self.mypay = (amount / 2).round
-      self.partnerpay = (amount - mypay)
-    when "pay_one_third"
-      self.mypay = (amount / 3).round
-      self.partnerpay = (amount - mypay)
-    when "pay_two_thirds"
-      self.mypay = (amount * 2 / 3).round
-      self.partnerpay = (amount - mypay)
-    when "pay_nothing"
-      self.mypay = 0
-      self.partnerpay = amount
-    end
-  end
-
-  def calculate_amount
-    return unless is_for_both?
-    if mypay.nil? || partnerpay.nil? || mypay + partnerpay != amount
-      errors[:base] << "入力した金額の合計が支払い金額と一致しません"
-    end
-  end
-
   # ユーザーと該当月からその月の支出合計額を算出
   # @param user: Userクラス, month: Stringクラス "2019-01"
   # @return Integer 支出合計額
@@ -131,6 +103,10 @@ class Expense < ApplicationRecord
     # 自分の一人の出費の支払い額(amount)の合計額 + 自分の二人の出費の自分の支払い分(mypay)の合計額 + パートナーの二人の出費のパートナーの支払い分(partner)の合計額
     user_expenses = user.expenses.one_month(period)
     user_expenses.both_f.sum(:amount) + user_expenses.both_t.sum(:mypay) + user.partner.expenses.one_month(period).both_t.sum(:partnerpay)
+  end
+
+  def self.necessary_attributes_from_repeat_exepnses
+    %w(amount memo category_id user_id both_flg mypay partnerpay percent)
   end
 
   def is_own_expense?(user, category=self.category)
@@ -170,15 +146,17 @@ class Expense < ApplicationRecord
   end
 
   # 新しく繰り返し出費が登録されたときに、expensesテーブルに該当する出費をインサートしていくメソッド
-  def self.creat_repeat_expenses(repeat_expense, expense_params)
+  def self.creat_repeat_expenses!(repeat_expense)
+    expense_attributes = {}
+    repeat_expense.attributes.each{ |k, v| expense_attributes["#{k}"] = v if Expense.necessary_attributes_from_repeat_exepnses.include?(k) }
     s_date = repeat_expense.s_date
     e_date = repeat_expense.e_date
     r_date = repeat_expense.r_date
     (s_date..e_date).select{|d| d.day == r_date }.each do |date|
-      expense = Expense.new(expense_params)
+      expense = Expense.new(expense_attributes)
       expense.date = date
       expense.repeat_expense_id = repeat_expense.id
-      expense.save
+      expense.save!
     end
   end
 
