@@ -22,18 +22,19 @@
 #
 
 FactoryBot.define do
-  # factory :users do
-  #   email "user@gmail.com"
-  #   name "user"
-  #   password "000000"
-  #   password_confirm "000000"
-  # end
-  #
+  factory :user do
+    email {"user@gmail.com"}
+    name {"user"}
+    password {"asdfasdf"}
+    password_confirmation {"asdfasdf"}
+  end
+
+  # 以下ではパートナーは作れない。
   # factory :partner do
-  #   email "partner@gmail.com"
-  #   name "partner"
-  #   password "000000"
-  #   password_confirm "000000"
-  #   partner User.first
+  #   email {"partner@gmail.com"}
+  #   name {"partner"}
+  #   password {"000000"}
+  #   password_confirmation {"000000"}
+  #   partner {User.first}
   # end
 end

@@ -13,7 +13,7 @@
 # **`memo`**               | `string`           |
 # **`mypay`**              | `integer`          |
 # **`partnerpay`**         | `integer`          |
-# **`percent`**            | `integer`          | `not null`
+# **`percent`**            | `integer`          | `default("pay_all"), not null`
 # **`created_at`**         | `datetime`         | `not null`
 # **`updated_at`**         | `datetime`         | `not null`
 # **`category_id`**        | `integer`          |
@@ -33,6 +33,9 @@
 
 FactoryBot.define do
   factory :expense do
-    
+    amount {1000}
+    date {Time.zone.today}
+    user {User.first}
+    category {user.categories.first}
   end
 end
