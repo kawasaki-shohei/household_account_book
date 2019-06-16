@@ -1,0 +1,40 @@
+<%= render partial: 'shared/html_title', locals: {subtitle: "繰り返し出費を編集"} %>
+<div class="content-wrapper">
+
+  <section class="content-header">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2 col-xs-12">
+        <h3>繰り返し出費を編集</h3>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2 col-xs-12">
+        <%= link_to '繰り返し出費一覧へ', repeat_expenses_path, class: "btn btn-brown space-bottom" %>
+
+        <div class="box box-brown">
+          <div class="box-body">
+            <% if @repeat_expense.is_for_both? %>
+              <%= render 'both_expense_form' %>
+            <% else %>
+              <%= render 'own_expense_form' %>
+            <% end %>
+          </div><!-- /.box-body -->
+        </div><!-- /.box.box-brown -->
+
+      </div><!-- /.col-md-12  -->
+    </div><!-- /row -->
+
+  </section><!-- /.content -->
+
+  <%= render 'expenses/calculator_modal' %>
+
+</div>
+
+<%= content_for :other_javascript do %>
+  <%= javascript_include_tag 'both_expenses_form' %>
+  <%= javascript_include_tag 'expenses_input_amount' %>
+<% end %>

@@ -45,14 +45,14 @@
   <div class="form-group">
     <%= f.label :date, value: '開始日' %>
     <div>
-      <%= f.date_field :s_date, required: true, value: @repeat_expense.default_date, class: "form-control" %>
+      <%= f.date_field :s_date, required: true, value: @repeat_expense.default_date('s_date'), class: "form-control" %>
     </div>
   </div>
 
   <div class="form-group">
     <%= f.label :date, value: '終了日' %>
     <div>
-      <%= f.date_field :e_date, required: true, value: @repeat_expense.default_date, class: "form-control" %>
+      <%= f.date_field :e_date, required: true, value: @repeat_expense.default_date('e_date'), class: "form-control" %>
     </div>
   </div>
 

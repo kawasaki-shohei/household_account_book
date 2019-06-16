@@ -37,12 +37,8 @@ class RepeatExpensesController < ApplicationController
   end
 
   def edit
-    @expense = RepeatExpense.find(params[:id])
-    if @expense.both_flg == false
-      @categories = Category.ones_categories(current_user)
-    else
-      @common_categories = common_categories
-    end
+    @repeat_expense = RepeatExpense.find(params[:id])
+    @categories = Category.ones_categories(@current_user)
   end
 
   def update
