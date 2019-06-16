@@ -13,7 +13,7 @@
 # **`memo`**         | `string`           |
 # **`mypay`**        | `integer`          |
 # **`partnerpay`**   | `integer`          |
-# **`percent`**      | `integer`          |
+# **`percent`**      | `integer`          | `not null`
 # **`r_date`**       | `integer`          |
 # **`s_date`**       | `date`             |
 # **`created_at`**   | `datetime`         | `not null`
@@ -37,6 +37,8 @@
 #
 
 class RepeatExpense < ApplicationRecord
+  enum percent: { manual_amount: -1, pay_all: 0, pay_half: 1, pay_one_third: 2, pay_two_thirds: 3, pay_nothing: 4 }
+
   belongs_to :category
   belongs_to :user
   has_many :expenses, dependent: :destroy

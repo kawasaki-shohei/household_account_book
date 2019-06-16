@@ -31,8 +31,7 @@ module ExpenseDecorator
   end
 
   def show_percent
-    #todo: percentにデフォルト値をつけたら、percent.nil?は不要
-    return if manual_amount? || percent.nil?
+    return if manual_amount?
     I18n.t("activerecord.enum.expense.percent.#{percent}")
   end
 
