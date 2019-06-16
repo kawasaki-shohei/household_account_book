@@ -3,7 +3,20 @@ module ExpenseDecorator
   def show_date(expenses, current_user, index)
     if index == 0 || date != expenses[index - 1].date
       expenses_of_the_date = expenses.select{ |e| e.date == date }
-      sum_of_the_date = category.expenses_sum(expenses_of_the_date, current_user)
+      number_of_category = expenses_of_the_date.map(&:category_id).uniq.size
+      if number_of_category == 1
+        sum_of_the_date = category.expenses_sum(expenses_of_the_date, current_user)
+      else
+        sum_of_the_date = expenses_of_the_date.inject(0) do |sum, expense|
+          if expense.is_own_expense?(current_user.partner)
+            sum
+          elsif expense.is_own_expense?(current_user)
+            sum + expense.amount
+          else
+            sum + expense.mypay
+          end
+        end
+      end
       content_tag(:li, class: "time-label") do
         concat content_tag(:span, l(date, format: :long), class: "bg-orange")
         concat (

@@ -1,14 +1,19 @@
 <%= render partial: 'shared/html_title', locals: {subtitle: "#{ @category.history_title(@period)}"} %>
 <div class="content-wrapper">
+
   <section class="content-header">
-    <%= render 'shared/notice_flash_message' %>
-    <%= render 'expenses_narrow_down_area' %>
-    <h3><%= @category.history_title(@period) %></h3>
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2 col-xs-12">
+        <%= render 'shared/notice_flash_message' %>
+        <%= render 'expenses_narrow_down_area' %>
+        <h3><%= @category.history_title(@period) %></h3>
+      </div>
+    </div>
   </section>
 
   <section class="content">
     <div class="row">
-      <div class="col-xs-12">
+      <div class="col-md-8 col-md-offset-2 col-xs-12">
         <%= back_btn_to_analyses_page %>
         <div class="box box-brown">
           <div class="box-body">
