@@ -14,7 +14,7 @@
 
     <div class="other-expense-details">
       <span><%= expense.check_mark(@current_user) %><%= @current_user.name %>の支払い</span>
-      <span class="space-left"><i class="fa fa-cny space-left text-"></i><%= expense.necessary_pay_of(@current_user).to_s(:delimited) %></span>
+      <span class="space-left"><i class="fa fa-cny space-left"></i><%= expense.necessary_pay_of(@current_user).to_s(:delimited) %></span>
     </div>
 
     <div class="other-expense-details">

@@ -31,3 +31,6 @@ select#percent_input{
   cursor:pointer;
   display: none;
 }
+.other-expense-details{
+  padding: 0 0 5px 10px;
+}

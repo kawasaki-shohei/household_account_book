@@ -3,8 +3,7 @@ class RepeatExpensesController < ApplicationController
   include CategoriesHelper
 
   def index
-    @current_user_expenses = current_user.repeat_expenses
-    @partner_expenses = partner.repeat_expenses
+    @repeat_expenses = RepeatExpense.includes(:user, :category).where(user: [@current_user, @partner]).order(created_at: :desc)
   end
 
   def both

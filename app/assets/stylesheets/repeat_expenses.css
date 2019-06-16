@@ -1,0 +1,15 @@
+.own-or-both-icon{
+  float: left;
+  width: 15px;
+  height: 15px;
+}
+.box-comments .repeat-exepnse-amount{
+  color: #4d2200 !important;
+  font-size: 1.2em;
+  display: block;
+  font-weight: 600;
+}
+.repeat-expense-percent{
+  font-size: 0.5em;
+  color: #777;
+}

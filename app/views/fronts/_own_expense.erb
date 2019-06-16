@@ -1,0 +1,19 @@
+<i class="fa fa-user own-or-both-icon"></i>
+<div class="comment-text">
+  <div class="repeat-exepnse-amount">
+    <i class="fa fa-cny"></i><%= repeat_expense.amount.to_s(:delimited) %>
+    <% unless repeat_expense.user == partner %>
+      <div class="pull-right">
+        <%= link_to edit_repeat_expense_path(repeat_expense) do %>
+          <i class="fa fa-lg fa-edit text-redpepper"></i>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <div><%= l(repeat_expense.s_date, format: :japanese_date_default) %> 〜 <%= l(repeat_expense.e_date, format: :japanese_date_default) %></div>
+  <div>
+    <span class="space-right"><%= repeat_expense.category.name %></span>
+    <span><%= repeat_expense.memo %></span>
+  </div>
+</div><!-- /.comment-text -->

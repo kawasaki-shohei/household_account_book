@@ -60,4 +60,8 @@ class RepeatExpense < ApplicationRecord
   def self.arrange(both_flg)
     both_flg ? self.both_t.newer : self.both_f.newer
   end
+
+  def is_own_expense?(user, category=self.category)
+    !is_for_both? && self.user == user && self.category == category
+  end
 end
