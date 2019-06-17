@@ -23,18 +23,24 @@
 
 FactoryBot.define do
   factory :user do
-    email {"user@gmail.com"}
-    name {"user"}
-    password {"asdfasdf"}
-    password_confirmation {"asdfasdf"}
+    name { Faker::Name.name }
+    email { Faker::Internet.email }
+    password { "password" }
+    password_confirmation { "password" }
+
+    factory :user_with_partner, class: 'User' do
+      after(:create) do |user|
+        partner = create(:partner)
+        create(:couple, user: user, partner: partner)
+        create(:couple, user: partner, partner: user)
+      end
+    end
   end
 
-  # 以下ではパートナーは作れない。
-  # factory :partner do
-  #   email {"partner@gmail.com"}
-  #   name {"partner"}
-  #   password {"000000"}
-  #   password_confirmation {"000000"}
-  #   partner {User.first}
-  # end
+  factory :partner, class: 'User' do
+    name { Faker::Name.name }
+    email { Faker::Internet.email }
+    password {"password"}
+    password_confirmation {"password"}
+  end
 end
