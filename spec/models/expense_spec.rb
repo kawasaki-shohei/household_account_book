@@ -160,4 +160,43 @@ RSpec.describe Expense, type: :model do
     end
   end
 
+  describe "Check percent, mypay and partnerpay are set correctly" do
+    before do
+      @user = FactoryBot.create(:user_with_partner)
+      @category = FactoryBot.create(:category)
+    end
+
+    context "when inserting own expense" do
+      it "percent is always pay_all" do
+        expense = Expense.create(
+          user: @user,
+          category: @category,
+          amount: 1000,
+          date: Faker::Date.backward(365)
+        )
+        expect(expense.both_flg).to be_falsey
+        expect(expense.percent).to eq("pay_all")
+      end
+    end
+
+    context "when inserting both expense with specified percent except from manual_amount" do
+      context "when percent is pay_all" do
+        it "mypay and partnerpay are set automatically with correct value" do
+          expense = Expense.create(
+            user: @user,
+            category: @category,
+            amount: 1000,
+            date: Time.zone.today,
+            both_flg: true,
+            percent: 0
+          )
+          expect(expense.percent).to eq("pay_all")
+          expect(expense.mypay).to be == 1000
+          expect(expense.partnerpay).to be == 0
+        end
+      end
+
+    end
+
+  end
 end
