@@ -180,20 +180,74 @@ RSpec.describe Expense, type: :model do
     end
 
     context "when inserting both expense with specified percent except from manual_amount" do
-      context "when percent is pay_all" do
-        it "mypay and partnerpay are set automatically with correct value" do
-          expense = Expense.create(
-            user: @user,
-            category: @category,
-            amount: 1000,
-            date: Time.zone.today,
-            both_flg: true,
-            percent: 0
-          )
-          expect(expense.percent).to eq("pay_all")
-          expect(expense.mypay).to be == 1000
-          expect(expense.partnerpay).to be == 0
-        end
+      it "mypay and partnerpay are set automatically with correct value when percent is pay_all" do
+        expense = Expense.create(
+          user: @user,
+          category: @category,
+          amount: 1000,
+          date: Time.zone.today,
+          both_flg: true,
+          percent: 0
+        )
+        expect(expense.percent).to eq("pay_all")
+        expect(expense.mypay).to be == 1000
+        expect(expense.partnerpay).to be == 0
+      end
+
+      it "mypay and partnerpay are set automatically with correct value when percent is pay_half" do
+        expense = Expense.create(
+          user: @user,
+          category: @category,
+          amount: 1000,
+          date: Time.zone.today,
+          both_flg: true,
+          percent: 1
+        )
+        expect(expense.percent).to eq("pay_half")
+        expect(expense.mypay).to be == 500
+        expect(expense.partnerpay).to be == 500
+      end
+
+      it "mypay and partnerpay are set automatically with correct value when percent is pay_one_third" do
+        expense = Expense.create(
+          user: @user,
+          category: @category,
+          amount: 1000,
+          date: Time.zone.today,
+          both_flg: true,
+          percent: 2
+        )
+        expect(expense.percent).to eq("pay_one_third")
+        expect(expense.mypay).to be == 333
+        expect(expense.partnerpay).to be == 667
+      end
+
+      it "mypay and partnerpay are set automatically with correct value when percent is pay_two_thirds" do
+        expense = Expense.create(
+          user: @user,
+          category: @category,
+          amount: 1000,
+          date: Time.zone.today,
+          both_flg: true,
+          percent: 3
+        )
+        expect(expense.percent).to eq("pay_two_thirds")
+        expect(expense.mypay).to be == 666
+        expect(expense.partnerpay).to be == 334
+      end
+
+      it "mypay and partnerpay are set automatically with correct value when percent is pay_nothing" do
+        expense = Expense.create(
+          user: @user,
+          category: @category,
+          amount: 1000,
+          date: Time.zone.today,
+          both_flg: true,
+          percent: 4
+        )
+        expect(expense.percent).to eq("pay_nothing")
+        expect(expense.mypay).to be == 0
+        expect(expense.partnerpay).to be == 1000
       end
 
     end
