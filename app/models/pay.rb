@@ -29,6 +29,8 @@ class Pay < ApplicationRecord
   belongs_to :user
 
   validates :amount, :date, presence: true
+  validates_length_of :amount, maximum: 10
+  validates_length_of :memo, maximum: 100
 
   scope :newer, -> {order(date: :desc, created_at: :desc)}
 
@@ -51,8 +53,7 @@ class Pay < ApplicationRecord
   def self.balance_of_gross(current_user, partner)
     my_gross = ones_gross(current_user)
     my_must_pay = must_pay(current_user, partner)
-    balance = my_must_pay - my_gross + ones_all_payment(partner)
-    return balance
+    my_must_pay - my_gross + ones_all_payment(partner)
   end
 
 end
