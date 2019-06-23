@@ -44,11 +44,16 @@
   </div>
   <br>
 
-  <div class="form-group">
-    <%= f.submit submit_btn_letters, class: "btn btn-orange btn-block" %>
-  </div>
+  <% if action_name == 'new' || action_name == 'create' %>
+    <div class="form-group">
+      <%= f.submit submit_btn_letters, class: "btn btn-orange btn-block" %>
+    </div>
 
-  <% if action_name == 'edit' %>
+  <% elsif action_name == 'edit' %>
+    <div class="form-group">
+      <%= f.submit submit_btn_letters, class: "btn btn-orange btn-block" %>
+    </div>
+
     <%= link_to '削除する', repeat_expense_path(@repeat_expense), method: :delete, data:{confirm: "Are you sure?"}, class: 'btn btn-brown btn-block' %>
   <% end %>
 
