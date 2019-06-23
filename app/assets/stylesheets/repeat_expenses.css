@@ -17,3 +17,11 @@
   color: var(--redpepper);
   padding: 10px 0px 0px 10px;
 }
+.repeat-expense-chose-btn{
+  display: block;
+  width: 100%;
+  background-color: white;
+  padding: 10px 0px;
+  border-top: solid 1px #eee;
+  font-size: 1.3em;
+}

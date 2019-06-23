@@ -76,10 +76,12 @@
       <%= f.submit submit_btn_letters, class: "btn btn-orange btn-block" %>
     </div>
 
-  <% elsif action_name == 'edit' %>
+  <% elsif action_name == 'edit' || action_name == 'update' %>
     <div class="form-group">
-      <%= f.submit submit_btn_letters, class: "btn btn-orange btn-block" %>
+      <button type="button" class="btn btn-orange btn-block" data-toggle="modal" data-target="#modal-default">更新</button>
     </div>
+
+    <%= render 'confirm_modal', form: f %>
 
     <%= link_to '削除する', repeat_expense_path(@repeat_expense), method: :delete, data:{confirm: "Are you sure?"}, class: 'btn btn-brown btn-block' %>
   <% end %>
