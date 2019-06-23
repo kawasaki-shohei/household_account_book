@@ -13,12 +13,14 @@
 # **`memo`**         | `string`           |
 # **`mypay`**        | `integer`          |
 # **`partnerpay`**   | `integer`          |
-# **`percent`**      | `integer`          | `not null`
+# **`percent`**      | `integer`          | `default("pay_all"), not null`
 # **`r_date`**       | `integer`          |
 # **`s_date`**       | `date`             |
 # **`created_at`**   | `datetime`         | `not null`
 # **`updated_at`**   | `datetime`         | `not null`
 # **`category_id`**  | `bigint(8)`        |
+# **`item_id`**      | `integer`          | `not null`
+# **`item_sub_id`**  | `integer`          | `not null`
 # **`user_id`**      | `bigint(8)`        |
 #
 # ### Indexes
@@ -27,6 +29,10 @@
 #     * **`category_id`**
 # * `index_repeat_expenses_on_user_id`:
 #     * **`user_id`**
+# * `index_repeat_expenses_on_user_id_and_item_id_and_item_sub_id` (_unique_):
+#     * **`user_id`**
+#     * **`item_id`**
+#     * **`item_sub_id`**
 #
 # ### Foreign Keys
 #

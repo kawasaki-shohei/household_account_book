@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_16_045856) do
+ActiveRecord::Schema.define(version: 2019_06_23_040934) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -142,7 +142,10 @@ ActiveRecord::Schema.define(version: 2019_06_16_045856) do
     t.integer "percent", limit: 2, default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "item_id", null: false
+    t.integer "item_sub_id", null: false
     t.index ["category_id"], name: "index_repeat_expenses_on_category_id"
+    t.index ["user_id", "item_id", "item_sub_id"], name: "index_repeat_expenses_on_user_id_and_item_id_and_item_sub_id", unique: true
     t.index ["user_id"], name: "index_repeat_expenses_on_user_id"
   end
 
