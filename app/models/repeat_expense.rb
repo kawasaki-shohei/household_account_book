@@ -93,4 +93,9 @@ class RepeatExpense < ApplicationRecord
     self.item_id = self.user.repeat_expenses.maximum(:item_id) + 1
     self.item_sub_id = 1
   end
+
+  def set_next_item_sub_id(old_repeat_expense)
+    self.item_id = old_repeat_expense.item_id
+    self.item_sub_id = old_repeat_expense.item_sub_id + 1
+  end
 end

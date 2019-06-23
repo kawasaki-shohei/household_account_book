@@ -146,10 +146,10 @@ class Expense < ApplicationRecord
   end
 
   # 新しく繰り返し出費が登録されたときに、expensesテーブルに該当する出費をインサートしていくメソッド
-  def self.creat_repeat_expenses!(repeat_expense)
+  def self.creat_repeat_expenses!(repeat_expense, is_only_future: false)
     expense_attributes = {}
     repeat_expense.attributes.each{ |k, v| expense_attributes["#{k}"] = v if Expense.necessary_attributes_from_repeat_exepnses.include?(k) }
-    s_date = repeat_expense.s_date
+    s_date = is_only_future ? Date.current : repeat_expense.s_date
     e_date = repeat_expense.e_date
     r_date = repeat_expense.r_date
     (s_date..e_date).select{|d| d.day == r_date }.each do |date|
