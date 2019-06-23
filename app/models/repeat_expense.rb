@@ -90,7 +90,8 @@ class RepeatExpense < ApplicationRecord
   end
 
   def set_new_item_id
-    self.item_id = self.user.repeat_expenses.maximum(:item_id) + 1
+    repeat_expenses = self.user.repeat_expenses.where.not(id: nil)
+    self.item_id = repeat_expenses.present? ? self.user.repeat_expenses.maximum(:item_id) + 1 : 1
     self.item_sub_id = 1
   end
 
