@@ -2450,9 +2450,6 @@ td.progress-bar-td {
   float: right;
   padding: 10px;
 }
-.other-expense-details{
-  padding: 0 0 5px 10px;
-}
 #company-name{
   color: var(--redpepper);
 }
@@ -2569,9 +2566,6 @@ select#percent_input{
   border-top-left-radius: 0 !important;
   border-bottom-left-radius: 0 !important;
 }
-.calculator-modal{
-  height: 600px;
-}
 .calculator-input-addon{
   font-size: 1.4em;
   cursor: pointer;
@@ -2596,6 +2590,9 @@ select#percent_input{
   bottom:60px;
   cursor:pointer;
   display: none;
+}
+.other-expense-details{
+  padding: 0 0 5px 10px;
 }
 .notifications-display-entries{
  margin-bottom: 30px;
@@ -2718,7 +2715,7 @@ body{
 }
 
 .btn-orange.focus, .btn-orange:focus {
-  color: #fff;
+  color: #fff !important;
   background-color: #cc7a3f;
   border-color: #cc7a3f;
 }
@@ -2777,6 +2774,33 @@ a:hover, a:active, a:focus {
 }
 .box-comments{
   background: white;
+}
+.own-or-both-icon{
+  float: left;
+  width: 15px;
+  height: 15px;
+}
+.box-comments .repeat-exepnse-amount{
+  color: #4d2200 !important;
+  font-size: 1.2em;
+  display: block;
+  font-weight: 600;
+}
+.repeat-expense-percent{
+  font-size: 0.5em;
+  color: #777;
+}
+.repeat-expense-error-messages{
+  color: var(--redpepper);
+  padding: 10px 0px 0px 10px;
+}
+.repeat-expense-chose-btn{
+  display: block;
+  width: 100%;
+  background-color: white;
+  padding: 10px 0px;
+  border-top: solid 1px #eee;
+  font-size: 1.3em;
 }
 html.before-login{
   background-color: var(--mushroom);
