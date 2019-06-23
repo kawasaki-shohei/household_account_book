@@ -84,6 +84,9 @@
     <%= render 'confirm_modal', form: f %>
 
     <%= link_to '削除する', repeat_expense_path(@repeat_expense), method: :delete, data:{confirm: "Are you sure?"}, class: 'btn btn-brown btn-block' %>
+    <div class="text-redpepper pull-right">
+      ※関連する当月以降の未来の出費を全て削除します。
+    </div>
   <% end %>
 
 <% end %>
