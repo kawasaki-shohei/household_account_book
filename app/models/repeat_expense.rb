@@ -56,6 +56,7 @@ class RepeatExpense < ApplicationRecord
   validates :amount, :s_date, :e_date, :r_date, :percent,presence: true
   validates_length_of :amount, :mypay, :partnerpay, maximum: 10
   validates_length_of :memo, maximum: 100
+  validates :item_id, uniqueness: { scope: [:user_id, :item_sub_id] }
   validate :calculate_amount
   validate :e_date_is_over_first_date
 
@@ -86,5 +87,10 @@ class RepeatExpense < ApplicationRecord
 
   def is_own_expense?(user, category=self.category)
     !is_for_both? && self.user == user && self.category == category
+  end
+
+  def set_new_item_id
+    self.item_id = self.user.repeat_expenses.maximum(:item_id) + 1
+    self.item_sub_id = 1
   end
 end
