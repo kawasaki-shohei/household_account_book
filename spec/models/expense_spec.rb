@@ -36,8 +36,8 @@ require 'rails_helper'
 RSpec.describe Expense, type: :model do
   describe "Validation Check" do
     before do
-      @user = FactoryBot.create(:user)
-      @category = FactoryBot.create(:category)
+      @user = create(:user)
+      @category = create(:category)
     end
 
     context "when own expenses" do
@@ -162,8 +162,8 @@ RSpec.describe Expense, type: :model do
 
   describe "Check percent, mypay and partnerpay are set correctly" do
     before do
-      @user = FactoryBot.create(:user_with_partner)
-      @category = FactoryBot.create(:category)
+      @user = create(:user_with_partner)
+      @category = create(:category)
     end
 
     context "when inserting own expense" do
@@ -249,6 +249,16 @@ RSpec.describe Expense, type: :model do
         expect(expense.mypay).to be == 0
         expect(expense.partnerpay).to be == 1000
       end
+    end
+  end
+
+  describe "for Pay page" do
+    before do
+      @user = create(:user_with_partner)
+      create_list(:own_category, 5, user: @user)
+      create_list(:both_category, 5, user: @user)
+      @categories = @user.categories
+    end
 
     end
 

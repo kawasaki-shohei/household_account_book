@@ -32,10 +32,10 @@
 #
 
 FactoryBot.define do
-  factory :expense do
-    amount {1000}
-    date {Time.zone.today}
-    user {User.first}
-    category {user.categories.first}
+  factory :own_past_expense, class: 'Expense' do
+    amount { 1000 }
+    date { Faker::Date.backward(365) }
+    user { User.first }
+    category { user.categories.first }
   end
 end
