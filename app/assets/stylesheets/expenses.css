@@ -3,9 +3,6 @@ select#percent_input{
   border-top-left-radius: 0 !important;
   border-bottom-left-radius: 0 !important;
 }
-.calculator-modal{
-  height: 600px;
-}
 .calculator-input-addon{
   font-size: 1.4em;
   cursor: pointer;

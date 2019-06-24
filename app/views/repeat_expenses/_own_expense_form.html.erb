@@ -44,12 +44,22 @@
   </div>
   <br>
 
-  <div class="form-group">
-    <%= f.submit submit_btn_letters, class: "btn btn-orange btn-block" %>
-  </div>
+  <% if action_name == 'new' || action_name == 'create' %>
+    <div class="form-group">
+      <%= f.submit submit_btn_letters, class: "btn btn-orange btn-block" %>
+    </div>
 
-  <% if action_name == 'edit' %>
+  <% elsif action_name == 'edit' || action_name == 'update' %>
+    <div class="form-group">
+      <button type="button" class="btn btn-orange btn-block" data-toggle="modal" data-target="#modal-default">更新</button>
+    </div>
+
+    <%= render 'confirm_modal', form: f %>
+
     <%= link_to '削除する', repeat_expense_path(@repeat_expense), method: :delete, data:{confirm: "Are you sure?"}, class: 'btn btn-brown btn-block' %>
+    <div class="text-redpepper pull-right">
+      ※関連する当月以降の未来の出費を全て削除します。
+    </div>
   <% end %>
 
 <% end %>

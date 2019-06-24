@@ -13,12 +13,14 @@
 # **`memo`**         | `string`           |
 # **`mypay`**        | `integer`          |
 # **`partnerpay`**   | `integer`          |
-# **`percent`**      | `integer`          | `not null`
+# **`percent`**      | `integer`          | `default("pay_all"), not null`
 # **`r_date`**       | `integer`          |
 # **`s_date`**       | `date`             |
 # **`created_at`**   | `datetime`         | `not null`
 # **`updated_at`**   | `datetime`         | `not null`
 # **`category_id`**  | `bigint(8)`        |
+# **`item_id`**      | `integer`          | `not null`
+# **`item_sub_id`**  | `integer`          | `not null`
 # **`user_id`**      | `bigint(8)`        |
 #
 # ### Indexes
@@ -27,6 +29,10 @@
 #     * **`category_id`**
 # * `index_repeat_expenses_on_user_id`:
 #     * **`user_id`**
+# * `index_repeat_expenses_on_user_id_and_item_id_and_item_sub_id` (_unique_):
+#     * **`user_id`**
+#     * **`item_id`**
+#     * **`item_sub_id`**
 #
 # ### Foreign Keys
 #
@@ -50,6 +56,7 @@ class RepeatExpense < ApplicationRecord
   validates :amount, :s_date, :e_date, :r_date, :percent,presence: true
   validates_length_of :amount, :mypay, :partnerpay, maximum: 10
   validates_length_of :memo, maximum: 100
+  validates :item_id, uniqueness: { scope: [:user_id, :item_sub_id] }
   validate :calculate_amount
   validate :e_date_is_over_first_date
 
@@ -80,5 +87,16 @@ class RepeatExpense < ApplicationRecord
 
   def is_own_expense?(user, category=self.category)
     !is_for_both? && self.user == user && self.category == category
+  end
+
+  def set_new_item_id
+    repeat_expenses = self.user.repeat_expenses.where.not(id: nil)
+    self.item_id = repeat_expenses.present? ? self.user.repeat_expenses.maximum(:item_id) + 1 : 1
+    self.item_sub_id = 1
+  end
+
+  def set_next_item_sub_id(old_repeat_expense)
+    self.item_id = old_repeat_expense.item_id
+    self.item_sub_id = old_repeat_expense.item_sub_id + 1
   end
 end

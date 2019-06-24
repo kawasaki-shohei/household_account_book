@@ -17,6 +17,12 @@
 
         <div class="box box-brown">
           <div class="box-body">
+            <% if flash[:error].present? %>
+              <% flash[:error].each do |message| %>
+                <p class="text-redpepper"><%= message %></p>
+              <% end %>
+            <% end %>
+
             <% if @repeat_expense.is_for_both? %>
               <%= render 'both_expense_form' %>
             <% else %>

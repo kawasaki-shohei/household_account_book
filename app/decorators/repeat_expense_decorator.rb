@@ -3,6 +3,10 @@ module RepeatExpenseDecorator
   include ExpenseDecorator
 
   def default_date(date_name)
-    action_name == 'edit' ? send("#{date_name}") : Date.current
+    if action_name == 'edit' || action_name == 'update'
+      send("#{date_name}")
+    else
+      Date.current
+    end
   end
 end

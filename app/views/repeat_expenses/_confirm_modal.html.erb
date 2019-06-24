@@ -1,0 +1,25 @@
+<div class="modal fade" id="modal-default" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span></button>
+        <h4 class="modal-title">繰り返し出費の変更</h4>
+      </div>
+      <div class="modal-body">
+        <p>「未来の出費のみ」または「過去未来全ての出費」に適応するか選択してください。</p>
+        <p>「未来の出費のみ」を選択した場合、過去のデータは以前の情報のまま保持され、新しい設定は今日より未来の出費のみ反映されます。(今日を含む)</p>
+        <p>「過去未来全ての出費」を選択した場合、関連する出費が過去未来のデータ全て新しい設定で更新されます。</p>
+        <p>ご注意：開始日・終了日を変更して期間を短くした場合、期間外となったデータが削除される可能性があります。</p>
+      </div>
+      <div>
+        <%= form.submit '過去未来全ての出費', class: 'btn repeat-expense-chose-btn' %>
+        <%= form.submit '未来の出費のみ', name: 'future_expenses', class: 'btn repeat-expense-chose-btn' %>
+        <button type="button" class="btn repeat-expense-chose-btn" data-dismiss="modal" aria-label="Close">キャンセル</button>
+      </div>
+
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
