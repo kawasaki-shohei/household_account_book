@@ -37,7 +37,7 @@ RSpec.describe Expense, type: :model do
   describe "Validation Check" do
     before do
       @user = create(:user)
-      @category = create(:category)
+      @category = create(:own_category){ |c| c.user = @user }
     end
 
     context "when own expenses" do
@@ -163,7 +163,7 @@ RSpec.describe Expense, type: :model do
   describe "Check percent, mypay and partnerpay are set correctly" do
     before do
       @user = create(:user_with_partner)
-      @category = create(:category)
+      @category = create(:both_category){ |c| c.user = @user }
     end
 
     context "when inserting own expense" do
@@ -257,10 +257,19 @@ RSpec.describe Expense, type: :model do
       @user = create(:user_with_partner)
       create_list(:own_category, 5, user: @user)
       create_list(:both_category, 5, user: @user)
-      @categories = @user.categories
+      @own_categories = Category.ones_categories(@user)
+      @both_categories = @own_categories.find_all{ |c| c.common }
     end
 
-    end
+    context "when" do
+      it "both_this_month" do
+        @expenses = create_list()
+      end
 
+      it "both_last_month" do
+
+      end
+    end
   end
+
 end
