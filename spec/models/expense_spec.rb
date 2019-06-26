@@ -257,13 +257,20 @@ RSpec.describe Expense, type: :model do
       @user = create(:user_with_partner)
       create_list(:own_category, 5, user: @user)
       create_list(:both_category, 5, user: @user)
-      @own_categories = Category.ones_categories(@user)
-      @both_categories = @own_categories.find_all{ |c| c.common }
+      own_categories = Category.ones_categories(@user)
+      both_categories = own_categories.find_all{ |c| c.common }
+      10.times do
+        expense = build(:own_past_expense)
+        expense.user = @user
+        expense.category = own_categories.sample
+        expense.save
+      end
+
     end
 
     context "when" do
       it "both_this_month" do
-        @expenses = create_list()
+        expect(@user.expenses.size).to eq(10)
       end
 
       it "both_last_month" do

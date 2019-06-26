@@ -28,7 +28,7 @@ FactoryBot.define do
   factory :own_category, class: 'Category' do
     name { Faker::Lorem.word }
     common { false }
-    user
+    association :user, strategy: :build
 
     factory :both_category, class: 'Category' do
       common { true }
