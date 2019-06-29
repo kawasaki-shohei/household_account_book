@@ -13,8 +13,8 @@
         <p>ご注意：開始日・終了日を変更して期間を短くした場合、期間外となったデータが削除される可能性があります。</p>
       </div>
       <div>
-        <%= form.submit '過去未来全ての出費', class: 'btn repeat-expense-chose-btn' %>
-        <%= form.submit '未来の出費のみ', name: 'future_expenses', class: 'btn repeat-expense-chose-btn' %>
+        <%= form.submit '過去未来全ての出費', name: 'updated_all', class: 'btn repeat-expense-chose-btn' %>
+        <%= form.submit '未来の出費のみ', name: 'updated_only_future', class: 'btn repeat-expense-chose-btn' %>
         <button type="button" class="btn repeat-expense-chose-btn" data-dismiss="modal" aria-label="Close">キャンセル</button>
       </div>
 

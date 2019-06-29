@@ -47,23 +47,23 @@ class RepeatExpensesController < ApplicationController
     @repeat_expense = RepeatExpense.find(params[:id])
     new_repeat_expense = @current_user.repeat_expenses.build(repeat_expense_params)
     new_repeat_expense.set_next_item_sub_id(@repeat_expense)
-    if params[:future_expenses].present? && @repeat_expense.s_date != new_repeat_expense.s_date && @repeat_expense.s_date < Date.current
+    if new_repeat_expense.updated_only_future? && @repeat_expense.s_date != new_repeat_expense.s_date && @repeat_expense.s_date < Date.current
       flash.now[:error] = ["未来の出費のみ変更する場合、今日より過去に設定されている開始日は変更できません。"]
       @repeat_expense.assign_attributes(repeat_expense_params)
       @categories = Category.ones_categories(@current_user)
       render 'edit' and return
     end
 
-    if params[:future_expenses].present?
-      expenses = @repeat_expense.expenses.where('date >= ?', Date.current)
-    else
-      expenses = @repeat_expense.expenses
+    if new_repeat_expense.updated_only_future?
+      destroy_target_expenses = @repeat_expense.expenses.where('date >= ?', Date.current)
+    elsif new_repeat_expense.updated_all?
+      destroy_target_expenses = @repeat_expense.expenses
     end
     ActiveRecord::Base.transaction do
       if new_repeat_expense.save
-        expenses.destroy_all
+        destroy_target_expenses.destroy_all
         begin
-          Expense.creat_repeat_expenses!(new_repeat_expense, is_only_future: params[:future_expenses].present?)
+          Expense.creat_repeat_expenses!(new_repeat_expense)
         rescue
           flash.now[:error] = ["繰り返し出費に紐づいている各出費の登録に失敗しました。"]
           raise ActiveRecord::Rollback
@@ -94,6 +94,12 @@ class RepeatExpensesController < ApplicationController
 
   private
   def repeat_expense_params
-    params.require(:repeat_expense).permit(:amount, :category_id, :s_date, :e_date, :r_date, :memo, :both_flg, :mypay, :partnerpay).merge(percent: params[:repeat_expense][:percent].to_i)
+    permitted_params = params.require(:repeat_expense).permit(:amount, :category_id, :s_date, :e_date, :r_date, :memo, :both_flg, :mypay, :partnerpay).merge(percent: params[:repeat_expense][:percent].to_i)
+    if params[:updated_only_future].present?
+      permitted_params.merge!(updated_period: "updated_only_future")
+    elsif params[:updated_all].present?
+      permitted_params.merge!(updated_period: "updated_all")
+    end
+    permitted_params
   end
 end
