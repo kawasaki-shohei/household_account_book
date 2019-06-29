@@ -3,8 +3,7 @@ class RepeatExpensesController < ApplicationController
   include CategoriesHelper
 
   def index
-    #fixme: group_byを使って、item_sub_idが最大のものだけ取得するように変更する。
-    @repeat_expenses = RepeatExpense.includes(:user, :category).where(user: [@current_user, @partner]).order(created_at: :desc)
+    @repeat_expenses = LatestRepeatExpense.includes(:user, :category).where(user: [@current_user, @partner]).order(item_id: :desc)
   end
 
   def new

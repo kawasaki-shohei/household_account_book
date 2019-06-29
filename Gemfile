@@ -8,8 +8,11 @@ end
 ruby '2.5.1'
 
 gem 'rails', '~> 5.2.2.1'
-gem 'pg', '~> 0.18'
 gem 'puma', '~> 3.7'
+
+#Database
+gem 'pg', '~> 0.18'
+gem 'scenic', '~> 1.5', '>= 1.5.1'
 
 # about assets
 gem 'sprockets-rails', '~> 3.2', '>= 3.2.1'

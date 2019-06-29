@@ -16,7 +16,7 @@
 # **`percent`**         | `integer`          | `default("pay_all"), not null`
 # **`r_date`**          | `integer`          |
 # **`s_date`**          | `date`             |
-# **`updated_period`**  | `integer`          | `default(0), not null`
+# **`updated_period`**  | `integer`          | `default("first_item"), not null`
 # **`created_at`**      | `datetime`         | `not null`
 # **`updated_at`**      | `datetime`         | `not null`
 # **`category_id`**     | `bigint(8)`        |
@@ -45,10 +45,12 @@
 
 class RepeatExpense < ApplicationRecord
   include PercentCalculator
+  include RepeatExpensesListsDisplayer
 
   enum percent: { manual_amount: -1, pay_all: 0, pay_half: 1, pay_one_third: 2, pay_two_thirds: 3, pay_nothing: 4 }
-
   enum updated_period: { first_item: 0, updated_all: 1, updated_only_future: 2 }
+
+  alias_attribute :is_for_both?, :both_flg
 
   belongs_to :category
   belongs_to :user
@@ -66,8 +68,6 @@ class RepeatExpense < ApplicationRecord
   scope :both_f, -> {where(both_flg: false)}
   scope :both_t, -> {where(both_flg: true)}
   scope :newer, -> {order(updated_at: :desc)}
-
-  alias_attribute :is_for_both?, :both_flg
 
   def self.ones_expenses(user)
     user.repeat_expenses.both_f.newer

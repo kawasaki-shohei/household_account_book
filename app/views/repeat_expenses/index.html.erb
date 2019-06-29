@@ -22,10 +22,10 @@
             </div>
           </div><!-- /.box-header -->
 
-          <div class="box-body box-comments">
+          <div class="box-body box-comments no-padding">
             <% @repeat_expenses.each do |repeat_expense| %>
               <% next if repeat_expense.is_own_expense?(@partner) %>
-              <div class="box-comment">
+              <div class="box-comment each-repeat-expense <%= repeat_expense.gray_out %>">
                 <% if repeat_expense.is_own_expense?(@current_user) %>
                   <%= render 'own_expense', repeat_expense: repeat_expense %>
                 <% else %>
