@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_23_040934) do
+ActiveRecord::Schema.define(version: 2019_06_29_003259) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -144,6 +144,7 @@ ActiveRecord::Schema.define(version: 2019_06_23_040934) do
     t.datetime "updated_at", null: false
     t.integer "item_id", null: false
     t.integer "item_sub_id", null: false
+    t.integer "updated_period", limit: 2, default: 0, null: false
     t.index ["category_id"], name: "index_repeat_expenses_on_category_id"
     t.index ["user_id", "item_id", "item_sub_id"], name: "index_repeat_expenses_on_user_id_and_item_id_and_item_sub_id", unique: true
     t.index ["user_id"], name: "index_repeat_expenses_on_user_id"
@@ -186,4 +187,31 @@ ActiveRecord::Schema.define(version: 2019_06_23_040934) do
   add_foreign_key "repeat_expenses", "categories"
   add_foreign_key "repeat_expenses", "users"
   add_foreign_key "wants", "users"
+
+  create_view "latest_repeat_expenses", sql_definition: <<-SQL
+      SELECT repeat_expenses_a.id,
+      repeat_expenses_a.amount,
+      repeat_expenses_a.s_date,
+      repeat_expenses_a.e_date,
+      repeat_expenses_a.r_date,
+      repeat_expenses_a.memo,
+      repeat_expenses_a.category_id,
+      repeat_expenses_a.user_id,
+      repeat_expenses_a.both_flg,
+      repeat_expenses_a.mypay,
+      repeat_expenses_a.partnerpay,
+      repeat_expenses_a.percent,
+      repeat_expenses_a.created_at,
+      repeat_expenses_a.updated_at,
+      repeat_expenses_a.item_id,
+      repeat_expenses_a.item_sub_id,
+      repeat_expenses_a.updated_period
+     FROM (repeat_expenses repeat_expenses_a
+       JOIN ( SELECT repeat_expenses.item_id,
+              max(repeat_expenses.item_sub_id) AS max_item_sub_id
+             FROM repeat_expenses
+            GROUP BY repeat_expenses.item_id) repeat_expenses_b ON (((repeat_expenses_a.item_id = repeat_expenses_b.item_id) AND (repeat_expenses_a.item_sub_id = repeat_expenses_b.max_item_sub_id))))
+    WHERE (repeat_expenses_a.user_id = ANY (ARRAY[(1)::bigint, (2)::bigint]))
+    ORDER BY repeat_expenses_a.created_at DESC;
+  SQL
 end

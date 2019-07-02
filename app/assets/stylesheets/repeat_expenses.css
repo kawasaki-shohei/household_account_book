@@ -1,3 +1,9 @@
+.each-repeat-expense{
+  padding: 10px !important;
+}
+.over-end-date{
+  background-color: gray;
+}
 .own-or-both-icon{
   float: left;
   width: 15px;

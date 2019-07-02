@@ -35,6 +35,14 @@ class Expense < ApplicationRecord
   include BalanceHelper
   include PercentCalculator
 
+  # todo: これはテーブルを作ってユーザーが自由に変更できるようにする。
+  enum percent: { manual_amount: -1, pay_all: 0, pay_half: 1, pay_one_third: 2, pay_two_thirds: 3, pay_nothing: 4 }
+
+  attr_accessor :is_new, :is_destroyed, :differences
+  alias_method :is_new?, :is_new
+  alias_method :is_destroyed?, :is_destroyed
+  alias_attribute :is_for_both?, :both_flg
+
   belongs_to :user
   belongs_to :category
 
@@ -44,9 +52,6 @@ class Expense < ApplicationRecord
   validates_length_of :amount, :mypay, :partnerpay, maximum: 10
   validates_length_of :memo, maximum: 100
   validate :calculate_amount
-
-  # todo: これはテーブルを作ってユーザーが自由に変更できるようにする。
-  enum percent: { manual_amount: -1, pay_all: 0, pay_half: 1, pay_one_third: 2, pay_two_thirds: 3, pay_nothing: 4 }
 
   end_of_this_month = Date.today.end_of_month
   beginning_of_this_month = Date.today.beginning_of_month
@@ -62,11 +67,6 @@ class Expense < ApplicationRecord
   scope :both_f, -> {where(both_flg: false)}
   scope :both_t, -> {where(both_flg: true)}
   scope :newer, -> {order(date: :desc, created_at: :desc)}
-
-  attr_accessor :is_new, :is_destroyed, :differences
-  alias_method :is_new?, :is_new
-  alias_method :is_destroyed?, :is_destroyed
-  alias_attribute :is_for_both?, :both_flg
 
   after_initialize { self.is_new = true unless self.id }
   before_save :set_differences
@@ -146,10 +146,10 @@ class Expense < ApplicationRecord
   end
 
   # 新しく繰り返し出費が登録されたときに、expensesテーブルに該当する出費をインサートしていくメソッド
-  def self.creat_repeat_expenses!(repeat_expense, is_only_future: false)
+  def self.creat_repeat_expenses!(repeat_expense)
     expense_attributes = {}
     repeat_expense.attributes.each{ |k, v| expense_attributes["#{k}"] = v if Expense.necessary_attributes_from_repeat_exepnses.include?(k) }
-    s_date = is_only_future ? Date.current : repeat_expense.s_date
+    s_date = repeat_expense.updated_only_future? ? Date.current : repeat_expense.s_date
     e_date = repeat_expense.e_date
     r_date = repeat_expense.r_date
     (s_date..e_date).select{|d| d.day == r_date }.each do |date|
