@@ -61,20 +61,8 @@ class User < ApplicationRecord
     end
   end
 
-
   def get_applicable_balance(period)
     balances.where(period: period).first_or_initialize
-  end
-
-  def insert_expenses_for_a_month(year: Time.zone.today.year, month: Time.zone.today.month)
-    @import_expenses = []
-    partner = self.partner
-    get_categories(partner).each do |category|
-      p category
-      count = get_count(category)
-      build_expenses_instances(year, month, category.id, count, both_flg: category.common)
-    end
-    Expense.import(@import_expenses) ? true :false
   end
 
   def insert_categories
@@ -87,35 +75,45 @@ class User < ApplicationRecord
     create_category_instance(both_kinds, user, true)
     create_category_instance(ones_kinds, user, false)
     create_category_instance(ones_kinds, partner, false)
-    Category.import(@import_categories) ? true : false
+    # Category.import(@import_categories) ? true : false
+    @import_categories.each(&:save!)
   end
 
   def get_category(name:)
-    categories.find_by(name: name)
+    categories.find_by_name(name)
+  end
+
+  def insert_expenses_for_a_month(year: Time.zone.today.year, month: Time.zone.today.month)
+    import_expenses = []
+    partner = self.partner
+    get_categories(partner).each do |category|
+      count = get_count(category)
+      count.times do |n|
+        import_expenses << build_expenses_instances(year, month, category, n)
+      end
+    end
+    import_expenses.each(&:save!)
   end
 
   private
 
-  def build_expenses_instances(year, month, category_id, count, both_flg:)
+  def build_expenses_instances(year, month, category, n)
     today = Time.zone.today
-    first = today.beginning_of_month.day
-    last = today.end_of_month.day
-    count.times do |n|
-      amount = rand(100..10000)
-      percent = count == 10 ? get_percent(n) : 1
-      mypay = calculate_mypay(amount, percent)
-      partnerpay = amount - mypay
-      @import_expenses << expenses.build(
-        amount: amount,
-        date: Date.parse("#{year}-#{month}-#{rand(first..last)}"),
-        note: "inserted #{today}",
-        category_id: category_id,
-        both_flg: both_flg,
-        mypay: both_flg ? mypay : nil,
-        partnerpay: both_flg ? partnerpay : nil,
-        percent: both_flg ? percent : nil,
-      )
-    end
+    first_day = Date.new(year, month, 1)
+    last_day = first_day.end_of_month
+    percent = category.name == '食費' ? get_percent(n) : 1
+    # mypay = calculate_mypay(amount, percent)
+    # partnerpay = amount - mypay
+    expenses.build(
+      amount: Faker::Number.number(6),
+      date: Faker::Date.between(first_day, last_day),
+      memo: "inserted at #{I18n.l(today, format: :default)}",
+      category_id: category.id,
+      both_flg: category.is_common?,
+      percent: category.is_common? ? percent : 0,
+      # mypay: category.both_flg ? mypay : nil,
+      # partnerpay: category.both_flg ? partnerpay : nil,
+    )
   end
 
   def get_percent(n)
@@ -133,7 +131,8 @@ class User < ApplicationRecord
 
   def get_count(category)
     case category.name
-    when "食費" then 10 when "日用品" then 5
+    when "食費" then 10
+    when "日用品" then 5
     when "交通費", "交際費", "保険代", "医療費" then 2
     else 1
     end

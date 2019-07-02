@@ -53,10 +53,10 @@ class Expense < ApplicationRecord
   validates_length_of :memo, maximum: 100
   validate :calculate_amount
 
-  end_of_this_month = Date.today.end_of_month
-  beginning_of_this_month = Date.today.beginning_of_month
-  end_of_last_month = Date.today.months_ago(1).end_of_month
-  beginning_of_last_month = Date.today.months_ago(1).beginning_of_month
+  end_of_this_month = Date.current.end_of_month
+  beginning_of_this_month = Date.current.beginning_of_month
+  end_of_last_month = Date.current.months_ago(1).end_of_month
+  beginning_of_last_month = Date.current.months_ago(1).beginning_of_month
   scope :this_month, -> {where('date >= ? AND date <= ?', beginning_of_this_month, end_of_this_month)}
   scope :last_month, -> {where('date >= ? AND date <= ?', beginning_of_last_month, end_of_last_month)}
   scope :until_last_month, -> {where('date <= ?', end_of_last_month)}
