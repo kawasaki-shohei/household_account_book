@@ -75,7 +75,6 @@ class User < ApplicationRecord
     create_category_instance(both_kinds, user, true)
     create_category_instance(ones_kinds, user, false)
     create_category_instance(ones_kinds, partner, false)
-    # Category.import(@import_categories) ? true : false
     @import_categories.each(&:save!)
   end
 
@@ -88,36 +87,36 @@ class User < ApplicationRecord
     partner = self.partner
     get_categories(partner).each do |category|
       count = get_count(category)
-      count.times do |n|
-        import_expenses << build_expenses_instances(year, month, category, n)
+      count.times do
+        import_expenses << build_expenses_instances(year, month, category, be_for_both: true)
       end
     end
     import_expenses.each(&:save!)
   end
 
-  private
-
-  def build_expenses_instances(year, month, category, n)
+  def build_expenses_instances(year, month, category, be_for_both: false)
     today = Time.zone.today
     first_day = Date.new(year, month, 1)
     last_day = first_day.end_of_month
-    percent = category.name == '食費' ? get_percent(n) : 1
-    # mypay = calculate_mypay(amount, percent)
-    # partnerpay = amount - mypay
-    expenses.build(
-      amount: Faker::Number.number(6),
+    expense = expenses.build(
+      amount: Faker::Number.number(5),
       date: Faker::Date.between(first_day, last_day),
-      memo: "inserted at #{I18n.l(today, format: :default)}",
+      memo: "random sample expense inserted at #{I18n.l(today, format: :default)}",
       category_id: category.id,
-      both_flg: category.is_common?,
-      percent: category.is_common? ? percent : 0,
-      # mypay: category.both_flg ? mypay : nil,
-      # partnerpay: category.both_flg ? partnerpay : nil,
-    )
+      both_flg: be_for_both,
+      percent: be_for_both ? get_random_percent : 0,
+      )
+    if expense.manual_amount?
+      expense.mypay = Faker::Number.between(1, expense.amount - 1)
+      expense.partnerpay = expense.amount - expense.mypay
+    end
+    expense
   end
 
-  def get_percent(n)
-    case n when 0..3 then 1 when 4..5 then 2 when 6..7 then 3 when 8..9 then 4 end
+  private
+
+  def get_random_percent
+    Expense.percents.sort_by{rand}[0][0]
   end
 
   def calculate_mypay(amount, percent)

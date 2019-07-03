@@ -38,6 +38,7 @@ gem 'rails-i18n', '~> 5.1', '>= 5.1.3'
 gem 'daemons', '~> 1.2', '>= 1.2.6'
 gem 'delayed_job_active_record', '~> 4.1', '>= 4.1.3'
 gem 'bcrypt', '3.1.11'
+gem 'faker'
 
 gem 'activerecord-import'
 
@@ -53,7 +54,6 @@ group :development, :test do
   gem 'binding_of_caller'
   gem 'rspec-rails', '~> 3.8'
   gem 'factory_bot_rails', '~> 5.0', '>= 5.0.1'
-  gem 'faker'
 end
 
 group :development do
