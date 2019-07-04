@@ -37,14 +37,15 @@ RSpec.describe Expense, type: :model do
   describe "Validation Check" do
     before do
       @user = create(:user)
-      @category = create(:own_category){ |c| c.user = @user }
+      @own_category = create(:own_category){ |c| c.user = @user }
+      @both_category = create(:both_category){ |c| c.user = @user }
     end
 
     context "when own expenses" do
       it "is valid with a amount, user_id, category_id and date" do
         expense = Expense.new(
           user: @user,
-          category: @category,
+          category: @own_category,
           amount: 1000,
           date: Time.zone.today
         )
@@ -54,7 +55,7 @@ RSpec.describe Expense, type: :model do
       it "is invalid without a amount" do
         expense = Expense.new(
           user: @user,
-          category: @category,
+          category: @own_category,
           amount: nil,
           date: Time.zone.today
         )
@@ -64,7 +65,7 @@ RSpec.describe Expense, type: :model do
       it "is invalid without a date" do
         expense = Expense.new(
           user: @user,
-          category: @category,
+          category: @own_category,
           amount: 1000,
           date: nil
         )
@@ -84,7 +85,7 @@ RSpec.describe Expense, type: :model do
       it "is invalid without a user_id" do
         expense = Expense.new(
           user: nil,
-          category: @category,
+          category: @own_category,
           amount: 1000,
           date: Time.zone.today
         )
@@ -98,7 +99,7 @@ RSpec.describe Expense, type: :model do
       it "is valid with a amount, user_id, category_id, date, true both_flg, percent, mypay and partnerpay" do
         expense = Expense.new(
           user: @user,
-          category: @category,
+          category: @both_category,
           amount: 1000,
           date: Time.zone.today,
           both_flg: true,
@@ -112,7 +113,7 @@ RSpec.describe Expense, type: :model do
       it "is invalid without mypay" do
         expense = Expense.new(
           user: @user,
-          category: @category,
+          category: @both_category,
           amount: 1000,
           date: Time.zone.today,
           both_flg: true,
@@ -128,7 +129,7 @@ RSpec.describe Expense, type: :model do
       it "is invalid without partnerpay" do
         expense = Expense.new(
           user: @user,
-          category: @category,
+          category: @both_category,
           amount: 1000,
           date: Time.zone.today,
           both_flg: true,
@@ -144,7 +145,7 @@ RSpec.describe Expense, type: :model do
       it "is invalid when additions of mypay and partnerpay is wrong with amount" do
         expense = Expense.new(
           user: @user,
-          category: @category,
+          category: @both_category,
           amount: 1000,
           date: Time.zone.today,
           both_flg: true,
@@ -155,6 +156,20 @@ RSpec.describe Expense, type: :model do
         expect(expense).to be_invalid
         expect(expense.errors.full_messages.size).to eq(1)
         expect(expense.errors.full_messages.first).to eq("入力した金額の合計が支払い金額と一致しません")
+      end
+
+      it "is invalid when being bound with not common category" do
+        expense = Expense.new(
+          user: @user,
+          category: @own_category,
+          amount: 1000,
+          date: Time.zone.today,
+          both_flg: true,
+          percent: 1
+        )
+        expect(expense).to be_invalid
+        expect(expense.errors.full_messages.size).to eq(1)
+        expect(expense.errors.full_messages.first).to eq("二人の出費には共通のカテゴリーを選択してください。")
       end
 
     end

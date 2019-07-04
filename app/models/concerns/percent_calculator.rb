@@ -1,11 +1,4 @@
 module PercentCalculator
-  def calculate_amount
-    return unless is_for_both?
-    if mypay.nil? || partnerpay.nil? || mypay + partnerpay != amount
-      errors[:base] << "入力した金額の合計が支払い金額と一致しません"
-    end
-  end
-
   def set_mypay_and_partnerpay
     return if !is_for_both?
     case percent

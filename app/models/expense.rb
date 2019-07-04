@@ -51,7 +51,8 @@ class Expense < ApplicationRecord
   validates :amount, :date, :percent, presence: true
   validates_length_of :amount, :mypay, :partnerpay, maximum: 10
   validates_length_of :memo, maximum: 100
-  validate :calculate_amount
+  validates_with BothExpenseAmountValidator
+  validates_with BoundCategoryValidator
 
   end_of_this_month = Date.current.end_of_month
   beginning_of_this_month = Date.current.beginning_of_month
