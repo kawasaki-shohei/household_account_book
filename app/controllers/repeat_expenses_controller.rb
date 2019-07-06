@@ -83,12 +83,33 @@ class RepeatExpensesController < ApplicationController
   end
 
   def destroy
-    # todo: updateと同じように過去未来全てか未来のみの出費を削除するか選べるようにする。
     @repeat_expense = RepeatExpense.find(params[:id])
-    Expense.destroy_repeat_expenses(current_user, @repeat_expense.id)
-    # create_notification(@repeat_expense)
-    @repeat_expense.destroy
-    redirect_to repeat_expenses_path, notice: "削除しました"
+    target_repeat_expenses = @current_user.repeat_expenses.where(item_id: @repeat_expense.item_id).order(item_sub_id: :desc)
+    target_expenses = Expense.where(repeat_expense_id: target_repeat_expenses.map(&:id))
+    ActiveRecord::Base.transaction do
+      begin
+        if params[:updated_period] == "updated_all"
+          target_expenses.each(&:destroy)
+          target_repeat_expenses.each(&:destroy)
+        elsif params[:updated_period] == "updated_only_future"
+          target_expenses.each do |expense|
+            if expense.date >= Date.current
+              expense.destroy
+            end
+          end
+          target_repeat_expenses.each(&:destroy)
+        end
+      rescue
+        flash[:error] = ["繰り返し出費の削除に失敗しました。"]
+        raise ActiveRecord::Rollback
+      end
+    end
+
+    if flash[:error].blank?
+      redirect_to repeat_expenses_path, notice: "繰り返し出費と関連する出費を削除しました。"
+    else
+      redirect_to edit_repeat_expense_path(@repeat_expense)
+    end
   end
 
   private

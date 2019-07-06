@@ -78,15 +78,15 @@
 
   <% elsif action_name == 'edit' || action_name == 'update' %>
     <div class="form-group">
-      <button type="button" class="btn btn-orange btn-block" data-toggle="modal" data-target="#modal-default">更新</button>
+      <button type="button" class="btn btn-orange btn-block" data-toggle="modal" data-target="#update-modal">更新</button>
     </div>
 
-    <%= render 'confirm_modal', form: f %>
+    <%= render 'confirm_update_modal', form: f %>
 
-    <%= link_to '削除する', repeat_expense_path(@repeat_expense), method: :delete, data:{confirm: "Are you sure?"}, class: 'btn btn-brown btn-block' %>
-    <div class="text-redpepper pull-right">
-      ※関連する当月以降の未来の出費を全て削除します。
-    </div>
+    <button type="button" class="btn btn-brown btn-block" data-toggle="modal" data-target="#destroy-modal">削除する</button>
+
+    <%= render 'confirm_destroy_modal' %>
+
   <% end %>
 
 <% end %>

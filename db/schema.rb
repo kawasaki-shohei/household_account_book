@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_29_003259) do
+ActiveRecord::Schema.define(version: 2019_07_05_235412) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -145,7 +145,9 @@ ActiveRecord::Schema.define(version: 2019_06_29_003259) do
     t.integer "item_id", null: false
     t.integer "item_sub_id", null: false
     t.integer "updated_period", limit: 2, default: 0, null: false
+    t.datetime "deleted_at"
     t.index ["category_id"], name: "index_repeat_expenses_on_category_id"
+    t.index ["deleted_at"], name: "index_repeat_expenses_on_deleted_at"
     t.index ["user_id", "item_id", "item_sub_id"], name: "index_repeat_expenses_on_user_id_and_item_id_and_item_sub_id", unique: true
     t.index ["user_id"], name: "index_repeat_expenses_on_user_id"
   end
@@ -205,13 +207,13 @@ ActiveRecord::Schema.define(version: 2019_06_29_003259) do
       repeat_expenses_a.updated_at,
       repeat_expenses_a.item_id,
       repeat_expenses_a.item_sub_id,
-      repeat_expenses_a.updated_period
+      repeat_expenses_a.updated_period,
+      repeat_expenses_a.deleted_at
      FROM (repeat_expenses repeat_expenses_a
        JOIN ( SELECT repeat_expenses.item_id,
               max(repeat_expenses.item_sub_id) AS max_item_sub_id
              FROM repeat_expenses
             GROUP BY repeat_expenses.item_id) repeat_expenses_b ON (((repeat_expenses_a.item_id = repeat_expenses_b.item_id) AND (repeat_expenses_a.item_sub_id = repeat_expenses_b.max_item_sub_id))))
-    WHERE (repeat_expenses_a.user_id = ANY (ARRAY[(1)::bigint, (2)::bigint]))
-    ORDER BY repeat_expenses_a.created_at DESC;
+    WHERE (repeat_expenses_a.deleted_at IS NULL);
   SQL
 end
