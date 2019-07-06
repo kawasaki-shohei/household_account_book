@@ -66,7 +66,7 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'html2haml'
   gem 'spring-commands-rspec', '~> 1.0', '>= 1.0.4'
-  gem 'yard', '~> 0.9.16'
+  gem 'yard', '~> 0.9.20'
   gem 'guard-yard', '~> 2.2', '>= 2.2.1'
   gem 'annotate'
   gem 'kramdown', :require => false
