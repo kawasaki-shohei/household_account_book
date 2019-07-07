@@ -9,14 +9,14 @@
 # **`id`**              | `bigint(8)`        | `not null, primary key`
 # **`amount`**          | `integer`          |
 # **`deleted_at`**      | `datetime`         |
-# **`e_date`**          | `date`             |
+# **`end_date`**        | `date`             |
 # **`is_for_both`**     | `boolean`          | `default(FALSE)`
 # **`memo`**            | `string`           |
 # **`mypay`**           | `integer`          |
 # **`partnerpay`**      | `integer`          |
 # **`percent`**         | `integer`          | `default("pay_all"), not null`
-# **`r_date`**          | `integer`          |
-# **`s_date`**          | `date`             |
+# **`repeat_day`**      | `integer`          |
+# **`start_date`**      | `date`             |
 # **`updated_period`**  | `integer`          | `default("first_item"), not null`
 # **`created_at`**      | `datetime`         | `not null`
 # **`updated_at`**      | `datetime`         | `not null`
@@ -60,12 +60,12 @@ class RepeatExpense < ApplicationRecord
 
   before_validation :set_mypay_and_partnerpay
 
-  validates :amount, :s_date, :e_date, :r_date, :percent, presence: true
+  validates :amount, :start_date, :end_date, :repeat_day, :percent, presence: true
   validates_length_of :amount, :mypay, :partnerpay, maximum: 10
   validates_length_of :memo, maximum: 100
   validates :item_id, uniqueness: { scope: [:user_id, :item_sub_id] }
   validate :calculate_amount
-  validate :e_date_is_over_first_date
+  validate :end_date_is_over_first_date
 
   scope :both_f, -> {where(is_for_both: false)}
   scope :both_t, -> {where(is_for_both: true)}
@@ -79,9 +79,9 @@ class RepeatExpense < ApplicationRecord
     user.repeat_expenses.both_t.newer
   end
 
-  def e_date_is_over_first_date
-    first_date = s_date.next_nth_day(r_date)
-    if e_date < first_date + 1.month
+  def end_date_is_over_first_date
+    first_date = start_date.next_nth_day(repeat_day)
+    if end_date < first_date + 1.month
       errors[:base] << "終了日は初回の出費の日付より1ヶ月後以降（#{I18n.l(first_date + 1.month + 1.day, format: :default)}〜）にしてください。"
     end
   end

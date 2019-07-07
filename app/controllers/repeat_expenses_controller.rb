@@ -46,7 +46,7 @@ class RepeatExpensesController < ApplicationController
     @repeat_expense = RepeatExpense.find(params[:id])
     new_repeat_expense = @current_user.repeat_expenses.build(repeat_expense_params)
     new_repeat_expense.set_next_item_sub_id(@repeat_expense)
-    if new_repeat_expense.updated_only_future? && @repeat_expense.s_date != new_repeat_expense.s_date && @repeat_expense.s_date < Date.current
+    if new_repeat_expense.updated_only_future? && @repeat_expense.start_date != new_repeat_expense.start_date && @repeat_expense.start_date < Date.current
       flash.now[:error] = ["未来の出費のみ変更する場合、今日より過去に設定されている開始日は変更できません。"]
       @repeat_expense.assign_attributes(repeat_expense_params)
       @categories = Category.ones_categories(@current_user)
@@ -114,7 +114,7 @@ class RepeatExpensesController < ApplicationController
 
   private
   def repeat_expense_params
-    permitted_params = params.require(:repeat_expense).permit(:amount, :category_id, :s_date, :e_date, :r_date, :memo, :is_for_both, :mypay, :partnerpay).merge(percent: params[:repeat_expense][:percent].to_i)
+    permitted_params = params.require(:repeat_expense).permit(:amount, :category_id, :start_date, :end_date, :repeat_day, :memo, :is_for_both, :mypay, :partnerpay).merge(percent: params[:repeat_expense][:percent].to_i)
     if params[:updated_only_future].present?
       permitted_params.merge!(updated_period: "updated_only_future")
     elsif params[:updated_all].present?

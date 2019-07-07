@@ -12,7 +12,7 @@
     <% end %>
   </div>
 
-  <div><%= l(repeat_expense.s_date, format: :japanese_date_default) %> 〜 <%= l(repeat_expense.e_date, format: :japanese_date_default) %></div>
+  <div><%= l(repeat_expense.start_date, format: :japanese_date_default) %> 〜 <%= l(repeat_expense.end_date, format: :japanese_date_default) %></div>
   <div>
     <span class="space-right"><%= repeat_expense.category.name %></span>
     <span><%= repeat_expense.memo %></span>
