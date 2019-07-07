@@ -40,7 +40,7 @@ class ExpensesController < ApplicationController
 
   def update
     @expense = Expense.find(params[:id])
-    @expense.assign_attributes(expense_params.merge(repeat_expense_id: nil))
+    @expense.assign_attributes(expense_params.merge(repeat_expense_id: nil))  # repeat_expenseが更新されても変更されないように。
     if @expense.update(expense_params)
       category = @expense.category
       redirect_to expenses_path(period: @expense.date.to_s_as_period, expense: @expense.id), notice: "出費を保存しました。#{category.name}: #{@expense.amount.to_s(:delimited)}円"

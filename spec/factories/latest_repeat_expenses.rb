@@ -9,6 +9,7 @@
 # **`id`**              | `bigint(8)`        |
 # **`amount`**          | `integer`          |
 # **`both_flg`**        | `boolean`          |
+# **`deleted_at`**      | `datetime`         |
 # **`e_date`**          | `date`             |
 # **`memo`**            | `string`           |
 # **`mypay`**           | `integer`          |

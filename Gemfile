@@ -14,6 +14,10 @@ gem 'puma', '~> 3.7'
 gem 'pg', '~> 0.18'
 gem 'scenic', '~> 1.5', '>= 1.5.1'
 
+# model
+gem 'activerecord-import'  #todo: 削除
+gem 'paranoia', '~> 2.4', '>= 2.4.2'
+
 # about assets
 gem 'sprockets-rails', '~> 3.2', '>= 3.2.1'
 gem 'uglifier', '>= 1.3.0'
@@ -31,7 +35,7 @@ gem 'webpacker', '~> 4.0', '>= 4.0.2'
 gem 'jbuilder', '~> 2.5'
 gem 'active_decorator', '~> 1.2'
 gem 'kaminari', '~> 1.1', '>= 1.1.1'
-gem 'haml-rails' #fixme: 削除
+gem 'haml-rails' #todo: 削除
 gem 'gon', '~> 6.2', '>= 6.2.1'
 gem 'rails-i18n', '~> 5.1', '>= 5.1.3'
 
@@ -39,8 +43,6 @@ gem 'daemons', '~> 1.2', '>= 1.2.6'
 gem 'delayed_job_active_record', '~> 4.1', '>= 4.1.3'
 gem 'bcrypt', '3.1.11'
 gem 'faker'
-
-gem 'activerecord-import'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -64,13 +66,14 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'html2haml'
   gem 'spring-commands-rspec', '~> 1.0', '>= 1.0.4'
-  gem 'yard', '~> 0.9.16'
+  gem 'yard', '~> 0.9.20'
   gem 'guard-yard', '~> 2.2', '>= 2.2.1'
   gem 'annotate'
   gem 'kramdown', :require => false
   gem 'rails-erd'
   gem 'schemadoc'
   gem 'ruby-graphviz'
+  gem 'bullet'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

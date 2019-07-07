@@ -9,6 +9,7 @@
 # **`id`**              | `bigint(8)`        | `not null, primary key`
 # **`amount`**          | `integer`          |
 # **`both_flg`**        | `boolean`          | `default(FALSE)`
+# **`deleted_at`**      | `datetime`         |
 # **`e_date`**          | `date`             |
 # **`memo`**            | `string`           |
 # **`mypay`**           | `integer`          |
@@ -28,6 +29,8 @@
 #
 # * `index_repeat_expenses_on_category_id`:
 #     * **`category_id`**
+# * `index_repeat_expenses_on_deleted_at`:
+#     * **`deleted_at`**
 # * `index_repeat_expenses_on_user_id`:
 #     * **`user_id`**
 # * `index_repeat_expenses_on_user_id_and_item_id_and_item_sub_id` (_unique_):
@@ -44,6 +47,7 @@
 #
 
 class RepeatExpense < ApplicationRecord
+  acts_as_paranoid
   include PercentCalculator
   include RepeatExpensesListsDisplayer
 
@@ -54,11 +58,11 @@ class RepeatExpense < ApplicationRecord
 
   belongs_to :category
   belongs_to :user
-  has_many :expenses, dependent: :destroy
+  has_many :expenses
 
   before_validation :set_mypay_and_partnerpay
 
-  validates :amount, :s_date, :e_date, :r_date, :percent,presence: true
+  validates :amount, :s_date, :e_date, :r_date, :percent, presence: true
   validates_length_of :amount, :mypay, :partnerpay, maximum: 10
   validates_length_of :memo, maximum: 100
   validates_with BothExpenseAmountValidator
@@ -94,13 +98,14 @@ class RepeatExpense < ApplicationRecord
   end
 
   def set_new_item_id
-    repeat_expenses = self.user.repeat_expenses.where.not(id: nil)
-    self.item_id = repeat_expenses.present? ? self.user.repeat_expenses.maximum(:item_id) + 1 : 1
+    repeat_expenses = user.repeat_expenses.with_deleted.where.not(id: nil)
+    self.item_id = repeat_expenses.present? ? repeat_expenses.maximum(:item_id) + 1 : 1
     self.item_sub_id = 1
   end
 
   def set_next_item_sub_id(old_repeat_expense)
     self.item_id = old_repeat_expense.item_id
+    max_item_sub_id = user.repeat_expenses.with_deleted.where(item_id: item_id).where.not(id: nil).maximum(:item_sub_id)
     self.item_sub_id = old_repeat_expense.item_sub_id + 1
   end
 end

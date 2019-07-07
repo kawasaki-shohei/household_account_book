@@ -1,0 +1,24 @@
+<div class="modal fade" id="destroy-modal" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span></button>
+        <h4 class="modal-title">繰り返し出費の削除</h4>
+      </div>
+      <div class="modal-body">
+        <p>「未来の出費のみ」または「過去未来全ての出費」に適応するか選択してください。</p>
+        <p>「未来の出費のみ」を選択した場合、過去のデータは以前の情報のまま保持され、今日より未来の出費のみ削除されます。(今日を含む)</p>
+        <p>「過去未来全ての出費」を選択した場合、過去未来のデータ全ての関連する出費が削除されます。</p>
+      </div>
+      <div>
+        <%= link_to '過去未来全ての出費', repeat_expense_path(@repeat_expense, updated_period: "updated_all"), method: :delete, class: 'btn repeat-expense-chose-btn' %>
+        <%= link_to '未来の出費のみ', repeat_expense_path(@repeat_expense, updated_period: "updated_only_future"), method: :delete, class: 'btn repeat-expense-chose-btn' %>
+        <button type="button" class="btn repeat-expense-chose-btn" data-dismiss="modal" aria-label="Close">キャンセル</button>
+      </div>
+
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
