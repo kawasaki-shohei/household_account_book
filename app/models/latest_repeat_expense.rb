@@ -8,9 +8,9 @@
 # --------------------- | ------------------ | ---------------------------
 # **`id`**              | `bigint(8)`        |
 # **`amount`**          | `integer`          |
-# **`both_flg`**        | `boolean`          |
 # **`deleted_at`**      | `datetime`         |
 # **`e_date`**          | `date`             |
+# **`is_for_both`**     | `boolean`          |
 # **`memo`**            | `string`           |
 # **`mypay`**           | `integer`          |
 # **`partnerpay`**      | `integer`          |
@@ -32,13 +32,9 @@ class LatestRepeatExpense < ApplicationRecord
   enum percent: { manual_amount: -1, pay_all: 0, pay_half: 1, pay_one_third: 2, pay_two_thirds: 3, pay_nothing: 4 }
   enum updated_period: { first_item: 0, updated_all: 1, updated_only_future: 2 }
 
-  alias_attribute :is_for_both?, :both_flg
-
   belongs_to :category
   belongs_to :user
   has_many :expenses, dependent: :destroy
-
-  alias_attribute :is_for_both?, :both_flg
 
   def readonly?
     true

@@ -8,9 +8,9 @@
 # --------------------- | ------------------ | ---------------------------
 # **`id`**              | `bigint(8)`        |
 # **`amount`**          | `integer`          |
-# **`both_flg`**        | `boolean`          |
 # **`deleted_at`**      | `datetime`         |
 # **`e_date`**          | `date`             |
+# **`is_for_both`**     | `boolean`          |
 # **`memo`**            | `string`           |
 # **`mypay`**           | `integer`          |
 # **`partnerpay`**      | `integer`          |

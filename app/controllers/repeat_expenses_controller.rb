@@ -114,7 +114,7 @@ class RepeatExpensesController < ApplicationController
 
   private
   def repeat_expense_params
-    permitted_params = params.require(:repeat_expense).permit(:amount, :category_id, :s_date, :e_date, :r_date, :memo, :both_flg, :mypay, :partnerpay).merge(percent: params[:repeat_expense][:percent].to_i)
+    permitted_params = params.require(:repeat_expense).permit(:amount, :category_id, :s_date, :e_date, :r_date, :memo, :is_for_both, :mypay, :partnerpay).merge(percent: params[:repeat_expense][:percent].to_i)
     if params[:updated_only_future].present?
       permitted_params.merge!(updated_period: "updated_only_future")
     elsif params[:updated_all].present?
