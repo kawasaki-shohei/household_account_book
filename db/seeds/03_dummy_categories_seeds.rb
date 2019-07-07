@@ -3,12 +3,12 @@ ones_kinds = %w(交通費 交際費 保険代 医療費)
 user = User.first
 partner = user.partner
 @categories = []
-def create_category_instance(kinds, user, common_flg)
+def create_category_instance(kinds, user, is_common)
   kinds.each do |kind|
     @categories << Category.new(
       name: kind,
       user_id: user.id,
-      common: common_flg
+      is_common: is_common
     )
   end
 end

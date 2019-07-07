@@ -12,7 +12,7 @@ module CategoryDecorator
   end
 
   def common_btn
-    if common
+    if is_common?
       icon = content_tag(:i, "", class: "fa fa-lg fa-star")
       link_to icon, common_category_path(self), method: :delete, remote: true, data:{confirm: "共通カテゴリーからしますが、よろしいでしょうか？"}, class: "text-redpepper space-left"
     else
@@ -22,7 +22,7 @@ module CategoryDecorator
   end
 
   def common_mark
-    return nil unless common
+    return nil unless is_common?
     icon = content_tag(:i, "", class: "fa fa-exchange")
     content_tag(:small, icon + ' 共通', class: "label bg-orange")
   end

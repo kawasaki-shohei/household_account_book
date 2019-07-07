@@ -66,7 +66,7 @@ class ApplicationController < ActionController::Base
       return true
     elsif controller_path == "repeat_expenses" && obj.is_for_both? == false
       return true
-    elsif controller_path == "categories" && obj.common == false
+    elsif controller_path == "categories" && obj.is_common? == false
       return true
     else
       return false

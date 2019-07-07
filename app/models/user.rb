@@ -72,7 +72,7 @@ class User < ApplicationRecord
     get_categories(partner).each do |category|
       p category
       count = get_count(category)
-      build_expenses_instances(year, month, category.id, count, is_for_both: category.common)
+      build_expenses_instances(year, month, category.id, count, is_for_both: category.is_common?)
     end
     Expense.import(@import_expenses) ? true :false
   end
@@ -159,12 +159,12 @@ class User < ApplicationRecord
     [foods, goods, rent, gas, electricity, water, transportation, entertainment, insurance, medical].compact
   end
 
-  def create_category_instance(kinds, user, common_flg)
+  def create_category_instance(kinds, user, is_common)
     kinds.each do |kind|
       @import_categories << Category.new(
         name: kind,
         user_id: user.id,
-        common: common_flg
+        is_common: is_common
       )
     end
   end
