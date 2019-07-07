@@ -1,10 +1,10 @@
-<%= render partial: 'shared/html_title', locals: {subtitle: "繰り返し出費一覧"} %>
+<%= render partial: 'shared/html_title', locals: {subtitle: "fronts controller"} %>
 <div class="content-wrapper">
 
   <section class="content-header">
     <div class="row">
       <div class="col-md-8 col-md-offset-2 col-xs-12">
-        <h3>繰り返し出費一覧</h3>
+        <h3>fronts controller</h3>
       </div>
     </div>
   </section>
@@ -16,21 +16,12 @@
         <div class="box box-brown">
 
           <div class="box-header with-border">
-            <div class="pull-right">
-              <%= link_to '繰り返し出費を追加', new_repeat_expense_path, class: "btn btn-orange" %>
-            </div>
+            <h3>box header</h3>
           </div><!-- /.box-header -->
 
-          <div class="box-body box-comments">
-            <% @repeat_expenses.each do |repeat_expense| %>
-              <% next if repeat_expense.is_own_expense?(@partner) %>
-              <div class="box-comment">
-                <% if repeat_expense.is_own_expense?(@current_user) %>
-                  <%= render 'own_expense', repeat_expense: repeat_expense %>
-                <% else %>
-                  <%= render 'both_expense', repeat_expense: repeat_expense %>
-                <% end %>
-              </div><!-- box-comment -->
+          <div class="box-body">
+            <% @categories.each do |category| %>
+              <%= category.expenses.first.memo %>
             <% end %>
           </div><!-- /.box-body -->
 

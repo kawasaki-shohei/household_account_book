@@ -64,6 +64,9 @@ GEM
     binding_of_caller (0.8.0)
       debug_inspector (>= 0.0.1)
     builder (3.2.3)
+    bullet (6.0.1)
+      activesupport (>= 3.0.0)
+      uniform_notifier (~> 1.11)
     byebug (11.0.1)
     capybara (2.18.0)
       addressable
@@ -298,6 +301,7 @@ GEM
       thread_safe (~> 0.1)
     uglifier (4.1.20)
       execjs (>= 0.3.0, < 3)
+    uniform_notifier (1.12.1)
     web-console (3.7.0)
       actionview (>= 5.0)
       activemodel (>= 5.0)
@@ -324,6 +328,7 @@ DEPENDENCIES
   bcrypt (= 3.1.11)
   better_errors
   binding_of_caller
+  bullet
   byebug
   capybara (~> 2.13)
   daemons (~> 1.2, >= 1.2.6)

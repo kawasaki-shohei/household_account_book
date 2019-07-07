@@ -1,6 +1,6 @@
 class FrontsController < ApplicationController
   def index
-    @repeat_expenses = RepeatExpense.includes(:user, :category).where(user: [@current_user, @partner]).order(created_at: :desc)
+    @categories = @current_user.categories
   end
 
   def new
