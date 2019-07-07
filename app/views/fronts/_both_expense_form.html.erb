@@ -46,21 +46,21 @@
   <div class="form-group">
     <%= f.label :date, value: '開始日' %>
     <div>
-      <%= f.date_field :s_date, required: true, value: @repeat_expense.default_date, class: "form-control" %>
+      <%= f.date_field :start_date, required: true, value: @repeat_expense.default_date, class: "form-control" %>
     </div>
   </div>
 
   <div class="form-group">
     <%= f.label :date, value: '終了日' %>
     <div>
-      <%= f.date_field :e_date, required: true, value: @repeat_expense.default_date, class: "form-control" %>
+      <%= f.date_field :end_date, required: true, value: @repeat_expense.default_date, class: "form-control" %>
     </div>
   </div>
 
   <div class="form-group">
     <%= f.label :date, value: '毎月 何日？' %>
     <div>
-      <%= f.select :r_date, 1..28, { include_blank: "-" }, required: true, id: "r_date", class: "form-control" %>
+      <%= f.select :repeat_day, 1..28, { include_blank: "-" }, required: true, id: "repeat_day", class: "form-control" %>
     </div>
   </div>
 

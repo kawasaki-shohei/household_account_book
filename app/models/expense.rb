@@ -122,10 +122,10 @@ class Expense < ApplicationRecord
   def self.creat_repeat_expenses!(repeat_expense)
     expense_attributes = {}
     repeat_expense.attributes.each{ |k, v| expense_attributes["#{k}"] = v if Expense.necessary_attributes_from_repeat_exepnses.include?(k) }
-    s_date = repeat_expense.updated_only_future? ? Date.current : repeat_expense.s_date
-    e_date = repeat_expense.e_date
-    r_date = repeat_expense.r_date
-    (s_date..e_date).select{|d| d.day == r_date }.each do |date|
+    start_date = repeat_expense.updated_only_future? ? Date.current : repeat_expense.start_date
+    end_date = repeat_expense.end_date
+    repeat_day = repeat_expense.repeat_day
+    (start_date..end_date).select{|d| d.day == repeat_day }.each do |date|
       expense = Expense.new(expense_attributes)
       expense.date = date
       expense.repeat_expense_id = repeat_expense.id
