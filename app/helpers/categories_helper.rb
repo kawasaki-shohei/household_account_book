@@ -4,7 +4,7 @@ module CategoriesHelper
     categories.find_all do |category|
       user = category.user
       user == @current_user ||
-        (user == @partner && category.common)
+        (user == @partner && category.is_common?)
     end
   end
 
@@ -18,19 +18,4 @@ module CategoriesHelper
     @categories.reject{ |c| c.only_ones_own?(@current_user) }
   end
 
-
-
-
-
-
-
-
-
-
-
-
-  #fixme: ビューで呼ばれているから要修正
-  def common_categories
-    @common_categories = Category.where('user_id = ? OR user_id = ?', current_user.id, partner.id).where(common: true)
-  end
 end

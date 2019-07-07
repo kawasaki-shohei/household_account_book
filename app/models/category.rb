@@ -7,7 +7,7 @@
 # Name              | Type               | Attributes
 # ----------------- | ------------------ | ---------------------------
 # **`id`**          | `bigint(8)`        | `not null, primary key`
-# **`common`**      | `boolean`          | `default(FALSE)`
+# **`is_common`**   | `boolean`          | `default(FALSE)`
 # **`name`**        | `string`           |
 # **`created_at`**  | `datetime`         | `not null`
 # **`updated_at`**  | `datetime`         | `not null`
@@ -29,12 +29,10 @@ class Category < ApplicationRecord
   has_many :budgets, dependent: :destroy
   has_many :expenses
 
-  scope :oneself, -> {where(common: false)}
-  scope :common_t, -> {where(common: true)}
+  scope :oneself, -> {where(is_common: false)}
+  scope :common_t, -> {where(is_common: true)}
 
   validates :name, presence: true, length: { maximum: 15 }
-
-  alias_attribute :is_common?, :common
 
   def self.ones_categories(user)
     partner = user.partner
@@ -63,7 +61,7 @@ class Category < ApplicationRecord
 
   # @return
   def only_ones_own?(user)
-    self.user == user && !common
+    self.user == user && !is_common?
   end
 
 end
