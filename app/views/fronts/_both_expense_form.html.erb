@@ -1,6 +1,6 @@
 <%= form_with(model: @repeat_expense, local: true) do |f| %>
   <%=render 'shared/error', object: @repeat_expense %>
-  <%= f.hidden_field :both_flg, value: true %>
+  <%= f.hidden_field :is_for_both, value: true %>
   <div class="form-group">
     <%= f.label :amount , value: '支払い金額' %>
     <div class="input-group">

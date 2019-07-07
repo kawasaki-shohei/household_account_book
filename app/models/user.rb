@@ -72,7 +72,7 @@ class User < ApplicationRecord
     get_categories(partner).each do |category|
       p category
       count = get_count(category)
-      build_expenses_instances(year, month, category.id, count, both_flg: category.common)
+      build_expenses_instances(year, month, category.id, count, is_for_both: category.common)
     end
     Expense.import(@import_expenses) ? true :false
   end
@@ -96,7 +96,7 @@ class User < ApplicationRecord
 
   private
 
-  def build_expenses_instances(year, month, category_id, count, both_flg:)
+  def build_expenses_instances(year, month, category_id, count, is_for_both:)
     today = Time.zone.today
     first = today.beginning_of_month.day
     last = today.end_of_month.day
@@ -110,10 +110,10 @@ class User < ApplicationRecord
         date: Date.parse("#{year}-#{month}-#{rand(first..last)}"),
         note: "inserted #{today}",
         category_id: category_id,
-        both_flg: both_flg,
-        mypay: both_flg ? mypay : nil,
-        partnerpay: both_flg ? partnerpay : nil,
-        percent: both_flg ? percent : nil,
+        is_for_both: is_for_both,
+        mypay: is_for_both ? mypay : nil,
+        partnerpay: is_for_both ? partnerpay : nil,
+        percent: is_for_both ? percent : nil,
       )
     end
   end

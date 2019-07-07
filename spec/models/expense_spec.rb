@@ -8,8 +8,8 @@
 # ------------------------ | ------------------ | ---------------------------
 # **`id`**                 | `bigint(8)`        | `not null, primary key`
 # **`amount`**             | `integer`          |
-# **`both_flg`**           | `boolean`          | `default(FALSE)`
 # **`date`**               | `date`             |
+# **`is_for_both`**        | `boolean`          | `default(FALSE)`
 # **`memo`**               | `string`           |
 # **`mypay`**              | `integer`          |
 # **`partnerpay`**         | `integer`          |
@@ -95,13 +95,13 @@ RSpec.describe Expense, type: :model do
     end
 
     context "when both expenses" do
-      it "is valid with a amount, user_id, category_id, date, true both_flg, percent, mypay and partnerpay" do
+      it "is valid with a amount, user_id, category_id, date, for_both_expense, percent, mypay and partnerpay" do
         expense = Expense.new(
           user: @user,
           category: @category,
           amount: 1000,
           date: Time.zone.today,
-          both_flg: true,
+          is_for_both: true,
           percent: 1,
           mypay: 500,
           partnerpay: 500
@@ -115,7 +115,7 @@ RSpec.describe Expense, type: :model do
           category: @category,
           amount: 1000,
           date: Time.zone.today,
-          both_flg: true,
+          is_for_both: true,
           percent: -1,
           mypay: nil,
           partnerpay: 500
@@ -131,7 +131,7 @@ RSpec.describe Expense, type: :model do
           category: @category,
           amount: 1000,
           date: Time.zone.today,
-          both_flg: true,
+          is_for_both: true,
           percent: -1,
           mypay: 500,
           partnerpay: nil
@@ -147,7 +147,7 @@ RSpec.describe Expense, type: :model do
           category: @category,
           amount: 1000,
           date: Time.zone.today,
-          both_flg: true,
+          is_for_both: true,
           percent: -1,
           mypay: 400,
           partnerpay: 500

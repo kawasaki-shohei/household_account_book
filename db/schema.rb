@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_05_235412) do
+ActiveRecord::Schema.define(version: 2019_07_07_095843) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -81,7 +81,7 @@ ActiveRecord::Schema.define(version: 2019_07_05_235412) do
     t.datetime "updated_at", null: false
     t.integer "category_id"
     t.integer "user_id"
-    t.boolean "both_flg", default: false
+    t.boolean "is_for_both", default: false
     t.integer "mypay"
     t.integer "partnerpay"
     t.integer "percent", limit: 2, default: 0, null: false
@@ -136,7 +136,7 @@ ActiveRecord::Schema.define(version: 2019_07_05_235412) do
     t.string "memo"
     t.bigint "category_id"
     t.bigint "user_id"
-    t.boolean "both_flg", default: false
+    t.boolean "is_for_both", default: false
     t.integer "mypay"
     t.integer "partnerpay"
     t.integer "percent", limit: 2, default: 0, null: false
@@ -199,7 +199,7 @@ ActiveRecord::Schema.define(version: 2019_07_05_235412) do
       repeat_expenses_a.memo,
       repeat_expenses_a.category_id,
       repeat_expenses_a.user_id,
-      repeat_expenses_a.both_flg,
+      repeat_expenses_a.is_for_both,
       repeat_expenses_a.mypay,
       repeat_expenses_a.partnerpay,
       repeat_expenses_a.percent,

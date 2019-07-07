@@ -8,9 +8,9 @@
 # --------------------- | ------------------ | ---------------------------
 # **`id`**              | `bigint(8)`        | `not null, primary key`
 # **`amount`**          | `integer`          |
-# **`both_flg`**        | `boolean`          | `default(FALSE)`
 # **`deleted_at`**      | `datetime`         |
 # **`e_date`**          | `date`             |
+# **`is_for_both`**     | `boolean`          | `default(FALSE)`
 # **`memo`**            | `string`           |
 # **`mypay`**           | `integer`          |
 # **`partnerpay`**      | `integer`          |
@@ -54,8 +54,6 @@ class RepeatExpense < ApplicationRecord
   enum percent: { manual_amount: -1, pay_all: 0, pay_half: 1, pay_one_third: 2, pay_two_thirds: 3, pay_nothing: 4 }
   enum updated_period: { first_item: 0, updated_all: 1, updated_only_future: 2 }
 
-  alias_attribute :is_for_both?, :both_flg
-
   belongs_to :category
   belongs_to :user
   has_many :expenses
@@ -69,8 +67,8 @@ class RepeatExpense < ApplicationRecord
   validate :calculate_amount
   validate :e_date_is_over_first_date
 
-  scope :both_f, -> {where(both_flg: false)}
-  scope :both_t, -> {where(both_flg: true)}
+  scope :both_f, -> {where(is_for_both: false)}
+  scope :both_t, -> {where(is_for_both: true)}
   scope :newer, -> {order(updated_at: :desc)}
 
   def self.ones_expenses(user)
@@ -79,10 +77,6 @@ class RepeatExpense < ApplicationRecord
 
   def self.ones_expenses_of_both(user)
     user.repeat_expenses.both_t.newer
-  end
-
-  def self.arrange(both_flg)
-    both_flg ? self.both_t.newer : self.both_f.newer
   end
 
   def e_date_is_over_first_date

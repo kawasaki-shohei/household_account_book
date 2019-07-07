@@ -41,7 +41,7 @@ module BalanceHelper
       self.is_for_new = object.is_new
       self.is_for_destroyed_object = object.is_destroyed
       self.object_differences = object.differences
-      if object.is_a?(Expense) && object.both_flg
+      if object.is_a?(Expense) && object.is_for_both?
         self.is_for_both_expense = true
       end
       if !is_for_new && !is_for_destroyed_object && object_differences[:date]
