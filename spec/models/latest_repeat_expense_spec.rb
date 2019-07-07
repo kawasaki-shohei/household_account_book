@@ -9,14 +9,14 @@
 # **`id`**              | `bigint(8)`        |
 # **`amount`**          | `integer`          |
 # **`deleted_at`**      | `datetime`         |
-# **`e_date`**          | `date`             |
+# **`end_date`**        | `date`             |
 # **`is_for_both`**     | `boolean`          |
 # **`memo`**            | `string`           |
 # **`mypay`**           | `integer`          |
 # **`partnerpay`**      | `integer`          |
 # **`percent`**         | `integer`          |
-# **`r_date`**          | `integer`          |
-# **`s_date`**          | `date`             |
+# **`repeat_day`**      | `integer`          |
+# **`start_date`**      | `date`             |
 # **`updated_period`**  | `integer`          |
 # **`created_at`**      | `datetime`         |
 # **`updated_at`**      | `datetime`         |
