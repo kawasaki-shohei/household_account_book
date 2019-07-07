@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_07_105002) do
+ActiveRecord::Schema.define(version: 2019_07_07_114215) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -130,9 +130,9 @@ ActiveRecord::Schema.define(version: 2019_07_07_105002) do
 
   create_table "repeat_expenses", force: :cascade do |t|
     t.integer "amount"
-    t.date "s_date"
-    t.date "e_date"
-    t.integer "r_date"
+    t.date "start_date"
+    t.date "end_date"
+    t.integer "repeat_day"
     t.string "memo"
     t.bigint "category_id"
     t.bigint "user_id"
@@ -193,9 +193,9 @@ ActiveRecord::Schema.define(version: 2019_07_07_105002) do
   create_view "latest_repeat_expenses", sql_definition: <<-SQL
       SELECT repeat_expenses_a.id,
       repeat_expenses_a.amount,
-      repeat_expenses_a.s_date,
-      repeat_expenses_a.e_date,
-      repeat_expenses_a.r_date,
+      repeat_expenses_a.start_date,
+      repeat_expenses_a.end_date,
+      repeat_expenses_a.repeat_day,
       repeat_expenses_a.memo,
       repeat_expenses_a.category_id,
       repeat_expenses_a.user_id,
