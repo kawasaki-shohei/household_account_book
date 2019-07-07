@@ -193,9 +193,9 @@ ActiveRecord::Schema.define(version: 2019_07_07_114215) do
   create_view "latest_repeat_expenses", sql_definition: <<-SQL
       SELECT repeat_expenses_a.id,
       repeat_expenses_a.amount,
-      repeat_expenses_a.start_date AS s_date,
-      repeat_expenses_a.end_date AS e_date,
-      repeat_expenses_a.repeat_day AS r_date,
+      repeat_expenses_a.start_date,
+      repeat_expenses_a.end_date,
+      repeat_expenses_a.repeat_day,
       repeat_expenses_a.memo,
       repeat_expenses_a.category_id,
       repeat_expenses_a.user_id,
