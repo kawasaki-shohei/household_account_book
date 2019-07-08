@@ -65,6 +65,17 @@ class User < ApplicationRecord
     balances.where(period: period).first_or_initialize
   end
 
+  def insert_expenses_for_a_month(year: Time.zone.today.year, month: Time.zone.today.month)
+    @import_expenses = []
+    partner = self.partner
+    get_categories(partner).each do |category|
+      p category
+      count = get_count(category)
+      build_expenses_instances(year, month, category.id, count, is_for_both: category.is_common?)
+    end
+    Expense.import(@import_expenses) ? true :false
+  end
+
   def insert_categories
     both_kinds = %w(家賃 食費 日用品 ガス代 電気代 水道代)
     ones_kinds = %w(交通費 交際費 保険代 医療費)
@@ -94,7 +105,7 @@ class User < ApplicationRecord
     import_expenses.each(&:save!)
   end
 
-  def build_expenses_instances(year, month, category, be_for_both: false)
+  def build_expenses_instances(year, month, category, is_for_both: false)
     today = Time.zone.today
     first_day = Date.new(year, month, 1)
     last_day = first_day.end_of_month
@@ -103,8 +114,8 @@ class User < ApplicationRecord
       date: Faker::Date.between(first_day, last_day),
       memo: "random sample expense inserted at #{I18n.l(today, format: :default)}",
       category_id: category.id,
-      both_flg: be_for_both,
-      percent: be_for_both ? get_random_percent : 0,
+      both_flg: is_for_both,
+      percent: is_for_both ? get_random_percent : 0,
       )
     if expense.manual_amount?
       expense.mypay = Faker::Number.between(1, expense.amount - 1)
@@ -157,12 +168,12 @@ class User < ApplicationRecord
     [foods, goods, rent, gas, electricity, water, transportation, entertainment, insurance, medical].compact
   end
 
-  def create_category_instance(kinds, user, common_flg)
+  def create_category_instance(kinds, user, is_common)
     kinds.each do |kind|
       @import_categories << Category.new(
         name: kind,
         user_id: user.id,
-        common: common_flg
+        is_common: is_common
       )
     end
   end

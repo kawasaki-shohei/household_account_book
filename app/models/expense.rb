@@ -8,8 +8,8 @@
 # ------------------------ | ------------------ | ---------------------------
 # **`id`**                 | `bigint(8)`        | `not null, primary key`
 # **`amount`**             | `integer`          |
-# **`both_flg`**           | `boolean`          | `default(FALSE)`
 # **`date`**               | `date`             |
+# **`is_for_both`**        | `boolean`          | `default(FALSE)`
 # **`memo`**               | `string`           |
 # **`mypay`**              | `integer`          |
 # **`partnerpay`**         | `integer`          |
@@ -41,7 +41,6 @@ class Expense < ApplicationRecord
   attr_accessor :is_new, :is_destroyed, :differences
   alias_method :is_new?, :is_new
   alias_method :is_destroyed?, :is_destroyed
-  alias_attribute :is_for_both?, :both_flg
 
   belongs_to :user
   belongs_to :category
@@ -65,8 +64,8 @@ class Expense < ApplicationRecord
   scope :one_month, -> (period) {where('date >= ? AND date <= ?', period.to_beginning_of_month, period.to_end_of_month)}
   scope :except_repeat_ones, -> {where.not()}
   scope :category, -> (category_id){unscope(:order).where(category_id: category_id).order(date: :desc, created_at: :desc)}
-  scope :both_f, -> {where(both_flg: false)}
-  scope :both_t, -> {where(both_flg: true)}
+  scope :both_f, -> {where(is_for_both: false)}
+  scope :both_t, -> {where(is_for_both: true)}
   scope :newer, -> {order(date: :desc, created_at: :desc)}
 
   after_initialize { self.is_new = true unless self.id }
@@ -94,7 +93,7 @@ class Expense < ApplicationRecord
   # @return [Expense]
   def self.specified_category_for_one_month(user, category, period)
     partner = user.partner
-    self.includes(:user, :category).references(:users, :categories).where(categories: {id: category}).one_month(period).where("users.id = ? OR (users.id = ? AND both_flg = ?)", user.id, partner.id, true).order(date: :desc, created_at: :desc)
+    self.includes(:user, :category).references(:users, :categories).where(categories: {id: category}).one_month(period).where("users.id = ? OR (users.id = ? AND is_for_both = ?)", user.id, partner.id, true).order(date: :desc, created_at: :desc)
   end
 
   # ユーザーと該当月からその月の支出合計額を算出
@@ -108,7 +107,7 @@ class Expense < ApplicationRecord
   end
 
   def self.necessary_attributes_from_repeat_exepnses
-    %w(amount memo category_id user_id both_flg mypay partnerpay percent)
+    %w(amount memo category_id user_id is_for_both mypay partnerpay percent)
   end
 
   def is_own_expense?(user, category=self.category)
@@ -124,10 +123,10 @@ class Expense < ApplicationRecord
   def self.creat_repeat_expenses!(repeat_expense)
     expense_attributes = {}
     repeat_expense.attributes.each{ |k, v| expense_attributes["#{k}"] = v if Expense.necessary_attributes_from_repeat_exepnses.include?(k) }
-    s_date = repeat_expense.updated_only_future? ? Date.current : repeat_expense.s_date
-    e_date = repeat_expense.e_date
-    r_date = repeat_expense.r_date
-    (s_date..e_date).select{|d| d.day == r_date }.each do |date|
+    start_date = repeat_expense.updated_only_future? ? Date.current : repeat_expense.start_date
+    end_date = repeat_expense.end_date
+    repeat_day = repeat_expense.repeat_day
+    (start_date..end_date).select{|d| d.day == repeat_day }.each do |date|
       expense = Expense.new(expense_attributes)
       expense.date = date
       expense.repeat_expense_id = repeat_expense.id

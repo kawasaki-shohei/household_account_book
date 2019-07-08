@@ -8,8 +8,8 @@
 # ------------------------ | ------------------ | ---------------------------
 # **`id`**                 | `bigint(8)`        | `not null, primary key`
 # **`amount`**             | `integer`          |
-# **`both_flg`**           | `boolean`          | `default(FALSE)`
 # **`date`**               | `date`             |
+# **`is_for_both`**        | `boolean`          | `default(FALSE)`
 # **`memo`**               | `string`           |
 # **`mypay`**              | `integer`          |
 # **`partnerpay`**         | `integer`          |
