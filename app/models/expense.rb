@@ -53,12 +53,7 @@ class Expense < ApplicationRecord
   validates_with BothExpenseAmountValidator
   validates_with BoundCategoryValidator
 
-  end_of_this_month = Date.current.end_of_month
-  beginning_of_this_month = Date.current.beginning_of_month
   end_of_last_month = Date.current.months_ago(1).end_of_month
-  beginning_of_last_month = Date.current.months_ago(1).beginning_of_month
-  scope :this_month, -> {where('date >= ? AND date <= ?', beginning_of_this_month, end_of_this_month)}
-  scope :last_month, -> {where('date >= ? AND date <= ?', beginning_of_last_month, end_of_last_month)}
   scope :until_last_month, -> {where('date <= ?', end_of_last_month)}
   # 引数はString。 例: "2019-01"
   scope :one_month, -> (period) {where('date >= ? AND date <= ?', period.to_beginning_of_month, period.to_end_of_month)}
@@ -134,32 +129,9 @@ class Expense < ApplicationRecord
     end
   end
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  # fixme: this occur n+1
-  # 手渡し料金表示画面で今月の料金を計算するメソッド
-  def self.both_this_month(current_user, partner)
-    current_user.expenses.this_month.both_t.sum(:mypay) + partner.expenses.this_month.both_t.sum(:partnerpay) - current_user.expenses.this_month.both_t.sum(:amount)
-  end
-
-  # fixme: this occur n+1
-  # 手渡し料金表示画面で先月の料金を計算するメソッド
-  def self.both_last_month(current_user, partner)
-    current_user.expenses.last_month.both_t.sum(:mypay) + partner.expenses.last_month.both_t.sum(:partnerpay) - current_user.expenses.last_month.both_t.sum(:amount)
+  def self.both_one_month(user, period)
+    partner = user.partner
+    user.expenses.one_month(period).both_t.sum(:mypay) + partner.expenses.one_month(period).both_t.sum(:partnerpay) - user.expenses.one_month(period).both_t.sum(:amount)
   end
 
 end

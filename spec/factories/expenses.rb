@@ -32,7 +32,7 @@
 #
 
 FactoryBot.define do
-  factory :own_past_expense, class: 'Expense' do
+  factory :own_expense, class: 'Expense' do
     amount { Faker::Number.number(6) }
     date { Faker::Date.backward(365) }
     memo { Faker::Lorem.word }
@@ -41,6 +41,10 @@ FactoryBot.define do
 
     factory :own_this_month_expense, class: 'Expense' do
       date { Faker::Date.between(Date.current.beginning_of_month, Date.current.end_of_month) }
+    end
+
+    factory :own_last_month_expense, class: 'Expense' do
+      date { Faker::Date.between(Date.current.last_month.beginning_of_month, Date.current.last_month.end_of_month) }
     end
   end
 end
