@@ -164,7 +164,7 @@ RSpec.describe Expense, type: :model do
           category: @own_category,
           amount: 1000,
           date: Time.zone.today,
-          both_flg: true,
+          is_for_both: true,
           percent: 1
         )
         expect(expense).to be_invalid
@@ -189,7 +189,7 @@ RSpec.describe Expense, type: :model do
           amount: 1000,
           date: Faker::Date.backward(365)
         )
-        expect(expense.both_flg).to be_falsey
+        expect(expense.is_for_both).to be_falsey
         expect(expense.percent).to eq("pay_all")
       end
     end
@@ -201,7 +201,7 @@ RSpec.describe Expense, type: :model do
           category: @category,
           amount: 1000,
           date: Time.zone.today,
-          both_flg: true,
+          is_for_both: true,
           percent: 0
         )
         expect(expense.percent).to eq("pay_all")
@@ -215,7 +215,7 @@ RSpec.describe Expense, type: :model do
           category: @category,
           amount: 1000,
           date: Time.zone.today,
-          both_flg: true,
+          is_for_both: true,
           percent: 1
         )
         expect(expense.percent).to eq("pay_half")
@@ -229,7 +229,7 @@ RSpec.describe Expense, type: :model do
           category: @category,
           amount: 1000,
           date: Time.zone.today,
-          both_flg: true,
+          is_for_both: true,
           percent: 2
         )
         expect(expense.percent).to eq("pay_one_third")
@@ -243,7 +243,7 @@ RSpec.describe Expense, type: :model do
           category: @category,
           amount: 1000,
           date: Time.zone.today,
-          both_flg: true,
+          is_for_both: true,
           percent: 3
         )
         expect(expense.percent).to eq("pay_two_thirds")
@@ -257,7 +257,7 @@ RSpec.describe Expense, type: :model do
           category: @category,
           amount: 1000,
           date: Time.zone.today,
-          both_flg: true,
+          is_for_both: true,
           percent: 4
         )
         expect(expense.percent).to eq("pay_nothing")
@@ -273,7 +273,7 @@ RSpec.describe Expense, type: :model do
       create_list(:own_category, 5, user: @user)
       create_list(:both_category, 5, user: @user)
       own_categories = Category.ones_categories(@user)
-      both_categories = own_categories.find_all{ |c| c.common }
+      both_categories = own_categories.find_all{ |c| c.is_common? }
       10.times do
         expense = build(:own_past_expense)
         expense.user = @user

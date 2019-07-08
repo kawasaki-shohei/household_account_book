@@ -114,7 +114,7 @@ class User < ApplicationRecord
       date: Faker::Date.between(first_day, last_day),
       memo: "random sample expense inserted at #{I18n.l(today, format: :default)}",
       category_id: category.id,
-      both_flg: is_for_both,
+      is_for_both: is_for_both,
       percent: is_for_both ? get_random_percent : 0,
       )
     if expense.manual_amount?
