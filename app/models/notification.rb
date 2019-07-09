@@ -88,7 +88,7 @@ class Notification < ApplicationRecord
     users = User.all
     users.each do |user|
       if partner = user.partner
-        my_last_payment = Expense.both_last_month(user, partner)
+        my_last_payment = Expense.both_one_month(user, Date.current.last_month.to_s_as_period)
         Notification.create(user_id: user.id,
           notification_message_id: 18,
           record_meta: "{\"amount\":#{my_last_payment},\"date\":\"#{Date.today.months_ago(1)}\"}"
