@@ -281,19 +281,6 @@ RSpec.describe Expense, type: :model do
       last_month_year = Date.current.last_month.year
       last_month = Date.current.last_month.month
 
-      # 自分の出費
-      10.times do
-        # 今月の自分の出費10,000分
-        this_month_expense = @user.build_expenses_instances(this_year, this_month, @own_categories.sample, is_for_both: false)
-        this_month_expense.amount = 1000
-        this_month_expense.save!
-
-        # 先月の自分の出費10,000円分
-        last_month_expense = @user.build_expenses_instances(last_month_year, last_month, @own_categories.sample, is_for_both: false)
-        last_month_expense.amount = 1000
-        last_month_expense.save!
-      end
-
       # 二人の出費
       def create_own_both_expenses(year, month)
         one_month_both_expense = @user.build_expenses_instances(year, month, @both_categories.sample, is_for_both: true)
@@ -399,21 +386,20 @@ RSpec.describe Expense, type: :model do
       # 先月分
       create_own_both_expenses(last_month_year, last_month)
       create_partner_both_expenses(last_month_year, last_month)
-
     end
 
-    context "when" do
-      it "both_this_month" do
-        period = Date.current.to_s_as_period
-        my_payment = Expense.both_one_month(@user, period)
-        expect(my_payment).to eq(65000)
-      end
+    it "own_payment_for_this_month" do
+      own_payment = Expense.own_payment_for_this_and_last_month(@user).first
+      partner_payment = Expense.own_payment_for_this_and_last_month(@partner).first
+      expect(own_payment).to eq(65000)
+      expect(partner_payment).to eq(-65000)
+    end
 
-      it "both_last_month" do
-        period = Date.current.last_month.to_s_as_period
-        my_payment = Expense.both_one_month(@user, period)
-        expect(my_payment).to eq(65000)
-      end
+    it "own_payment_for_last_month" do
+      own_payment = Expense.own_payment_for_this_and_last_month(@user).second
+      partner_payment = Expense.own_payment_for_this_and_last_month(@partner).second
+      expect(own_payment).to eq(65000)
+      expect(partner_payment).to eq(-65000)
     end
   end
 
