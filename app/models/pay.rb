@@ -43,7 +43,7 @@ class Pay < ApplicationRecord
   end
 
   def self.get_couple_pays(user)
-    self.includes(:user).where(users: {id: [user, user.partner]}).newer
+    self.eager_load(:user).where(users: {id: [user, user.partner]}).newer
   end
 
   def self.must_pay(current_user, partner)

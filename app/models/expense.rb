@@ -105,14 +105,6 @@ class Expense < ApplicationRecord
     %w(amount memo category_id user_id is_for_both mypay partnerpay percent)
   end
 
-  def is_own_expense?(user, category=self.category)
-    !is_for_both? && self.user == user && self.category == category
-  end
-
-  def is_both_expense_paid_by?(user, category)
-    is_for_both? && self.user == user && self.category == category
-  end
-
   # 新しく繰り返し出費が登録されたときに、expensesテーブルに該当する出費をインサートしていくメソッド
   # @param [RepeatExpense] repeat_expense
   def self.creat_repeat_expenses!(repeat_expense)
@@ -129,9 +121,43 @@ class Expense < ApplicationRecord
     end
   end
 
-  def self.both_one_month(user, period)
+  # @param {user} user
+  # @param [String] period
+  # @return [Integer]
+  def self.own_payment_for_one_month(user, period)
     partner = user.partner
-    user.expenses.one_month(period).both_t.sum(:mypay) + partner.expenses.one_month(period).both_t.sum(:partnerpay) - user.expenses.one_month(period).both_t.sum(:amount)
+    expenses = self.eager_load(:user).where(users: {id: [user, partner]}).one_month(period).both_t
+    user_expenses = expenses.find_all{ |e| e.user == user }
+    partner_expenses = expenses.find_all{ |e| e.user == partner }
+    user_expenses.sum(&:mypay) + partner_expenses.sum(&:partnerpay) - user_expenses.sum(&:amount)
+  end
+
+  # @param [User] user
+  # @return [Array]
+  def self.own_payment_for_this_and_last_month(user)
+    partner = user.partner
+    expenses = self.eager_load(:user).where(users: {id: [user, partner]}).where('date >= ? AND date <= ?', Date.current.last_month.beginning_of_month, Date.current.end_of_month).both_t
+
+    this_month_expenses = expenses.find_all{ |e| e.date.between?(Date.current.beginning_of_month, Date.current.end_of_month) }
+    last_month_expenses = expenses.find_all{ |e| e.date.between?(Date.current.last_month.beginning_of_month, Date.current.last_month.end_of_month) }
+    [calculate_payment(user, partner, this_month_expenses), calculate_payment(user, partner, last_month_expenses)]
+  end
+
+  def is_own_expense?(user, category=self.category)
+    !is_for_both? && self.user == user && self.category == category
+  end
+
+  def is_both_expense_paid_by?(user, category)
+    is_for_both? && self.user == user && self.category == category
+  end
+
+  class << self
+    private
+    def calculate_payment(user, partner, one_month_expenses)
+      user_expenses = one_month_expenses.find_all{ |e| e.user == user }
+      partner_expenses = one_month_expenses.find_all{ |e| e.user == partner }
+      user_expenses.sum(&:mypay) + partner_expenses.sum(&:partnerpay) - user_expenses.sum(&:amount)
+    end
   end
 
 end

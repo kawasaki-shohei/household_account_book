@@ -3,9 +3,8 @@ class PaysController < ApplicationController
 
   def index
     @pays = Pay.get_couple_pays(current_user).page(params[:page])
-    @balance = Pay.balance_of_gross(current_user, partner)
-    @my_payment = Expense.both_one_month(@current_user, Date.current.to_s_as_period)
-    @my_last_payment = Expense.both_one_month(@current_user, Date.current.last_month.to_s_as_period)
+    @rollover = Pay.balance_of_gross(current_user, partner)
+    @own_this_month_payment, @own_last_month_payment = Expense.own_payment_for_this_and_last_month(@current_user)
   end
 
   def new
