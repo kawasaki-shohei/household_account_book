@@ -65,17 +65,6 @@ class User < ApplicationRecord
     balances.where(period: period).first_or_initialize
   end
 
-  def insert_expenses_for_a_month(year: Time.zone.today.year, month: Time.zone.today.month)
-    @import_expenses = []
-    partner = self.partner
-    get_categories(partner).each do |category|
-      p category
-      count = get_count(category)
-      build_expenses_instances(year, month, category.id, count, is_for_both: category.is_common?)
-    end
-    Expense.import(@import_expenses) ? true :false
-  end
-
   def insert_categories
     both_kinds = %w(家賃 食費 日用品 ガス代 電気代 水道代)
     ones_kinds = %w(交通費 交際費 保険代 医療費)
@@ -99,7 +88,7 @@ class User < ApplicationRecord
     get_categories(partner).each do |category|
       count = get_count(category)
       count.times do
-        import_expenses << build_expenses_instances(year, month, category, be_for_both: true)
+        import_expenses << build_expenses_instances(year, month, category, is_for_both: true)
       end
     end
     import_expenses.each(&:save!)

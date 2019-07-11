@@ -269,133 +269,22 @@ RSpec.describe Expense, type: :model do
 
   describe "for Pay page" do
     before do
-      @user = create(:user_with_partner)
+      @user = create(
+        :user_with_partner,
+        :with_this_and_last_expenses,
+        :with_partner_this_and_last_expenses
+      )
       @partner = @user.partner
-      create_list(:own_category, 5, user: @user)
-      create_list(:both_category, 5, user: @user)
-      @own_categories = Category.ones_categories(@user)
-      @both_categories = @own_categories.find_all{ |c| c.is_common? }
-
-      this_year = Date.current.year
-      this_month = Date.current.month
-      last_month_year = Date.current.last_month.year
-      last_month = Date.current.last_month.month
-
-      # 二人の出費
-      def create_own_both_expenses(year, month)
-        one_month_both_expense = @user.build_expenses_instances(year, month, @both_categories.sample, is_for_both: true)
-        5.times do
-          manual_amount_expense = one_month_both_expense.dup
-          manual_amount_expense.assign_attributes(
-            amount: 5000,
-            percent: "manual_amount",
-            mypay: 1000,
-            partnerpay: 4000
-          )
-          manual_amount_expense.save!
-
-          pay_all_expense = one_month_both_expense.dup
-          pay_all_expense.assign_attributes(
-            amount: 1000,
-            percent: "pay_all"
-          )
-          pay_all_expense.save!
-
-          pay_half_expense = one_month_both_expense.dup
-          pay_half_expense.assign_attributes(
-            amount: 8000,
-            percent: "pay_half"
-          )
-          pay_half_expense.save!
-
-          pay_one_third_expense = one_month_both_expense.dup
-          pay_one_third_expense.assign_attributes(
-            amount: 3000,
-            percent: "pay_one_third"
-          )
-          pay_one_third_expense.save!
-
-          pay_two_thirds_expense = one_month_both_expense.dup
-          pay_two_thirds_expense.assign_attributes(
-            amount: 3000,
-            percent: "pay_two_thirds"
-          )
-          pay_two_thirds_expense.save!
-
-          pay_nothing_expense = one_month_both_expense.dup
-          pay_nothing_expense.assign_attributes(
-            amount: 2000,
-            percent: "pay_nothing"
-          )
-          pay_nothing_expense.save!
-        end
-      end
-
-      def create_partner_both_expenses(year, month)
-        one_month_both_expense = @partner.build_expenses_instances(year, month, @both_categories.sample, is_for_both: true)
-        5.times do
-          manual_amount_expense = one_month_both_expense.dup
-          manual_amount_expense.assign_attributes(
-            amount: 10000,
-            percent: "manual_amount",
-            mypay: 2000,
-            partnerpay: 8000
-          )
-          manual_amount_expense.save!
-
-          pay_all_expense = one_month_both_expense.dup
-          pay_all_expense.assign_attributes(
-            amount: 2000,
-            percent: "pay_all"
-          )
-          pay_all_expense.save!
-
-          pay_half_expense = one_month_both_expense.dup
-          pay_half_expense.assign_attributes(
-            amount: 16000,
-            percent: "pay_half"
-          )
-          pay_half_expense.save!
-
-          pay_one_third_expense = one_month_both_expense.dup
-          pay_one_third_expense.assign_attributes(
-            amount: 6000,
-            percent: "pay_one_third"
-          )
-          pay_one_third_expense.save!
-
-          pay_two_thirds_expense = one_month_both_expense.dup
-          pay_two_thirds_expense.assign_attributes(
-            amount: 6000,
-            percent: "pay_two_thirds"
-          )
-          pay_two_thirds_expense.save!
-
-          pay_nothing_expense = one_month_both_expense.dup
-          pay_nothing_expense.assign_attributes(
-            amount: 4000,
-            percent: "pay_nothing"
-          )
-          pay_nothing_expense.save!
-        end
-      end
-
-      # 今月分
-      create_own_both_expenses(this_year, this_month)
-      create_partner_both_expenses(this_year, this_month)
-      # 先月分
-      create_own_both_expenses(last_month_year, last_month)
-      create_partner_both_expenses(last_month_year, last_month)
     end
 
-    it "own_payment_for_this_month" do
+    it "has correct own_payment_for_this_month" do
       own_payment = Expense.own_payment_for_this_and_last_month(@user).first
       partner_payment = Expense.own_payment_for_this_and_last_month(@partner).first
       expect(own_payment).to eq(65000)
       expect(partner_payment).to eq(-65000)
     end
 
-    it "own_payment_for_last_month" do
+    it "has correct own_payment_for_last_month" do
       own_payment = Expense.own_payment_for_this_and_last_month(@user).second
       partner_payment = Expense.own_payment_for_this_and_last_month(@partner).second
       expect(own_payment).to eq(65000)
