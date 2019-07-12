@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Pay, type: :model do
   describe "Validation Check" do
     before do
-      @user = create(:user)
+      @user = create(:user_with_partner)
     end
 
     it "is valid with amount, date, user_id" do
@@ -40,18 +40,33 @@ RSpec.describe Pay, type: :model do
     end
   end
 
-  it "ones_all_payment" do
+  describe "for rollover" do
+    before do
+      @user = create(
+        :user_with_partner,
+        :with_this_and_last_expenses,
+        :with_expenses_before_last_month,
+        :with_partner_this_and_last_expenses,
+        :with_partner_expenses_before_last_month
+      )
+      @partner = @user.partner
+    end
+
+    it "ones_all_payment" do
+
+    end
+
+    it "ones_gross" do
+
+    end
+
+    it "must_pay" do
+
+    end
+
+    it "balance_of_gross" do
+
+    end
   end
 
-  it "ones_gross" do
-
-  end
-
-  it "must_pay" do
-
-  end
-
-  it "balance_of_gross" do
-
-  end
 end

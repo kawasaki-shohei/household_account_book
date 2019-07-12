@@ -67,6 +67,10 @@ FactoryBot.define do
       date { Faker::Date.between(Date.current.last_month.beginning_of_month, Date.current.last_month.end_of_month) }
     end
 
+    trait :for_past_day_before_last_month do
+      date { Faker::Date.between(Date.current.last_year.beginning_of_month, Date.current.months_ago(2).end_of_month) }
+    end
+
     factory :own_both_manual_amount_expense, class: 'Expense' do
       amount { 5000 }
       percent { "manual_amount" }
