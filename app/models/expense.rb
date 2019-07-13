@@ -53,8 +53,7 @@ class Expense < ApplicationRecord
   validates_with BothExpenseAmountValidator
   validates_with BoundCategoryValidator
 
-  end_of_last_month = Date.current.months_ago(1).end_of_month
-  scope :until_last_month, -> {where('date <= ?', end_of_last_month)}
+  scope :until_last_month, -> {where('date <= ?', Date.current.last_month.end_of_month)}
   # 引数はString。 例: "2019-01"
   scope :one_month, -> (period) {where('date >= ? AND date <= ?', period.to_beginning_of_month, period.to_end_of_month)}
   scope :except_repeat_ones, -> {where.not()}
