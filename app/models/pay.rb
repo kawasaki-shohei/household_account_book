@@ -50,6 +50,7 @@ class Pay < ApplicationRecord
     current_user.expenses.until_last_month.both_t.sum(:mypay) + partner.expenses.until_last_month.both_t.sum(:partnerpay)
   end
 
+  # todo: メソッド名変更 rollover。 ones_grossは自分の手渡し料金が含まれていないように見えるため、分離する。ones_grossの中のones_all_paymentはいらない。このメソッドで計算するようにすればいい。
   def self.balance_of_gross(current_user, partner)
     my_gross = ones_gross(current_user)
     my_must_pay = must_pay(current_user, partner)
