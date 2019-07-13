@@ -28,6 +28,7 @@ class Category < ApplicationRecord
   belongs_to :user
   has_many :budgets, dependent: :destroy
   has_many :expenses
+  has_many :repeat_expenses
 
   scope :oneself, -> {where(is_common: false)}
   scope :common_t, -> {where(is_common: true)}
