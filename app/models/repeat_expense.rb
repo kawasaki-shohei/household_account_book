@@ -66,7 +66,6 @@ class RepeatExpense < ApplicationRecord
   validates_with BothExpenseAmountValidator
   validates_with BoundCategoryValidator
   validates :item_id, uniqueness: { scope: [:user_id, :item_sub_id] }
-  validate :calculate_amount
   validate :end_date_is_over_first_date
 
   scope :both_f, -> {where(is_for_both: false)}
