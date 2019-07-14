@@ -272,21 +272,24 @@ RSpec.describe Expense, type: :model do
       @user = create(
         :user_with_partner,
         :with_this_and_last_expenses,
-        :with_partner_this_and_last_expenses
+        :with_expenses_before_last_month,
+        :with_partner_this_and_last_expenses,
+        :with_partner_expenses_before_last_month
       )
       @partner = @user.partner
+      @expenses = Expense.both_expenses_until_this_month(@user, @partner)
     end
 
     it "has correct own_payment_for_this_month" do
-      own_payment = Expense.own_payment_for_this_and_last_month(@user).first
-      partner_payment = Expense.own_payment_for_this_and_last_month(@partner).first
+      own_payment = Expense.own_payment_for_this_and_last_month(@user, @partner, @expenses).first
+      partner_payment = Expense.own_payment_for_this_and_last_month(@partner, @user, @expenses).first
       expect(own_payment).to eq(65000)
       expect(partner_payment).to eq(-65000)
     end
 
     it "has correct own_payment_for_last_month" do
-      own_payment = Expense.own_payment_for_this_and_last_month(@user).second
-      partner_payment = Expense.own_payment_for_this_and_last_month(@partner).second
+      own_payment = Expense.own_payment_for_this_and_last_month(@user, @partner, @expenses).second
+      partner_payment = Expense.own_payment_for_this_and_last_month(@partner, @user, @expenses).second
       expect(own_payment).to eq(65000)
       expect(partner_payment).to eq(-65000)
     end

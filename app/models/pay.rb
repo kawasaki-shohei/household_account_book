@@ -34,27 +34,8 @@ class Pay < ApplicationRecord
 
   scope :newer, -> {order(date: :desc, created_at: :desc)}
 
-  def self.ones_all_payment(user)
-    user.pays.sum(:amount)
-  end
-
-  def self.ones_gross(user)
-    user.expenses.until_last_month.both_t.sum(:amount) + ones_all_payment(user)
-  end
-
-  def self.get_couple_pays(user)
-    self.eager_load(:user).where(users: {id: [user, user.partner]}).newer
-  end
-
-  def self.must_pay(current_user, partner)
-    current_user.expenses.until_last_month.both_t.sum(:mypay) + partner.expenses.until_last_month.both_t.sum(:partnerpay)
-  end
-
-  # todo: メソッド名変更 rollover。 ones_grossは自分の手渡し料金が含まれていないように見えるため、分離する。ones_grossの中のones_all_paymentはいらない。このメソッドで計算するようにすればいい。
-  def self.balance_of_gross(current_user, partner)
-    my_gross = ones_gross(current_user)
-    my_must_pay = must_pay(current_user, partner)
-    my_must_pay - my_gross + ones_all_payment(partner)
+  def self.get_couple_pays(user, partner)
+    self.includes(:user).where(users: {id: [user, partner]})
   end
 
 end

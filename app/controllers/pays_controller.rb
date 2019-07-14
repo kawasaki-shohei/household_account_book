@@ -2,9 +2,13 @@ class PaysController < ApplicationController
   after_action -> {create_notification(@pay)}, only: [:create, :update]
 
   def index
-    @pays = Pay.get_couple_pays(current_user).page(params[:page])
-    @rollover = Pay.balance_of_gross(current_user, partner)
-    @own_this_month_payment, @own_last_month_payment = Expense.own_payment_for_this_and_last_month(@current_user)
+    all_pays = Pay.get_couple_pays(@current_user, @partner)
+    expenses = Expense.both_expenses_until_this_month(@current_user, @partner)
+    service = CalculateRolloverService.new(@current_user, @partner, all_pays, expenses)
+
+    @pays = all_pays.newer.page(params[:page])
+    @rollover = service.call
+    @own_this_month_payment, @own_last_month_payment = Expense.own_payment_for_this_and_last_month(@current_user, @partner, expenses)
   end
 
   def new

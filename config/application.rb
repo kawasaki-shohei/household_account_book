@@ -13,6 +13,7 @@ module HouseholdAccountBook
     config.time_zone = 'Tokyo'
     config.active_record.default_timezone = :local
     config.autoload_paths += Dir["#{config.root}/app/validators"]
+    config.autoload_paths += Dir["#{config.root}/app/services"]
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '*.{rb,yml}').to_s]
     config.i18n.default_locale = :ja
     config.generators do |g|
