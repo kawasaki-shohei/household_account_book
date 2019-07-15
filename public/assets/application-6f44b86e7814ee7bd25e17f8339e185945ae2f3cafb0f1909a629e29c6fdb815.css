@@ -2594,6 +2594,38 @@ select#percent_input{
 .other-expense-details{
   padding: 0 0 5px 10px;
 }
+.before-login-header {
+  background-color: var(--redpepper);
+  line-height: 50px;
+  height: 50px;
+  vertical-align: center;
+}
+.before-login-header .logo {
+  color: white;
+  font-weight: 300;
+  font-size: 20px;
+  padding-left: 15px;
+}
+.header-menu{
+  float: right;
+  padding-right: 15px;
+}
+.before-login-header a {
+  color: white;
+}
+.header-menu .menu-link {
+  padding: 0 10px;
+  display: inline-block;
+}
+.header-menu .menu-link:active,
+.header-menu .menu-link:focus,
+.header-menu .menu-link:hover {
+  background: rgba(0,0,0,0.1);
+  color: white;
+}
+.home-box-body {
+  font-size: 1.2em;
+}
 .notifications-display-entries{
  margin-bottom: 30px;
 }
@@ -2617,103 +2649,148 @@ select#percent_input{
 body{
   color: #4d2200;
 }
+a:hover, a:active, a:focus {
+  outline: none;
+  text-decoration: none;
+  color: var(--onion);
+}
 
+/*
+ * overwrite skin-red
+ * ----------------------
+ */
+.skin-red .wrapper, .skin-red .main-sidebar, .skin-red .left-side {
+  background-color: var(--mushroom);
+}
 .skin-red .main-header .logo {
   background-color: var(--redpepper);
   color: #fff;
   border-bottom: 0 solid transparent;
 }
-
 .skin-red .main-header .logo:hover {
   background-color: #b30000;
 }
-
 .skin-red .main-header .navbar {
   background-color: var(--redpepper);
 }
-
 .skin-red .main-header .navbar .sidebar-toggle:hover {
   background-color: #b30000;
 }
-
-.content-wrapper {
-  min-height: 100%;
-  background-color: #ecf0f5;
-  z-index: 800;
-}
-
 .content-wrapper {
   min-height: 100%;
   background-color: var(--mushroom);
   z-index: 800;
 }
-
 .skin-red .main-sidebar, .skin-red .left-side {
   background-color: var(--mushroom);
   border-right: solid 1px #4d2200;
 }
-
 .skin-red .sidebar-menu>li.header {
   color: var(--driftwood);
   background: var(--mushroom);
   border-bottom: solid 1px #fff;
 }
-
 .skin-red .sidebar-menu>li:hover>a, .skin-red .sidebar-menu>li.active>a, .skin-red .sidebar-menu>li.menu-open>a {
   color: var(--driftwood);
   background: #ffe6cc;
 }
-
 .skin-red .sidebar a {
   color: var(--driftwood);
 }
-
 .sidebar-menu>li {
   border-bottom: solid 1px #fff;
 }
-
 .skin-red .sidebar-menu>li.active>a {
   border-left-color: var(--redpepper);
 }
-
 .skin-red .sidebar-menu>li>.treeview-menu {
   margin: 0 1px;
   background: #fff;
   border-bottom: solid 1px #fff;
 }
-
 .skin-red .sidebar-menu .treeview-menu>li {
   background: #fff;
 }
-
 .skin-red .sidebar-menu .treeview-menu>li>a {
   color: #803900;
 }
-
 .skin-red .sidebar-menu .treeview-menu>li.active>a, .skin-red .sidebar-menu .treeview-menu>li>a:hover {
   color: #4d2200;
   background: #ffe6cc;
 }
+.nav-tabs-custom>.nav-tabs>li.active {
+  border-top-color: var(--driftwood);
+}
 
+/*
+ * Page: Home, Login & Register
+ * ----------------------
+ */
+.home-page,
+.login-page,
+.register-page {
+  background: var(--mushroom);
+}
+.home-logo,
+.login-logo,
+.register-logo {
+  font-size: 35px;
+  text-align: center;
+  margin-top: 80px;
+  margin-bottom: 20px;
+  font-weight: 300;
+}
+.login-logo a,
+.register-logo a {
+  color: #444;
+}
+.home-box,
+.login-box,
+.register-box {
+  width: 360px;
+  margin: 7% auto;
+}
+@media (max-width: 768px) {
+  .home-box,
+  .login-box,
+  .register-box {
+    width: 90%;
+    margin-top: 20px;
+  }
+}
+.home-box-body,
+.login-box-body,
+.register-box-body {
+  background: #fff;
+  padding: 20px;
+  color: #4d2200;
+  border: solid 1px #4d2200;
+}
+
+/*
+ * overwrite color
+ * ----------------------
+ */
 .bg-orange {
   background-color: var(--onion) !important;
 }
-
 .bg-red {
   background-color: var(--redpepper) !important;
 }
 
+/*
+ * overwrite button
+ * ----------------------
+ */
 .btn-orange {
   color: #fff;
   background-color: var(--onion);
   border-color: transparent;
 }
-
 .btn-orange:hover, .btn-orange:active, .btn-orange.hover {
   color: #fff;
   background-color: #e68947;
 }
-
 .btn-orange.focus, .btn-orange:focus {
   color: #fff !important;
   background-color: #cc7a3f;
@@ -2724,6 +2801,10 @@ body{
   background-color: var(--redpepper) !important;
 }
 
+/*
+ * overwrite pagination
+ * ----------------------
+ */
 .pagination > .active > a,
 .pagination > .active > span,
 .pagination > .active > a:hover,
@@ -2737,44 +2818,37 @@ body{
   border-color: #803900;
 }
 
+/*
+ * overwrite form-control
+ * ----------------------
+ */
 .form-control:focus {
   border-color: var(--onion);
 }
 
+/*
+ * overwrite todo-list
+ * ----------------------
+ */
 .todo-list>li {
   background: #fff;
   border-left: 2px solid var(--onion);
   box-shadow: 0 1px 1px rgba(0,0,0,0.1);
   color: #4d2200;
 }
-
 .todo-list>li .tools {
   display: inline-block;
 }
 
-a:hover, a:active, a:focus {
-  outline: none;
-  text-decoration: none;
-  color: var(--onion);
-}
-
-.nav-tabs-custom>.nav-tabs>li.active {
-  border-top-color: var(--driftwood);
-}
-
-.login-page, .register-page {
-  background: var(--mushroom);
-}
-.login-logo, .register-logo{
-  margin-bottom: 80px;
-}
-.login-box-body, .register-box-body{
-  color: #4d2200;
-  border: solid 1px #4d2200;
-}
+/*
+ * overwrite box-comments
+ * ----------------------
+ */
 .box-comments{
   background: white;
 }
+
+
 .each-repeat-expense{
   padding: 10px !important;
 }
@@ -2810,9 +2884,6 @@ input.repeat-expense-chose-btn{
   border-top: solid 1px #eee;
   font-size: 1.3em;
   color: inherit;
-}
-html.before-login{
-  background-color: var(--mushroom);
 }
 .jumbotron {
   background: #6b7381;
