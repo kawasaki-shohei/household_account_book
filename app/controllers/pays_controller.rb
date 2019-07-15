@@ -17,8 +17,11 @@ class PaysController < ApplicationController
 
   def create
     @pay = Pay.new(pay_params)
-    @pay.save
-    redirect_to pays_path, notice: "#{@pay.date.strftime("%Y年%m月")}分の手渡し料金を登録しました。"
+    if @pay.save
+      redirect_to pays_path, notice: "#{@pay.date.strftime("%Y年%m月")}分の手渡し料金を登録しました。"
+    else
+      render 'new'
+    end
   end
 
   def edit

@@ -6,7 +6,7 @@ RSpec.describe Pay, type: :model do
       @user = create(:user_with_partner)
     end
 
-    it "is valid with amount, date, user_id" do
+    it "is valid with amount, past date, user_id" do
       pay = Pay.new(
         amount: 10000,
         date: Faker::Date.backward(365),
@@ -29,6 +29,17 @@ RSpec.describe Pay, type: :model do
         user: @user
       )
       expect(pay).to be_invalid
+    end
+
+    it "is invalid with future date" do
+      pay = Pay.new(
+        amount: 10000,
+        user: @user,
+        date: Date.current.tomorrow
+      )
+      expect(pay).to be_invalid
+      expect(pay.errors.full_messages.size).to eq(1)
+      expect(pay.errors.full_messages.first).to eq("未来日は入力できません。")
     end
 
     it "is invalid without user_id" do

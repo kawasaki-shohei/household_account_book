@@ -31,8 +31,9 @@ class Pay < ApplicationRecord
   validates :amount, :date, presence: true
   validates_length_of :amount, maximum: 10
   validates_length_of :memo, maximum: 100
+  validates :date, past_date: true
 
-  scope :newer, -> {order(date: :desc, created_at: :desc)}
+  scope :newer, -> { order(date: :desc, created_at: :desc) }
 
   def self.get_couple_pays(user, partner)
     self.includes(:user).where(users: {id: [user, partner]})
