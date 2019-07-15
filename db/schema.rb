@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_15_072546) do
+ActiveRecord::Schema.define(version: 2019_07_15_082505) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,8 @@ ActiveRecord::Schema.define(version: 2019_07_15_072546) do
     t.datetime "updated_at", null: false
     t.bigint "user_id"
     t.boolean "is_common", default: false
+    t.bigint "category_master_id"
+    t.index ["category_master_id"], name: "index_categories_on_category_master_id"
     t.index ["user_id"], name: "index_categories_on_user_id"
   end
 
@@ -183,6 +185,7 @@ ActiveRecord::Schema.define(version: 2019_07_15_072546) do
   add_foreign_key "balances", "users"
   add_foreign_key "budgets", "categories"
   add_foreign_key "budgets", "users"
+  add_foreign_key "categories", "category_masters"
   add_foreign_key "categories", "users"
   add_foreign_key "couples", "users"
   add_foreign_key "couples", "users", column: "partner_id"
