@@ -37,8 +37,8 @@ RSpec.describe Expense, type: :model do
   describe "Validation Check" do
     before do
       @user = create(:user)
-      @own_category = create(:own_category){ |c| c.user = @user }
-      @both_category = create(:both_category){ |c| c.user = @user }
+      @own_category = create(:own_category, user: @user)
+      @both_category = create(:both_category, user: @user)
     end
 
     context "when own expenses" do
@@ -178,7 +178,7 @@ RSpec.describe Expense, type: :model do
   describe "Check percent, mypay and partnerpay are set correctly" do
     before do
       @user = create(:user_with_partner)
-      @category = create(:both_category){ |c| c.user = @user }
+      @category = create(:both_category, user: @user)
     end
 
     context "when inserting own expense" do
