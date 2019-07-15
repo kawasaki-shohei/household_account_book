@@ -2,7 +2,11 @@ require 'csv'
 
 def delete_all_and_reset_pk_sequence(table)
   puts "executing - delete all data in #{table} table"
-  table.classify.constantize.all.each { |record| record.delete }
+  if table == "repeat_expenses"
+    table.classify.constantize.with_deleted.each { |record| record.delete }
+  else
+    table.classify.constantize.all.each { |record| record.delete }
+  end
   one_table_reset_pk_sequence(table)
 end
 

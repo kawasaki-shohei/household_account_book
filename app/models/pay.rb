@@ -29,30 +29,14 @@ class Pay < ApplicationRecord
   belongs_to :user
 
   validates :amount, :date, presence: true
+  validates :amount, length: { maximum: 10 }
+  validates :memo, length: { maximum: 100 }
+  validates :date, past_date: true
 
-  scope :newer, -> {order(date: :desc, created_at: :desc)}
+  scope :newer, -> { order(date: :desc, created_at: :desc) }
 
-  def self.ones_all_payment(user)
-    user.pays.sum(:amount)
-  end
-
-  def self.ones_gross(user)
-    user.expenses.until_last_month.both_t.sum(:amount) + ones_all_payment(user)
-  end
-
-  def self.get_couple_pays(user)
-    self.includes(:user).where(users: {id: [user, user.partner]}).newer
-  end
-
-  def self.must_pay(current_user, partner)
-    current_user.expenses.until_last_month.both_t.sum(:mypay) + partner.expenses.until_last_month.both_t.sum(:partnerpay)
-  end
-
-  def self.balance_of_gross(current_user, partner)
-    my_gross = ones_gross(current_user)
-    my_must_pay = must_pay(current_user, partner)
-    balance = my_must_pay - my_gross + ones_all_payment(partner)
-    return balance
+  def self.get_couple_pays(user, partner)
+    self.includes(:user).where(users: {id: [user, partner]})
   end
 
 end

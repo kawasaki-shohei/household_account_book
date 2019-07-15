@@ -8,12 +8,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <title><%= content_for?(:html_title) ? yield(:html_title) : CONFIG[:site_name] %></title>
+  <title><%= CONFIG[:site_name] %></title>
   <%= favicon_link_tag('favicon.ico') %>
   <%= stylesheet_link_tag 'application' %>
 </head>
 
-<body class="hold-transition login-page">
+<body class="hold-transition home-page">
 <div class="wrapper">
 
   <!-- Main Header -->

@@ -25,8 +25,13 @@
 #
 
 FactoryBot.define do
-  factory :category do
-    name {"食費"}
-    user {User.first}
+  factory :own_category, class: 'Category' do
+    name { Faker::Lorem.word }
+    is_common { false }
+    association :user, strategy: :build
+
+    factory :both_category, class: 'Category' do
+      is_common { true }
+    end
   end
 end

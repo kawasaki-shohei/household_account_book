@@ -29,6 +29,7 @@
 
 FactoryBot.define do
   factory :couple do
-    
+    association :user, strategy: :build
+    association :partner, strategy: :build
   end
 end

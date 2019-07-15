@@ -23,7 +23,7 @@
                 <b>先月分<small class="label bg-red space-left">確定</small></b>
                 <p class="pull-right">
                   <span class="lead"><strong>
-                    <%= payment_amount_as_string(@my_last_payment) %>
+                    <%= payment_amount_as_string(@own_last_month_payment) %>
                   </strong></span>
                 </p>
               </li>
@@ -31,7 +31,7 @@
                 <b>今月分<small class="label bg-orange space-left">未確定</small></b>
                 <p class="pull-right">
                   <span class="lead"><strong>
-                    <%= payment_amount_as_string(@my_payment) %>
+                    <%= payment_amount_as_string(@own_this_month_payment) %>
                   </strong></span>
                 </p>
               </li>
@@ -39,7 +39,7 @@
                 <b>先月までの</br>繰り越し精算金額<small class="label bg-red space-left">確定</small></b>
                 <p class="pull-right">
                   <span class="lead"><strong>
-                    <%= payment_amount_as_string(@balance) %>
+                    <%= payment_amount_as_string(@rollover) %>
                   </strong></span>
                 </p>
               </li>
