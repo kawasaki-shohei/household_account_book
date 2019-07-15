@@ -32,10 +32,113 @@
 #
 
 FactoryBot.define do
-  factory :expense do
-    amount {1000}
-    date {Time.zone.today}
-    user {User.first}
-    category {user.categories.first}
+  factory :own_expense, class: 'Expense' do
+    amount { Faker::Number.number(6) }
+    date { Faker::Date.backward(365) }
+    memo { Faker::Lorem.word }
+    association :user, strategy: :build
+    association :category, factory: :own_category, strategy: :build
+
+    factory :own_this_month_expense, class: 'Expense' do
+      date { Faker::Date.between(Date.current.beginning_of_month, Date.current.end_of_month) }
+    end
+
+    factory :own_last_month_expense, class: 'Expense' do
+      date { Faker::Date.between(Date.current.last_month.beginning_of_month, Date.current.last_month.end_of_month) }
+    end
+  end
+
+  factory :own_both_expenses, class: 'Expense' do
+    is_for_both { true }
+    date { Faker::Date.backward(365) }
+    amount { Faker::Number.number(6) }
+    association :user, strategy: :build
+    association :category, factory: :both_category, strategy: :build
+
+    trait :with_exist_category do
+      category { user.categories.where(is_common: true).sample }
+    end
+
+    trait :for_this_month do
+      date { Faker::Date.between(Date.current.beginning_of_month, Date.current.end_of_month) }
+    end
+
+    trait :for_last_month do
+      date { Faker::Date.between(Date.current.last_month.beginning_of_month, Date.current.last_month.end_of_month) }
+    end
+
+    trait :for_past_day_before_last_month do
+      date { Faker::Date.between(Date.current.last_year.beginning_of_month, Date.current.months_ago(2).end_of_month) }
+    end
+
+    factory :own_both_manual_amount_expense, class: 'Expense' do
+      amount { 5000 }
+      percent { "manual_amount" }
+      mypay { 1000 }
+      partnerpay { 4000 }
+    end
+
+    factory :own_both_pay_all_expense, class: 'Expense' do
+      amount { 1000 }
+      percent { "pay_all" }
+    end
+
+    factory :own_both_pay_half_expense, class: 'Expense' do
+      amount { 8000 }
+      percent { "pay_half" }
+    end
+
+    factory :own_both_pay_one_third_expense, class: 'Expense' do
+      amount { 3000 }
+      percent { "pay_one_third" }
+    end
+
+    factory :own_both_pay_two_third_expense, class: 'Expense' do
+      amount { 3000 }
+      percent { "pay_two_thirds" }
+    end
+
+    factory :own_both_pay_nothing_expense, class: 'Expense' do
+      amount { 2000 }
+      percent { "pay_nothing" }
+    end
+    
+    # パートナーの出費
+    factory :partner_both_manual_amount_expense, class: 'Expense' do
+      amount { 10000 }
+      percent { "manual_amount" }
+      mypay { 2000 }
+      partnerpay { 8000 }
+    end
+
+    factory :partner_both_pay_all_expense, class: 'Expense' do
+      amount { 2000 }
+      percent { "pay_all" }
+    end
+
+    factory :partner_both_pay_half_expense, class: 'Expense' do
+      amount { 16000 }
+      percent { "pay_half" }
+    end
+
+    factory :partner_both_pay_one_third_expense, class: 'Expense' do
+      amount { 6000 }
+      percent { "pay_one_third" }
+    end
+
+    factory :partner_both_pay_two_third_expense, class: 'Expense' do
+      amount { 6000 }
+      percent { "pay_two_thirds" }
+    end
+
+    factory :partner_both_pay_nothing_expense, class: 'Expense' do
+      amount { 4000 }
+      percent { "pay_nothing" }
+    end
+  end
+
+  factory :partner_both_expenses, class: 'Expense' do
+    association :user, strategy: :build
+    association :category, factory: :both_category, strategy: :build
   end
 end

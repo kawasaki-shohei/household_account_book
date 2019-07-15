@@ -2,10 +2,13 @@ class PaysController < ApplicationController
   after_action -> {create_notification(@pay)}, only: [:create, :update]
 
   def index
-    @pays = Pay.get_couple_pays(current_user).page(params[:page])
-    @balance = Pay.balance_of_gross(current_user, partner)
-    @my_payment = Expense.both_this_month(current_user, partner)
-    @my_last_payment = Expense.both_last_month(current_user, partner)
+    all_pays = Pay.get_couple_pays(@current_user, @partner)
+    expenses = Expense.both_expenses_until_this_month(@current_user, @partner)
+    service = CalculateRolloverService.new(@current_user, @partner, all_pays, expenses)
+
+    @pays = all_pays.newer.page(params[:page])
+    @rollover = service.call
+    @own_this_month_payment, @own_last_month_payment = Expense.own_payment_for_this_and_last_month(@current_user, @partner, expenses)
   end
 
   def new
@@ -14,8 +17,11 @@ class PaysController < ApplicationController
 
   def create
     @pay = Pay.new(pay_params)
-    @pay.save
-    redirect_to pays_path, notice: "#{@pay.date.strftime("%Y年%m月")}分の手渡し料金を登録しました。"
+    if @pay.save
+      redirect_to pays_path, notice: "#{@pay.date.strftime("%Y年%m月")}分の手渡し料金を登録しました。"
+    else
+      render 'new'
+    end
   end
 
   def edit

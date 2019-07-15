@@ -3,8 +3,8 @@ Household Account Book For Couples
 https://pairmoney.herokuapp.com/
 
 ## Description
-カップルの財布を別にして、カップルの出費を管理できる家計簿Webアプリです。
-簡単な出費の入力で複雑な二人の出費を計算できます。
+PairMoneyは、夫婦またはカップル専用の家計簿webアプリケーションです。  
+簡単な出費の入力で、複雑な二人の出費を管理できます。  
 
 ## Requirement
 - Ruby 2.5.1
