@@ -3,12 +3,14 @@ tables.each do |table|
   ActiveRecord::Base.connection.reset_pk_sequence!(table)
 end
 
-def create_two_users(id=0)
+def create_two_users
   users = []
+  id = User.maximum(:id) + 1
   2.times do
     id += 1
     users << User.create!(
-      name: "test-user#{id}",
+      id: id,
+      name: "user#{id}",
       email: "user#{id}@gmail.com",
       password: Rails.application.credentials.dummy_user_password
     )
@@ -17,8 +19,8 @@ def create_two_users(id=0)
 end
 
 def make_one_couple(user, partner)
-  user.update_attributes!(partner_id: partner.id)
-  partner.update_attributes!(partner_id: user.id)
+  Couple.create!(user: user, partner: partner)
+  Couple.create!(user: partner, partner: user)
 end
 
 ActiveRecord::Base.transaction do
