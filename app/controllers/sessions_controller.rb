@@ -5,6 +5,9 @@ class SessionsController < ApplicationController
   skip_before_action :check_access_right, raise: false
 
   def new
+    if logged_in?
+      redirect_to expenses_path
+    end
   end
 
   def create
