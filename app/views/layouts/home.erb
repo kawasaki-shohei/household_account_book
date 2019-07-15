@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="before-login">
+<html>
 <head>
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
@@ -8,13 +8,42 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <title><%= content_for?(:html_title) ? yield(:html_title) : CONFIG[:site_name] %></title>
+  <title><%= CONFIG[:site_name] %></title>
   <%= favicon_link_tag('favicon.ico') %>
   <%= stylesheet_link_tag 'application' %>
 </head>
 
-<body class="hold-transition login-page">
+<body class="hold-transition skin-red home-page">
 <div class="wrapper">
+
+  <!-- Main Header -->
+  <header class="main-header">
+
+    <!-- Logo -->
+    <a href="/" class="logo">
+      <!-- mini logo for sidebar mini 50x50 pixels -->
+      <span class="logo-mini"><b>P</b></span>
+      <!-- logo for regular state and mobile devices -->
+      <span class="logo-lg"><b><%= CONFIG[:site_name] %></b></span>
+    </a>
+
+    <!-- Header Navbar -->
+    <nav class="navbar navbar-static-top" role="navigation">
+      <!-- Navbar Right Menu -->
+      <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+
+          <li class="">
+            <%= link_to new_expense_path do %>
+              <i class="fa fa-lg fa-pencil"></i>
+            <% end  %>
+          </li><!-- /.dropdown.user.user-menu -->
+
+        </ul><!-- /.nav.navbar-nav -->
+      </div><!-- /.navbar-custom-menu -->
+
+    </nav>
+  </header>
 
   <%= yield %>
 
