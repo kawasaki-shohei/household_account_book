@@ -40,46 +40,20 @@ RSpec.describe Pay, type: :model do
     end
   end
 
-  describe "for rollover" do
+  describe "for pays list page" do
     before do
-      @user = create(
-        :user_with_partner,
-        :with_this_and_last_expenses,
-        :with_expenses_before_last_month,
-        :with_partner_this_and_last_expenses,
-        :with_partner_expenses_before_last_month
-      )
+      @user = create(:user_with_partner)
       @partner = @user.partner
-      create_list(:pay, 5, amount: 10000, user: @user)
-      create_list(:pay, 5, amount: 20000, user: @partner)
+      create_list(:pay, 5, user: @user)
+      create_list(:pay, 5, user: @partner)
     end
 
-    it "ones_all_payment" do
-      own_all_payment = Pay.ones_all_payment(@user)
-      partner_all_payment = Pay.ones_all_payment(@partner)
-      expect(own_all_payment).to eq(50000)
-      expect(partner_all_payment).to eq(100000)
-    end
-
-    it "ones_gross" do
-      own_ones_gross = Pay.ones_gross(@user)
-      partner_ones_gross = Pay.ones_gross(@partner)
-      expect(own_ones_gross).to eq(270000)
-      expect(partner_ones_gross).to eq(540000)
-    end
-
-    it "must_pay" do
-      own_must_pay = Pay.must_pay(@user, @partner)
-      partner_must_pay = Pay.must_pay(@partner, @user)
-      expect(own_must_pay).to eq(350000)
-      expect(partner_must_pay).to eq(310000)
-    end
-
-    it "balance_of_gross" do
-      own_rollover = Pay.balance_of_gross(@user, @partner)
-      partner_rollover = Pay.balance_of_gross(@partner, @user)
-      expect(own_rollover).to eq(180000)
-      expect(partner_rollover).to eq(-180000)
+    it "can get all pays for own and partner" do
+      pays = Pay.get_couple_pays(@user, @partner)
+      own_pays = pays.find_all { |pay| pay.user == @user }
+      partner_pays = pays.find_all { |pay| pay.user == @partner }
+      expect(own_pays.size).to eq(5)
+      expect(partner_pays.size).to eq(5)
     end
   end
 
