@@ -38,7 +38,7 @@ class ApplicationController < ActionController::Base
   def check_access_right
     return unless session[:partner_mode]
     if action_name != 'index'
-      redirect_to root_path
+      redirect_to expenses_path
     end
   end
 

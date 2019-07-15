@@ -13,36 +13,16 @@
   <%= stylesheet_link_tag 'application' %>
 </head>
 
-<body class="hold-transition skin-red home-page">
+<body class="hold-transition home-page">
 <div class="wrapper">
 
   <!-- Main Header -->
-  <header class="main-header">
-
-    <!-- Logo -->
-    <a href="/" class="logo">
-      <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>P</b></span>
-      <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b><%= CONFIG[:site_name] %></b></span>
-    </a>
-
-    <!-- Header Navbar -->
-    <nav class="navbar navbar-static-top" role="navigation">
-      <!-- Navbar Right Menu -->
-      <div class="navbar-custom-menu">
-        <ul class="nav navbar-nav">
-
-          <li class="">
-            <%= link_to new_expense_path do %>
-              <i class="fa fa-lg fa-pencil"></i>
-            <% end  %>
-          </li><!-- /.dropdown.user.user-menu -->
-
-        </ul><!-- /.nav.navbar-nav -->
-      </div><!-- /.navbar-custom-menu -->
-
-    </nav>
+  <header class="before-login-header">
+    <a href="/" class="logo"><b><%= CONFIG[:site_name] %></b></a>
+    <span class="header-menu">
+      <%= link_to '新規登録', signup_path, class: "menu-link" %>
+      <%= link_to 'ログイン', login_path, class: "menu-link" %>
+    </span>
   </header>
 
   <%= yield %>
