@@ -2,7 +2,7 @@ module CommonDecorator
   def get_edit_link
     self_name = self.class.table_name.singularize
     icon = raw("<i class=\"fa fa-lg fa-pencil-square-o text-redpepper\"></i>")
-    if user == @current_user
+    if user == current_user
       link_to icon, self.send("edit_#{self_name}_path",self)
     else
       ''
