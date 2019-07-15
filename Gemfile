@@ -35,7 +35,6 @@ gem 'webpacker', '~> 4.0', '>= 4.0.2'
 gem 'jbuilder', '~> 2.5'
 gem 'active_decorator', '~> 1.2'
 gem 'kaminari', '~> 1.1', '>= 1.1.1'
-gem 'haml-rails' #todo: 削除
 gem 'gon', '~> 6.2', '>= 6.2.1'
 gem 'rails-i18n', '~> 5.1', '>= 5.1.3'
 
