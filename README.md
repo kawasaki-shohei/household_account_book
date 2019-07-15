@@ -35,30 +35,30 @@ PairMoneyは、夫婦またはカップル専用の家計簿webアプリケー�
 ## Usage
 1. PostgreSQLをインストール
 
-1. Gem のインストール
+2. Gem のインストール
 ```
 $ bundle install
 ```
 
-1. AdminLTEのインストール
+3. AdminLTEのインストール
 ```
 yarn add admin-lte@2.4.5
 ```
 
-1. jquery-ui-touch-punchのインストール
+4. jquery-ui-touch-punchのインストール
 タッチに操作に対応させるため。
 https://github.com/furf/jquery-ui-touch-punch
 ```
 yarn add jquery-ui-touch-punch
 ```
 
-1. データベースの構築
+5. データベースの構築
 ```
 $ rails db:create
 $ rails db:migrate
 ```
 
-1. テストデータの挿入
+6. テストデータの挿入
 ```
 rails db:seeds
 ```
@@ -68,7 +68,12 @@ rails db:seeds
 rails db:seed_from_file SEED_FILENAME='ファイル名(/db/配下からのパス付き)'
 ```
 
-1. Railsサーバー起動
+7.test環境のマスターデータを挿入
+```
+RAILS_ENV=test rails db:seed_from_file SEED_FILENAME='seeds/00_category_masters_seeds.rb'
+```
+
+7. Railsサーバー起動
 ```
 $ rails server
 ```
