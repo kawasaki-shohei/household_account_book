@@ -29,8 +29,8 @@ class Pay < ApplicationRecord
   belongs_to :user
 
   validates :amount, :date, presence: true
-  validates_length_of :amount, maximum: 10
-  validates_length_of :memo, maximum: 100
+  validates :amount, length: { maximum: 10 }
+  validates :memo, length: { maximum: 100 }
   validates :date, past_date: true
 
   scope :newer, -> { order(date: :desc, created_at: :desc) }

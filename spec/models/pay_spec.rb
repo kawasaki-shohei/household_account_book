@@ -23,6 +23,15 @@ RSpec.describe Pay, type: :model do
       expect(pay).to be_invalid
     end
 
+    it "is invalid with over 11 digits amount" do
+      pay = Pay.new(
+        amount: 10000000000,
+        date: Faker::Date.backward(365),
+        user: @user
+      )
+      expect(pay).to be_invalid
+    end
+
     it "is invalid without date" do
       pay = Pay.new(
         amount: 10000,
@@ -46,6 +55,16 @@ RSpec.describe Pay, type: :model do
       pay = Pay.new(
         amount: 10000,
         date: Faker::Date.backward(365),
+      )
+      expect(pay).to be_invalid
+    end
+
+    it "is invalid with over 101 letters memo" do
+      pay = Pay.new(
+        amount: 10000,
+        date: Faker::Date.backward(365),
+        memo: Faker::String.random(101),
+        user: @user
       )
       expect(pay).to be_invalid
     end
