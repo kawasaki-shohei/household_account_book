@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_07_114215) do
+ActiveRecord::Schema.define(version: 2019_07_15_072546) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,6 +42,13 @@ ActiveRecord::Schema.define(version: 2019_07_07_114215) do
     t.bigint "user_id"
     t.boolean "is_common", default: false
     t.index ["user_id"], name: "index_categories_on_user_id"
+  end
+
+  create_table "category_masters", force: :cascade do |t|
+    t.string "name", null: false
+    t.boolean "is_common", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "couples", force: :cascade do |t|
