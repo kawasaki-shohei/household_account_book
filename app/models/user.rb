@@ -38,11 +38,11 @@ class User < ApplicationRecord
   has_many :incomes, dependent: :destroy
   has_many :balances, dependent: :destroy
 
-  before_save { email.downcase! }
+  VALID_EMAIL_REGEX = /\A[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*\z/i
   validates :name,  presence: true, length: { maximum: 10 }
   validates :email, presence: true, uniqueness: true,
             length: { maximum: 255 },
-            format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i }
+            format: { with: VALID_EMAIL_REGEX }
   has_secure_password
   validates :password, presence: true, length: { minimum: 8 }, allow_nil: true
   with_options if: :partner_email_to_register do
