@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <title><%= content_for?(:html_title) ? yield(:html_title) : CONFIG[:site_name] + "(管理)" %></title>
+  <%= favicon_link_tag('favicon.ico') %>
+  <%= Gon::Base.render_data %>
+  <%= stylesheet_link_tag 'admin-lte/dist/css/skins/skin-black.min' %>
+  <%= stylesheet_link_tag 'application' %>
+
+  <%= yield :webpacker_assets %>
+
+</head>
+
+<body class="hold-transition skin-black sidebar-mini">
+<div class="wrapper">
+
+  <!-- Main Header -->
+  <header class="main-header">
+
+    <!-- Logo -->
+    <a href="/" class="logo">
+      <!-- mini logo for sidebar mini 50x50 pixels -->
+      <span class="logo-mini"><b>P</b></span>
+      <!-- logo for regular state and mobile devices -->
+      <span class="logo-lg"><b><%= CONFIG[:site_name] + "(管理)" %></b></span>
+    </a>
+
+    <!-- Header Navbar -->
+    <nav class="navbar navbar-static-top" role="navigation">
+      <!-- Sidebar toggle button-->
+      <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+        <span class="sr-only">Toggle navigation</span>
+      </a>
+
+      <% if logged_in? %>
+        <!-- Navbar Right Menu -->
+        <div class="navbar-custom-menu">
+          <ul class="nav navbar-nav">
+
+            <li class="dropdown user user-menu">
+              <div id="partner-mode-switch-part">
+                <span class="text-white" id="partner-mode-user-name">
+                  <%= @current_user.name %>
+                </span>
+              </div>
+            </li><!-- /.dropdown.user.user-menu -->
+          </ul><!-- /.nav.navbar-nav -->
+        </div><!-- /.navbar-custom-menu -->
+      <% end %>
+    </nav>
+  </header>
+
+  <!-- Left side column. contains the logo and sidebar -->
+  <aside class="main-sidebar">
+
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+
+      <!-- Sidebar Menu -->
+      <ul class="sidebar-menu" data-widget="tree">
+        <li class="header">メニュー</li>
+        <li>
+          <%= link_to admin_logout_path, method: :post do %>
+            <i class="fa fa-sign-out"></i> <span>ログアウト</span>
+          <% end %>
+        </li>
+      </ul><!-- /.sidebar-menu -->
+    </section> <!-- /.sidebar -->
+  </aside>
+
+  <%= yield %>
+
+  <!-- Main Footer -->
+  <footer class="main-footer">
+    <!-- To the right -->
+    <div class="pull-right hidden-xs">
+    </div>
+    <!-- Default to the left -->
+    <strong>Copyright &copy; 2019 <a href="#" id="company-name"><%= CONFIG[:site_name] %></a>.</strong> All rights reserved.
+  </footer>
+</div><!-- ./wrapper -->
+
+<%= javascript_include_tag 'application' %>
+<%= yield(:other_javascript) %>
+</body>
+</html>

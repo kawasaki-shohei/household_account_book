@@ -1,4 +1,4 @@
-body{
+body.skin-red{
   color: #4d2200;
 }
 a:hover, a:active, a:focus {
@@ -28,7 +28,7 @@ a:hover, a:active, a:focus {
 .skin-red .main-header .navbar .sidebar-toggle:hover {
   background-color: #b30000;
 }
-.content-wrapper {
+.skin-red .content-wrapper {
   min-height: 100%;
   background-color: var(--mushroom);
   z-index: 800;
@@ -75,9 +75,22 @@ a:hover, a:active, a:focus {
 }
 
 /*
- * Page: Home, Login & Register
+ * overwrite skin-black
  * ----------------------
  */
+.skin-black .wrapper{
+  background-color: #ecf0f5;
+}
+.skin-black .content-wrapper{
+  min-height: 100%;
+  z-index: 800;
+}
+
+
+  /*
+   * Page: Home, Login & Register
+   * ----------------------
+   */
 .home-page,
 .login-page,
 .register-page {

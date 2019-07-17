@@ -11,4 +11,9 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in the app/assets
 # folder are already added.
+
+Rails.application.config.assets.precompile += %w(
+admin-lte/dist/css/skins/skin-red.min.css admin-lte/dist/css/skins/skin-black.min.css
+)
+
 Rails.application.config.assets.precompile += %w( analyses_index.js adminlte_sortable_plugin.js both_expenses_form.js expenses_input_amount.js expenses_index.js page_top.js)
