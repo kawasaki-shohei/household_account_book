@@ -13,7 +13,8 @@
   <%= Gon::Base.render_data %>
   <%= stylesheet_link_tag 'admin-lte/dist/css/skins/skin-black.min' %>
   <%= stylesheet_link_tag 'application' %>
-
+  <%= stylesheet_link_tag 'overwrite_admin_lte_for_admin' %>
+  <%= yield(:other_css) %>
   <%= yield :webpacker_assets %>
 
 </head>

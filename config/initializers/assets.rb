@@ -20,6 +20,7 @@ Rails.application.config.assets.precompile += %w(
   overwrite_admin_lte.css
   overwrite_admin_lte_for_admin.css
   home.css
+  login.css
   admin_login.css
   analyses.css
   expenses.css
