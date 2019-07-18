@@ -2,10 +2,27 @@
  * overwrite skin-black
  * ----------------------
  */
+html{
+  background-color: #ecf0f5;
+}
 .skin-black .wrapper{
   background-color: #ecf0f5;
 }
 .skin-black .content-wrapper{
   min-height: 100%;
   z-index: 800;
+}
+
+/*
+ * overwrite btn
+ * ----------------------
+ */
+.btn-black{
+  background-color: #333;
+  color: white;
+}
+.btn.btn-black:focus,
+.btn.btn-black:hover,
+.btn.btn-black:active{
+  color: #c0c0c0;
 }

@@ -1,5 +1,23 @@
-<div class="content-wrapper">
-  <h1>Admin::Sessions#new</h1>
-  <p>Find me in app/views/admin/sessions/new.html.erb</p>
-</div>
+<%= render partial: 'shared/html_title', locals: {subtitle: "管理者ログイン"} %>
 
+<div class="login-box">
+  <div class="login-box-body">
+    <p class="text-red"><%= alert %></p>
+    <%= form_with(scope: :session, url: admin_login_path, local: true) do |f| %>
+      <div class="form-group has-feedback">
+        <%= f.email_field :email, placeholder: "メールアドレス", required: true, class: "form-control" %>
+      </div>
+      <br />
+
+      <div class="form-group has-feedback">
+        <%= f.password_field :password, placeholder: "パスワード", required: true, class: "form-control" %>
+      </div>
+      <br /><br />
+
+      <div class="button-panel">
+        <%= f.submit "ログイン", class:"btn btn-black btn-block" %>
+      </div>
+
+    <% end %>
+  </div><!-- /.login-box-body -->
+</div><!-- /.login-box -->
