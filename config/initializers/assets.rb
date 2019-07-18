@@ -13,7 +13,24 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 # folder are already added.
 
 Rails.application.config.assets.precompile += %w(
-admin-lte/dist/css/skins/skin-red.min.css admin-lte/dist/css/skins/skin-black.min.css
+  admin-lte/dist/css/skins/skin-red.min.css
+  admin-lte/dist/css/skins/skin-black.min.css
+  header.css
+  toggle_switch.css
+  overwrite_admin_lte.css
+  overwrite_admin_lte_for_admin.css
+  home.css
+  admin_login.css
+  analyses.css
+  expenses.css
+  repeat_expenses.css
+  notifications.css
 )
 
-Rails.application.config.assets.precompile += %w( analyses_index.js adminlte_sortable_plugin.js both_expenses_form.js expenses_input_amount.js expenses_index.js page_top.js)
+Rails.application.config.assets.precompile += %w(
+  analyses_index.js
+  adminlte_sortable_plugin.js
+  both_expenses_form.js
+  expenses_input_amount.js
+  expenses_index.js page_top.js
+)

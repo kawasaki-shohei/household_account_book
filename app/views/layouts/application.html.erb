@@ -13,6 +13,10 @@
   <%= Gon::Base.render_data %>
   <%= stylesheet_link_tag 'admin-lte/dist/css/skins/skin-red.min' %>
   <%= stylesheet_link_tag 'application' %>
+  <%= stylesheet_link_tag 'overwrite_admin_lte' %>
+  <%= stylesheet_link_tag 'header' %>
+  <%= stylesheet_link_tag 'toggle_switch' %>
+  <%= yield(:other_css) %>
   <%= yield :webpacker_assets %>
 
 </head>

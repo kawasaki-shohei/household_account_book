@@ -1,0 +1,11 @@
+/*
+ * overwrite skin-black
+ * ----------------------
+ */
+.skin-black .wrapper{
+  background-color: #ecf0f5;
+}
+.skin-black .content-wrapper{
+  min-height: 100%;
+  z-index: 800;
+}
