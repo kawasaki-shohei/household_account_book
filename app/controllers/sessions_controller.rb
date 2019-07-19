@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
 
   def new
     if logged_in?
-      redirect_to expenses_path
+      redirect_to mypage_top_path
     end
   end
 
@@ -14,7 +14,7 @@ class SessionsController < ApplicationController
     user = User.find_by(email: params[:session][:email])
     if user && user.authenticate(params[:session][:password])
       session[:user_id] = user.id
-      redirect_to expenses_path
+      redirect_to mypage_top_path
     else
       redirect_to login_path, alert: 'メールアドレスまたはパスワードが違います。'
     end
