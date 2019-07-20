@@ -46,11 +46,9 @@
           <ul class="nav navbar-nav">
 
             <li class="dropdown user user-menu">
-              <div id="partner-mode-switch-part">
-                <span class="text-white" id="partner-mode-user-name">
-                  <%= @current_admin.name %>
-                </span>
-              </div>
+              <a href="#">
+                <%= @current_admin.name %>
+              </a>
             </li><!-- /.dropdown.user.user-menu -->
           </ul><!-- /.nav.navbar-nav -->
         </div><!-- /.navbar-custom-menu -->
@@ -67,11 +65,18 @@
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">メニュー</li>
-        <li>
-          <%= link_to admin_logout_path, method: :delete do %>
-            <i class="fa fa-sign-out"></i> <span>ログアウト</span>
-          <% end %>
-        </li>
+        <% if logged_in? %>
+          <li>
+            <%= link_to admin_users_path do %>
+              <i class="fa fa-users"></i> <span>ユーザー一覧</span>
+            <% end %>
+          </li>
+          <li>
+            <%= link_to admin_logout_path, method: :delete do %>
+              <i class="fa fa-sign-out"></i> <span>ログアウト</span>
+            <% end %>
+          </li>
+        <% end %>
       </ul><!-- /.sidebar-menu -->
     </section> <!-- /.sidebar -->
   </aside>
