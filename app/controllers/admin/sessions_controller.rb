@@ -9,7 +9,7 @@ class Admin::SessionsController < AdminController
 
   def create
     admin = Admin.find_by(email: params[:session][:email])
-    if admin && admin.authenticate(params[:session][:password])
+    if admin&.authenticate(params[:session][:password])
       session[:admin_id] = admin.id
       redirect_to admin_top_path
     else
