@@ -10,7 +10,11 @@
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <title><%= CONFIG[:site_name] %></title>
   <%= favicon_link_tag('favicon.ico') %>
+  <%= stylesheet_link_tag 'admin-lte/dist/css/skins/skin-red.min' %>
   <%= stylesheet_link_tag 'application' %>
+  <%= stylesheet_link_tag 'overwrite_admin_lte' %>
+  <%= stylesheet_link_tag 'home' %>
+  <%= stylesheet_link_tag 'login' %>
 </head>
 
 <body class="hold-transition home-page">
@@ -21,7 +25,11 @@
     <a href="/" class="logo"><b><%= CONFIG[:site_name] %></b></a>
     <span class="header-menu">
       <%= link_to '新規登録', signup_path, class: "menu-link" %>
-      <%= link_to 'ログイン', login_path, class: "menu-link" %>
+      <% if logged_in? %>
+        <%= link_to 'マイページへ', mypage_top_path, class: "menu-link" %>
+      <% else %>
+        <%= link_to 'ログイン', login_path, class: "menu-link" %>
+      <% end %>
     </span>
   </header>
 

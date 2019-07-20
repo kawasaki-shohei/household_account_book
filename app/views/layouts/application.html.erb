@@ -11,7 +11,12 @@
   <title><%= content_for?(:html_title) ? yield(:html_title) : CONFIG[:site_name] %></title>
   <%= favicon_link_tag('favicon.ico') %>
   <%= Gon::Base.render_data %>
+  <%= stylesheet_link_tag 'admin-lte/dist/css/skins/skin-red.min' %>
   <%= stylesheet_link_tag 'application' %>
+  <%= stylesheet_link_tag 'overwrite_admin_lte' %>
+  <%= stylesheet_link_tag 'header' %>
+  <%= stylesheet_link_tag 'toggle_switch' %>
+  <%= yield(:other_css) %>
   <%= yield :webpacker_assets %>
 
 </head>
@@ -23,7 +28,7 @@
   <header class="main-header">
 
     <!-- Logo -->
-    <a href="/" class="logo">
+    <a href="<%= mypage_top_path %>" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>P</b></span>
       <!-- logo for regular state and mobile devices -->

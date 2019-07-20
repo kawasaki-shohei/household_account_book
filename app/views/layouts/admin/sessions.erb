@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <title><%= content_for?(:html_title) ? yield(:html_title) : CONFIG[:site_name] +  "(管理)" %></title>
+  <%= favicon_link_tag('favicon.ico') %>
+  <%= stylesheet_link_tag 'admin-lte/dist/css/skins/skin-black.min' %>
+  <%= stylesheet_link_tag 'application' %>
+  <%= stylesheet_link_tag 'overwrite_admin_lte_for_admin' %>
+  <%= stylesheet_link_tag 'admin_login' %>
+</head>
+
+<body class="hold-transition skin-black login-page">
+<div class="wrapper">
+
+  <!-- Main Header -->
+  <header class="before-login-header">
+    <a href="/" class="logo"><b><%= CONFIG[:site_name] + "(管理)" %></b></a>
+    <span class="header-menu">
+      <%= link_to 'マイページへ', login_path, class: "menu-link" %>
+    </span>
+  </header>
+
+  <%= yield %>
+
+</div><!-- ./wrapper -->
+
+<%= javascript_include_tag 'application' %>
+<%= yield(:other_javascript) %>
+</body>
+</html>
