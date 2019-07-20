@@ -24,7 +24,11 @@
     <a href="/" class="logo"><b><%= CONFIG[:site_name] %></b></a>
     <span class="header-menu">
       <%= link_to '新規登録', signup_path, class: "menu-link" %>
-      <%= link_to 'ログイン', login_path, class: "menu-link" %>
+      <% if logged_in? %>
+        <%= link_to 'マイページへ', mypage_top_path, class: "menu-link" %>
+      <% else %>
+        <%= link_to 'ログイン', login_path, class: "menu-link" %>
+      <% end %>
     </span>
   </header>
 

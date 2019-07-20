@@ -4,12 +4,8 @@ class UsersController < ApplicationController
   skip_before_action :check_access_right, only: [:new, :create], raise: false
 
   def new
-    if logged_in?
-      redirect_to expenses_path
-    else
-      @user = User.new
-      render layout: 'sessions'
-    end
+    @user = User.new
+    render layout: 'sessions'
   end
 
   def create
