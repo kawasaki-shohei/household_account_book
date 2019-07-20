@@ -1,4 +1,8 @@
 <%= render partial: 'shared/html_title', locals: {subtitle: "通知一覧"} %>
+<%= content_for :other_css do %>
+  <%= stylesheet_link_tag 'notifications' %>
+<% end %>
+
 <div class="content-wrapper">
 
   <section class="content-header">

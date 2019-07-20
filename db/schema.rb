@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_07_114215) do
+ActiveRecord::Schema.define(version: 2019_07_20_002004) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "admins", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "email", null: false
+    t.string "password_digest", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_admins_on_email", unique: true
+  end
 
   create_table "balances", force: :cascade do |t|
     t.bigint "user_id"
@@ -41,7 +50,16 @@ ActiveRecord::Schema.define(version: 2019_07_07_114215) do
     t.datetime "updated_at", null: false
     t.bigint "user_id"
     t.boolean "is_common", default: false
+    t.bigint "category_master_id"
+    t.index ["category_master_id"], name: "index_categories_on_category_master_id"
     t.index ["user_id"], name: "index_categories_on_user_id"
+  end
+
+  create_table "category_masters", force: :cascade do |t|
+    t.string "name", null: false
+    t.boolean "is_common", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "couples", force: :cascade do |t|
@@ -51,15 +69,6 @@ ActiveRecord::Schema.define(version: 2019_07_07_114215) do
     t.datetime "updated_at", null: false
     t.index ["partner_id"], name: "index_couples_on_partner_id", unique: true
     t.index ["user_id"], name: "index_couples_on_user_id", unique: true
-  end
-
-  create_table "deleted_records", force: :cascade do |t|
-    t.bigint "deleted_by"
-    t.string "table_name"
-    t.text "record_meta", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["deleted_by"], name: "index_deleted_records_on_deleted_by"
   end
 
   create_table "deposits", force: :cascade do |t|
@@ -159,27 +168,16 @@ ActiveRecord::Schema.define(version: 2019_07_07_114215) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "allow_share_own", default: false
-    t.boolean "sys_admin", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
-  end
-
-  create_table "wants", force: :cascade do |t|
-    t.bigint "user_id"
-    t.string "name"
-    t.boolean "bought_flg", default: false
-    t.text "memo"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_wants_on_user_id"
   end
 
   add_foreign_key "balances", "users"
   add_foreign_key "budgets", "categories"
   add_foreign_key "budgets", "users"
+  add_foreign_key "categories", "category_masters"
   add_foreign_key "categories", "users"
   add_foreign_key "couples", "users"
   add_foreign_key "couples", "users", column: "partner_id"
-  add_foreign_key "deleted_records", "users", column: "deleted_by"
   add_foreign_key "deposits", "users"
   add_foreign_key "expenses", "repeat_expenses"
   add_foreign_key "incomes", "users"
@@ -188,7 +186,6 @@ ActiveRecord::Schema.define(version: 2019_07_07_114215) do
   add_foreign_key "pays", "users"
   add_foreign_key "repeat_expenses", "categories"
   add_foreign_key "repeat_expenses", "users"
-  add_foreign_key "wants", "users"
 
   create_view "latest_repeat_expenses", sql_definition: <<-SQL
       SELECT repeat_expenses_a.id,

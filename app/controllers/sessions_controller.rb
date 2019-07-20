@@ -1,20 +1,20 @@
 class SessionsController < ApplicationController
-  skip_before_action :check_logging_in
+  skip_before_action :check_logging_in, only: [:new, :create]
   skip_before_action :check_partner
   skip_before_action :count_header_notifications, raise: false
   skip_before_action :check_access_right, raise: false
 
   def new
     if logged_in?
-      redirect_to expenses_path
+      redirect_to mypage_top_path
     end
   end
 
   def create
-    user = User.find_by(email: params[:session][:email].downcase)
-    if user && user.authenticate(params[:session][:password])
+    user = User.find_by(email: params[:session][:email])
+    if user&.authenticate(params[:session][:password])
       session[:user_id] = user.id
-      redirect_to expenses_path
+      redirect_to mypage_top_path
     else
       redirect_to login_path, alert: 'メールアドレスまたはパスワードが違います。'
     end

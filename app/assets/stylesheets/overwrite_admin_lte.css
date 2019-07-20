@@ -1,4 +1,4 @@
-body{
+body.skin-red{
   color: #4d2200;
 }
 a:hover, a:active, a:focus {
@@ -28,7 +28,7 @@ a:hover, a:active, a:focus {
 .skin-red .main-header .navbar .sidebar-toggle:hover {
   background-color: #b30000;
 }
-.content-wrapper {
+.skin-red .content-wrapper {
   min-height: 100%;
   background-color: var(--mushroom);
   z-index: 800;
@@ -74,10 +74,10 @@ a:hover, a:active, a:focus {
   border-top-color: var(--driftwood);
 }
 
-/*
- * Page: Home, Login & Register
- * ----------------------
- */
+  /*
+   * Page: Home, Login & Register
+   * ----------------------
+   */
 .home-page,
 .login-page,
 .register-page {
@@ -87,6 +87,7 @@ a:hover, a:active, a:focus {
 .login-logo,
 .register-logo {
   font-size: 35px;
+  color: #4d2200;
   text-align: center;
   margin-top: 80px;
   margin-bottom: 20px;
