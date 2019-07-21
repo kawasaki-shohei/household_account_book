@@ -64,7 +64,7 @@ class PreviewsController < ApplicationController
     User.create!(
       name: "プレビュー",
       email: Faker::Internet.safe_email,
-      password: Faker::Internet.password(10, 20, true, true),
+      password: Rails.application.credentials.preview_user_password,
       allow_share_own: true,
       is_preview_user: true
     )
@@ -74,7 +74,7 @@ class PreviewsController < ApplicationController
     partner = User.create!(
       name: "パートナー",
       email: Faker::Internet.safe_email,
-      password: Faker::Internet.password(10, 20, true, true),
+      password: Rails.application.credentials.preview_user_password,
       allow_share_own: true,
       is_preview_user: true
     )
@@ -83,11 +83,24 @@ class PreviewsController < ApplicationController
     partner
   end
 
+  def create_copied_category(user, category_masters)
+    categories = []
+    category_masters.each do |category_master|
+      categories << category_master.categories.create!(category_master.attributes_without_id_and_timestamps.merge(user_id: user.id))
+    end
+    categories
+  end
+
   def create_preview_categories
     categories = []
-    CategoryMaster.all.each do |category_master|
-      categories << category_master.categories.create!(category_master.attributes_without_id_and_timestamps.merge(user_id: @user.id))
-    end
+    own_category_masters = CategoryMaster.where(is_common: false).order(:id)
+    own_common_category_masters, partner_common_category_masters = CategoryMaster.where(is_common: true).partition { |category_master| category_master.id.even? }
+    # 自分だけのカテゴリーを登録
+    categories += create_copied_category(@user, own_category_masters)
+    categories += create_copied_category(@partner, own_category_masters)
+    # 共通のカテゴリーを登録
+    categories += create_copied_category(@user, own_common_category_masters)
+    categories += create_copied_category(@partner, partner_common_category_masters)
     categories
   end
 
@@ -97,35 +110,48 @@ class PreviewsController < ApplicationController
 
   def create_preview_budgets(category)
     # 合計18,0000円 + 定額貯金50,000円
-    budget = category.budgets.build(user: @user)
+    own_budget = category.budgets.build(user: @user)
+    partner_budget = category.budgets.build(user: @partner)
     case category.name
     # 共通のカテゴリー
     when category_name("food")
-      budget.amount = 50000
+      own_budget.amount = 50000
+      partner_budget.amount = 60000
     when category_name("convenience_goods")
-      budget.amount = 5000
+      own_budget.amount = 5000
+      partner_budget.amount = 6000
     when category_name("data")
-      budget.amount = 12000
+      own_budget.amount = 12000
+      partner_budget.amount = 14000
     when category_name("utility")
-      budget.amount = 10000
+      own_budget.amount = 10000
+      partner_budget.amount = 12000
     when category_name("living")
-      budget.amount = 50000
+      own_budget.amount = 50000
+      partner_budget.amount = 50000
     when category_name("entertainment")
-      budget.amount = 10000
+      own_budget.amount = 10000
+      partner_budget.amount = 10000
     # 自分だけのカテゴリー
     when category_name("transportation")
-      budget.amount = 10000
+      own_budget.amount = 10000
+      partner_budget.amount = 12000
     when category_name("entertainment_expense")
-      budget.amount = 8000
+      own_budget.amount = 8000
+      partner_budget.amount = 10000
     when category_name("learning")
-      budget.amount = 12000
+      own_budget.amount = 12000
+      partner_budget.amount = 14000
     when category_name("medical")
-      budget.amount = 5000
+      own_budget.amount = 5000
+      partner_budget.amount = 5000
     when category_name("beauty")
-      budget.amount = 8000
+      own_budget.amount = 8000
+      partner_budget.amount = 4000
     end
     # amountを入力しないものは予算を設定しない
-    budget.save! if budget.amount
+    own_budget.save! if own_budget.amount
+    partner_budget.save! if partner_budget.amount
   end
 
   def save_repeat_expense!(repeat_expense)

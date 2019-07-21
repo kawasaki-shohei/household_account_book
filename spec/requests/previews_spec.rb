@@ -24,10 +24,4 @@ RSpec.describe "Previews", type: :request do
     end
   end
 
-  describe 'DELETE /preview', type: :request do
-    it "succeed deleting all records of all preview users" do
-      delete preview_path
-      expect(response).to have_http_status("302")
-    end
-  end
 end
