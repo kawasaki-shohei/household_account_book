@@ -14,5 +14,14 @@
 #
 
 class CategoryMaster < ApplicationRecord
+  has_many :categories
   validates :name, presence: true, length: { maximum: 15 }
+
+  def attributes_without_id_and_timestamps
+    attr = attributes.dup
+    attr.delete("id")
+    attr.delete("created_at")
+    attr.delete("updated_at")
+    attr
+  end
 end
