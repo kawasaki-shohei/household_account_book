@@ -275,7 +275,8 @@ RSpec.describe Expense, type: :model do
         :with_partner_this_and_last_expenses,
       )
       @partner = @user.partner
-      @expenses = Expense.both_expenses_until_this_month(@user, @partner)
+      period = Date.current.to_s_as_period
+      @expenses = Expense.both_expenses_until_one_month(@user, @partner, period)
     end
 
     it "has correct payment for this month" do
