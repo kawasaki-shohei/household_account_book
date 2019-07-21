@@ -37,7 +37,7 @@ class Expense < ApplicationRecord
 
   enum percent: { manual_amount: -1, pay_all: 0, pay_half: 1, pay_one_third: 2, pay_two_thirds: 3, pay_nothing: 4 }
 
-  attr_accessor :is_new, :is_destroyed, :differences
+  attr_accessor :is_new, :is_destroyed, :differences, :skip_calculate_balance
   alias_method :is_new?, :is_new
   alias_method :is_destroyed?, :is_destroyed
 
@@ -63,7 +63,7 @@ class Expense < ApplicationRecord
   after_initialize { self.is_new = true unless self.id }
   before_save :set_differences
   before_destroy { self.is_destroyed = true }
-  after_commit { go_calculate_balance(self) }
+  after_commit { go_calculate_balance(self) unless skip_calculate_balance }
 
   # 金額に関するカラムを配列で返す。
   def self.money_attributes
