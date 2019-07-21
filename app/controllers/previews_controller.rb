@@ -1,4 +1,4 @@
-class PreviewController < ApplicationController
+class PreviewsController < ApplicationController
   skip_before_action :check_logging_in
   skip_before_action :check_partner
   skip_before_action :count_header_notifications, raise: false
@@ -28,6 +28,10 @@ class PreviewController < ApplicationController
       end
       create_preview_withdraw
       create_preview_repeat_expenses
+
+      # ログイン
+      session[:preview_user_id] = @user.id
+      redirect_to mypage_top_path
     end
   end
 
@@ -207,14 +211,13 @@ class PreviewController < ApplicationController
   def create_preview_expenses(period)
     first_day = period.to_beginning_of_month
     end_day = period.to_end_of_month
-    # { manual_amount: -1, pay_all: 0, pay_half: 1, pay_one_third: 2, pay_two_thirds: 3, pay_nothing: 4 }
 
     # 毎日
-    (first_day..end_day).each do |date|
-      # 二人の食費 毎日 500 ~ 3,000
+    (first_day..end_day).step(2).each do |date|
+      # 二人の食費 2日に1回 500 ~ 3,000
       own_both_expense = both_expense_instance(@user, @food, date)
       own_both_expense.assign_attributes(
-        amount: rand(500..3000),
+        amount: rand(1000..4000),
         percent: :pay_one_third,
       )
       own_both_expense.save!
