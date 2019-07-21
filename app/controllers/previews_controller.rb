@@ -5,6 +5,22 @@ class PreviewsController < ApplicationController
   skip_before_action :check_access_right, raise: false
 
   def create
+    # プレビューモードが2回目の場合
+    if session[:preview_user_id]
+      redirect_to mypage_top_path
+    end
+
+    create_preview_records
+    if session[:preview_user_id]
+      redirect_to mypage_top_path
+    else
+      redirect_to root_path, alert: "プレビューが失敗しました。"
+    end
+  end
+
+  private
+
+  def create_preview_records
     # カテゴリー、予算、出費、繰り返し出費、精算、収入、貯金、引き出し、通知(出費3件、精算1件)
     ActiveRecord::Base.transaction do
       @user = create_preview_user
@@ -28,14 +44,15 @@ class PreviewsController < ApplicationController
       end
       create_preview_withdraw
       create_preview_repeat_expenses
+      #todo: payの挿入
 
       # ログイン
       session[:preview_user_id] = @user.id
-      redirect_to mypage_top_path
     end
+  rescue => e
+    # todo: slack通知する
+    logger.error(e)
   end
-
-  private
 
   def define_category_instance_variables(category)
     names_hash = t('category_master.name')
@@ -46,8 +63,8 @@ class PreviewsController < ApplicationController
   def create_preview_user
     User.create!(
       name: "プレビュー",
-      email: "test-user@pairmoney.com",
-      password: Rails.application.credentials.preview_user_password,
+      email: Faker::Internet.safe_email,
+      password: Faker::Internet.password(10, 20, true, true),
       allow_share_own: true,
       is_preview_user: true
     )
@@ -56,8 +73,8 @@ class PreviewsController < ApplicationController
   def create_preview_partner
     partner = User.create!(
       name: "パートナー",
-      email: "test-partner@pairmoney.com",
-      password: Rails.application.credentials.preview_user_password,
+      email: Faker::Internet.safe_email,
+      password: Faker::Internet.password(10, 20, true, true),
       allow_share_own: true,
       is_preview_user: true
     )
