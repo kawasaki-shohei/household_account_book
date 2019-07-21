@@ -97,8 +97,8 @@ class Expense < ApplicationRecord
     user_expenses.both_f.sum(:amount) + user_expenses.both_t.sum(:mypay) + user.partner.expenses.one_month(period).both_t.sum(:partnerpay)
   end
 
-  def self.both_expenses_until_this_month(user, partner)
-    eager_load(:user).where(users: {id: [user, partner]}).both_t.where('date <= ?', Date.current.end_of_month)
+  def self.both_expenses_until_one_month(user, partner, period)
+    eager_load(:user).where(users: {id: [user, partner]}).both_t.where('date <= ?', period.to_end_of_month)
   end
 
   # @param [User] user
