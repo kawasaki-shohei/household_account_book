@@ -1,4 +1,5 @@
 class PreviewsController < ApplicationController
+  protect_from_forgery
   skip_before_action :check_logging_in
   skip_before_action :check_partner
   skip_before_action :count_header_notifications, raise: false
@@ -6,8 +7,8 @@ class PreviewsController < ApplicationController
 
   def create
     # プレビューモードが2回目の場合
-    if session[:preview_user_id]
-      redirect_to mypage_top_path
+    if current_user.present? && session[:preview_user_id]
+      redirect_to mypage_top_path and return
     end
 
     create_preview_records
@@ -15,6 +16,57 @@ class PreviewsController < ApplicationController
       redirect_to mypage_top_path
     else
       redirect_to root_path, alert: "プレビューが失敗しました。"
+    end
+  end
+
+  def destroy
+    unless preview_users = correct_preview_users
+      head 200
+    end
+    # 注意 Couple Category RepeatExpense
+    # normal_tables = [Budget, Balance, Expense, Pay, Income, Deposit, Notification]
+    normal_tables = %w(budgets balances pays deposits notifications)
+
+    preview_users.each do |user|
+      ActiveRecord::Base.transaction do
+        partner = user.partner
+        # 出費テーブル
+        user.expenses.each do |expense|
+          expense.skip_calculate_balance = true
+          expense.destroy
+        end
+        partner.expenses.each do |expense|
+          expense.skip_calculate_balance = true
+          expense.destroy
+        end
+        # 収入テーブル
+        user.incomes.each do |income|
+          income.skip_calculate_balance = true
+          income.destroy
+        end
+        partner.incomes.each do |income|
+          income.skip_calculate_balance = true
+          income.destroy
+        end
+
+        normal_tables.each do |table|
+          user.send(table).each(&:destroy)
+        end
+        normal_tables.each do |table|
+          partner.send(table).each(&:destroy)
+        end
+        # 繰り返し出費テーブル
+        user.repeat_expenses.with_deleted&.each(&:really_destroy!)
+        partner.repeat_expenses.with_deleted&.each(&:really_destroy!)
+        # カテゴリーテーブル
+        user.categories.each(&:destroy)
+        partner.categories.each(&:destroy)
+        # カップルテーブル
+        Couple.find_by(user: user).destroy
+        Couple.find_by(user: user.partner).destroy
+        user.destroy
+        partner.destroy
+      end
     end
   end
 
@@ -374,6 +426,17 @@ class PreviewsController < ApplicationController
         )
       own_both_expense.save!
     end
+  end
+
+  def correct_preview_users
+    preview_users = User.where(is_preview_user: true)
+    target_users = []
+    preview_users.each do |user|
+      unless target_users.include?(user.partner)
+        target_users << user
+      end
+    end
+    target_users
   end
 
 end
