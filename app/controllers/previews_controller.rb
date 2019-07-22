@@ -20,11 +20,10 @@ class PreviewsController < ApplicationController
   end
 
   def destroy
-    unless preview_users = correct_preview_users
+    unless preview_users = collect_preview_users
       head 200
     end
-    # 注意 Couple Category RepeatExpense
-    # normal_tables = [Budget, Balance, Expense, Pay, Income, Deposit, Notification]
+    # 注意 Expense Income RepeatExpense Category Couple
     normal_tables = %w(budgets balances pays deposits notifications)
 
     preview_users.each do |user|
@@ -67,6 +66,12 @@ class PreviewsController < ApplicationController
         user.destroy
         partner.destroy
       end
+    end
+
+    if User.where(is_preview_user: true).blank?
+      render plain: "succeeded", status: 200
+    else
+      render plain: "failed", status: 200
     end
   end
 
@@ -428,10 +433,10 @@ class PreviewsController < ApplicationController
     end
   end
 
-  def correct_preview_users
-    preview_users = User.where(is_preview_user: true)
+  def collect_preview_users
+    all_preview_users = User.where(is_preview_user: true)
     target_users = []
-    preview_users.each do |user|
+    all_preview_users.each do |user|
       unless target_users.include?(user.partner)
         target_users << user
       end

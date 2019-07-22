@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "Previews", type: :request do
-  describe 'POST /preview', type: :request do
+  describe '/preview', type: :request do
     before do
       CategoryMaster.create!(id: 1, name: I18n.t('category_master.name.food'), is_common: true)
       CategoryMaster.create!(id: 2, name: I18n.t('category_master.name.convenience_goods'), is_common: true)
@@ -18,9 +18,20 @@ RSpec.describe "Previews", type: :request do
       CategoryMaster.create!(id: 12, name: I18n.t('category_master.name.medical'), is_common: false)
       CategoryMaster.create!(id: 13, name: I18n.t('category_master.name.beauty'), is_common: false)
     end
-    it "succeed preview records" do
-      post preview_path
-      expect(response).to have_http_status("302")
+    context "POST /previews" do
+      it "succeeds creating preview records" do
+        post preview_path
+        expect(response).to have_http_status("302")
+      end
+    end
+
+    context "DELETE /previews" do
+      before { post preview_path }
+      it "succeeds deleting all preview users" do
+        delete preview_path
+        expect(response).to have_http_status("200")
+        expect(response.body).to eq("succeeded")
+      end
     end
   end
 
