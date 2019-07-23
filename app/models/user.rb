@@ -9,6 +9,7 @@
 # **`id`**               | `bigint(8)`        | `not null, primary key`
 # **`allow_share_own`**  | `boolean`          | `default(FALSE)`
 # **`email`**            | `string`           |
+# **`is_preview_user`**  | `boolean`          | `default(FALSE)`
 # **`name`**             | `string`           |
 # **`password_digest`**  | `string`           |
 # **`created_at`**       | `datetime`         | `not null`
@@ -43,11 +44,17 @@ class User < ApplicationRecord
             format: { with: VALID_EMAIL_REGEX }
   has_secure_password
   validates :password, presence: true, length: { minimum: 8 }, allow_nil: true
+  validate :password_complexity
   with_options if: :partner_email_to_register do
     validate :check_valid_partner
   end
 
   after_update { build_couple.register_partner!(partner_email_to_register) if partner_email_to_register }
+
+  def password_complexity
+    return if password.blank? || password =~ /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,70}$/
+    errors.add :password, "パスワードの強度が不足しています。パスワードの長さは8〜70文字とし、大文字と小文字と数字と特殊文字をそれぞれ1文字以上含める必要があります。"
+  end
 
   def check_valid_partner
     unless pre_partner = User.find_by(email: partner_email_to_register)

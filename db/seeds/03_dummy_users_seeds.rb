@@ -8,14 +8,15 @@ def create_two_users
   id = User.maximum(:id) + 1
   2.times do
     id += 1
-    users << User.create!(
+    user = User.new(
       id: id,
       name: "user#{id}",
       email: "user#{id}@gmail.com",
       password: Rails.application.credentials.dummy_user_password
     )
+    # 開発用に簡単なパスワードを設定しているため
+    user.save(validate: false)
   end
-  users
 end
 
 def make_one_couple(user, partner)
