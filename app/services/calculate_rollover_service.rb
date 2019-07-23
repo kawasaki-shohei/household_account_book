@@ -9,6 +9,7 @@ class CalculateRolloverService
   def initialize(user, partner, pays, expenses, n_month_ago: 1)
     @user = user
     @partner = partner
+    # デフォルトは先月までの出費を取得
     expenses_until_one_month = expenses.find_all { |expense| expense.date <= Date.current.months_ago(n_month_ago).end_of_month }
     @user_expenses = expenses_until_one_month.find_all { |expense| expense.user == @user}
     @partner_expenses = expenses_until_one_month.find_all { |expense| expense.user == @partner}

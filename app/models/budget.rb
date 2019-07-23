@@ -33,5 +33,10 @@ class Budget < ApplicationRecord
   belongs_to :category
 
   validates_presence_of :amount
+  validate do
+    if Budget.exists?(user: self.user, category: self.category)
+      errors[:base] << "1つのカテゴリーに複数の予算を設定できません。"
+    end
+  end
 
 end

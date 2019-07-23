@@ -9,6 +9,7 @@
 # **`id`**               | `bigint(8)`        | `not null, primary key`
 # **`allow_share_own`**  | `boolean`          | `default(FALSE)`
 # **`email`**            | `string`           |
+# **`is_preview_user`**  | `boolean`          | `default(FALSE)`
 # **`name`**             | `string`           |
 # **`password_digest`**  | `string`           |
 # **`created_at`**       | `datetime`         | `not null`
@@ -24,8 +25,7 @@ FactoryBot.define do
   factory :user, class: 'User' do
     name { Faker::Name.name }
     email { Faker::Internet.email }
-    password { "password" }
-    password_confirmation { "password" }
+    password { "asdf!ASDF!1234!" }
 
     factory :user_with_partner, class: 'User' do
       after(:create) do |user|
@@ -106,7 +106,6 @@ FactoryBot.define do
   factory :partner, class: 'User' do
     name { Faker::Name.name }
     email { Faker::Internet.email }
-    password {"password"}
-    password_confirmation {"password"}
+    password { "asdf!ASDF!1234!" }
   end
 end

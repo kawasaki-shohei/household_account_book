@@ -8,7 +8,7 @@
 
 
   <div class="login-box-body">
-    <p class="text-red"><%= alert %></p>
+    <p class="text-redpepper"><%= alert %></p>
     <%= form_with(scope: :session, url: login_path, local: true) do |f| %>
       <div class="form-group has-feedback">
         <%= f.email_field :email, placeholder: "メールアドレス", required: true, class: "form-control" %>

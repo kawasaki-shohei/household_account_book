@@ -36,14 +36,14 @@ class Income < ApplicationRecord
   scope :one_month, -> (period) {where('date >= ? AND date <= ?', period.to_beginning_of_month, period.to_end_of_month)}
   scope :newer, -> {order(date: :desc, created_at: :desc)}
 
-  attr_accessor :is_new, :is_destroyed, :differences
+  attr_accessor :is_new, :is_destroyed, :differences, :skip_calculate_balance
   alias_method :is_new?, :is_new
   alias_method :is_destroyed?, :is_destroyed
 
   after_initialize { self.is_new = true unless self.id }
   before_save :set_differences
   before_destroy { self.is_destroyed = true }
-  after_commit { go_calculate_balance(self) }
+  after_commit { go_calculate_balance(self) unless skip_calculate_balance }
 
   # 該当付きの収入の合計値を算出
   def self.one_month_total_income(user, year_month)

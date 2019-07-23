@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_20_002004) do
+ActiveRecord::Schema.define(version: 2019_07_20_093856) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -168,6 +168,7 @@ ActiveRecord::Schema.define(version: 2019_07_20_002004) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "allow_share_own", default: false
+    t.boolean "is_preview_user", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 

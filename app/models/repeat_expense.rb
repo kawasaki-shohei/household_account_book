@@ -100,6 +100,6 @@ class RepeatExpense < ApplicationRecord
   def set_next_item_sub_id(old_repeat_expense)
     self.item_id = old_repeat_expense.item_id
     max_item_sub_id = user.repeat_expenses.with_deleted.where(item_id: item_id).where.not(id: nil).maximum(:item_sub_id)
-    self.item_sub_id = old_repeat_expense.item_sub_id + 1
+    self.item_sub_id = max_item_sub_id + 1
   end
 end

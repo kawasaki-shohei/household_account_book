@@ -3,18 +3,6 @@ Rails.application.routes.draw do
   get 'home/index'
   root to: 'home#index'
 
-  namespace :admin do
-    get '/', to: 'sessions#new'
-    get 'login', to: 'sessions#new'
-    post 'login', to: 'sessions#create'
-    delete 'logout', to: 'sessions#destroy'
-
-    resources :users, only: [:index]
-    get 'users', to: 'users#index', as: :top
-  end
-
-  resources :fronts #fixme: 削除する
-
   resource :user, except: [:new, :create, :show, :destroy]
   get 'signup', to: 'users#new'
   post 'signup', to: 'users#create'
@@ -26,6 +14,20 @@ Rails.application.routes.draw do
   get 'login', to: 'sessions#new'
   post 'login', to: 'sessions#create'
   delete 'logout', to: 'sessions#destroy'
+
+  resource :preview, only: [:create, :destroy]
+
+  namespace :admin do
+    get '/', to: 'sessions#new'
+    get 'login', to: 'sessions#new'
+    post 'login', to: 'sessions#create'
+    delete 'logout', to: 'sessions#destroy'
+
+    resources :users, only: [:index]
+    get 'users', to: 'users#index', as: :top
+  end
+
+  resources :fronts #fixme: 削除する
 
   resources :notifications, only: [:index, :update] do
     patch :bulk_update, on: :collection
