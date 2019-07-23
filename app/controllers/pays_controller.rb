@@ -3,9 +3,7 @@ class PaysController < ApplicationController
 
   def index
     all_pays = Pay.get_couple_pays(@current_user, @partner)
-    period = Date.current.to_s_as_period
-    # 今月までのuserとpartnerの全ての出費
-    expenses = Expense.both_expenses_until_one_month(@current_user, @partner, period)
+    expenses = Expense.both_expenses_until_one_month(@current_user, @partner)
     service = CalculateRolloverService.new(@current_user, @partner, all_pays, expenses)
 
     @pays = all_pays.newer.page(params[:page])

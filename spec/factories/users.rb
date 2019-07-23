@@ -25,8 +25,7 @@ FactoryBot.define do
   factory :user, class: 'User' do
     name { Faker::Name.name }
     email { Faker::Internet.email }
-    password { "password" }
-    password_confirmation { "password" }
+    password { "asdf!ASDF!1234!" }
 
     factory :user_with_partner, class: 'User' do
       after(:create) do |user|
@@ -107,7 +106,6 @@ FactoryBot.define do
   factory :partner, class: 'User' do
     name { Faker::Name.name }
     email { Faker::Internet.email }
-    password {"password"}
-    password_confirmation {"password"}
+    password { "asdf!ASDF!1234!" }
   end
 end
