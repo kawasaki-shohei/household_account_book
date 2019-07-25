@@ -88,6 +88,10 @@ class PreviewsController < ApplicationController
         create_preview_budgets(category)
       end
 
+      # 1回だけ入力するもの
+      create_preview_withdraw
+      create_preview_repeat_expenses
+
       # 毎月入力するもの(出費、収入、貯金、引き出し)
       three_months_period = [
         Date.current.months_ago(2).to_s_as_period,
@@ -96,12 +100,10 @@ class PreviewsController < ApplicationController
       ]
       three_months_period.each do |period|
         create_preview_expenses(period)
-        create_preview_incomes(period)
+        create_preview_incomes(period)  # balanceを計算するためexpensesよりも後にする。
         create_preview_deposits(period)
+        create_preview_pays(period)
       end
-      create_preview_withdraw
-      create_preview_repeat_expenses
-      #todo: payの挿入
 
       # ログイン
       session[:preview_user_id] = @user.id
@@ -209,41 +211,6 @@ class PreviewsController < ApplicationController
     # amountを入力しないものは予算を設定しない
     own_budget.save! if own_budget.amount
     partner_budget.save! if partner_budget.amount
-  end
-
-  def save_repeat_expense!(repeat_expense)
-    repeat_expense.set_new_item_id
-    repeat_expense.save!
-    Expense.creat_repeat_expenses!(repeat_expense)
-  end
-
-  def create_preview_repeat_expenses
-    rent = RepeatExpense.new(
-      user: @partner,
-      category: @living,
-      memo: "家賃",
-      amount: 90000,
-      is_for_both: true,
-      percent: :manual_amount,
-      mypay: 50000,
-      partnerpay: 40000,
-      start_date: Date.current.months_ago(2).beginning_of_month,
-      end_date: Date.current.months_since(2).end_of_month,
-      repeat_day: 10
-    )
-    save_repeat_expense!(rent)
-
-    english = RepeatExpense.new(
-      user: @user,
-      category: @learning,
-      memo: "英会話",
-      amount: 8000,
-      is_for_both: false,
-      start_date: Date.current.months_ago(2).beginning_of_month,
-      end_date: Date.current.months_since(2).end_of_month,
-      repeat_day: 27
-    )
-    save_repeat_expense!(english)
   end
 
   def create_preview_incomes(period)
@@ -430,6 +397,68 @@ class PreviewsController < ApplicationController
         percent: :pay_nothing,
         )
       own_both_expense.save!
+    end
+  end
+
+  def save_repeat_expense!(repeat_expense)
+    repeat_expense.set_new_item_id
+    repeat_expense.save!
+    Expense.creat_repeat_expenses!(repeat_expense)
+  end
+
+  def create_preview_repeat_expenses
+    rent = RepeatExpense.new(
+      user: @partner,
+      category: @living,
+      memo: "家賃",
+      amount: 90000,
+      is_for_both: true,
+      percent: :manual_amount,
+      mypay: 50000,
+      partnerpay: 40000,
+      start_date: Date.current.months_ago(2).beginning_of_month,
+      end_date: Date.current.months_since(2).end_of_month,
+      repeat_day: 10
+    )
+    save_repeat_expense!(rent)
+
+    english = RepeatExpense.new(
+      user: @user,
+      category: @learning,
+      memo: "英会話",
+      amount: 8000,
+      is_for_both: false,
+      start_date: Date.current.months_ago(2).beginning_of_month,
+      end_date: Date.current.months_since(2).end_of_month,
+      repeat_day: 27
+    )
+    save_repeat_expense!(english)
+  end
+
+  def create_preview_pays(period)
+    # 今月以外は精算する
+    return if period == Date.current.to_s_as_period
+    pays = Pay.get_couple_pays(@user, @partner)
+    expenses = Expense.both_expenses_until_one_month(@user, @partner, period)
+    n_month_ago = (Date.current.year * 12 + Date.current.month) - (period.year_number * 12 + period.month_number)
+    pay_user = @user  # payを入力する人
+    service = CalculateRolloverService.new(@user, @partner, pays, expenses, n_month_ago: n_month_ago)
+    rollover = service.call
+    if rollover.negative?
+      service = CalculateRolloverService.new(@partner, @user, pays, expenses, n_month_ago: n_month_ago)
+      rollover = service.call
+      pay_user = @partner
+    end
+    # 精算金額が1000円以上なら四捨五入して支払う
+    if rollover >= 1000
+      amount = rollover.truncate(-3)
+      date = period.to_beginning_of_month.next_month
+      Pay.create!(
+        amount: amount,
+        user: pay_user,
+        date: date,
+        memo: "#{period.month_string}月分"
+      )
     end
   end
 

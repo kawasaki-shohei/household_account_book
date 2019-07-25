@@ -1,87 +1,52 @@
-Household Account Book For Couples
-====
-https://pairmoney.herokuapp.com/
+# README
 
-## Description
-PairMoneyは、夫婦またはカップル専用の家計簿webアプリケーションです。  
-簡単な出費の入力で、複雑な二人の出費を管理できます。  
+[![ruby version](https://img.shields.io/badge/Ruby-v2.5.1-red.svg)](https://www.ruby-lang.org/ja/)
+[![rails version](https://img.shields.io/badge/Rails-v5.2.2.1-critical.svg)](http://rubyonrails.org/)
+[![PostgreSQL version](https://img.shields.io/badge/PostgreSQL-v10.6-blue.svg)](https://www.postgresql.org/)
+[![React version](https://img.shields.io/badge/React-v16.8.6-informational.svg)](https://reactjs.org/)
+[![React-Redux version](https://img.shields.io/badge/React-Redux-v7.0.3-blueviolet.svg)](https://react-redux.js.org/)
 
-## Requirement
-- Ruby 2.5.1
-- Rails 5.2.2
-- PostgreSQL 10.6
+## アプリ名: PairMoney
+アプリURL: https://pairmoney.herokuapp.com/
 
-## Function
-- カテゴリーのCRUD処理
-- 予算のCRUD処理
-- 出費のCRUD処理
-- 二人の貯金のCRUD処理
-- 収入のCRUD処理
+## アプリ概要
+夫婦またはカップル専用の家計簿webアプリケーション。  
+簡単な出費の入力で、複雑な二人の出費を管理できる。  
+
+## コンセプト
+夫婦やカップルでも財布を分けて管理したい人をターゲットとしている。  
+毎日の食費や日用品などの家族のための出費を記録して、１ヶ月単位で精算金額を計算できる。  
+
+## 使用技術
+- フロントエンド
+  - Bootstrap 3.3.7
+  - jQuery 3.2.1
+  - AdminLTE 2.4.5
+  - React 16.8.6 (電卓機能のみ)
+  - React Redux 7.0.3 (電卓機能のみ)
+- サーバーサイド
+  - Ruby 2.5.1
+  - Ruby on Rails 5.2.2.1
+- データベース
+  - PostgreSQL 10.6
+- インフラ
+  Heroku
+
+## 実装機能
+- カテゴリー登録機能
+- 予算登録機能
+- 出費登録機能
+- 電卓機能
+- 二人の貯金登録機能
+- 収入登録機能
 - 精算金額計算機能
-- 手渡し料金のCRUD処理
-- 繰り返し出費のCRUD処理
-- ほしい物リストCRUD処理
+- 手渡し料金登録機能
+- 繰り返し出費登録機能
 - パートナーレコード閲覧モード
-- 設定管理機能
 - 管理画面機能
-詳しくは[こちらのWiki](https://github.com/shoooohei/household_account_book/wiki/%E3%82%A2%E3%83%97%E3%83%AA%E3%81%AE%E6%A6%82%E8%A6%81)を参照
 
-## Comming Soon
-- 子カテゴリ機能
+詳しくは[こちらのWiki](https://github.com/shoooohei/household_account_book/wiki)を参照
 
 ## ER Diagram
 ![er](https://github.com/shoooohei/household_account_book/blob/master/erd.png)
 
-## Usage
-1. PostgreSQLをインストール
-
-2. Gem のインストール
-```
-$ bundle install
-```
-
-3. AdminLTEのインストール
-```
-yarn add admin-lte@2.4.5
-```
-
-4. jquery-ui-touch-punchのインストール
-タッチに操作に対応させるため。
-https://github.com/furf/jquery-ui-touch-punch
-```
-yarn add jquery-ui-touch-punch
-```
-
-5. データベースの構築
-```
-$ rails db:create
-$ rails db:migrate
-```
-
-6. テストデータの挿入
-```
-rails db:seeds
-```
-
-上記が上手く動かなかった場合、ファイルを指定してテストデータを挿入できます。
-```
-rails db:seed_from_file SEED_FILENAME='ファイル名(/db/配下からのパス付き)'
-```
-
-7.test環境のマスターデータを挿入
-```
-RAILS_ENV=test rails db:seed_from_file SEED_FILENAME='seeds/00_category_masters_seeds.rb'
-```
-
-7. Railsサーバー起動
-```
-$ rails server
-```
-
-## Licence
-
-[MIT](https://github.com/tcnksm/tool/blob/master/LICENCE)
-
-## Author
-
-[shoooohei](https://github.com/shoooohei)
