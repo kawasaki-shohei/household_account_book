@@ -4,7 +4,6 @@
 [![rails version](https://img.shields.io/badge/Rails-v5.2.2.1-critical.svg)](http://rubyonrails.org/)
 [![PostgreSQL version](https://img.shields.io/badge/PostgreSQL-v10.6-blue.svg)](https://www.postgresql.org/)
 [![React version](https://img.shields.io/badge/React-v16.8.6-informational.svg)](https://reactjs.org/)
-[![React-Redux version](https://img.shields.io/badge/React-Redux-v7.0.3-blueviolet.svg)](https://react-redux.js.org/)
 
 ## アプリ名: PairMoney
 アプリURL: https://pairmoney.herokuapp.com/
@@ -30,7 +29,7 @@
 - データベース
   - PostgreSQL 10.6
 - インフラ
-  Heroku
+  - Heroku
 
 ## 実装機能
 - カテゴリー登録機能
