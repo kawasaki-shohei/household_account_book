@@ -51,6 +51,6 @@
 
 詳しくは[こちらのWiki](https://github.com/shoooohei/household_account_book/wiki)を参照
 
-## ER Diagram
+## ER図
 ![er](https://github.com/shoooohei/household_account_book/blob/master/erd.png)
 
