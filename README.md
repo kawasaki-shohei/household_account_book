@@ -3,8 +3,7 @@
 [![ruby version](https://img.shields.io/badge/Ruby-v2.5.1-red.svg)](https://www.ruby-lang.org/ja/)
 [![rails version](https://img.shields.io/badge/Rails-v5.2.2.1-critical.svg)](http://rubyonrails.org/)
 [![PostgreSQL version](https://img.shields.io/badge/PostgreSQL-v10.6-blue.svg)](https://www.postgresql.org/)
-[![React version](https://img.shields.io/badge/React-v16.8.6-informational.svg)](https://reactjs.org/)
-[![React-Redux version](https://img.shields.io/badge/React-Redux-v7.0.3-blueviolet.svg)](https://react-redux.js.org/)
+[![React version](https://img.shields.io/badge/React-v16.8.6-green.svg)](https://reactjs.org/)
 
 ## アプリ名: PairMoney
 アプリURL: https://pairmoney.herokuapp.com/
@@ -29,24 +28,29 @@
   - Ruby on Rails 5.2.2.1
 - データベース
   - PostgreSQL 10.6
-- インフラ
-  Heroku
+- 本番環境 & ステージング環境
+  - Heroku
 
 ## 実装機能
+- ユーザー登録機能
+- ログイン機能
+- パートナー登録機能
 - カテゴリー登録機能
 - 予算登録機能
 - 出費登録機能
 - 電卓機能
-- 二人の貯金登録機能
 - 収入登録機能
-- 精算金額計算機能
+- 収支バランス自動計算機能
+- 出費分析機能
+- 二人の貯金登録機能
 - 手渡し料金登録機能
+- 精算金額計算機能
 - 繰り返し出費登録機能
+- 通知機能
 - パートナーレコード閲覧モード
-- 管理画面機能
 
 詳しくは[こちらのWiki](https://github.com/shoooohei/household_account_book/wiki)を参照
 
-## ER Diagram
+## ER図
 ![er](https://github.com/shoooohei/household_account_book/blob/master/erd.png)
 
