@@ -38,6 +38,7 @@ class PreviewsController < ApplicationController
           expense.skip_calculate_balance = true
           expense.destroy
         end
+        ActiveRecord::Base.connection.reset_pk_sequence!("expenses")
         # 収入テーブル
         user.incomes.each do |income|
           income.skip_calculate_balance = true
@@ -47,24 +48,30 @@ class PreviewsController < ApplicationController
           income.skip_calculate_balance = true
           income.destroy
         end
+        ActiveRecord::Base.connection.reset_pk_sequence!("incomes")
 
         normal_tables.each do |table|
           user.send(table).each(&:destroy)
         end
         normal_tables.each do |table|
           partner.send(table).each(&:destroy)
+          ActiveRecord::Base.connection.reset_pk_sequence!(table)
         end
         # 繰り返し出費テーブル
         user.repeat_expenses.with_deleted&.each(&:really_destroy!)
         partner.repeat_expenses.with_deleted&.each(&:really_destroy!)
+        ActiveRecord::Base.connection.reset_pk_sequence!("repeat_expenses")
         # カテゴリーテーブル
         user.categories.each(&:destroy)
         partner.categories.each(&:destroy)
+        ActiveRecord::Base.connection.reset_pk_sequence!("categories")
         # カップルテーブル
         Couple.find_by(user: user).destroy
         Couple.find_by(user: user.partner).destroy
+        ActiveRecord::Base.connection.reset_pk_sequence!("couples")
         user.destroy
         partner.destroy
+        ActiveRecord::Base.connection.reset_pk_sequence!("users")
       end
     end
 
