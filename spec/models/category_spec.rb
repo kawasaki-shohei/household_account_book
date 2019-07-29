@@ -44,5 +44,23 @@ RSpec.describe Category, type: :model do
       )
       expect(category).to be_valid
     end
+
+    it "is invalid without user" do
+      category = Category.new(
+        user: nil,
+        name: Faker::Lorem.word,
+        )
+      expect(category).to be_invalid
+      expect(category.errors.full_messages.size).to eq(1)
+    end
+
+    it "is invalid without name" do
+      category = Category.new(
+        user: @user,
+        name: nil,
+        )
+      expect(category).to be_invalid
+      expect(category.errors.full_messages.size).to eq(1)
+    end
   end
 end
