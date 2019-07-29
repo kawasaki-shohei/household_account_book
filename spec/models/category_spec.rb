@@ -32,5 +32,17 @@
 require 'rails_helper'
 
 RSpec.describe Category, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe "Validation Check" do
+    before do
+      @user = create(:user_with_partner)
+    end
+
+    it "is valid with user and name" do
+      category = Category.new(
+        user: @user,
+        name: Faker::Lorem.word,
+      )
+      expect(category).to be_valid
+    end
+  end
 end
