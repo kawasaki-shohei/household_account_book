@@ -28,5 +28,18 @@
 require 'rails_helper'
 
 RSpec.describe Income, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe "Validation Check" do
+    before do
+      @user = create(:user_with_partner)
+    end
+
+    it "is valid with amount, date and user" do
+      income = Income.new(
+        amount: 1000,
+        date: Date.current,
+        user: @user
+      )
+      expect(income).to be_valid
+    end
+  end
 end
