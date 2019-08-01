@@ -41,5 +41,15 @@ RSpec.describe Income, type: :model do
       )
       expect(income).to be_valid
     end
+
+    it "is invalid without user" do
+      income = Income.new(
+        amount: 1000,
+        date: Date.current,
+        user: nil
+      )
+      expect(income).to be_invalid
+      expect(income.errors.full_messages.size).to eq(1)
+    end
   end
 end
