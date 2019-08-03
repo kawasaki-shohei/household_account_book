@@ -79,3 +79,11 @@
 - DateクラスとStringクラスにメソッドを追加  
   月単位でロジックを組むことが多いので、 `"2019-08".to_beginning_of_month => Thu, 01 Aug 2019`のように簡単に変換できるように、DateクラスとStringクラスにメソッドを追加して、どこからでも呼び出せるようにしている。
 - Date.currentを使用して、タイムゾーンの誤差がでないようにしている。
+
+## Licence
+
+[MIT](https://github.com/tcnksm/tool/blob/master/LICENCE)
+
+## Author
+
+[shoooohei](https://github.com/shoooohei)
