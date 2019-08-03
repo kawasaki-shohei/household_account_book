@@ -54,3 +54,11 @@
 ## ER図
 ![er](https://github.com/shoooohei/household_account_book/blob/master/erd.png)
 
+## Licence
+
+[MIT](https://github.com/tcnksm/tool/blob/master/LICENCE)
+
+## Author
+
+[shoooohei](https://github.com/shoooohei)
+
