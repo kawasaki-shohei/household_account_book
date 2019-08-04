@@ -1,5 +1,20 @@
 ---
 ja:
+  category_master:
+    name:
+      food: 食費
+      convenience_goods: 日用雑貨
+      data: 通信
+      utility: 水道・光熱
+      living: 住まい
+      entertainment: エンタメ
+      big_expense: 大型出費
+      others: その他
+      transportation: 交通
+      entertainment_expense: 交際費
+      learning: 教育・教養
+      medical: 医療・保険
+      beauty: 美容・衣服
   notification:
     func:
       notifications: 【お知らせ】今月の手渡し料金をお知らせします。

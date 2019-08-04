@@ -1,4 +1,9 @@
 <%= render partial: 'shared/html_title', locals: {subtitle: "繰り返し出費を入力"} %>
+<%= content_for :other_css do %>
+  <%= stylesheet_link_tag 'repeat_expenses' %>
+  <%= stylesheet_link_tag 'analyses' %>
+<% end %>
+
 <div class="content-wrapper">
 
   <section class="content-header">

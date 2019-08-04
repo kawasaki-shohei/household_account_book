@@ -9,9 +9,9 @@
 # **`id`**               | `bigint(8)`        | `not null, primary key`
 # **`allow_share_own`**  | `boolean`          | `default(FALSE)`
 # **`email`**            | `string`           |
+# **`is_preview_user`**  | `boolean`          | `default(FALSE)`
 # **`name`**             | `string`           |
 # **`password_digest`**  | `string`           |
-# **`sys_admin`**        | `boolean`          | `default(FALSE)`
 # **`created_at`**       | `datetime`         | `not null`
 # **`updated_at`**       | `datetime`         | `not null`
 #

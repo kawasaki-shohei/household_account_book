@@ -8,6 +8,7 @@
 
 
   <div class="home-box-body text-center">
+    <p class="text-redpepper"><%= alert %></p>
     <div><b>PairMoney</b>は、</div>
     <div>夫婦またはカップル専用の</div>
     <div>家計簿webアプリケーションです。</div>
@@ -15,7 +16,7 @@
     <div>簡単な収入や出費の入力で</div>
     <div>複雑な二人の出費を管理できます。</div>
     <br />
-    <%#= link_to 'プレビュー', '#', class: "btn btn-orange btn-block" %>
+    <%= link_to 'プレビュー', preview_path, method: :post, class: "btn btn-orange btn-block" %>
   </div><!-- /.home-box-body -->
 
 </div><!-- /.home-box -->

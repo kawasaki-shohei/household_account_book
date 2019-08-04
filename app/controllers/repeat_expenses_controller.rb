@@ -14,7 +14,6 @@ class RepeatExpensesController < ApplicationController
   def create
     @repeat_expense = @current_user.repeat_expenses.build(repeat_expense_params)
     @repeat_expense.set_new_item_id
-    errors = []
     ActiveRecord::Base.transaction do
       if @repeat_expense.save
         begin

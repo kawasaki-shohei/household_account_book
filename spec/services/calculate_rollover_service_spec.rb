@@ -13,8 +13,7 @@ RSpec.describe CalculateRolloverService, type: :service do
     create_list(:pay, 5, amount: 10000, user: @user)
     create_list(:pay, 5, amount: 20000, user: @partner)
     @all_pays = Pay.get_couple_pays(@user, @partner)
-    period = Date.current.to_s_as_period
-    @expenses = Expense.both_expenses_until_one_month(@user, @partner, period)
+    @expenses = Expense.both_expenses_until_one_month(@user, @partner)
   end
 
   it "returns correct rollover amount for own" do
