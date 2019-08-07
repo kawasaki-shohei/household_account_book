@@ -61,5 +61,24 @@ RSpec.describe Income, type: :model do
       expect(income).to be_invalid
       expect(income.errors.full_messages.size).to eq(2)
     end
+
+    it "is valid with 9 digits amount" do
+      income = Income.new(
+        amount: 9999999999,
+        date: Date.current,
+        user: @user
+      )
+      expect(income).to be_valid
+    end
+
+    it "is valid with 10 digits amount" do
+      income = Income.new(
+        amount: 10000000000,
+        date: Date.current,
+        user: @user
+      )
+      expect(income).to be_invalid
+      expect(income.errors.full_messages.size).to eq(1)
+    end
   end
 end
