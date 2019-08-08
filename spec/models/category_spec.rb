@@ -32,5 +32,52 @@
 require 'rails_helper'
 
 RSpec.describe Category, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe "Validation Check" do
+    before do
+      @user = create(:user_with_partner)
+    end
+
+    it "is valid with user and name" do
+      category = Category.new(
+        user: @user,
+        name: Faker::Lorem.word,
+      )
+      expect(category).to be_valid
+    end
+
+    it "is invalid without user" do
+      category = Category.new(
+        user: nil,
+        name: Faker::Lorem.word,
+        )
+      expect(category).to be_invalid
+      expect(category.errors.full_messages.size).to eq(1)
+    end
+
+    it "is invalid without name" do
+      category = Category.new(
+        user: @user,
+        name: nil,
+        )
+      expect(category).to be_invalid
+      expect(category.errors.full_messages.size).to eq(1)
+    end
+
+    it "is valid with 15 letters name" do
+      category = Category.new(
+        user: @user,
+        name: Faker::Lorem.characters(15)
+        )
+      expect(category).to be_valid
+    end
+
+    it "is invalid with 16 letters name" do
+      category = Category.new(
+        user: @user,
+        name: Faker::Lorem.characters(16)
+      )
+      expect(category).to be_invalid
+      expect(category.errors.full_messages.size).to eq(1)
+    end
+  end
 end

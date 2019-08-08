@@ -82,7 +82,7 @@ RSpec.describe Expense, type: :model do
         expect(expense).to be_invalid
       end
 
-      it "is invalid without a user_id" do
+      it "is invalid without user_id" do
         expense = Expense.new(
           user: nil,
           category: @own_category,
