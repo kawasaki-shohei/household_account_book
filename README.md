@@ -58,32 +58,6 @@
 - MacOS Google Chrome
 - Google Chrome for Android
 
-## 気をつけたポイント
-- ステージング環境を用意して、本番環境にデプロイする前に動作確認している。
-- バージョンをあげて、credentials.yml.encを使えるようにした。
-- formは全て`form_with`を使って、XSSやCSRFに注意している。
-- SQLインジェクションに注意して、ActiveRecordのwhereメソッドの引数にはplaceholderを使っている。
-- 脆弱性対応
-  脆弱性が報告されたため、Rails 5.2.2.1へjQueryを3.4.0へバージョンアップした。  
-  Ruby 2.5.1 にも脆弱性が報告されているため、バージョンアップする予定。
-- ActiveRecordが発行するSQLを理解して、N+1問題の解決に努力している。
-- Decoratorを導入して、ビューで使うロジックをModelから切り離している。
-- ER図の自動更新  
-  gem rails-erdを使い、migrateの実行をフックして、ER図が自動的に更新されるようにしている。
-- migrate実行時にモデルにカラム情報を自動的に記載するようにしている。
-- アセッツ  
-  Railsのデフォルトで全てのアセッツを全てのページで読み込むのは、性能が悪く、加えてクラス名やid名の衝突にもなる。  
-  基本的に全てのページで必要になるBootstrapやjQuery以外は、各ページで読み込むCSSとJSを指定している。
-- わかりにくいカラム名の変更
-  - expenses.both_flg → expenses.is_for_both  
-    二人の出費かどうかを判断するexpensesテーブルの`[Boolean] both_flg`は`if expense.both_flg`としたときに、trueなのかfalseなのかわかりにくい。  
-    `is_for_both`とすることで`if expense.is_for_both`としたときに、`二人の出費だったら`と意味だとわかりやすくなった。
-  - categories.kind → categories.name  
-    他のテーブルではnameを使用していたため統一した。
-- DateクラスとStringクラスにメソッドを追加  
-  月単位でロジックを組むことが多いので、 `"2019-08".to_beginning_of_month => Thu, 01 Aug 2019`のように簡単に変換できるように、DateクラスとStringクラスにメソッドを追加して、どこからでも呼び出せるようにしている。
-- Date.currentを使用して、タイムゾーンの誤差がでないようにしている。
-
 ## Licence
 
 [MIT](https://github.com/tcnksm/tool/blob/master/LICENCE)
