@@ -24,7 +24,8 @@ RUN apt-get install -y --no-install-recommends \
       nodejs \
       yarn \
       vim \
-      postgresql-client
+      postgresql-client \
+      graphviz
 
 # キャッシュされているパッケージを削除
 RUN apt-get clean
