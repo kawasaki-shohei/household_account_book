@@ -3,8 +3,6 @@ FROM ruby:2.6.3
 # timezone
 RUN cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
 
-EXPOSE 3000
-
 ENV LANG C.UTF-8
 ENV APP_ROOT /usr/src/household_account_book
 
@@ -21,6 +19,8 @@ RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources
 # 必要なライブラリ等をインストール
 RUN apt-get update
 RUN apt-get install -y --no-install-recommends \
+      build-essential \
+      libpq-dev \
       nodejs \
       yarn \
       vim \
@@ -38,5 +38,9 @@ RUN gem install bundler -v 1.17.3
 # ソースコードを全てimageにコピー
 COPY ./ $APP_ROOT
 
+RUN bundle install
+
+EXPOSE 3000
+
 # サーバー起動
-CMD bash -c "bash ./init.sh"
+#CMD bash -c "bash ./init.sh"
