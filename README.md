@@ -1,8 +1,8 @@
 # README
 
-[![ruby version](https://img.shields.io/badge/Ruby-v2.5.1-red.svg)](https://www.ruby-lang.org/ja/)
+[![ruby version](https://img.shields.io/badge/Ruby-v2.6.3-red.svg)](https://www.ruby-lang.org/ja/)
 [![rails version](https://img.shields.io/badge/Rails-v5.2.2.1-critical.svg)](http://rubyonrails.org/)
-[![PostgreSQL version](https://img.shields.io/badge/PostgreSQL-v10.6-blue.svg)](https://www.postgresql.org/)
+[![PostgreSQL version](https://img.shields.io/badge/PostgreSQL-v11.5-blue.svg)](https://www.postgresql.org/)
 [![React version](https://img.shields.io/badge/React-v16.8.6-green.svg)](https://reactjs.org/)
 
 ## アプリ名: PairMoney
