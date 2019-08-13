@@ -14,26 +14,24 @@ COMMAND_RESULT=`docker-compose ps -q`
 if [ '' == "$COMMAND_RESULT" ] ; then
 
     # バックグラウンドで起動
-    docker-compose up -d
+    docker-compose up -d --build
 
-    # アセッツコンパイル
-    docker-compose exec web rails assets:precompile RAILS_ENV=staging
-
-    # DB作成
-    docker-compose exec web rails db:create
+    # node modulesをインストール
+    docker-compose exec web yarn install
 
     # マイグレーション
     docker-compose exec web rails db:migrate
 
+    # テストデータ投入
+    docker-compose exec web rails db:seeds
+
     # rails再起動
     docker-compose exec web rails restart
 
-    # テストデータ投入
-    docker-compose exec web rails db:seeds RAILS_ENV=staging
 else
 
     # バックグラウンドで起動のみ
-    docker-compose up -d
+    docker-compose up -d --build
 
 fi
 
