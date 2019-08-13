@@ -40,7 +40,11 @@ COPY ./ $APP_ROOT
 
 RUN bundle install
 
+COPY entrypoint.sh /usr/bin/
+RUN chmod +x /usr/bin/entrypoint.sh
+ENTRYPOINT ["entrypoint.sh"]
+
 EXPOSE 3000
 
 # サーバー起動
-#CMD bash -c "bash ./init.sh"
+#CMD ["rails", "server", "-b", "0.0.0.0"]
