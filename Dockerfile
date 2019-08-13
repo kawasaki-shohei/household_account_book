@@ -1,32 +1,50 @@
-FROM ruby:2.3.0-alpine
+FROM ruby:2.6.3
+
+# timezone
+RUN cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
 
 ENV LANG C.UTF-8
 ENV APP_ROOT /usr/src/household_account_book
 
-RUN mkdir $APP_ROOT
+RUN mkdir -p $APP_ROOT
 WORKDIR $APP_ROOT
 
 COPY Gemfile $APP_ROOT
 COPY Gemfile.lock $APP_ROOT
 
-# 必要なライブラリ等をインストール
-RUN apk upgrade --no-cache && \
-    apk add --update --no-cache \
-      postgresql-client \
-      nodejs \
-      tzdata && \
-    apk add --update --no-cache --virtual=build-dependencies \
-      build-base \
-      curl-dev \
-      linux-headers \
-      libxml2-dev \
-      libxslt-dev \
-      postgresql-dev \
-      ruby-dev \
-      yaml-dev \
-      zlib-dev && \
-    gem install bundler && \
-    bundle install -j4 && \
-    apk del build-dependencies
+# yarnをインストールする前に必要な設定
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
 
+# 必要なライブラリ等をインストール
+RUN apt-get update
+RUN apt-get install -y --no-install-recommends \
+      build-essential \
+      libpq-dev \
+      nodejs \
+      yarn \
+      vim \
+      postgresql-client \
+      graphviz
+
+# キャッシュされているパッケージを削除
+RUN apt-get clean
+# キャッシュされているパッケージリストを削除
+RUN rm -rf /var/lib/apt/lists/*
+
+# Bundlerをインストール
+RUN gem install bundler -v 1.17.3
+
+# ソースコードを全てimageにコピー
 COPY ./ $APP_ROOT
+
+RUN bundle install
+
+COPY entrypoint.sh /usr/bin/
+RUN chmod +x /usr/bin/entrypoint.sh
+ENTRYPOINT ["entrypoint.sh"]
+
+EXPOSE 3000
+
+# サーバー起動
+#CMD ["rails", "server", "-b", "0.0.0.0"]
