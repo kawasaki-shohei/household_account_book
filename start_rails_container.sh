@@ -25,6 +25,15 @@ if [ '' == "$COMMAND_RESULT" ] ; then
     # テストデータ投入
     docker-compose exec web rails db:seeds
 
+    # テスト環境データベース作成
+    docker-compose exec web rails db:create RAILS_ENV=test
+
+    # テスト環境マイグレート
+    docker-compose exec web rails db:migrate RAILS_ENV=test
+
+    # テスト環境テストデータ投入
+    docker-compose exec web rails db:seed_from_file SEED_FILENAME='seeds/00_category_masters_seeds.rb' RAILS_ENV=test
+
     # rails再起動
     docker-compose exec web rails restart
 
