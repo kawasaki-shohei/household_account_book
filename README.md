@@ -54,6 +54,10 @@
 ## ER図
 ![er](https://github.com/shoooohei/household_account_book/blob/master/erd.png)
 
+## 対応ブラウザ
+- MacOS Google Chrome
+- Google Chrome for Android
+
 ## 気をつけたポイント
 - ステージング環境を用意して、本番環境にデプロイする前に動作確認している。
 - バージョンをあげて、credentials.yml.encを使えるようにした。
