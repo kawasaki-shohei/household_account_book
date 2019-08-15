@@ -90,5 +90,26 @@ RSpec.describe Income, type: :model do
       expect(income).to be_invalid
       expect(income.errors.full_messages.size).to eq(1)
     end
+
+    it "is valid with 100 letters memo" do
+      income = Income.new(
+        amount: 1000,
+        date: Date.current,
+        user: @user,
+        memo: "a" * 100
+      )
+      expect(income).to be_valid
+    end
+
+    it "is invalid with 101 letters memo" do
+      income = Income.new(
+        amount: 1000,
+        date: Date.current,
+        user: @user,
+        memo: "a" * 101
+      )
+      expect(income).to be_invalid
+      expect(income.errors.full_messages.size).to eq(1)
+    end
   end
 end
