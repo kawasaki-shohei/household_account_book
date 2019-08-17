@@ -41,4 +41,27 @@ module ApplicationHelper
     end
   end
 
+  def signup_url_according_to_environment
+    if Rails.env.production? || Rails.env.preview?
+      CONFIG[:production_url] + signup_path
+    else
+      signup_path
+    end
+  end
+
+  def login_url_according_to_environment
+    if Rails.env.production? || Rails.env.preview?
+      CONFIG[:production_url] + login_path
+    else
+      login_path
+    end
+  end
+
+  def root_url_according_to_environment
+    if Rails.env.production? || Rails.env.preview?
+      CONFIG[:production_url] + root_path
+    else
+      root_path
+    end
+  end
 end
