@@ -34,23 +34,23 @@ module BalanceHelper
 
     # @param Expense or Income
     def initialize(_object)
-      self.object = _object
-      self.user = object.user
-      self.partner = object.user.partner
-      self.period = object.date.to_s_as_period
-      self.is_for_new = object.is_new
-      self.is_for_destroyed_object = object.is_destroyed
-      self.object_differences = object.differences
+      @object = _object
+      @user = object.user
+      @partner = object.user.partner
+      @period = object.date.to_s_as_period
+      @is_for_new = object.is_new
+      @is_for_destroyed_object = object.is_destroyed
+      @object_differences = object.differences
       if object.is_a?(Expense) && object.is_for_both?
-        self.is_for_both_expense = true
+        @is_for_both_expense = true
       end
       if !is_for_new && !is_for_destroyed_object && object_differences[:date]
-        self.period_was = object_differences[:date][0].to_s_as_period
+        @period_was = object_differences[:date][0].to_s_as_period
       end
-      self.period_is_future = self.period && period.is_after_next_month?
-      self.period_was_is_future = self.period_was && period_was.is_after_next_month?
+      @period_is_future = @period && period.is_after_next_month?
+      @period_was_is_future = @period_was && period_was.is_after_next_month?
       set_is_changed_over_period
-      self.is_for_both_expense_and_over_period = is_for_both_expense && is_changed_over_period
+      @is_for_both_expense_and_over_period = is_for_both_expense && is_changed_over_period
       set_skip_calculate_balance
     end
 

@@ -28,5 +28,67 @@
 require 'rails_helper'
 
 RSpec.describe Income, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe "Validation Check" do
+    before do
+      @user = create(:user_with_partner)
+    end
+
+    it "is valid with amount, date and user" do
+      income = Income.new(
+        amount: 1000,
+        date: Date.current,
+        user: @user
+      )
+      expect(income).to be_valid
+    end
+
+    it "is invalid without user" do
+      income = Income.new(
+        amount: 1000,
+        date: Date.current,
+        user: nil
+      )
+      expect(income).to be_invalid
+      expect(income.errors.full_messages.size).to eq(1)
+    end
+
+    it "is invalid without amount" do
+      income = Income.new(
+        amount: nil,
+        date: Date.current,
+        user: @user
+      )
+      expect(income).to be_invalid
+      expect(income.errors.full_messages.size).to eq(2)
+    end
+
+    it "is valid with 10 digits amount" do
+      income = Income.new(
+        amount: 9999999999,
+        date: Date.current,
+        user: @user
+      )
+      expect(income).to be_valid
+    end
+
+    it "is valid with 11 digits amount" do
+      income = Income.new(
+        amount: 10000000000,
+        date: Date.current,
+        user: @user
+      )
+      expect(income).to be_invalid
+      expect(income.errors.full_messages.size).to eq(1)
+    end
+
+    it "is invalid without date" do
+      income = Income.new(
+        amount: 1000,
+        date: nil,
+        user: @user
+      )
+      expect(income).to be_invalid
+      expect(income.errors.full_messages.size).to eq(1)
+    end
+  end
 end

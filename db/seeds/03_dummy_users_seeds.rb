@@ -5,7 +5,7 @@ end
 
 def create_two_users
   users = []
-  id = User.maximum(:id) + 1
+  id = User.first.present? ? User.maximum(:id) : 0
   2.times do
     id += 1
     user = User.new(
@@ -16,7 +16,10 @@ def create_two_users
     )
     # 開発用に簡単なパスワードを設定しているため
     user.save(validate: false)
+    ActiveRecord::Base.connection.reset_pk_sequence!('users')
+    users << user
   end
+  users
 end
 
 def make_one_couple(user, partner)

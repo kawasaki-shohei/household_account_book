@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_20_093856) do
+ActiveRecord::Schema.define(version: 2019_07_27_062244) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -209,9 +209,10 @@ ActiveRecord::Schema.define(version: 2019_07_20_093856) do
       repeat_expenses_a.deleted_at
      FROM (repeat_expenses repeat_expenses_a
        JOIN ( SELECT repeat_expenses.item_id,
+              repeat_expenses.user_id,
               max(repeat_expenses.item_sub_id) AS max_item_sub_id
              FROM repeat_expenses
-            GROUP BY repeat_expenses.item_id) repeat_expenses_b ON (((repeat_expenses_a.item_id = repeat_expenses_b.item_id) AND (repeat_expenses_a.item_sub_id = repeat_expenses_b.max_item_sub_id))))
+            GROUP BY repeat_expenses.user_id, repeat_expenses.item_id) repeat_expenses_b ON (((repeat_expenses_a.user_id = repeat_expenses_b.user_id) AND (repeat_expenses_a.item_id = repeat_expenses_b.item_id) AND (repeat_expenses_a.item_sub_id = repeat_expenses_b.max_item_sub_id))))
     WHERE (repeat_expenses_a.deleted_at IS NULL);
   SQL
 end

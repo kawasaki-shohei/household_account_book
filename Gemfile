@@ -5,7 +5,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-ruby '2.5.1'
+ruby '2.6.3'
 
 gem 'rails', '~> 5.2.2.1'
 gem 'puma', '~> 3.7'
@@ -56,6 +56,8 @@ group :development, :test do
   gem 'binding_of_caller'
   gem 'rspec-rails', '~> 3.8'
   gem 'factory_bot_rails', '~> 5.0', '>= 5.0.1'
+  gem 'debase'
+  gem 'ruby-debug-ide'
 end
 
 group :development do
