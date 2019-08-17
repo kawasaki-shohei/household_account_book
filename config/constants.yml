@@ -1,6 +1,8 @@
 default: &default
-  site_name: "PairMoney"
+  site_name: PairMoney
   selection_year_term: 30
+  slack_webhook_url: https://hooks.slack.com/services/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
+  preview_url: https://preview-pairmoney.herokuapp.com
 
 development:
   <<: *default
