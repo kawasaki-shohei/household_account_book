@@ -2,6 +2,7 @@ default: &default
   site_name: PairMoney
   selection_year_term: 30
   slack_webhook_url: https://hooks.slack.com/services/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
+  production_url: https://pairmoney.herokuapp.com
   preview_url: https://preview-pairmoney.herokuapp.com
 
 development:
@@ -11,6 +12,9 @@ test:
   <<: *default
 
 staging:
+  <<: *default
+
+preview:
   <<: *default
 
 production:
