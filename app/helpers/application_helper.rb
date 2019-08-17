@@ -33,4 +33,12 @@ module ApplicationHelper
     session[:partner_mode] ? :delete : :post
   end
 
+  def preview_mode_url
+    if Rails.env.production? || Rails.env.preview?
+      CONFIG[:preview_url] + preview_path
+    else
+      preview_path
+    end
+  end
+
 end
