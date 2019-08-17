@@ -277,6 +277,7 @@ GEM
       rubyzip (~> 1.2, >= 1.2.2)
     sexp_processor (4.12.1)
     shellany (0.0.1)
+    slack-notifier (2.3.2)
     spring (2.1.0)
     spring-commands-rspec (1.0.4)
       spring (>= 0.9.1)
@@ -357,6 +358,7 @@ DEPENDENCIES
   scenic (~> 1.5, >= 1.5.1)
   schemadoc
   selenium-webdriver
+  slack-notifier (~> 2.3, >= 2.3.2)
   spring
   spring-commands-rspec (~> 1.0, >= 1.0.4)
   spring-watcher-listen (~> 2.0.0)
