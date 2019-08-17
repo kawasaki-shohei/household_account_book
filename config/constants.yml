@@ -13,5 +13,8 @@ test:
 staging:
   <<: *default
 
+preview:
+  <<: *default
+
 production:
   <<: *default
