@@ -25,7 +25,7 @@ class SessionsController < ApplicationController
     session.delete(:preview_user_id)
     session.delete(:partner_mode)
     flash[:notice] = 'ログアウトしました'
-    redirect_to login_path
+    redirect_to view_context.login_url_according_to_environment
   end
 
 end
