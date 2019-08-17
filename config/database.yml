@@ -15,8 +15,10 @@ staging:
   <<: *default
   database: staging_household_account_book
 
+preview:
+  <<: *default
+  database: household_account_book_preview
+
 production:
   <<: *default
   database: household_account_book_production
-  username: household_account_book
-  password: <%= ENV['HOUSEHOLD_ACCOUNT_BOOK_DATABASE_PASSWORD'] %>
