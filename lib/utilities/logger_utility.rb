@@ -1,5 +1,7 @@
 class LoggerUtility
+
   @logger = Rails.logger
+
   def self.output_info_log(**args)
     class_name = args.fetch(:class_name, nil)
     method = args.fetch(:method, nil)
@@ -54,6 +56,13 @@ class LoggerUtility
     @logger.info "========================================================================"
     @logger.info "#{object.class.name} id: #{object.id} is unrelated to balance"
     @logger.info "========================================================================"
+  end
 
+  def self.error_log(e)
+    @logger.error(<<~LOG)
+      #{e.class.to_s}
+      #{e.message}
+      #{e.backtrace.join('\n')}
+    LOG
   end
 end
