@@ -9,9 +9,6 @@ ENV APP_ROOT /usr/src/household_account_book
 RUN mkdir -p $APP_ROOT
 WORKDIR $APP_ROOT
 
-COPY Gemfile $APP_ROOT
-COPY Gemfile.lock $APP_ROOT
-
 # yarnをインストールする前に必要な設定
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
@@ -35,10 +32,18 @@ RUN rm -rf /var/lib/apt/lists/*
 # Bundlerをインストール
 RUN gem install bundler -v 1.17.3
 
+# bundle install
+COPY Gemfile $APP_ROOT/Gemfile
+COPY Gemfile.lock $APP_ROOT/Gemfile.lock
+RUN bundle install
+
+# npm packagesをインストール
+COPY package.json $APP_ROOT
+COPY yarn.lock $APP_ROOT
+RUN yarn install --frozen-lockfile
+
 # ソースコードを全てimageにコピー
 COPY ./ $APP_ROOT
-
-RUN bundle install
 
 COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
