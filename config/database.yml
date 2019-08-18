@@ -15,9 +15,9 @@ staging:
   <<: *default
   database: staging_household_account_book
 
-preview:
+demo:
   <<: *default
-  database: household_account_book_preview
+  database: household_account_book_demo
 
 production:
   <<: *default

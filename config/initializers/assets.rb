@@ -35,5 +35,5 @@ Rails.application.config.assets.precompile += %w(
   expenses_input_amount.js
   expenses_index.js
   page_top.js
-  preview.js
+  demo.js
 )

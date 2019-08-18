@@ -1,4 +1,4 @@
-class PreviewsController < ApplicationController
+class DemoController < ApplicationController
   protect_from_forgery
   skip_before_action :check_logging_in
   skip_before_action :check_partner
@@ -7,12 +7,12 @@ class PreviewsController < ApplicationController
 
   def create
     # プレビューモードが2回目の場合
-    if current_user.present? && session[:preview_user_id]
+    if current_user.present? && session[:demo_user_id]
       redirect_to mypage_top_path and return
     end
 
-    create_preview_records
-    if session[:preview_user_id]
+    create_demo_records
+    if session[:demo_user_id]
       redirect_to mypage_top_path
     else
       redirect_to root_path, alert: "プレビューが失敗しました。"
@@ -20,13 +20,13 @@ class PreviewsController < ApplicationController
   end
 
   def destroy
-    unless preview_users = collect_preview_users
+    unless demo_users = collect_demo_users
       head 200
     end
     # 注意 Expense Income RepeatExpense Category Couple
     normal_tables = %w(budgets balances pays deposits notifications)
 
-    preview_users.each do |user|
+    demo_users.each do |user|
       ActiveRecord::Base.transaction do
         partner = user.partner
         # 出費テーブル
@@ -75,7 +75,7 @@ class PreviewsController < ApplicationController
       end
     end
 
-    if User.where(is_preview_user: true).blank?
+    if User.where(is_demo_user: true).blank?
       render plain: "succeeded", status: 200
     else
       render plain: "failed", status: 200
@@ -84,20 +84,20 @@ class PreviewsController < ApplicationController
 
   private
 
-  def create_preview_records
+  def create_demo_records
     # カテゴリー、予算、出費、繰り返し出費、精算、収入、貯金、引き出し、通知(出費3件、精算1件)
     ActiveRecord::Base.transaction do
-      @user = create_preview_user
-      @partner = create_preview_partner
-      @categories = create_preview_categories
+      @user = create_demo_user
+      @partner = create_demo_partner
+      @categories = create_demo_categories
       @categories.each do |category|
         define_category_instance_variables(category)
-        create_preview_budgets(category)
+        create_demo_budgets(category)
       end
 
       # 1回だけ入力するもの
-      create_preview_withdraw
-      create_preview_repeat_expenses
+      create_demo_withdraw
+      create_demo_repeat_expenses
 
       # 毎月入力するもの(出費、収入、貯金、引き出し)
       three_months_period = [
@@ -106,14 +106,14 @@ class PreviewsController < ApplicationController
         Date.current.to_s_as_period
       ]
       three_months_period.each do |period|
-        create_preview_expenses(period)
-        create_preview_incomes(period)  # balanceを計算するためexpensesよりも後にする。
-        create_preview_deposits(period)
-        create_preview_pays(period)
+        create_demo_expenses(period)
+        create_demo_incomes(period)  # balanceを計算するためexpensesよりも後にする。
+        create_demo_deposits(period)
+        create_demo_pays(period)
       end
 
       # ログイン
-      session[:preview_user_id] = @user.id
+      session[:demo_user_id] = @user.id
     end
   rescue => e
     # todo: slack通知する
@@ -126,23 +126,23 @@ class PreviewsController < ApplicationController
     eval "@#{key}=category"
   end
 
-  def create_preview_user
+  def create_demo_user
     User.create!(
       name: "プレビュー",
       email: Faker::Internet.safe_email,
-      password: Rails.application.credentials.preview_user_password,
+      password: Rails.application.credentials.demo_user_password,
       allow_share_own: true,
-      is_preview_user: true
+      is_demo_user: true
     )
   end
 
-  def create_preview_partner
+  def create_demo_partner
     partner = User.create!(
       name: "パートナー",
       email: Faker::Internet.safe_email,
-      password: Rails.application.credentials.preview_user_password,
+      password: Rails.application.credentials.demo_user_password,
       allow_share_own: true,
-      is_preview_user: true
+      is_demo_user: true
     )
     Couple.create!(user: @user, partner: partner)
     Couple.create!(user: partner, partner: @user)
@@ -157,7 +157,7 @@ class PreviewsController < ApplicationController
     categories
   end
 
-  def create_preview_categories
+  def create_demo_categories
     categories = []
     own_category_masters = CategoryMaster.where(is_common: false).order(:id)
     own_common_category_masters, partner_common_category_masters = CategoryMaster.where(is_common: true).partition { |category_master| category_master.id.even? }
@@ -174,7 +174,7 @@ class PreviewsController < ApplicationController
     t("category_master.name.#{name}")
   end
 
-  def create_preview_budgets(category)
+  def create_demo_budgets(category)
     # 合計18,0000円 + 定額貯金50,000円
     own_budget = category.budgets.build(user: @user)
     partner_budget = category.budgets.build(user: @partner)
@@ -220,7 +220,7 @@ class PreviewsController < ApplicationController
     partner_budget.save! if partner_budget.amount
   end
 
-  def create_preview_incomes(period)
+  def create_demo_incomes(period)
     @user.incomes.create!(
       amount: 250000,
       date: Date.parse(period + "-25"),
@@ -234,7 +234,7 @@ class PreviewsController < ApplicationController
     )
   end
 
-  def create_preview_deposits(period)
+  def create_demo_deposits(period)
     @user.deposits.create!(
       amount: 30000,
       date: Date.parse(period + "-26"),
@@ -248,7 +248,7 @@ class PreviewsController < ApplicationController
     )
   end
 
-  def create_preview_withdraw
+  def create_demo_withdraw
     @user.deposits.create!(
       amount: 10000,
       date: Date.current,
@@ -282,7 +282,7 @@ class PreviewsController < ApplicationController
     expense
   end
 
-  def create_preview_expenses(period)
+  def create_demo_expenses(period)
     first_day = period.to_beginning_of_month
     end_day = period.to_end_of_month
 
@@ -413,7 +413,7 @@ class PreviewsController < ApplicationController
     Expense.creat_repeat_expenses!(repeat_expense)
   end
 
-  def create_preview_repeat_expenses
+  def create_demo_repeat_expenses
     rent = RepeatExpense.new(
       user: @partner,
       category: @living,
@@ -442,7 +442,7 @@ class PreviewsController < ApplicationController
     save_repeat_expense!(english)
   end
 
-  def create_preview_pays(period)
+  def create_demo_pays(period)
     # 今月以外は精算する
     return if period == Date.current.to_s_as_period
     pays = Pay.get_couple_pays(@user, @partner)
@@ -469,10 +469,10 @@ class PreviewsController < ApplicationController
     end
   end
 
-  def collect_preview_users
-    all_preview_users = User.where(is_preview_user: true)
+  def collect_demo_users
+    all_demo_users = User.where(is_demo_user: true)
     target_users = []
-    all_preview_users.each do |user|
+    all_demo_users.each do |user|
       unless target_users.include?(user.partner)
         target_users << user
       end
