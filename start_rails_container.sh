@@ -16,9 +16,6 @@ if [ '' == "$COMMAND_RESULT" ] ; then
     # バックグラウンドで起動
     docker-compose up -d --build
 
-    # node modulesをインストール
-    docker-compose exec web yarn install
-
     # マイグレーション
     docker-compose exec web rails db:migrate
 
