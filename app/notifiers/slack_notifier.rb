@@ -3,8 +3,8 @@ class SlackNotifier
 
   attr_accessor :notifier, :channel, :request, :session
   def initialize(request=nil, session=nil)
-    @notifier = Slack::Notifier.new(WEBHOOK_URL)
     @channel = Rails.env
+    @notifier = Slack::Notifier.new(WEBHOOK_URL, channel: @channel)
     @request = request
     @session = session
   end
