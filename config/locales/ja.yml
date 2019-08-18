@@ -31,6 +31,10 @@ ja:
       destroy: 削除
       bought: 購入
       want: 未購入に戻
+    slack:
+      start_demo: デモアプリを開始しました。
+      succeeded_demo: デモレコードの作成が成功しました。
+      failed_demo: デモレコードの作成が失敗しました。
   activerecord:
     errors:
       messages:
