@@ -28,7 +28,7 @@ categorySelect.addEventListener('change', (e) => {
 window.onload = () => {
   if(arg.expense){
     const expense_id = arg.expense;
-    const target = $(`#expense-list-id-${expense_id}`)[0];
-    $('html, body').animate({scrollTop: target.offsetTop - 50}, 500, 'swing');
+    const target = $(`#expense-list-id-${expense_id}`);
+    $('html, body').animate({scrollTop: target.offset().top - 50}, 500, 'swing');
   }
 };

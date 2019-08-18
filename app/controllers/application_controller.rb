@@ -8,18 +8,18 @@ class ApplicationController < ActionController::Base
 
   def current_user
     user = User.find_by(id: session[:user_id])
-    preview_user = User.find_by(id: session[:preview_user_id], is_preview_user: true)
+    demo_user = User.find_by(id: session[:demo_user_id], is_demo_user: true)
     if user.present?
       if session[:partner_mode]
         @current_user = user.partner
       else
         @current_user = user
       end
-    elsif preview_user.present?
+    elsif demo_user.present?
       if session[:partner_mode]
-        @current_user = preview_user.partner
+        @current_user = demo_user.partner
       else
-        @current_user = preview_user
+        @current_user = demo_user
       end
     end
   end

@@ -47,11 +47,11 @@ window.onload = () => {
     const category_id = arg.category;
     let target;
     if (arg.tab === 'expenses') {
-      target = $(`#expenses-comparison-category-id-${category_id}`)[0];
+      target = $(`#expenses-comparison-category-id-${category_id}`);
     } else {
-      target = $(`#budgets-comparison-category-id-${category_id}`)[0];
+      target = $(`#budgets-comparison-category-id-${category_id}`);
     }
-    $('html, body').animate({scrollTop: target.offsetTop - 30}, 500, 'swing');
+    $('html, body').animate({scrollTop: target.offset().top - 30}, 500, 'swing');
   }
 };
 
