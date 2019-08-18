@@ -25,11 +25,10 @@ categorySelect.addEventListener('change', (e) => {
   document.querySelector('#expenses-search-btn').href = getParameters({ categoryValue: e.target.value })
 });
 
-window.onload = function(){
+window.onload = () => {
   if(arg.expense){
     const expense_id = arg.expense;
-    const target = document.querySelector(`#expense-list-id-${expense_id}`);
-    const rect = target.getBoundingClientRect();
-    window.scrollBy({top: rect.top - 50, behavior: "smooth"});
+    const target = $(`#expense-list-id-${expense_id}`)[0];
+    $('html, body').animate({scrollTop: target.offsetTop - 50}, 500, 'swing');
   }
 };
