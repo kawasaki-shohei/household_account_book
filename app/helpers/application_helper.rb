@@ -36,8 +36,10 @@ module ApplicationHelper
   def demo_btn
     if Rails.env.production?
       link_to 'デモアプリを試す', CONFIG[:demo_url], class: "btn btn-orange btn-block"
+    elsif Rails.env.demo?
+      link_to 'デモアプリを試す', demo_path, method: :post, class: "btn btn-orange btn-block", id: 'demo-btn', style: 'background-color: #cc7a3f; border-color: #cc7a3f;'
     else
-      link_to 'デモアプリを試す', demo_path, method: :post, class: "btn btn-orange btn-block", id: 'demo-btn'
+      link_to 'デモアプリを試す', demo_path, method: :post, class: "btn btn-orange btn-block"
     end
   end
 
