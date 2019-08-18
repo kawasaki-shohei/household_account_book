@@ -33,11 +33,11 @@ module ApplicationHelper
     session[:partner_mode] ? :delete : :post
   end
 
-  def preview_mode_url
-    if Rails.env.production? || Rails.env.preview?
-      CONFIG[:preview_url] + preview_path
+  def preview_btn
+    if Rails.env.production?
+      link_to 'プレビュー', CONFIG[:preview_url], class: "btn btn-orange btn-block"
     else
-      preview_path
+      link_to 'プレビュー', preview_path, method: :post, class: "btn btn-orange btn-block", id: 'preview-btn'
     end
   end
 
