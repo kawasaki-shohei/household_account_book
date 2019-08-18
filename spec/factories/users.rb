@@ -9,7 +9,7 @@
 # **`id`**               | `bigint(8)`        | `not null, primary key`
 # **`allow_share_own`**  | `boolean`          | `default(FALSE)`
 # **`email`**            | `string`           |
-# **`is_preview_user`**  | `boolean`          | `default(FALSE)`
+# **`is_demo_user`**     | `boolean`          | `default(FALSE)`
 # **`name`**             | `string`           |
 # **`password_digest`**  | `string`           |
 # **`created_at`**       | `datetime`         | `not null`
