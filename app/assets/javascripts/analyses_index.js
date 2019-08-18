@@ -45,10 +45,11 @@ expensePanelHeading.addEventListener('click', () => {
 window.onload = () => {
   if(arg.category){
     const category_id = arg.category;
+    let target;
     if (arg.tab === 'expenses') {
-      var target = $(`#expenses-comparison-category-id-${category_id}`)[0];
+      target = $(`#expenses-comparison-category-id-${category_id}`)[0];
     } else {
-      var target = $(`#budgets-comparison-category-id-${category_id}`)[0];
+      target = $(`#budgets-comparison-category-id-${category_id}`)[0];
     }
     $('html, body').animate({scrollTop: target.offsetTop - 30}, 500, 'swing');
   }
