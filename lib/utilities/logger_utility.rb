@@ -60,7 +60,7 @@ class LoggerUtility
 
   def self.error_log(e)
     @logger.error(<<~LOG)
-      #{e.class.to_s}
+      #{e.class}
       #{e.message}
       #{e.backtrace.join('\n')}
     LOG
