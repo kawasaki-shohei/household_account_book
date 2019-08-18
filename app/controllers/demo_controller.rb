@@ -6,6 +6,9 @@ class DemoController < ApplicationController
   skip_before_action :check_access_right, raise: false
 
   def create
+    notifier = SlackNotifier.new(request, session)
+    notifier.notify_starting_demo
+
     # プレビューモードが2回目の場合
     if current_user.present? && session[:demo_user_id]
       redirect_to mypage_top_path and return
@@ -13,8 +16,10 @@ class DemoController < ApplicationController
 
     create_demo_records
     if session[:demo_user_id]
+      notifier.notify_succeeded_demo
       redirect_to mypage_top_path
     else
+      notifier.notify_failed_demo
       redirect_to root_path, alert: "プレビューが失敗しました。"
     end
   end

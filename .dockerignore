@@ -1,0 +1,14 @@
+.bundle
+.dockerignore
+.git
+.gitignore
+docker-compose.yml
+Dockerfile
+log
+node_modules
+public/assets
+public/packs
+README.md
+storage
+test
+tmp
