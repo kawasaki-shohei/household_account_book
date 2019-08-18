@@ -42,16 +42,15 @@ expensePanelHeading.addEventListener('click', () => {
 
 // ページ読み込み後にパラメーターで指定したカテゴリーまでスクロールする。
 // todo: スクロールしたあとに、指定したカテゴリーを強調する処理を入れないとわかりにくい。
-window.onload = function(){
+window.onload = () => {
   if(arg.category){
     const category_id = arg.category;
     if (arg.tab === 'expenses') {
-      var target = document.querySelector(`#expenses-comparison-category-id-${category_id}`);
+      var target = $(`#expenses-comparison-category-id-${category_id}`)[0];
     } else {
-      var target = document.querySelector(`#budgets-comparison-category-id-${category_id}`);
+      var target = $(`#budgets-comparison-category-id-${category_id}`)[0];
     }
-    const rect = target.getBoundingClientRect();
-    window.scrollBy({top: rect.top - 30, behavior: "smooth"});
+    $('html, body').animate({scrollTop: target.offsetTop - 30}, 500, 'swing');
   }
 };
 
