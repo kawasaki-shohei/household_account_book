@@ -16,8 +16,14 @@
     <div>簡単な収入や出費の入力で</div>
     <div>複雑な二人の出費を管理できます。</div>
     <br />
-    <%= link_to 'プレビュー', preview_mode_url, method: :post, class: "btn btn-orange btn-block" %>
+    <%= preview_btn %>
   </div><!-- /.home-box-body -->
 
 </div><!-- /.home-box -->
+
+<% if Rails.env.preview? %>
+  <%= content_for :other_javascript do %>
+    <%= javascript_include_tag 'preview' %>
+  <% end %>
+<% end %>
 

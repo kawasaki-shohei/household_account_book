@@ -33,5 +33,7 @@ Rails.application.config.assets.precompile += %w(
   adminlte_sortable_plugin.js
   both_expenses_form.js
   expenses_input_amount.js
-  expenses_index.js page_top.js
+  expenses_index.js
+  page_top.js
+  preview.js
 )
