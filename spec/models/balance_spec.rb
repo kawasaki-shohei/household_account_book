@@ -30,5 +30,18 @@
 require 'rails_helper'
 
 RSpec.describe Balance, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe "Validation Check" do
+    before do
+      @user = create(:user)
+    end
+    
+    it "is valid with amount, period, user" do
+      balance = Balance.new(
+        amount: 1000,
+        period: "2019-01",
+        user: @user
+      )
+      expect(balance).to be_valid
+    end
+  end
 end
