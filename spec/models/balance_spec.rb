@@ -43,5 +43,14 @@ RSpec.describe Balance, type: :model do
       )
       expect(balance).to be_valid
     end
+
+    it "is invalid without amount" do
+      balance = Balance.new(
+        amount: nil,
+        period: "2019-01",
+        user: @user
+      )
+      expect(balance).to be_valid
+    end
   end
 end
