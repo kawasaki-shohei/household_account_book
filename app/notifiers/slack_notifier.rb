@@ -1,5 +1,5 @@
 class SlackNotifier
-  WEBHOOK_URL = CONFIG[:slack_webhook_url]
+  WEBHOOK_URL = SlackSettings.slack_webhook_url
 
   attr_accessor :notifier, :channel, :request, :session
   def initialize(request=nil, session=nil)
