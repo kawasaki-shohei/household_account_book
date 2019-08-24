@@ -56,13 +56,18 @@ class User < ApplicationRecord
     errors.add(:password, I18n.t('user.validation.weak_password'))
   end
 
+  def has_partner?
+    self.partner.present?
+  end
+
   def check_valid_partner
-    unless pre_partner = User.find_by(email: partner_email_to_register)
-      errors[:base] << '入力いただいたメールアドレスのユーザーはご登録されていないため、パートナーとして登録できません。'
-      return
-    end
-    if pre_partner.partner
-      errors[:base] << '入力いただいたメールアドレスのユーザーは、すでにあなた以外のパートナーが登録されているため、パートナーとして登録できません。'
+    pre_partner = User.find_by(email: partner_email_to_register)
+    if email == partner_email_to_register
+      errors[:base] << I18n.t('user.edit.validation.own_email')
+    elsif pre_partner.blank?
+      errors[:base] << I18n.t('user.edit.validation.no_registerd_email')
+    elsif pre_partner.has_partner?
+      errors[:base] << I18n.t('user.edit.validation.already_has_partner')
     end
   end
 
