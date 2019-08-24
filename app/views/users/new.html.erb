@@ -31,14 +31,14 @@
 
       <div class="form-group has-feedback">
         <%= f.label :password , value: t('user.new.password') %>
-        <p id="password-explanation"><%= t('user.new.password_explanation') %></p>
+        <p class="password-explanation"><%= t('user.new.password_explanation') %></p>
         <div>
           <%= f.password_field :password, class:"form-control", required: true %>
         </div>
       </div>
 
       <div class="form-group has-feedback">
-        <p id="password-confirmation-explanation"><%= t('user.new.password_confirmation_explanation') %></p>
+        <p class="password-explanation"><%= t('user.new.password_confirmation_explanation') %></p>
         <div>
           <%= f.password_field :password_confirmation, class:"form-control", required: true %>
         </div>

@@ -3,6 +3,7 @@ ja:
   name: 名前
   email: メールアドレス
   password: パスワード
+  partner: パートナー
   user:
     new:
       tilte: 新規登録
@@ -13,6 +14,18 @@ ja:
       submit: 新規登録
     validation:
       weak_password: パスワードの強度が不足しています。パスワードの長さは8〜70文字とし、半角数字、半角英字の大文字と小文字、特殊文字(#?!@$%^&*-)をそれぞれ1文字以上含める必要があります。
+    edit:
+      title: アカウント設定
+      no_registered_partner: パートナーを登録してください。
+      change_password: ※変更がなければ空白で構いません。
+      partner_registration: パートナーの登録
+      partner_registration_explanation: |-
+        パートナーのメールアドレスを入力してください。
+        パートナーは登録されているユーザーである必要があります。
+      validation:
+        own_email: パートナーの登録欄に自分のメールアドレスを入力しないでください。
+        no_registerd_email: 入力いただいたメールアドレスのユーザーはご登録されていないため、パートナーとして登録できません。
+        already_has_partner: 入力いただいたメールアドレスのユーザーはパートナーとして登録できません。
   category_master:
     name:
       food: 食費

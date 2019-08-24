@@ -27,10 +27,7 @@
   background: rgba(0,0,0,0.1);
   color: white;
 }
-#password-explanation {
+.password-explanation {
   line-height: 15px;
-  font-size: 0.9em;
-}
-#password-confirmation-explanation {
   font-size: 0.9em;
 }
