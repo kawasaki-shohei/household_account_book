@@ -65,7 +65,7 @@ class User < ApplicationRecord
     if email == partner_email_to_register
       errors[:base] << I18n.t('user.edit.validation.own_email')
     elsif pre_partner.blank?
-      errors[:base] << I18n.t('user.edit.validation.no_registerd_email')
+      errors[:base] << I18n.t('user.edit.validation.no_registered_email')
     elsif pre_partner.has_partner?
       errors[:base] << I18n.t('user.edit.validation.already_has_partner')
     end
