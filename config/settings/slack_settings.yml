@@ -1,0 +1,11 @@
+defaults: &defaults
+  slack_webhook_url: <%= "#{Rails.application.credentials.slack_webhook_url}" %>
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults
