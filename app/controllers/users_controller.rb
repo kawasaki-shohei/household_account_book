@@ -12,6 +12,8 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       session[:user_id] = @user.id
+      notifier = SlackNotifier.new(request, session)
+      notifier.notify_new_user_registration(@user)
       redirect_to edit_user_path, notice: '登録ありがとうございます。パートナーをご登録ください。'
     else
       render 'new', layout: 'sessions'

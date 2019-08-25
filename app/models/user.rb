@@ -53,16 +53,21 @@ class User < ApplicationRecord
 
   def password_complexity
     return if password.blank? || password =~ /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,70}$/
-    errors.add :password, "パスワードの強度が不足しています。パスワードの長さは8〜70文字とし、大文字と小文字と数字と特殊文字をそれぞれ1文字以上含める必要があります。"
+    errors.add(:password, I18n.t('user.validation.weak_password'))
+  end
+
+  def has_partner?
+    self.partner.present?
   end
 
   def check_valid_partner
-    unless pre_partner = User.find_by(email: partner_email_to_register)
-      errors[:base] << '入力いただいたメールアドレスのユーザーはご登録されていないため、パートナーとして登録できません。'
-      return
-    end
-    if pre_partner.partner
-      errors[:base] << '入力いただいたメールアドレスのユーザーは、すでにあなた以外のパートナーが登録されているため、パートナーとして登録できません。'
+    pre_partner = User.find_by(email: partner_email_to_register)
+    if email == partner_email_to_register
+      errors[:base] << I18n.t('user.edit.validation.own_email')
+    elsif pre_partner.blank?
+      errors[:base] << I18n.t('user.edit.validation.no_registered_email')
+    elsif pre_partner.has_partner?
+      errors[:base] << I18n.t('user.edit.validation.already_has_partner')
     end
   end
 

@@ -1,4 +1,4 @@
-<%= render partial: 'shared/html_title', locals: {subtitle: "アカウント設定"} %>
+<%= render partial: 'shared/html_title', locals: {subtitle: t('user.edit.title')} %>
 <div class="content-wrapper">
 
   <section class="content-header">
@@ -7,11 +7,11 @@
         <% if @partner.nil? %>
           <div class="alert alert-danger alert-dismissible text-white">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            <h5>パートナーを登録してください。</h5>
+            <h5><%= t('user.edit.no_registered_partner') %></h5>
           </div>
         <% end %>
         <%= render 'shared/notice_flash_message' %>
-        <h3>アカウント設定</h3>
+        <h3><%= t('user.edit.title') %></h3>
       </div>
     </div>
   </section>
@@ -29,13 +29,13 @@
               <div class="form-group">
                 <%= f.label :name , value: '名前' %>
                 <div>
-                  <%= f.text_field :name, maxlength: 10, class:"form-control", value: @current_user.name, required: true %>
+                  <%= f.text_field :name, maxlength: UserSettings.max_username_letters, class:"form-control", value: @current_user.name, required: true %>
                 </div>
               </div>
               <br />
 
               <div class="form-group">
-                <%= f.label :email , value: 'メールアドレス' %>
+                <%= f.label :email , value: t('email') %>
                 <div>
                   <%= f.email_field :email, class:"form-control", value: @current_user.email, required: true %>
                 </div>
@@ -43,41 +43,44 @@
               <br />
 
               <div class="form-group">
-                <%= f.label :password , value: 'パスワード' %>
+                <%= f.label :password , value: t('user.new.password') %>
+                <p  class="user-edit-explanation"><%= t('user.edit.change_password') %></p>
+                <p  class="user-edit-explanation"><%= t('user.new.password_explanation') %></p>
                 <div>
                   <%= f.password_field :password, class:"form-control" %>
                 </div>
               </div>
 
               <div class="form-group">
-                <%= f.label :password_confirmation , value: 'パスワード確認' %>
+                <p  class="user-edit-explanation"><%= t('user.new.password_confirmation_explanation') %></p>
                 <div>
                   <%= f.password_field :password_confirmation, class:"form-control" %>
                 </div>
               </div>
               <br />
+              <br />
 
               <% if @partner.present? %>
                 <div class="form-group">
-                  <p><b>パートナー</b></p>
-                  <table class="table-responsive no-border space-left">
-                  <tbody>
-                    <tr>
-                      <th>名前</th>
-                      <td><%= @partner.name %></td>
-                    </tr>
-                    <tr>
-                      <th>メールアドレス</th>
-                      <td><%= @partner.email %></td>
-                    </tr>
-                  </tbody>
-                  </table>
+                  <p><b><%= t('partner') %></b></p>
+                  <div class="table-responsive">
+                    <table class="table no-border">
+                      <tbody>
+                      <tr>
+                        <th><%= t('name') %></th>
+                        <td><%= @partner.name %></td>
+                      </tr>
+                      <tr>
+                        <th><%= t('email') %></th>
+                        <td><%= @partner.email %></td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               <% else %>
-                <p><b>パートナーの登録</b></p>
-                <div>パートナーのメールアドレスを入力してください。</div>
-                <div>パートナーは登録されているユーザーである必要があります。</div>
-                <br />
+                <p><b><%= t('user.edit.partner_registration') %></b></p>
+                <%= simple_format(t('user.edit.partner_registration_explanation'), class: "user-edit-explanation") %>
                 <div class="form-group">
                   <div>
                     <%= f.email_field :partner_email_to_register, class:"form-control", placeholder: "partner@partner.com" %>
@@ -98,3 +101,7 @@
   </section><!-- /.content -->
 
 </div>
+
+<%= content_for :other_css do %>
+  <%= stylesheet_link_tag 'users' %>
+<% end %>
