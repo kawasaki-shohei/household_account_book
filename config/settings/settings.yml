@@ -10,5 +10,11 @@ development:
 test:
   <<: *defaults
 
+staging:
+  <<: *defaults
+
+demo:
+  <<: *defaults
+
 production:
   <<: *defaults
