@@ -29,6 +29,7 @@
 
 class Balance < ApplicationRecord
   belongs_to :user
+  validates_presence_of :amount, :period
   validates :period, uniqueness: { scope: :user_id }, format: { with: /\A\d{4}-\d{2}\z/ }
   validate :future_month
 

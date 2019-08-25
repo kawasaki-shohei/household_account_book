@@ -50,7 +50,18 @@ RSpec.describe Balance, type: :model do
         period: "2019-01",
         user: @user
       )
-      expect(balance).to be_valid
+      expect(balance).to be_invalid
+      expect(balance.errors.full_messages.size).to eq(1)
+    end
+
+    it "is invalid without user" do
+      balance = Balance.new(
+        amount: 1000,
+        period: "2019-01",
+        user: nil
+      )
+      expect(balance).to be_invalid
+      expect(balance.errors.full_messages.size).to eq(1)
     end
   end
 end
