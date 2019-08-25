@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <title><%= content_for?(:html_title) ? yield(:html_title) : CONFIG[:site_name] +  "(管理)" %></title>
+  <title><%= content_for?(:html_title) ? yield(:html_title) : Settings.site_name +  "(管理)" %></title>
   <%= favicon_link_tag('favicon.ico') %>
   <%= stylesheet_link_tag 'admin-lte/dist/css/skins/skin-black.min' %>
   <%= stylesheet_link_tag 'application' %>
@@ -21,7 +21,7 @@
 
   <!-- Main Header -->
   <header class="before-login-header">
-    <a href="/" class="logo"><b><%= CONFIG[:site_name] + "(管理)" %></b></a>
+    <a href="/" class="logo"><b><%= Settings.site_name + "(管理)" %></b></a>
     <span class="header-menu">
       <%= link_to 'マイページへ', login_path, class: "menu-link" %>
     </span>
