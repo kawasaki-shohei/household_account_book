@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <title><%= content_for?(:html_title) ? yield(:html_title) : CONFIG[:site_name] + "(管理)" %></title>
+  <title><%= content_for?(:html_title) ? yield(:html_title) : Settings.site_name + "(管理)" %></title>
   <%= favicon_link_tag('favicon.ico') %>
   <%= Gon::Base.render_data %>
   <%= stylesheet_link_tag 'admin-lte/dist/css/skins/skin-black.min' %>
@@ -30,7 +30,7 @@
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>P</b></span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b><%= CONFIG[:site_name] + "(管理)" %></b></span>
+      <span class="logo-lg"><b><%= Settings.site_name + "(管理)" %></b></span>
     </a>
 
     <!-- Header Navbar -->
@@ -89,7 +89,7 @@
     <div class="pull-right hidden-xs">
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2019 <a href="#" id="company-name"><%= CONFIG[:site_name] %></a>.</strong> All rights reserved.
+    <strong>Copyright &copy; 2019 <a href="#" id="company-name"><%= Settings.site_name %></a>.</strong> All rights reserved.
   </footer>
 </div><!-- ./wrapper -->
 

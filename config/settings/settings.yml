@@ -1,0 +1,20 @@
+defaults: &defaults
+  site_name: PairMoney
+  production_url: https://pairmoney.herokuapp.com
+  demo_url: https://demo-pairmoney.herokuapp.com
+  selection_year_term: 30
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+staging:
+  <<: *defaults
+
+demo:
+  <<: *defaults
+
+production:
+  <<: *defaults

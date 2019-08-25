@@ -275,6 +275,7 @@ GEM
     selenium-webdriver (3.142.3)
       childprocess (>= 0.5, < 2.0)
       rubyzip (~> 1.2, >= 1.2.2)
+    settingslogic (2.0.9)
     sexp_processor (4.12.1)
     shellany (0.0.1)
     slack-notifier (2.3.2)
@@ -358,6 +359,7 @@ DEPENDENCIES
   scenic (~> 1.5, >= 1.5.1)
   schemadoc
   selenium-webdriver
+  settingslogic (~> 2.0, >= 2.0.9)
   slack-notifier (~> 2.3, >= 2.3.2)
   spring
   spring-commands-rspec (~> 1.0, >= 1.0.4)
