@@ -61,6 +61,7 @@ ja:
       start_demo: デモアプリを開始しました。
       succeeded_demo: デモレコードの作成が成功しました。
       failed_demo: デモレコードの作成が失敗しました。
+      new_user_registration: 新規会員登録がありました。
   activerecord:
     errors:
       messages:

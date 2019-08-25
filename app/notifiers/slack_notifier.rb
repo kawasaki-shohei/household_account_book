@@ -35,6 +35,18 @@ class SlackNotifier
     ping(message)
   end
 
+  def notify_new_user_registration(user)
+    message = <<~TEXT
+      #{I18n.t('notification.slack.new_user_registration')}
+      username: #{user.name}
+      email: #{user.email}
+      session_id: #{session[:session_id]}
+      IP_address: #{request.env["HTTP_X_FORWARDED_FOR"] || request.remote_ip}
+      user_agent: #{request.env["HTTP_USER_AGENT"]}
+    TEXT
+    ping(message)
+  end
+
   private
 
   def ping(message)
