@@ -63,5 +63,15 @@ RSpec.describe Balance, type: :model do
       expect(balance).to be_invalid
       expect(balance.errors.full_messages.size).to eq(1)
     end
+
+    it "is invalid with future_month" do
+      balance = Balance.new(
+        amount: 1000,
+        period: Date.current.months_since(1).to_s_as_period,
+        user: @user
+      )
+      expect(balance).to be_invalid
+      expect(balance.errors.full_messages.size).to eq(1)
+    end
   end
 end
