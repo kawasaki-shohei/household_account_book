@@ -35,8 +35,8 @@ class Balance < ApplicationRecord
 
   # 来月以降のbalanceは生成しないように、バリデーションチェックをする
   def future_month
-    if period.to_beginning_of_month > Date.current.beginning_of_month
-      errors[:base] << "未来の収支バランスは計算しません。"
+    if period.present? && period.to_beginning_of_month > Date.current.beginning_of_month
+      errors[:base] << I18n.t('balance.validation.future_month_is_invalid')
     end
   end
 

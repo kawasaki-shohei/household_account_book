@@ -51,7 +51,7 @@ RSpec.describe Balance, type: :model do
         user: @user
       )
       expect(balance).to be_invalid
-      expect(balance.errors.full_messages.size).to eq(1)
+      expect(balance.errors.details).to eq({:amount=>[{:error=>:blank}]})
     end
 
     it "is invalid without user" do
@@ -61,7 +61,17 @@ RSpec.describe Balance, type: :model do
         user: nil
       )
       expect(balance).to be_invalid
-      expect(balance.errors.full_messages.size).to eq(1)
+      expect(balance.errors.details).to eq({:user=>[{:error=>:blank}]})
+    end
+
+    it "is invalid without period" do
+      balance = Balance.new(
+        amount: 1000,
+        period: nil,
+        user: @user
+      )
+      expect(balance).to be_invalid
+      expect(balance.errors.details).to eq({:period=>[{:error=>:blank}, {:error=>:invalid, :value=>nil}]})
     end
 
     it "is invalid with future_month" do
@@ -71,7 +81,7 @@ RSpec.describe Balance, type: :model do
         user: @user
       )
       expect(balance).to be_invalid
-      expect(balance.errors.full_messages.size).to eq(1)
+      expect(balance.errors[:base]).to eq([I18n.t('balance.validation.future_month_is_invalid')])
     end
   end
 end

@@ -35,6 +35,9 @@ ja:
       start_demo: デモアプリを開始しました。
       succeeded_demo: デモレコードの作成が成功しました。
       failed_demo: デモレコードの作成が失敗しました。
+  balance:
+    validation:
+      future_month_is_invalid: 未来の収支バランスは計算しません。
   activerecord:
     errors:
       messages:
