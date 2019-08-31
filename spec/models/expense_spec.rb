@@ -187,7 +187,7 @@ RSpec.describe Expense, type: :model do
           user: @user,
           category: @category,
           amount: 1000,
-          date: Faker::Date.backward(365)
+          date: Faker::Date.backward(days: 365)
         )
         expect(expense.is_for_both).to be_falsey
         expect(expense.percent).to eq("pay_all")

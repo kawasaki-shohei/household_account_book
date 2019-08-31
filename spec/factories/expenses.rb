@@ -33,25 +33,25 @@
 
 FactoryBot.define do
   factory :own_expense, class: 'Expense' do
-    amount { Faker::Number.number(6) }
-    date { Faker::Date.backward(365) }
+    amount { Faker::Number.number(digits: 6) }
+    date { Faker::Date.backward(days: 365) }
     memo { Faker::Lorem.word }
     association :user, strategy: :build
     association :category, factory: :own_category, strategy: :build
 
     factory :own_this_month_expense, class: 'Expense' do
-      date { Faker::Date.between(Date.current.beginning_of_month, Date.current.end_of_month) }
+      date { Faker::Date.between(from: Date.current.beginning_of_month, to: Date.current.end_of_month) }
     end
 
     factory :own_last_month_expense, class: 'Expense' do
-      date { Faker::Date.between(Date.current.last_month.beginning_of_month, Date.current.last_month.end_of_month) }
+      date { Faker::Date.between(from: Date.current.last_month.beginning_of_month, to: Date.current.last_month.end_of_month) }
     end
   end
 
   factory :own_both_expenses, class: 'Expense' do
     is_for_both { true }
-    date { Faker::Date.backward(365) }
-    amount { Faker::Number.number(6) }
+    date { Faker::Date.backward(days: 365) }
+    amount { Faker::Number.number(digits: 6) }
     association :user, strategy: :build
     association :category, factory: :both_category, strategy: :build
 
@@ -60,15 +60,15 @@ FactoryBot.define do
     end
 
     trait :for_this_month do
-      date { Faker::Date.between(Date.current.beginning_of_month, Date.current.end_of_month) }
+      date { Faker::Date.between(from: Date.current.beginning_of_month, to: Date.current.end_of_month) }
     end
 
     trait :for_last_month do
-      date { Faker::Date.between(Date.current.last_month.beginning_of_month, Date.current.last_month.end_of_month) }
+      date { Faker::Date.between(from: Date.current.last_month.beginning_of_month, to: Date.current.last_month.end_of_month) }
     end
 
     trait :for_past_day_before_last_month do
-      date { Faker::Date.between(Date.current.last_year.beginning_of_month, Date.current.months_ago(2).end_of_month) }
+      date { Faker::Date.between(from: Date.current.last_year.beginning_of_month, to: Date.current.months_ago(2).end_of_month) }
     end
 
     factory :own_both_manual_amount_expense, class: 'Expense' do
