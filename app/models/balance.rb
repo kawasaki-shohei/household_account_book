@@ -40,23 +40,27 @@ class Balance < ApplicationRecord
     end
   end
 
+  def self.create_or_update_balance(list)
+    user = list[:user]
+    target_period = list[:period]
+    balance = user.get_applicable_balance(target_period)
+    # balance = where(user: user, period: target_period).first_or_initialize
+    balance.amount = list[:amount]
+    if balance.save
+      message = "scceeded to save balance id: #{balance.id}, user: #{balance.user.name}, period: #{balance.period}"
+      LoggerUtility.output_info_log({class_name: self.name, method: __method__, user: user, message: message})
+    else
+      message = balance.errors.full_messages
+      LoggerUtility.output_info_log({class_name: self.name, method: __method__, user: user, message: message})
+    end
+  end
+
+
   # balance_calculatorによって渡された、注文書(balance_lists)に応じて、balanceを作成する。
   # @param {user: User, period: String, amount: Integer}
-  def self.create_or_update_balance(balance_lists)
+  def self.make_balances_from(balance_lists)
     LoggerUtility.output_balance_lists(balance_lists)
-    balance_lists.each do |list|
-      user = list[:user]
-      target_period = list[:period]
-      balance = user.get_applicable_balance(target_period)
-      balance.amount = list[:amount]
-      if balance.save
-        message = "scceeded to save balance id: #{balance.id}, user: #{balance.user.name}, period: #{balance.period}"
-        LoggerUtility.output_info_log({class_name: self.name, method: __method__, user: user, message: message})
-      else
-        message = balance.errors.full_messages
-        LoggerUtility.output_info_log({class_name: self.name, method: __method__, user: user, message: message})
-      end
-    end
+    balance_lists.each { |list| create_or_update_balance(list) }
   end
 
   # すでにSQLを叩いて、取り出しているレコード群の中から該当する月のレコードをSQLを叩かないで取り出し、そのamountを返す。なければ、0を返す。

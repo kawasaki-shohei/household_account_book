@@ -109,8 +109,8 @@ class User < ApplicationRecord
     first_day = Date.new(year, month, 1)
     last_day = first_day.end_of_month
     expense = expenses.build(
-      amount: Faker::Number.number(5),
-      date: Faker::Date.between(first_day, last_day),
+      amount: Faker::Number.number(digits: 5),
+      date: Faker::Date.between(from: first_day, to: last_day),
       memo: "random sample expense inserted at #{I18n.l(today, format: :default)}",
       category_id: category.id,
       is_for_both: is_for_both,

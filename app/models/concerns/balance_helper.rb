@@ -11,7 +11,7 @@ module BalanceHelper
     end
 
     balance_lists = balance_calculator.make_balance_lists
-    Balance.create_or_update_balance(balance_lists)
+    Balance.make_balances_from(balance_lists)
   end
   alias_method :go_calculate_balance, :control_calculate_balance
 
