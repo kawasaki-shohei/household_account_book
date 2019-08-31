@@ -1,5 +1,31 @@
 ---
 ja:
+  name: 名前
+  email: メールアドレス
+  password: パスワード
+  partner: パートナー
+  user:
+    new:
+      tilte: 新規登録
+      name: 名前（最大10文字）
+      password: パスワード
+      password_explanation: ※パスワードの長さは8〜70文字とし、半角数字、半角英字の大文字と小文字、特殊文字(#?!@$%^&*-)をそれぞれ1文字以上含めて入力してください。
+      password_confirmation_explanation: ※確認のため再入力をお願いします。
+      submit: 新規登録
+    validation:
+      weak_password: パスワードの強度が不足しています。パスワードの長さは8〜70文字とし、半角数字、半角英字の大文字と小文字、特殊文字(#?!@$%^&*-)をそれぞれ1文字以上含める必要があります。
+    edit:
+      title: アカウント設定
+      no_registered_partner: パートナーを登録してください。
+      change_password: ※変更がなければ空白で構いません。
+      partner_registration: パートナーの登録
+      partner_registration_explanation: |-
+        パートナーのメールアドレスを入力してください。
+        パートナーは登録されているユーザーである必要があります。
+      validation:
+        own_email: パートナーの登録欄に自分のメールアドレスを入力しないでください。
+        no_registered_email: 入力いただいたメールアドレスのユーザーはご登録されていないため、パートナーとして登録できません。
+        already_has_partner: 入力いただいたメールアドレスのユーザーはパートナーとして登録できません。
   category_master:
     name:
       food: 食費
@@ -35,9 +61,10 @@ ja:
       start_demo: デモアプリを開始しました。
       succeeded_demo: デモレコードの作成が成功しました。
       failed_demo: デモレコードの作成が失敗しました。
-  balance:
-    validation:
-      future_month_is_invalid: 未来の収支バランスは計算しません。
+      new_user_registration: 新規会員登録がありました。
+    balance:
+      validation:
+        future_month_is_invalid: 未来の収支バランスは計算しません。
   activerecord:
     errors:
       messages:
@@ -170,38 +197,38 @@ ja:
   errors:
     format: "%{attribute}%{message}"
     messages:
-      accepted: を受諾してください
-      blank: を入力してください
-      confirmation: と%{attribute}の入力が一致しません
-      empty: を入力してください
-      equal_to: は%{count}にしてください
-      even: は偶数にしてください
-      exclusion: は予約されています
-      greater_than: は%{count}より大きい値にしてください
-      greater_than_or_equal_to: は%{count}以上の値にしてください
-      inclusion: は一覧にありません
-      invalid: は不正な値です
-      less_than: は%{count}より小さい値にしてください
-      less_than_or_equal_to: は%{count}以下の値にしてください
+      accepted: を受諾してください。
+      blank: を入力してください。
+      confirmation: と%{attribute}の入力が一致しません。
+      empty: を入力してください。
+      equal_to: は%{count}にしてください。
+      even: は偶数にしてください。
+      exclusion: は予約されています。
+      greater_than: は%{count}より大きい値にしてください。
+      greater_than_or_equal_to: は%{count}以上の値にしてください。
+      inclusion: は一覧にありません。
+      invalid: は不正な値です。
+      less_than: は%{count}より小さい値にしてください。
+      less_than_or_equal_to: は%{count}以下の値にしてください。
       model_invalid: 'バリデーションに失敗しました: %{errors}'
-      not_a_number: は数値で入力してください
-      not_an_integer: は整数で入力してください
-      odd: は奇数にしてください
-      other_than: は%{count}以外の値にしてください
-      present: は入力しないでください
-      required: を入力してください
-      taken: はすでに存在します
-      too_long: は%{count}文字以内で入力してください
-      too_short: は%{count}文字以上で入力してください
-      wrong_length: は%{count}文字で入力してください
+      not_a_number: は数値で入力してください。
+      not_an_integer: は整数で入力してください。
+      odd: は奇数にしてください。
+      other_than: は%{count}以外の値にしてください。
+      present: は入力しないでください。
+      required: を入力してください。
+      taken: はすでに存在します。
+      too_long: は%{count}文字以内で入力してください。
+      too_short: は%{count}文字以上で入力してください。
+      wrong_length: は%{count}文字で入力してください。
     template:
-      body: 次の項目を確認してください
+      body: 次の項目を確認してください。
       header:
-        one: "%{model}にエラーが発生しました"
-        other: "%{model}に%{count}個のエラーが発生しました"
+        one: "%{model}にエラーが発生しました。"
+        other: "%{model}に%{count}個のエラーが発生しました。"
   helpers:
     select:
-      prompt: 選択してください
+      prompt: 選択してください。
     submit:
       create: 登録する
       submit: 保存する

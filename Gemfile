@@ -43,6 +43,7 @@ gem 'delayed_job_active_record', '~> 4.1', '>= 4.1.3'
 gem 'bcrypt', '3.1.11'
 gem 'faker'
 gem 'slack-notifier', '~> 2.3', '>= 2.3.2'
+gem 'settingslogic', '~> 2.0', '>= 2.0.9'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

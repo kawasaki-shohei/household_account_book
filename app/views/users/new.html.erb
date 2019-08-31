@@ -2,7 +2,7 @@
 <div class="register-box">
   <div class="register-logo">
     <%= image_tag 'icon.png', width: 42, height: 42 %>
-    <b>PairMoney</b>
+    <b><%= Settings.site_name %></b>
     <%= image_tag 'icon.png', width: 42, height: 42 %>
   </div><!--/.register-logo -->
 
@@ -16,28 +16,29 @@
     <%= form_with(model: @user, url: signup_path, local: true) do |f| %>
       <%=render 'shared/error', object: @user %>
       <div class="form-group has-feedback">
-        <%= f.label :name , value: '名前（最大10文字）' %>
+        <%= f.label :name , value: t('user.new.name') %>
         <div>
-          <%= f.text_field :name, maxlength: 10, class:"form-control", value: @user.name, required: true %>
+          <%= f.text_field :name, maxlength: UserSettings.max_username_letters, class:"form-control", value: @user.name, required: true %>
         </div>
       </div>
 
       <div class="form-group has-feedback">
-        <%= f.label :email , value: 'メールアドレス' %>
+        <%= f.label :email , value: t('email') %>
         <div>
           <%= f.email_field :email, class:"form-control", value: @user.email, required: true %>
         </div>
       </div>
 
       <div class="form-group has-feedback">
-        <%= f.label :password , value: 'パスワード（8文字以上）' %>
+        <%= f.label :password , value: t('user.new.password') %>
+        <p class="password-explanation"><%= t('user.new.password_explanation') %></p>
         <div>
           <%= f.password_field :password, class:"form-control", required: true %>
         </div>
       </div>
 
       <div class="form-group has-feedback">
-        <%= f.label :password_confirmation , value: 'パスワード確認（8文字以上）' %>
+        <p class="password-explanation"><%= t('user.new.password_confirmation_explanation') %></p>
         <div>
           <%= f.password_field :password_confirmation, class:"form-control", required: true %>
         </div>
@@ -45,7 +46,7 @@
       <br />
 
       <div class="button-panel">
-        <%= f.submit "新規登録", class:"btn btn-orange btn-block" %>
+        <%= f.submit t('user.new.submit'), class:"btn btn-orange btn-block" %>
       </div>
 
     <% end %>
