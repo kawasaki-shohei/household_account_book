@@ -133,4 +133,307 @@ RSpec.describe Balance, type: :model do
     end
   end
 
+  describe "Balance after change expense or income" do
+    context "when create new own expense" do
+      context "when create new this month expense" do
+        it "balance is updated" do
+
+        end
+      end
+
+      context "when create new last month expense" do
+        it "balance is updated" do
+
+        end
+      end
+
+      context "when create new future month expense" do
+        it "balance will not be created" do
+
+        end
+      end
+    end
+
+    context "update own expense" do
+      context "when update own expense memo" do
+        it "balance will not be changed" do
+
+        end
+      end
+
+      context "when update own expense category" do
+        it "balance will not be changed" do
+
+        end
+      end
+
+      context "when update own expense amount" do
+        it "balance amount will be changed" do
+
+        end
+      end
+
+      context "when update own expense date into other date in the same month" do
+        it "balance will not be changed" do
+
+        end
+      end
+
+      context "when update own expense date into other date in past month" do
+        it "both that month and the past month balances will be changed" do
+
+        end
+      end
+
+      context "when update own expense date into other date in future month" do
+        it "that month balance will be changed, but future balance will not be created" do
+
+        end
+      end
+
+      context "when update own expense of future date into other past date" do
+        it "past month balance will be changed" do
+
+        end
+      end
+
+      context "when update own expense amount and date into this month date" do
+        it "this month balance will be changed" do
+
+        end
+      end
+
+      context "when update own expense amount and date into past month date" do
+        it "both that month and past month balances will be changed" do
+
+        end
+      end
+
+      context "when update own expense amount and date into future month date" do
+        it "that month balance will be changed, but future balance will not be created" do
+
+        end
+      end
+    end
+
+    context "delete own expense" do
+      context "delete own expense of not future month" do
+        it "that month balance will be changed" do
+
+        end
+      end
+
+      context "delete future month own expense" do
+        it "balance will be changed nothing" do
+
+        end
+      end
+    end
+
+    context "when create both expense" do
+      context "create new both expense" do
+        it "balance will be changed" do
+
+        end
+      end
+
+      context "create new past month both expense" do
+        it "past month balance will be changed" do
+
+        end
+      end
+
+      context "create new future month both expense" do
+        it "balance will change nothing" do
+
+        end
+      end
+
+      context "when update both expense memo" do
+        it "balance will not be changed" do
+
+        end
+      end
+
+      context "when update both expense category" do
+        it "balance will not be changed" do
+
+        end
+      end
+
+      context "when update both expense amount" do
+        it "both own balance and partner balance will be changed" do
+
+        end
+      end
+
+      context "when update both expense mypay and partnerpay" do
+        it "both own balance and partner balance will be changed" do
+
+        end
+      end
+
+      context "when update both expense date into other date in the same month" do
+        it "balance will not be changed" do
+
+        end
+      end
+
+      context "when update both expense date into other date in past month" do
+        it "own that month and the past month balances and partners that month and the past month balances will be changed" do
+
+        end
+      end
+
+      context "when update both expense amount and date into the same month date" do
+        it "both own balance and partner balance will be changed" do
+
+        end
+      end
+
+      context "when update both expense amount and date into past month date" do
+        it "own that month and the past month balances and partners that month and the past month balances will be changed" do
+
+        end
+      end
+
+      context "when update both expense amount and date into future month date" do
+        it "own that month balance and partners that month balance will be changed, but future balance will not be created" do
+
+        end
+      end
+
+      context "when update both expense mypay and partnerpay and date into the same month date" do
+        it "both own balance and partner balance will be changed" do
+
+        end
+      end
+
+      context "when update both expense mypay and partnerpay  and date into past month date" do
+        it "own that month and the past month balances and partners that month and the past month balances will be changed" do
+
+        end
+      end
+
+      context "when update both expense mypay and partnerpay  and date into future month date" do
+        it "own that month balance and partners that month balance will be changed, but future balance will not be created" do
+
+        end
+      end
+
+      context "delete both expense" do
+        context "delete both expense of not future month" do
+          it "own that month balance and partner that month balance will be changed" do
+
+          end
+        end
+
+        context "delete future month both expense" do
+          it "balance will be changed nothing" do
+
+          end
+        end
+      end
+
+    end
+
+    context "when create income" do
+      context "when create income of not future month" do
+        it "balance will be changed" do
+
+        end
+      end
+
+      context "when create income of future month" do
+        it "future balance will not be created" do
+
+        end
+      end
+    end
+
+    context "when update income" do
+      context "when update income amount" do
+        it "balance will be changed" do
+
+        end
+      end
+
+      context "when update income date into other date in the same month" do
+        it "balance will not be changed" do
+
+        end
+      end
+
+      context "when update income date into other date in the past month" do
+        it "both that month and past month balances will be changed" do
+
+        end
+      end
+
+      context "when update income date into other date in the future month" do
+        it "that month balance will be changed, but future month balance will not be created" do
+
+        end
+      end
+
+      context "when update income amount and date into other date in the past month" do
+        it "both that month and past month balances will be changed" do
+
+        end
+      end
+
+      context "when update income amount and date into other date in the future month" do
+        it "that month balance will be changed, but future balance will not be created" do
+
+        end
+      end
+
+      context "when update future month income memo" do
+        it "future month balance is not exist" do
+
+        end
+      end
+
+      context "when update future month income amount" do
+        it "future month balance is not exist" do
+
+        end
+      end
+
+      context "when update future month income date into the other date in the same month" do
+        it "future month balance is not exist" do
+
+        end
+      end
+
+      context "when update future month income date into the other date in not future month" do
+        it "that month balance will be changed, but future month is not exist" do
+
+        end
+      end
+
+      context "when update future month income amount adn date into the other date in not future month" do
+        it "that month balance will be changed, but future month is not exist" do
+
+        end
+      end
+
+    end
+
+    context "when delete income" do
+      context "delete income of not future month" do
+        it "that month balance will be changed" do
+
+        end
+      end
+
+      context "delete future month income" do
+        it "future month balance is not exist" do
+
+        end
+      end
+    end
+
+  end
+
 end
