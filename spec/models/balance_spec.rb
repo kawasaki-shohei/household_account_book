@@ -134,37 +134,38 @@ RSpec.describe Balance, type: :model do
   end
 
   describe "Balance after change expense or income" do
-    let(:user) { create(:user_with_partner) }
-    let(:category) { create(:own_category, user: user)}
-    let(:partner) { user.partner }
+    let!(:user) { create(:user_with_partner) }
+    let!(:category) { create(:own_category, user: user) }
+    let!(:category2) { create(:own_category, user: user) }
+    let!(:partner) { user.partner }
 
     context "about own expense" do
-      let(:own_this_month_expense) { create(:own_this_month_expense, amount: 1000, user: user, category: category) }
-      let(:own_last_month_expense) { create(:own_last_month_expense, amount: 1000, user: user, category: category) }
-      let(:this_month_period) { own_this_month_expense.date.to_s_as_period }
-      let(:last_month_period) { own_last_month_expense.date.to_s_as_period }
-      let(:next_month_period) { Date.current.next_month.to_s_as_period }
+      let!(:own_this_month_expense) { create(:own_this_month_expense, amount: 1000, user: user, category: category) }
+      let!(:own_last_month_expense) { create(:own_last_month_expense, amount: 1000, user: user, category: category) }
+      let!(:this_month_period) { own_this_month_expense.date.to_s_as_period }
+      let!(:last_month_period) { own_last_month_expense.date.to_s_as_period }
+      let!(:next_month_period) { Date.current.next_month.to_s_as_period }
       let(:own_this_month_balance) { user.balances.find_by(period: this_month_period) }
       let(:own_last_month_balance) { user.balances.find_by(period: last_month_period) }
 
       context "when create new own expense" do
         context "when create new this month expense" do
+          before { create(:own_this_month_expense, amount: 1000, user: user, category: category) }
           it "balance is updated" do
-            create(:own_this_month_expense, amount: 1000, user: user, category: category)
             expect(own_this_month_balance.amount).to eq(-2000)
           end
         end
 
         context "when create new last month expense" do
+          before { create(:own_last_month_expense, amount: 1000, user: user, category: category) }
           it "balance is updated" do
-            create(:own_last_month_expense, amount: 1000, user: user, category: category)
             expect(own_last_month_balance.amount).to eq(-2000)
           end
         end
 
         context "when create new future month expense" do
+          before { create(:own_next_month_expense, amount: 1000, user: user, category: category) }
           it "balance will not be created" do
-            create(:own_next_month_expense, amount: 1000, user: user, category: category)
             balance = user.balances.find_by(period: next_month_period)
             expect(balance).to be_falsey
           end
@@ -172,23 +173,26 @@ RSpec.describe Balance, type: :model do
       end
 
       context "when update own expense" do
+        let!(:old_amount) { own_this_month_balance.amount }
         context "when update own expense memo" do
-          it "balance will not be changed" do
-            expect {
-              own_this_month_expense.update!(memo: 'update')
-            }.to_not change(own_this_month_balance, :amount)
+          before { own_this_month_expense.update!(memo: 'update') }
+          it "balance amount will not be changed" do
+            expect(own_this_month_balance.reload.amount).to eq(old_amount)
           end
         end
 
         context "when update own expense category" do
-          it "balance will not be changed" do
-
+          before { own_this_month_expense.update!(category: category2) }
+          it "balance amount will not be changed" do
+            expect(own_this_month_balance.reload.amount).to eq(old_amount)
           end
         end
 
         context "when update own expense amount" do
-          it "balance amount will be changed" do
-
+          before { own_this_month_expense.update!(amount: 2000) }
+          it "balance amount will not be changed" do
+            expect(own_this_month_balance.reload.amount).to_not eq(old_amount)
+            expect(own_this_month_balance.amount).to eq(-2000)
           end
         end
 
