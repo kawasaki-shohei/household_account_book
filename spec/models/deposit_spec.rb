@@ -8,7 +8,7 @@
 # ------------------- | ------------------ | ---------------------------
 # **`id`**            | `bigint(8)`        | `not null, primary key`
 # **`amount`**        | `integer`          | `not null`
-# **`date`**          | `datetime`         | `not null`
+# **`date`**          | `date`             | `not null`
 # **`is_withdrawn`**  | `boolean`          | `default(FALSE)`
 # **`memo`**          | `string`           |
 # **`created_at`**    | `datetime`         | `not null`

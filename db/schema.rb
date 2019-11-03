@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_18_021837) do
+ActiveRecord::Schema.define(version: 2019_11_03_075519) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -75,7 +75,7 @@ ActiveRecord::Schema.define(version: 2019_08_18_021837) do
     t.bigint "user_id"
     t.boolean "is_withdrawn", default: false
     t.integer "amount", null: false
-    t.datetime "date", null: false
+    t.date "date", null: false
     t.string "memo"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
