@@ -8,15 +8,15 @@
           <%= form_with(model: deposit, local: true) do |f| %>
             <%=render 'shared/error', object: deposit %>
 
-            <%= f.label :amount , value: '金額' %>
+            <%= f.label :amount , value: t('amount') %>
             <div class="input-group">
-              <%= f.number_field :amount, class:"form-control input-lg", min: 0, max: couples_total_amount, value: deposit.amount, required: true %>
-              <span class="input-group-addon">円</span>
+              <%= f.number_field :amount, class:"form-control input-lg", min: 0, max: 9999999999, value: deposit.amount&.abs, required: true %>
+              <span class="input-group-addon"><%= t('currency') %></span>
             </div>
             <br>
 
             <div class="form-group">
-              <%= f.label :date, value: '日付' %>
+              <%= f.label :date, value: t('date_label') %>
               <div>
                 <%= f.date_field :date, required: true, value: deposit.default_date, class: "form-control input-lg" %>
               </div>
@@ -24,7 +24,7 @@
             <br>
 
             <div class="form-group">
-              <%= f.label :date, value: 'メモ' %>
+              <%= f.label :date, value: t('memo') %>
               <div>
                 <%= f.text_field :memo, class: "form-control input-lg" %>
               </div>
@@ -40,7 +40,7 @@
             </div>
 
             <% if action_name == 'edit' %>
-              <%= link_to '削除する', deposit_path(deposit), method: :delete, data:{confirm: "Are you sure?"}, class: 'btn btn-brown btn-block' %>
+              <%= link_to t('delete'), deposit_path(deposit), method: :delete, data:{confirm: "Are you sure?"}, class: 'btn btn-brown btn-block' %>
             <% end %>
 
           <% end %>
