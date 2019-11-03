@@ -19,15 +19,13 @@
           <div class="info-box-content">
             <span class="info-box-text">総額</span>
             <span class="info-box-number">
-              <%= @deposits.total_amount.to_s(:delimited) %> 円
+              <%= total_deposits_amount(@deposits).to_s(:delimited) %> 円
             </span>
           </div>
         </div>
         <%= link_to '二人の貯金を追加', new_deposit_path, class: "btn btn-orange btn-block" %>
         <br />
-        <% unless @deposits.empty? || @deposits.total_amount == 0 %>
-          <%= link_to '引き出した金額を追加', withdraw_deposit_path, class: "btn btn-brown btn-block" %>
-        <% end %>
+        <%= link_to '引き出した金額を追加', withdraw_deposit_path, class: "btn btn-brown btn-block" %>
       </div>
     </div>
 

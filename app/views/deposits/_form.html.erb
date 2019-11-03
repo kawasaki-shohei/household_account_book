@@ -10,7 +10,7 @@
 
             <%= f.label :amount , value: '金額' %>
             <div class="input-group">
-              <%= f.number_field :amount, class:"form-control input-lg", min: 0, max: couples_total_amount, value: deposit.amount, required: true %>
+              <%= f.number_field :amount, class:"form-control input-lg", min: 0, max: 9999999999, value: deposit.amount, required: true %>
               <span class="input-group-addon">円</span>
             </div>
             <br>

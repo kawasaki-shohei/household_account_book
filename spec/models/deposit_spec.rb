@@ -29,5 +29,48 @@
 require 'rails_helper'
 
 RSpec.describe Deposit, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe "#withdrawn_amount" do
+    let!(:user) { create(:user) }
+    subject { deposit.reload.amount.positive? }
+
+    context "when deposit amount is positive" do
+      let!(:deposit) { build(:deposit, user: user) }
+      before { deposit.save! }
+      it "amount is positive" do
+        expect(subject).to be_truthy
+      end
+    end
+
+    context "when deposit amount is negative" do
+      let!(:deposit) { build(:deposit, user: user) }
+      before do
+        deposit.amount = -10000
+        deposit.save!
+      end
+      it "amount is positive" do
+        expect(subject).to be_truthy
+      end
+    end
+
+    context "when withdrawn amount is positive" do
+      let!(:deposit) { build(:deposit, :withdrawn, user: user) }
+      before do
+        deposit.amount = 10000
+        deposit.save!
+      end
+      it "amount is negative" do
+        expect(subject).to be_falsey
+      end
+    end
+
+    context "when withdrawn amount is negative" do
+      let!(:deposit) { build(:deposit, :withdrawn, user: user) }
+      before do
+        deposit.save!
+      end
+      it "amount is negative" do
+        expect(subject).to be_falsey
+      end
+    end
+  end
 end
