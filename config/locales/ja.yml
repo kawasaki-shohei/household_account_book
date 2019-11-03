@@ -1,5 +1,11 @@
 ---
 ja:
+  name: 名前
+  amount: 金額
+  currency: 円
+  date_label: 日付
+  memo: メモ
+  delete: 削除する
   category_master:
     name:
       food: 食費
@@ -15,6 +21,26 @@ ja:
       learning: 教育・教養
       medical: 医療・保険
       beauty: 美容・衣服
+  deposit:
+    index:
+      title: 二人の貯金一覧
+      total_amount: 総額
+      add_deposit: 二人の貯金を追加
+      add_withdrawn_deposit: 引き出した金額を追加
+    new:
+      title:
+        normal: 二人の貯金を入力
+        withdrawn: 引き出した貯金を入力
+    create:
+      succeeded: 二人の貯金を追加しました。
+    edit:
+      title:
+        normal: 二人の貯金を編集
+        withdrawn: 引き出した貯金を編集
+    update:
+      succeeded: 二人の貯金を更新しました。
+    destroy:
+      suceeded: 二人の貯金を削除しました。
   notification:
     func:
       notifications: 【お知らせ】今月の手渡し料金をお知らせします。

@@ -5,7 +5,7 @@
     <div class="row">
       <div class="col-md-8 col-md-offset-2 col-xs-12">
         <%= render 'shared/notice_flash_message' %>
-        <h3>二人の貯金</h3>
+        <h3><%= t('deposit.index.title') %></h3>
       </div>
     </div>
   </section>
@@ -17,15 +17,15 @@
         <div class="info-box">
           <span class="info-box-icon bg-orange"><i class="fa fa-bank"></i></span>
           <div class="info-box-content">
-            <span class="info-box-text">総額</span>
+            <span class="info-box-text"><%= t('deposit.index.total_amount') %></span>
             <span class="info-box-number">
-              <%= total_deposits_amount(@unpaged_deposits).to_s(:delimited) %> 円
+              <%= total_deposits_amount(@unpaged_deposits).to_s(:delimited) %> <%= t('currency') %>
             </span>
           </div>
         </div>
-        <%= link_to '二人の貯金を追加', new_deposit_path, class: "btn btn-orange btn-block" %>
+        <%= link_to t('deposit.index.add_deposit'), new_deposit_path, class: "btn btn-orange btn-block" %>
         <br />
-        <%= link_to '引き出した金額を追加', withdraw_deposit_path, class: "btn btn-brown btn-block" %>
+        <%= link_to t('deposit.index.add_withdrawn_deposit'), withdraw_deposit_path, class: "btn btn-brown btn-block" %>
       </div>
     </div>
 
@@ -34,19 +34,16 @@
     <div class="row">
       <div class="col-md-8 col-md-offset-2 col-xs-12">
         <div class="box box-brown">
-          <div class="box-header with-border">
-            <h3 class="box-title">過去の精算</h3>
-          </div><!-- /.box-header -->
 
           <div class="box-body no-padding">
             <div class="table-responsive">
               <table class="table no-margin">
                 <thead>
                 <tr>
-                  <th>日付</th>
-                  <th>名前</th>
-                  <th>金額</th>
-                  <th>メモ</th>
+                  <th><%= t('date_label') %></th>
+                  <th><%= t('name') %></th>
+                  <th><%= t('amount') %></th>
+                  <th><%= t('memo') %></th>
                 </tr>
                 </thead>
                 <tbody>
