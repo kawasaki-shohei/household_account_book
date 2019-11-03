@@ -76,7 +76,7 @@ module AnalysesHelper
 
   def options_for_year_month
     default = params[:period] ? params[:period] : Date.current.to_s_as_period
-    term = CONFIG[:selection_year_term] * 12  # 30年
+    term = Settings.selection_year_term * 12  # 30年
     start_date = default.to_beginning_of_month.months_ago(term)
     container = []
     0.step(term * 2, 1) do |n|

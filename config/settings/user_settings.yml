@@ -1,0 +1,17 @@
+defaults: &defaults
+  max_username_letters: 10
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+staging:
+  <<: *defaults
+
+demo:
+  <<: *defaults
+
+production:
+  <<: *defaults

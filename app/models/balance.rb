@@ -29,13 +29,14 @@
 
 class Balance < ApplicationRecord
   belongs_to :user
+  validates_presence_of :amount, :period
   validates :period, uniqueness: { scope: :user_id }, format: { with: /\A\d{4}-\d{2}\z/ }
   validate :future_month
 
   # 来月以降のbalanceは生成しないように、バリデーションチェックをする
   def future_month
-    if period.to_beginning_of_month > Date.current.beginning_of_month
-      errors[:base] << "未来の収支バランスは計算しません。"
+    if period.present? && period.to_beginning_of_month > Date.current.beginning_of_month
+      errors[:base] << I18n.t('balance.validation.future_month_is_invalid')
     end
   end
 

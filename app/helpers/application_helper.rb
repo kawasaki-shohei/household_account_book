@@ -35,15 +35,17 @@ module ApplicationHelper
 
   def demo_btn
     if Rails.env.production?
-      link_to 'デモアプリを試す', CONFIG[:demo_url], class: "btn btn-orange btn-block"
+      link_to 'デモアプリを試す', Settings.demo_url, class: "btn btn-orange btn-block", target:'_blank'
+    elsif Rails.env.demo?
+      link_to 'デモアプリを試す', demo_path, method: :post, class: "btn btn-orange btn-block", id: 'demo-btn', style: 'background-color: #cc7a3f; border-color: #cc7a3f;'
     else
-      link_to 'デモアプリを試す', demo_path, method: :post, class: "btn btn-orange btn-block", id: 'demo-btn'
+      link_to 'デモアプリを試す', demo_path, method: :post, class: "btn btn-orange btn-block"
     end
   end
 
   def signup_url_according_to_environment
     if Rails.env.production? || Rails.env.demo?
-      CONFIG[:production_url] + signup_path
+      Settings.production_url + signup_path
     else
       signup_path
     end
@@ -51,7 +53,7 @@ module ApplicationHelper
 
   def login_url_according_to_environment
     if Rails.env.production? || Rails.env.demo?
-      CONFIG[:production_url] + login_path
+      Settings.production_url + login_path
     else
       login_path
     end
@@ -59,7 +61,7 @@ module ApplicationHelper
 
   def root_url_according_to_environment
     if Rails.env.production? || Rails.env.demo?
-      CONFIG[:production_url] + root_path
+      Settings.production_url + root_path
     else
       root_path
     end

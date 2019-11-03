@@ -6,16 +6,21 @@ class DemoController < ApplicationController
   skip_before_action :check_access_right, raise: false
 
   def create
-    # プレビューモードが2回目の場合
+    notifier = SlackNotifier.new(request, session)
+    notifier.notify_starting_demo
+
+    # デモモードが2回目の場合
     if current_user.present? && session[:demo_user_id]
       redirect_to mypage_top_path and return
     end
 
     create_demo_records
     if session[:demo_user_id]
+      notifier.notify_succeeded_demo
       redirect_to mypage_top_path
     else
-      redirect_to root_path, alert: "プレビューが失敗しました。"
+      notifier.notify_failed_demo
+      redirect_to root_path, alert: "デモアプリのアクセスに失敗しました。"
     end
   end
 
@@ -128,7 +133,7 @@ class DemoController < ApplicationController
 
   def create_demo_user
     User.create!(
-      name: "プレビュー",
+      name: "デモ",
       email: Faker::Internet.safe_email,
       password: Rails.application.credentials.demo_user_password,
       allow_share_own: true,

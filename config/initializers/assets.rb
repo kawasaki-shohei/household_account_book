@@ -26,6 +26,7 @@ Rails.application.config.assets.precompile += %w(
   expenses.css
   repeat_expenses.css
   notifications.css
+  users.css
 )
 
 Rails.application.config.assets.precompile += %w(
