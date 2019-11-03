@@ -38,7 +38,7 @@ class DepositsController < ApplicationController
   def destroy
     @deposit = Deposit.find(params[:id])
     @deposit.destroy
-    redirect_to deposits_path, notice: t('deposit.destroy.suceeded')
+    redirect_to deposits_path, notice: t('deposit.destroy.succeeded')
   end
 
   private
