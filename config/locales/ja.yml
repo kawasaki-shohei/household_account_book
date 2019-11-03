@@ -40,7 +40,7 @@ ja:
     update:
       succeeded: 二人の貯金を更新しました。
     destroy:
-      suceeded: 二人の貯金を削除しました。
+      succeeded: 二人の貯金を削除しました。
   notification:
     func:
       notifications: 【お知らせ】今月の手渡し料金をお知らせします。
