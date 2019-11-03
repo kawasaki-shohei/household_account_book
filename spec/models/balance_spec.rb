@@ -30,5 +30,58 @@
 require 'rails_helper'
 
 RSpec.describe Balance, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe "Validation Check" do
+    before do
+      @user = create(:user)
+    end
+    
+    it "is valid with amount, period, user" do
+      balance = Balance.new(
+        amount: 1000,
+        period: "2019-01",
+        user: @user
+      )
+      expect(balance).to be_valid
+    end
+
+    it "is invalid without amount" do
+      balance = Balance.new(
+        amount: nil,
+        period: "2019-01",
+        user: @user
+      )
+      expect(balance).to be_invalid
+      expect(balance.errors.details).to eq({:amount=>[{:error=>:blank}]})
+    end
+
+    it "is invalid without user" do
+      balance = Balance.new(
+        amount: 1000,
+        period: "2019-01",
+        user: nil
+      )
+      expect(balance).to be_invalid
+      expect(balance.errors.details).to eq({:user=>[{:error=>:blank}]})
+    end
+
+    it "is invalid without period" do
+      balance = Balance.new(
+        amount: 1000,
+        period: nil,
+        user: @user
+      )
+      expect(balance).to be_invalid
+      expect(balance.errors.details).to eq({:period=>[{:error=>:blank}, {:error=>:invalid, :value=>nil}]})
+    end
+
+    it "is invalid with future_month" do
+      balance = Balance.new(
+        amount: 1000,
+        period: Date.current.months_since(1).to_s_as_period,
+        user: @user
+      )
+      expect(balance).to be_invalid
+      expect(balance.errors[:base]).to eq([I18n.t('balance.validation.future_month_is_invalid')])
+    end
+  end
 end
