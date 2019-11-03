@@ -2,6 +2,7 @@ class DepositsController < ApplicationController
 
   def index
     @deposits = Deposit.get_couple_deposits(@current_user).page(params[:page])
+    @unpaged_deposits = @deposits.except(:limit, :offset)
   end
 
   def new
