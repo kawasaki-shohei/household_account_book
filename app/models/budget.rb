@@ -33,10 +33,10 @@ class Budget < ApplicationRecord
   belongs_to :category
 
   validates_presence_of :amount
-  validate do
+  validate :must_not_set_multiple_budgets_for_one_category, on: :create
+  def must_not_set_multiple_budgets_for_one_category
     if Budget.exists?(user: self.user, category: self.category)
-      errors[:base] << "1つのカテゴリーに複数の予算を設定できません。"
+      errors[:base] << I18n.t('budget.validation.no_multiple_records')
     end
   end
-
 end

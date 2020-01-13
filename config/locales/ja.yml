@@ -46,6 +46,9 @@ ja:
       learning: 教育・教養
       medical: 医療・保険
       beauty: 美容・衣服
+  budget:
+    validation:
+      no_multiple_records: 1つのカテゴリーに複数の予算を設定できません。
   deposit:
     index:
       title: 二人の貯金一覧
