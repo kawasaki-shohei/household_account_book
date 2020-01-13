@@ -14,15 +14,15 @@ class BudgetsController < ApplicationController
     check = Budget.find_by(user_id: current_user.id, category_id: params[:category_id])
     if check.present?
       @budget.errors[:base] << "同じカテゴリに２つの予算を設定できません。予算を編集してください。"
-      set_all_categories
+      @categories = Category.get_user_categories_with_budgets(current_user)
       render 'new'
     end
 
     if @budget.save
-      find_budget_category
+      @category = Category.find(@budget.category_id)
       redirect_to budgets_path, notice: "#{@category.name}の予算を#{@budget.amount}円に設定しました"
     else
-      set_all_categories
+      @categories = Category.get_user_categories_with_budgets(current_user)
       render 'new'
     end
   end
@@ -35,10 +35,10 @@ class BudgetsController < ApplicationController
   def update
     @budget = Budget.find(params[:id])
     if @budget.update(budget_params)
-      find_budget_category
+      @category = Category.find(@budget.category_id)
       redirect_to budgets_path, notice: "#{@category.name}の予算を#{@budget.amount}円に設定しました"
     else
-      set_all_categories
+      @category= @budget.category
       render 'edit'
     end
   end
@@ -53,9 +53,5 @@ class BudgetsController < ApplicationController
   private
   def budget_params
     params.require(:budget).permit(:category_id, :amount)
-  end
-
-  def find_budget_category
-    @category = Category.find(@budget.category_id)
   end
 end
