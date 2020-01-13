@@ -8,7 +8,7 @@ end
 ruby '2.6.3'
 
 gem 'rails', '~> 5.2.2.1'
-gem 'puma', '~> 3.7'
+gem 'puma', '~> 3.12'
 
 #Database
 gem 'pg', '~> 0.18'
