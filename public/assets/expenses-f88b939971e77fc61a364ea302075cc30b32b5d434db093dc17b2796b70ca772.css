@@ -31,3 +31,7 @@ select#percent_input{
 .other-expense-details{
   padding: 0 0 5px 10px;
 }
+
+.target-timeline-item {
+  border: solid 2px var(--onion);
+}

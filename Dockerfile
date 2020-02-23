@@ -32,6 +32,14 @@ RUN rm -rf /var/lib/apt/lists/*
 # Bundlerをインストール
 RUN gem install bundler -v 1.17.3
 
+#user hab
+RUN \
+ useradd -m hab; \
+ echo 'hab:hab' | chpasswd; \
+ echo "hab ALL=NOPASSWD: ALL" >> /etc/sudoers
+COPY ./.bash_profile /home/hab/
+RUN chown -R hab:hab /home/hab
+
 # bundle install
 COPY Gemfile $APP_ROOT/Gemfile
 COPY Gemfile.lock $APP_ROOT/Gemfile.lock
@@ -48,6 +56,7 @@ COPY ./ $APP_ROOT
 COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
+USER hab
 
 EXPOSE 3000
 
