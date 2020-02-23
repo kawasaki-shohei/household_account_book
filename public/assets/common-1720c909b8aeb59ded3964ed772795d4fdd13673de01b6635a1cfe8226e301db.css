@@ -1,0 +1,113 @@
+/* 管理画面を含むシステム全体のcss */
+
+#company-name{
+  color: var(--redpepper);
+}
+.space-left{
+  margin-left: 5px;
+}
+.space-right{
+ margin-right: 5px;
+}
+.space-top{
+  margin-top: 5px;
+}
+.space-bottom{
+  margin-bottom: 5px;
+}
+.inside-space-top{
+  padding-top: 10px;
+}
+.inside-space-left{
+  padding-left: 10px;
+}
+.no-margin-top{
+  margin-top: 0px;
+}
+.no-margin-bottom{
+  margin-bottom: 0px;
+}
+.no-margin-right{
+  margin-right: 0px;
+}
+.no-margin-left{
+  margin-left: 0px;
+}
+.no-padding-right{
+  padding-right: 0px;
+}
+.no-padding-left{
+  padding-left: 0px;
+}
+.no-padding-bottom{
+  padding-bottom: 0px;
+}
+.no-padding-top{
+  padding-top: 0px;
+}
+.mushroom{
+  background: var(--mushroom);
+}
+
+.table>tbody>tr>td.td-middle{
+  vertical-align: middle;
+}
+.category-circle{
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  text-align:center;
+  line-height: 40px;
+  vertical-align: middle;
+}
+.no-border-left{
+  border-left: none;
+}
+.no-border-right{
+  border-right: none;
+}
+.with-border-top{
+  border-top: solid 1px #f4f4f4;
+}
+.text-redpepper{color: var(--redpepper);}
+.text-orange{color: var(--onion);}
+.text-brown{color: var(--driftwood);}
+.text-white{color: white;}
+
+.btn-brown {
+  color: #fff;
+  background-color: var(--driftwood);
+  border-color: transparent;
+}
+
+.btn-brown:hover, .btn-brown:active, .btn-brown.hover {
+  color: #fff;
+  background-color: #803900;
+}
+
+.btn-brown.focus, .btn-brown:focus {
+  color: #fff;
+  background-color: #662e00;
+  border-color: #4d2200;
+}
+
+.box.box-brown {
+  border-top-color: var(--driftwood);
+}
+.bg-brown {
+  color: white;
+  background-color: var(--driftwood) !important;
+}
+.inherit-color{
+  color: inherit;
+}
+.no-shadow{
+  box-shadow: none;
+}
+.label-orange{
+  background-color: var(--onion);
+}
+.alert-orange{
+  background-color: var(--onion);
+}
