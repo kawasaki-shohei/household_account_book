@@ -28,7 +28,9 @@ categorySelect.addEventListener('change', (e) => {
 window.onload = () => {
   if(arg.expense){
     const expense_id = arg.expense;
-    const target = $(`#expense-list-id-${expense_id}`);
-    $('html, body').animate({scrollTop: target.offset().top - 50}, 500, 'swing');
+    const targetLi = $(`#expense-list-id-${expense_id}`);
+    $('html, body').animate({scrollTop: targetLi.offset().top - 50}, 500, 'swing');
+    const timelineItem = targetLi.find('.timeline-item');
+    timelineItem.addClass('target-timeline-item')
   }
 };
