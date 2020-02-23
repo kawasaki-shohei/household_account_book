@@ -75,7 +75,7 @@
                       <td><%= pay.date_period %></td>
                       <td><%= pay.user.name %></td>
                       <td><%= pay.delimited_amount %></td>
-                      <td><%= pay.truncated_memo %></td>
+                      <td class="index-table-memo"><%= pay.memo %></td>
                       <td><%= pay.get_edit_link %></td>
                     </tr>
                   <% end  %>
