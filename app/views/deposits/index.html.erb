@@ -1,6 +1,6 @@
 <%= render partial: 'shared/html_title', locals: {subtitle: "二人の貯金"} %>
-<div class="content-wrapper">
 
+<div class="content-wrapper">
   <section class="content-header">
     <div class="row">
       <div class="col-md-8 col-md-offset-2 col-xs-12">
@@ -52,7 +52,7 @@
                       <td><%= deposit.date_as_string %></td>
                       <td><%= deposit.user.name %></td>
                       <td><%= deposit.amount_with_plus_or_minus %></td>
-                      <td><%= deposit.truncated_memo %></td>
+                      <td class="index-table-memo"><%= deposit.memo %></td>
                       <td><%= deposit.get_edit_link %></td>
                     </tr>
                   <% end  %>
