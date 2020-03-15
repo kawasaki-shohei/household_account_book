@@ -27,8 +27,6 @@ Rails.application.routes.draw do
     get 'users', to: 'users#index', as: :top
   end
 
-  resources :fronts #fixme: 削除する
-
   resources :notifications, only: [:index, :update] do
     patch :bulk_update, on: :collection
   end
