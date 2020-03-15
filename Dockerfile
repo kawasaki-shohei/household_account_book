@@ -90,7 +90,7 @@ RUN yarn install --frozen-lockfile
 # 残りのソースコードを全て配置
 COPY ./ $APP_ROOT
 
-COPY entrypoint.sh /usr/bin/
+COPY script/entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
 USER hab
