@@ -26,10 +26,6 @@ module CommonDecorator
     make_it_red(amount_str)
   end
 
-  def truncated_memo
-    memo.truncate(5, omission: "..")
-  end
-
   def make_it_red(str)
     content_tag(:span, str, class: "text-redpepper")
   end

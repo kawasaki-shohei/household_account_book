@@ -41,7 +41,7 @@
                     <tr>
                       <td><%= income.date_as_string %></td>
                       <td><%= income.delimited_amount %></td>
-                      <td><%= income.truncated_memo %></td>
+                      <td class="index-table-memo"><%= income.memo %></td>
                       <td><%= income.get_edit_link %></td>
                     </tr>
                   <% end  %>
