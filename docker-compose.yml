@@ -20,7 +20,7 @@ services:
     tty: true
     stdin_open: true
   db:
-    image: postgres
+    image: postgres:12.2
     ports:
       - 5432:5432
     environment:
