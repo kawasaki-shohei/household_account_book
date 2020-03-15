@@ -1,4 +1,4 @@
 #!/bin/bash
 set -e
-rm -f /sample_rails_application/tmp/pids/server.pid
+rm -f /usr/src/household_account_book/tmp/pids/server.pid
 exec "$@"
