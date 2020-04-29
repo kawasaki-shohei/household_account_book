@@ -15,13 +15,11 @@ gem 'pg', '~> 0.18'
 gem 'scenic', '~> 1.5', '>= 1.5.1'
 
 # model
-gem 'activerecord-import'  #todo: 削除
 gem 'paranoia', '~> 2.4', '>= 2.4.2'
 
 # about assets
 gem 'sprockets-rails', '~> 3.2', '>= 3.2.1'
 gem 'uglifier', '>= 1.3.0'
-gem 'rails-ujs', '~> 0.1.0'
 gem 'font-awesome-rails', '~> 4.7', '>= 4.7.0.4'
 gem 'react-rails', '~> 2.5'
 gem 'webpacker', '~> 4.0', '>= 4.0.2'
@@ -38,8 +36,6 @@ gem 'kaminari', '~> 1.1', '>= 1.1.1'
 gem 'gon', '~> 6.2', '>= 6.2.1'
 gem 'rails-i18n', '~> 5.1', '>= 5.1.3'
 
-gem 'daemons', '~> 1.2', '>= 1.2.6'
-gem 'delayed_job_active_record', '~> 4.1', '>= 4.1.3'
 gem 'bcrypt', '3.1.11'
 gem 'faker'
 gem 'slack-notifier', '~> 2.3', '>= 2.3.2'
