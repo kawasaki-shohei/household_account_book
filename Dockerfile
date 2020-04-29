@@ -67,14 +67,13 @@ RUN gem install bundler -v $BUNDLER_VERSION -N
 
 # ログインユーザーを作成
 RUN \
- useradd -m hab; \
- echo 'hab:hab' | chpasswd; \
- echo "hab ALL=NOPASSWD: ALL" >> /etc/sudoers
-COPY ./.bash_profile /home/hab/
-RUN chown -R hab:hab /home/hab
+ useradd -m dev; \
+ echo 'dev:dev' | chpasswd; \
+ echo "dev ALL=NOPASSWD: ALL" >> /etc/sudoers
+COPY ./.bash_profile /home/dev/
+RUN chown -R dev:dev /home/dev
 
-# アプリケーションソースコードのディレクトリを作成
-RUN mkdir -p $APP_ROOT
+# アプリケーションソースコードのルートディレクトリへ移動
 WORKDIR $APP_ROOT
 
 # bundle install
@@ -87,13 +86,10 @@ COPY package.json $APP_ROOT
 COPY yarn.lock $APP_ROOT
 RUN yarn install --frozen-lockfile
 
-# 残りのソースコードを全て配置
-COPY ./ $APP_ROOT
-
 COPY script/entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
-USER hab
+USER dev
 
 EXPOSE 3000
 

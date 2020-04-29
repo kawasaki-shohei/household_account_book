@@ -7,9 +7,6 @@
 # Ignore bundler config.
 /.bundle
 
-# Ignore vender/bundler
-vendor/bundle/*
-
 # Ignore all logfiles and tempfiles.
 /log/*
 /tmp/*
