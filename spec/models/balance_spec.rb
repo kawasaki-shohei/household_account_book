@@ -139,7 +139,23 @@ RSpec.describe Balance, type: :model do
     let!(:category2) { create(:own_category, user: user) }
     let!(:partner) { user.partner }
 
-    context "about own expense" do
+    context "when there is no this month expense yet" do
+      let!(:this_month_period) { Date.current.to_s_as_period }
+      subject { user.balances.exists?(period: this_month_period) }
+
+      it "this month balance does not exist" do
+        expect(subject).to be_falsey
+      end
+
+      context "when create this month expense" do
+        before { create(:own_this_month_expense, amount: 1000, user: user, category: category) }
+        it "this month balance is created" do
+          expect(subject).to be_truthy
+        end
+      end
+    end
+
+    context "when there is more than one this month expense" do
       let!(:own_this_month_expense) { create(:own_this_month_expense, amount: 1000, user: user, category: category) }
       let!(:own_last_month_expense) { create(:own_last_month_expense, amount: 1000, user: user, category: category) }
       let!(:this_month_period) { own_this_month_expense.date.to_s_as_period }
