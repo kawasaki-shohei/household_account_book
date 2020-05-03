@@ -161,97 +161,101 @@ RSpec.describe Balance, type: :model do
       let!(:this_month_period) { own_this_month_expense.date.to_s_as_period }
       let!(:last_month_period) { own_last_month_expense.date.to_s_as_period }
       let!(:next_month_period) { Date.current.next_month.to_s_as_period }
-      let(:own_this_month_balance) { user.balances.find_by(period: this_month_period) }
-      let(:own_last_month_balance) { user.balances.find_by(period: last_month_period) }
+      let!(:first_own_this_month_balance) { user.balances.find_by(period: this_month_period) }
+      let!(:first_own_last_month_balance) { user.balances.find_by(period: last_month_period) }
+      let(:target_own_this_month_balance) { user.balances.find_by(period: this_month_period) }
+      let(:target_own_last_month_balance) { user.balances.find_by(period: last_month_period) }
+      let(:target_own_next_month_balance) { user.balances.find_by(period: next_month_period) }
 
-      context "when create new own expense" do
-        context "when create new this month expense" do
-          before { create(:own_this_month_expense, amount: 1000, user: user, category: category) }
-          it "balance is updated" do
-            expect(own_this_month_balance.amount).to eq(-2000)
-          end
+      context "when create new this month expense" do
+        before { create(:own_this_month_expense, amount: 1000, user: user, category: category) }
+        let(:target_balances) { user.balances.where(period: this_month_period) }
+
+        it "only one this month balance exist" do
+          expect(target_balances.length).to eq(1)
+          expect(target_balances.first.id).to eq(first_own_this_month_balance.id)
         end
 
-        context "when create new last month expense" do
-          before { create(:own_last_month_expense, amount: 1000, user: user, category: category) }
-          it "balance is updated" do
-            expect(own_last_month_balance.amount).to eq(-2000)
-          end
-        end
-
-        context "when create new future month expense" do
-          before { create(:own_next_month_expense, amount: 1000, user: user, category: category) }
-          it "balance will not be created" do
-            balance = user.balances.find_by(period: next_month_period)
-            expect(balance).to be_falsey
-          end
+        it "this month balance amount is updated" do
+          expect(target_own_this_month_balance.amount).to eq(-2000)
         end
       end
 
-      context "when update own expense" do
-        let!(:old_amount) { own_this_month_balance.amount }
-        context "when update own expense memo" do
-          before { own_this_month_expense.update!(memo: 'update') }
-          it "balance amount will not be changed" do
-            expect(own_this_month_balance.reload.amount).to eq(old_amount)
-          end
+      context "when create new last month expense" do
+        before { create(:own_last_month_expense, amount: 1000, user: user, category: category) }
+        it "last month balance amount is updated" do
+          expect(target_own_last_month_balance.amount).to eq(-2000)
         end
+      end
 
-        context "when update own expense category" do
-          before { own_this_month_expense.update!(category: category2) }
-          it "balance amount will not be changed" do
-            expect(own_this_month_balance.reload.amount).to eq(old_amount)
-          end
+      context "when create new next month expense" do
+        before { create(:own_next_month_expense, amount: 1000, user: user, category: category) }
+        it "next month balance will not be created" do
+          expect(target_own_next_month_balance).to be_falsey
         end
+      end
 
-        context "when update own expense amount" do
-          before { own_this_month_expense.update!(amount: 2000) }
-          it "balance amount will not be changed" do
-            expect(own_this_month_balance.reload.amount).to_not eq(old_amount)
-            expect(own_this_month_balance.amount).to eq(-2000)
-          end
+      context "when update own this month expense memo" do
+        before { own_this_month_expense.update!(memo: 'update') }
+        it "own this month balance amount will not be changed" do
+          expect(target_own_this_month_balance.amount).to eq(first_own_this_month_balance.amount)
         end
+      end
 
-        context "when update own expense date into other date in the same month" do
-          it "balance will not be changed" do
-
-          end
+      context "when update own this month expense category" do
+        before { own_this_month_expense.update!(category: category2) }
+        it "own this month balance amount will not be changed" do
+          expect(target_own_this_month_balance.amount).to eq(first_own_this_month_balance.amount)
         end
+      end
 
-        context "when update own expense date into other date in last month" do
-          it "both this month and the last month balances will be changed" do
-
-          end
+      context "when update own this month expense amount" do
+        before { own_this_month_expense.update!(amount: 2000) }
+        it "own this month balance amount will not be changed" do
+          expect(target_own_this_month_balance.amount).to_not eq(first_own_this_month_balance.amount)
+          expect(target_own_this_month_balance.amount).to eq(-2000)
         end
+      end
 
-        context "when update own expense date into other date in future month" do
-          it "this month balance will be changed, but future balance will not be created" do
+      context "when update own expense date into other date in the same month" do
+        it "balance will not be changed" do
 
-          end
         end
+      end
 
-        context "when update own expense of future date into other past date" do
-          it "last month balance will be changed" do
+      context "when update own expense date into other date in last month" do
+        it "both this month and the last month balances will be changed" do
 
-          end
         end
+      end
 
-        context "when update own expense amount and date into this month date" do
-          it "this month balance will be changed" do
+      context "when update own expense date into other date in future month" do
+        it "this month balance will be changed, but future balance will not be created" do
 
-          end
         end
+      end
 
-        context "when update own expense amount and date into last month date" do
-          it "both this month and last month balances will be changed" do
+      context "when update own expense of future date into other past date" do
+        it "last month balance will be changed" do
 
-          end
         end
+      end
 
-        context "when update own expense amount and date into future month date" do
-          it "this month balance will be changed, but future balance will not be created" do
+      context "when update own expense amount and date into this month date" do
+        it "this month balance will be changed" do
 
-          end
+        end
+      end
+
+      context "when update own expense amount and date into last month date" do
+        it "both this month and last month balances will be changed" do
+
+        end
+      end
+
+      context "when update own expense amount and date into future month date" do
+        it "this month balance will be changed, but future balance will not be created" do
+
         end
       end
 
@@ -376,6 +380,17 @@ RSpec.describe Balance, type: :model do
         end
       end
 
+    end
+
+    context "when there is no this month income yet" do
+      it "this month balance does not exist" do
+
+      end
+      context "after create this month income" do
+        it "this month balance is created" do
+
+        end
+      end
     end
 
     context "when create income" do
