@@ -90,7 +90,7 @@ RSpec.describe Pay, type: :model do
       pay = Pay.new(
         amount: 10000,
         date: Faker::Date.backward(days: 365),
-        memo: Faker::String.random(101),
+        memo: Faker::String.random(length: 101),
         user: @user
       )
       expect(pay).to be_invalid
