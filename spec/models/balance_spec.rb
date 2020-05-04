@@ -31,8 +31,8 @@ require 'rails_helper'
 
 RSpec.describe Balance, type: :model do
   describe "Validation Check" do
-    let(:user) { create(:user_with_partner) }
-    let(:partner) { user.partner }
+    let!(:user) { create(:user_with_partner) }
+    let!(:partner) { user.partner }
     
     it "is valid with amount, period, user" do
       balance = Balance.new(
@@ -92,10 +92,10 @@ RSpec.describe Balance, type: :model do
   end
 
   describe ".create_or_update_balance" do
-    let(:user) { create(:user_with_partner) }
-    let(:category) { create(:own_category, user: user)}
-    let(:partner) { user.partner }
-    let(:list) {{ user: user, period: Date.current.to_s_as_period, amount: -1000 }}
+    let!(:user) { create(:user_with_partner) }
+    let!(:category) { create(:own_category, user: user)}
+    let!(:partner) { user.partner }
+    let!(:list) {{ user: user, period: Date.current.to_s_as_period, amount: -1000 }}
 
     context "when specific balance is not exist" do
       it "new balance is created" do
