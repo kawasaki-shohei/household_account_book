@@ -212,7 +212,8 @@ RSpec.describe Balance, type: :model do
     let!(:category) { create(:own_category, user: user) }
 
     context "when update own this month expense memo" do
-      let!(:own_this_month_expense) { create(:own_this_month_expense, amount: 1000, user: user, category: category) }
+      let!(:created_expense_id) { create(:own_this_month_expense, amount: 1000, user: user, category: category).id }
+      let!(:own_this_month_expense) { user.expenses.find(created_expense_id) }
       let!(:this_month_period) { own_this_month_expense.date.to_s_as_period }
       let!(:first_own_this_month_balance) { user.balances.find_by(period: this_month_period) }
       let(:target_own_this_month_balance) { user.balances.find_by(period: this_month_period) }
@@ -224,7 +225,8 @@ RSpec.describe Balance, type: :model do
     end
 
     context "when update own this month expense category" do
-      let!(:own_this_month_expense) { create(:own_this_month_expense, amount: 1000, user: user, category: category) }
+      let!(:created_expense_id) { create(:own_this_month_expense, amount: 1000, user: user, category: category).id }
+      let!(:own_this_month_expense) { user.expenses.find(created_expense_id) }
       let!(:this_month_period) { own_this_month_expense.date.to_s_as_period }
       let!(:first_own_this_month_balance) { user.balances.find_by(period: this_month_period) }
       let!(:category2) { create(:own_category, user: user) }
@@ -237,7 +239,8 @@ RSpec.describe Balance, type: :model do
     end
 
     context "when update own this month expense amount" do
-      let!(:own_this_month_expense) { create(:own_this_month_expense, amount: 1000, user: user, category: category) }
+      let!(:created_expense_id) { create(:own_this_month_expense, amount: 1000, user: user, category: category).id }
+      let!(:own_this_month_expense) { user.expenses.find(created_expense_id) }
       let!(:this_month_period) { own_this_month_expense.date.to_s_as_period }
       let!(:first_own_this_month_balance) { user.balances.find_by(period: this_month_period) }
       let(:target_own_this_month_balance) { user.balances.find_by(period: this_month_period) }
@@ -250,14 +253,38 @@ RSpec.describe Balance, type: :model do
     end
 
     context "when update own this month expense date into other date in the same month" do
-      it "balance will not be changed" do
+      let!(:created_expense_id) { create(:own_this_month_expense, amount: 1000, user: user, category: category).id }
+      let!(:own_this_month_expense) { user.expenses.find(created_expense_id) }
+      let!(:this_month_period) { own_this_month_expense.date.to_s_as_period }
+      let!(:first_own_this_month_balance) { user.balances.find_by(period: this_month_period) }
+      let(:target_own_this_month_balance) { user.balances.find_by(period: this_month_period) }
+      before { own_this_month_expense.update!(date: random_this_month_date) }
 
+      it "own this month balance amount will not be changed" do
+        expect(target_own_this_month_balance.amount).to eq(first_own_this_month_balance.amount)
       end
     end
 
-    context "when update own this month expense date into other date in last month" do
-      it "both this and last month balances will be changed" do
+    context "when update own this month expense date into other date in past month" do
+      let!(:created_past_month_expense_id) { create(:own_past_month_expense, amount: 1000, user: user, category: category).id }
+      let!(:own_past_month_expense) { user.expenses.find(created_past_month_expense_id) }
+      let!(:past_month_period) { own_past_month_expense.date.to_s_as_period }
+      let!(:first_own_past_month_balance) { user.balances.find_by(period: past_month_period) }
 
+      let!(:created_this_month_expense_id) { create(:own_this_month_expense, amount: 1000, user: user, category: category).id }
+      let!(:own_this_month_expense) { user.expenses.find(created_this_month_expense_id) }
+      let!(:this_month_period) { own_this_month_expense.date.to_s_as_period }
+      let!(:first_own_this_month_balance) { user.balances.find_by(period: this_month_period) }
+
+      let(:target_own_this_month_balance) { user.balances.find_by(period: this_month_period) }
+      let(:target_own_past_month_balance) { user.balances.find_by(period: past_month_period) }
+      before { own_this_month_expense.update!(date: random_specific_month_date(period: past_month_period)) }
+
+      it "both own this and past month balances will be changed" do
+        expect(target_own_this_month_balance.amount).to_not eq(first_own_this_month_balance.amount)
+        expect(target_own_this_month_balance.amount).to eq(0)
+        expect(target_own_past_month_balance.amount).to_not eq(first_own_past_month_balance.amount)
+        expect(target_own_past_month_balance.amount).to eq(-2000)
       end
     end
 
