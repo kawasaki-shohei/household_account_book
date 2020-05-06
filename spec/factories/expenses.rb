@@ -43,12 +43,12 @@ FactoryBot.define do
       date { Faker::Date.between(from: Date.current.beginning_of_month, to: Date.current.end_of_month) }
     end
 
-    factory :own_last_month_expense, class: 'Expense' do
-      date { Faker::Date.between(from: Date.current.last_month.beginning_of_month, to: Date.current.last_month.end_of_month) }
+    factory :own_past_month_expense, class: 'Expense' do
+      date { Faker::Date.between(from: Date.current.last_year.beginning_of_month, to: Date.current.months_ago(1).end_of_month) }
     end
 
-    factory :own_next_month_expense, class: 'Expense' do
-      date { Faker::Date.between(from: Date.current.next_month.beginning_of_month, to: Date.current.next_month.end_of_month) }
+    factory :own_future_month_expense, class: 'Expense' do
+      date { Faker::Date.between(from: Date.current.next_month.beginning_of_month, to: Date.current.next_year.end_of_month) }
     end
   end
 

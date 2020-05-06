@@ -174,34 +174,35 @@ RSpec.describe Balance, type: :model do
       end
     end
 
-    context "when there is more than one last month expense and create additional last month expense" do
+    context "when there is more than one past month expense and create additional past month expense" do
       let!(:user) { create(:user_with_partner) }
       let!(:category) { create(:own_category, user: user) }
-      let!(:own_last_month_expense) { create(:own_last_month_expense, amount: 1000, user: user, category: category) }
-      let!(:last_month_period) { own_last_month_expense.date.to_s_as_period }
-      let!(:first_own_last_month_balance) { user.balances.find_by(period: last_month_period) }
-      let(:target_balances) { user.balances.where(period: last_month_period) }
-      let(:target_own_last_month_balance) { user.balances.find_by(period: last_month_period) }
-      before { create(:own_last_month_expense, amount: 1000, user: user, category: category) }
+      let!(:own_past_month_expense) { create(:own_past_month_expense, amount: 1000, user: user, category: category) }
+      let!(:past_month_period) { own_past_month_expense.date.to_s_as_period }
+      let!(:first_own_past_month_balance) { user.balances.find_by(period: past_month_period) }
+      let(:target_balances) { user.balances.where(period: past_month_period) }
+      let(:target_own_past_month_balance) { user.balances.find_by(period: past_month_period) }
+      before { create(:own_expense, amount: 1000, date: random_specific_month_date(period: past_month_period), user: user, category: category) }
 
-      it "only one last month balance exist" do
+      it "only one past month balance exist" do
         expect(target_balances.length).to eq(1)
-        expect(target_balances.first.id).to eq(first_own_last_month_balance.id)
+        expect(target_balances.first.id).to eq(first_own_past_month_balance.id)
       end
 
-      it "last month balance amount is updated" do
-        expect(target_own_last_month_balance.amount).to eq(-2000)
+      it "past month balance amount is updated" do
+        expect(target_own_past_month_balance.amount).to eq(-2000)
       end
     end
 
-    context "when create new next month expense" do
+    context "when create new future month expense" do
       let!(:user) { create(:user_with_partner) }
       let!(:category) { create(:own_category, user: user) }
-      let!(:next_month_period) { Date.current.next_month.to_s_as_period }
-      let(:target_own_next_month_balance) { user.balances.find_by(period: next_month_period) }
-      before { create(:own_next_month_expense, amount: 1000, user: user, category: category) }
-      it "next month balance will not be created" do
-        expect(target_own_next_month_balance).to be_falsey
+      let!(:own_future_month_expense) { create(:own_future_month_expense, amount: 1000, user: user, category: category) }
+      let!(:future_month_period) { own_future_month_expense.date.to_s_as_period }
+      subject(:target_own_future_month_balance) { user.balances.find_by(period: future_month_period) }
+
+      it "future month balance will not be created" do
+        expect(target_own_future_month_balance).to be_falsey
       end
     end
   end
@@ -267,7 +268,7 @@ RSpec.describe Balance, type: :model do
     end
 
     context "when update own expense of future date into other past date" do
-      it "last month balance will be changed" do
+      it "past month balance will be changed" do
 
       end
     end
@@ -278,8 +279,8 @@ RSpec.describe Balance, type: :model do
       end
     end
 
-    context "when update own this month expense amount and that date into last month date" do
-      it "both this month and last month balances will be changed" do
+    context "when update own this month expense amount and that date into past month date" do
+      it "both this month and past month balances will be changed" do
 
       end
     end
@@ -298,8 +299,8 @@ RSpec.describe Balance, type: :model do
       end
     end
 
-    context "when delete own last month expense" do
-      it "last month balance will be changed" do
+    context "when delete own past month expense" do
+      it "past month balance will be changed" do
 
       end
     end
@@ -320,8 +321,8 @@ RSpec.describe Balance, type: :model do
       end
     end
 
-    context "create new last month both expense" do
-      it "last month balance will be changed" do
+    context "create new past month both expense" do
+      it "past month balance will be changed" do
 
       end
     end
@@ -362,8 +363,8 @@ RSpec.describe Balance, type: :model do
       end
     end
 
-    context "when update both expense date into other date in last month" do
-      it "own this month and the last month balances and partners this month and the last month balances will be changed" do
+    context "when update both expense date into other date in past month" do
+      it "own this month and the past month balances and partners this month and the past month balances will be changed" do
 
       end
     end
@@ -374,8 +375,8 @@ RSpec.describe Balance, type: :model do
       end
     end
 
-    context "when update both expense amount and date into last month date" do
-      it "own this month and the last month balances and partners this month and the last month balances will be changed" do
+    context "when update both expense amount and date into past month date" do
+      it "own this month and the past month balances and partners this month and the past month balances will be changed" do
 
       end
     end
@@ -392,8 +393,8 @@ RSpec.describe Balance, type: :model do
       end
     end
 
-    context "when update both expense mypay and partnerpay  and date into last month date" do
-      it "own this month and the last month balances and partners this month and the last month balances will be changed" do
+    context "when update both expense mypay and partnerpay  and date into past month date" do
+      it "own this month and the past month balances and partners this month and the past month balances will be changed" do
 
       end
     end
@@ -462,8 +463,8 @@ RSpec.describe Balance, type: :model do
         end
       end
 
-      context "when update income date into other date in the last month" do
-        it "both this month and last month balances will be changed" do
+      context "when update income date into other date in the past month" do
+        it "both this month and past month balances will be changed" do
 
         end
       end
@@ -474,8 +475,8 @@ RSpec.describe Balance, type: :model do
         end
       end
 
-      context "when update income amount and date into other date in the last month" do
-        it "both this month and last month balances will be changed" do
+      context "when update income amount and date into other date in the past month" do
+        it "both this month and past month balances will be changed" do
 
         end
       end
