@@ -56,8 +56,7 @@ RUN \
  useradd -m dev; \
  echo 'dev:dev' | chpasswd; \
  echo "dev ALL=NOPASSWD: ALL" >> /etc/sudoers
-# アプリケーションソースコードのルートディレクトリを作成
-WORKDIR ${APP_ROOT}
+RUN mkdir -p ${APP_ROOT}
 RUN chown -R dev:dev ${APP_ROOT}
 USER dev
 
@@ -85,6 +84,7 @@ RUN rbenv global ${RUBY_VERSION}
 RUN gem install bundler -v $BUNDLER_VERSION -N
 
 # bundle install
+WORKDIR ${APP_ROOT}
 COPY --chown=dev:dev Gemfile* ${APP_ROOT}/
 RUN bundle install
 RUN rbenv rehash
