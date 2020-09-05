@@ -10,11 +10,19 @@ class DemoController < ApplicationController
     notifier.notify_starting_demo
 
     # デモモードが2回目の場合
+    logger.info(<<~LOG)
+      current_user.present? -> #{current_user.present?}
+      session[:demo_user_id] -> #{session[:demo_user_id]}
+    LOG
     if current_user.present? && session[:demo_user_id]
       redirect_to mypage_top_path and return
     end
 
     create_demo_records
+    logger.info(<<~LOG)
+      current_user.present? -> #{current_user.present?}
+      session[:demo_user_id] -> #{session[:demo_user_id]}
+    LOG
     if session[:demo_user_id]
       notifier.notify_succeeded_demo
       redirect_to mypage_top_path
