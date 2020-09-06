@@ -34,7 +34,7 @@ img {
 /*----------------------------
 * ヘッダー
 *----------------------------*/
-＃header {
+#header {
   width: 100%;
 }
 
@@ -79,7 +79,9 @@ img {
   padding: 0.5rem;
 }
 
-/*  こんな方にピッタリ */
+/*----------------------------
+* こんな方にピッタリ
+*----------------------------*/
 .recommend-content {
   display: flex;
   justify-content: center;
@@ -92,10 +94,8 @@ img {
   border: 1px solid #d9d9d9;
   width: 300px;
   height: auto;
-  padding: 0 0 16px;
   background-color: #00983F;
   text-align: center;
-  margin-bottom: 20px;
   padding: 3%;
   margin: 5%;
 }
@@ -113,14 +113,15 @@ img {
   overflow: hidden;
 }
 
-/* こんなお悩み */
+/*----------------------------
+* こんなお悩み
+*----------------------------*/
 .worries {
   background-color: #FAFBE4;
 }
 
 .worries-wrap {
   max-width: 900px;
-  margin: 0 auto;
   display: flex;
   list-style: none;
   align-items: center;
@@ -147,7 +148,9 @@ img {
   font-size: 1.5rem;
 }
 
-/* できることここから */
+/*----------------------------
+* できることここから
+*----------------------------*/
 h3 {
   font-size: 20px;
   font-weight: bold;
@@ -183,7 +186,9 @@ h3 {
   padding: 0 5% 5% 5%;
 }
 
-/* ここがポイント */
+/*----------------------------
+* ここがポイント
+*----------------------------*/
 .point-wrap {
   max-width: 900px;
   display: flex;
@@ -202,7 +207,9 @@ h3 {
   margin-bottom: 15px;
 }
 
-/* ジャンプボタンここから */
+/*----------------------------
+* ジャンプボタンここから
+*----------------------------*/
 .button-page {
   justify-content: center;
   display: flex;
@@ -223,13 +230,13 @@ h3 {
   margin: 0 10% 5% 10%;
 }
 
-/* お問い合わせ */
+/*----------------------------
+* お問い合わせ
+*----------------------------*/
 form {
-  margin-bottom: 14px;
   align-items: center;
   justify-content: center;
-  margin: 0 30%;
-  margin-bottom: 30px;
+  margin: 0 30% 30px;
 }
 
 .required {
@@ -249,7 +256,7 @@ textarea {
   padding: 10px;
   font-size: 1rem;
   border: 1px solid #d9d9d9;
-  box-shadow: inset 0px 2px 5px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 2px 5px 0 rgba(0, 0, 0, 0.1);
   margin-bottom: 5px;
 }
 
@@ -283,7 +290,9 @@ dl {
   justify-content: center;
 }
 
-/* サービスここから */
+/*----------------------------
+* サービスここから
+*----------------------------*/
 .service-wrapper {
   background-color: #FAFBE4;
   padding-bottom: 5%;
@@ -304,7 +313,9 @@ dl {
   margin: 0 5%;
 }
 
-/* フッター */
+/*----------------------------
+* フッター
+*----------------------------*/
 footer {
   background-color: #464141;
 }
@@ -325,7 +336,9 @@ footer {
   padding: 30px 0;
 }
 
-/*  ハンバーガーメニュー */
+/*----------------------------
+* ハンバーガーメニュー
+*----------------------------*/
 .menu-btn {
   margin-top: 5px;
   margin-right: 8px;
@@ -365,10 +378,6 @@ footer {
   box-sizing: border-box;
 }
 
-.fa fa-bars {
-  display: none;
-}
-
 /*----------------------------
 * アニメーション部分
 *----------------------------*/
@@ -384,9 +393,9 @@ footer {
   transform: translateX(0);
 }
 
-/*************ページトップここから*****************
-*********************************** */
-
+/*----------------------------
+* ページトップここから
+*----------------------------*/
 #page_top {
   width: 50px;
   height: 50px;
@@ -427,11 +436,9 @@ footer {
   color: #00983F;
 }
 
-/*************ページトップここまで*****************
-*********************************** */
-
-/*************モバイル版ここから*****************
-*********************************** */
+/*----------------------------
+* モバイル版
+*----------------------------*/
 @media (max-width: 890px) {
   .main-nav {
     display: none;
@@ -498,7 +505,7 @@ footer {
 
   }
 
-  /* ジャンプボタンここから */
+  /* お悩みここまで */
   .button-right,
   .button-left {
     margin: 5%
@@ -523,8 +530,4 @@ footer {
     font-size: 13px;
   }
 
-
 }
-
-/*************モバイル版ここまで*****************
-*********************************** */
