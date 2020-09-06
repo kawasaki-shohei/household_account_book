@@ -5,12 +5,16 @@ class DemoController < ApplicationController
   skip_before_action :count_header_notifications, raise: false
   skip_before_action :check_access_right, raise: false
 
+  def show
+
+  end
+
   def create
     notifier = SlackNotifier.new(request, session)
     notifier.notify_starting_demo
 
     # デモモードが2回目の場合
-    if current_user.present? && session[:demo_user_id]
+    if logged_in? && session[:demo_user_id]
       redirect_to mypage_top_path and return
     end
 

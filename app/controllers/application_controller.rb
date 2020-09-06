@@ -25,11 +25,14 @@ class ApplicationController < ActionController::Base
   end
 
   def logged_in?
-    !current_user.nil?
+    current_user.present?
   end
 
   def check_logging_in
-    unless logged_in?
+    if logged_in?
+      logger.info("#{@current_user.name} is logged in")
+    else
+      logger.info("Redirected to login path because there is no user info in session")
       redirect_to login_path
     end
   end

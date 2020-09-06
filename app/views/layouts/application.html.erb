@@ -1,6 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <% if is_env_needed_ga? %>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=<%= Settings.ga_tracking_id %>"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '<%= Settings.ga_tracking_id %>');
+    </script>
+  <% end %>
+
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
 

@@ -4,6 +4,9 @@
   height: 50px;
   vertical-align: center;
 }
+.logo{
+  max-width: 80%;
+}
 .before-login-header .logo {
   color: white;
   font-weight: 300;
@@ -26,6 +29,16 @@
 .header-menu .menu-link:hover {
   background: rgba(0,0,0,0.1);
   color: white;
+}
+
+.home-box-body {
+  font-size: 1.2em;
+}
+#demo-btn{
+  font-size: 1.1em;
+  background-color: #cc7a3f;
+  border-color: #cc7a3f;
+  margin-bottom: 20px;
 }
 .password-explanation {
   line-height: 15px;

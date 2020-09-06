@@ -1,8 +1,9 @@
 defaults: &default
-  site_name: PairMoney
-  production_url: https://pairmoney.herokuapp.com
-  demo_url: https://demo-pairmoney.herokuapp.com
+  site_name: "PairMoney"
+  production_url: "https://pairmoney.herokuapp.com"
+  demo_url: "https://demo-pairmoney.herokuapp.com"
   selection_year_term: 30
+  ga_tracking_id: "UA-177238612-1"
 
 development:
   <<: *default

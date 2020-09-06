@@ -1,29 +1,251 @@
-<div class="home-box">
-  <div class="home-logo">
-    <div><small>Welcome to</small></div>
-    <%= image_tag 'icon.png', width: 42, height: 42 %>
-    <b>PairMoney</b>
-    <%= image_tag 'icon.png', width: 42, height: 42 %>
-  </div><!--/.home-logo -->
+<a id="page-top"></a>
+<header id="header">
+  <div class="page-header wrapper">
+    <h1>
+      <%= image_tag 'home/logo.gif', alt: 'ロゴ', class: 'logo' %>
+    </h1>
+    <nav>
+      <ul class="main-nav">
+        <li><a href="#recommend" class="main-nav-list">ペアマネとは？</a></li>
+        <li><a href="#can" class="main-nav-list">機能説明</a></li>
+        <li><a href="#contact" class="main-nav-list">お問い合わせ</a></li>
 
+        <li>
+          <% if Rails.env.production? %>
+            <%= link_to 'デモページ', Settings.demo_url + demo_path, class: "main-nav-list btn-top", target:'_blank' %>
+          <% else %>
+            <%= link_to 'デモページ', demo_path, class: "main-nav-list btn-top", target:'_blank' %>
+          <% end %>
+        </li>
+        <li>
+          <% if logged_in? %>
+            <%= link_to 'ログイン', login_url_according_to_environment, class: "menu-link btn-top" %>
+          <% else %>
+            <%= link_to '無料登録', signup_url_according_to_environment, class: "main-nav-list btn-top" %>
+          <% end %>
+        </li>
+      </ul>
+    </nav>
 
-  <div class="home-box-body text-center">
-    <p class="text-redpepper"><%= alert %></p>
-    <div><b>PairMoney</b>は、</div>
-    <div>夫婦またはカップル専用の</div>
-    <div>家計簿webアプリケーションです。</div>
-    <br />
-    <div>簡単な収入や出費の入力で</div>
-    <div>複雑な二人の出費を管理できます。</div>
-    <br />
-    <%= demo_btn %>
-  </div><!-- /.home-box-body -->
+    <div class="menu-btn">
+      <i class="fa fa-bars" aria-hidden="true"></i>
+    </div>
+    <div class="menu">
+      <div class="menu_item">ペアマネとは？</div>
+      <div class="menu_item">機能説明</div>
+      <div class="menu_item">お問い合わせ</div>
+    </div>
+  </div>
+</header>
+<!--トップページ　ここまで-->
+<!-- スクロール用 -->
+<div class="top">
+  <%= image_tag 'home/top.jpg', alt: 'top' %>
+</div>
+<!-- スクロール用 -->
 
-</div><!-- /.home-box -->
+<!--ピッタリサービスここから-->
+<main class="content">
+  <div class="inner">
+    <div class="section-heading">
+      <a id="recommend"></a>
+    </div>
+    <div class="section-heading">
+      <h2 class="heading-primary">こんな方にピッタリです！</h2>
+    </div>
+    <div class="recommend-content">
+      <div class="recommend-left">
+        <div class="recommend-inner">
+          <%= image_tag 'home/binder.png', alt: 'バインダー', class: "recommend-left-img" %>
+          <p>2人の財布を分けて管理したい方</p>
+        </div>
+      </div>
+      <div class="recommend-right">
+        <div class="recommend-inner">
+          <%= image_tag 'home/calculator.png', alt: '計算機', class: "recommend-right-img" %>
+          <p>2人の共通の出費を明確に管理したい方</p>
+        </div>
+      </div>
+    </div>
 
-<% if Rails.env.demo? %>
-  <%= content_for :other_javascript do %>
-    <%= javascript_include_tag 'demo' %>
-  <% end %>
+    <!--wピッタリサービスここまで-->
+
+    <!--お悩みここから-->
+    <div class="worries">
+      <div class="section-heading">
+        <a id="about"></a>
+        <h2 class="heading-primary">こんなお悩みありませんか？</h2>
+      </div>
+      <div class="worries-wrap">
+        <div class="check-img">
+          <%= image_tag 'home/worried_man.png', alt: '悩んでいる男性' %>
+        </div>
+        <div class="check-li">
+          <div class="check-1 check-comments">
+            <i class="far fa-check-square"></i>
+            <p class="check-sentence">毎月いくら使ったかわからない。</p>
+          </div>
+          <div class="check-2 check-comments">
+            <i class="far fa-check-square"></i>
+            <p class="check-sentence">いつも自分ばかり払っている。</p>
+          </div>
+          <div class="check-3 check-comments">
+            <i class="far fa-check-square"></i>
+            <p class="check-sentence">パートナーが何に使っているか把握したい。</p>
+          </div>
+          <div class="check-4 check-comments">
+            <i class="far fa-check-square"></i>
+            <p class="check-sentence">自分が多く払ったけど言いにくい。</p>
+          </div>
+          <div class="check-5 check-comments">
+            <i class="far fa-check-square"></i>
+            <p class="check-sentence">2人の共通の出費を明確にしたい。</p>
+          </div>
+          <div class="check-6 check-comments">
+            <i class="far fa-check-square"></i>
+            <p class="check-sentence">使っていないはずなのにお金がたまらない。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--お悩み　ここまで-->
+
+    <!-- できることここから -->
+    <div class="section-heading">
+      <a id="can"></a>
+      <h2 class="heading-primary">できること</h2>
+    </div>
+    <div class="can-content">
+      <div class="can-list">
+        <h3>出費登録機能</h3>
+        <p>出費の登録・更新・削除ができます。</p>
+        <i class="fas fa-shopping-cart icon"></i>
+      </div>
+      <div class="can-list">
+        <h3>予算登録機能</h3>
+        <p>カテゴリーに対して予算を登録・編集・削除できます。</p>
+        <i class="fas fa-calculator icon"></i>
+      </div>
+      <div class="can-list">
+        <h3>収入登録機能</h3>
+        <p>自分の収入の登録・更新・削除ができます。</p>
+        <i class="far fa-money-bill-alt icon"></i>
+      </div>
+      <div class="can-list">
+        <h3>手渡し料金登録機能</h3>
+        <p>パートナーに手渡した金額の登録・更新・削除ができる。</p>
+        <i class="fas fa-yen-sign icon"></i>
+      </div>
+      <div class="can-list">
+        <h3>2人の貯金登録機能</h3>
+        <p>二人の貯金の登録・更新・削除ができます。</p>
+        <i class="fas fa-university icon"></i>
+      </div>
+      <div class="can-list">
+        <h3>精算金額計算機能</h3>
+        <p>パートナーのために払った金額を考慮して、精算する機能です。</p>
+        <i class="fas fa-comments-dollar icon"></i>
+      </div>
+    </div>
+    <!-- できることここまで -->
+
+    <!-- ここがポイントここから -->
+    <div class="section-heading">
+      <a id="point"></a>
+      <h2 class="heading-primary">ここがポイント</h2>
+    </div>
+    <div class="point-wrap">
+      <div class="point-img">
+        <%= image_tag 'home/happy_women.png', alt: '喜んでいる女性' %>
+      </div>
+      <div class="point-content">
+        <ul>
+          <li>お互いが何に使ったのかすぐにわかる。</li>
+          <li>共通の出費の管理が簡単。</li>
+          <li>自分だけの出費と２人のための出費が簡単に把握できる。</li>
+        </ul>
+      </div>
+    </div>
+    <!-- ここがポイントここまで -->
+
+    <!-- ジャンプボタンここから -->
+    <div class="button-page">
+      <% if Rails.env.production? %>
+        <%= link_to 'デモページ', Settings.demo_url + demo_path, class: "button-right", target:'_blank' %>
+      <% else %>
+        <%= link_to 'デモページ', demo_path, class: "button-right", target:'_blank' %>
+      <% end %>
+      <%= link_to '無料登録', signup_url_according_to_environment, class: "button-left" %>
+    </div>
+    <!-- ジャンプボタンここまで -->
+
+    <!-- お問い合わせここから -->
+    <div class="section-heading">
+      <a id="contact"></a>
+      <h2 class="heading-primary">お問い合わせ</h2>
+    </div>
+    <div class="form">
+      <form class="form" action="index.html" method="post">
+        <dl>
+          <dt><span class="required">お名前</span></dt>
+          <dd><input type="text" name="name" class="name" placeholder="名字　名前" required></dd>
+          <dt><span class="required">メールアドレス</span></dt>
+          <dd><input type="email" name="email" class="email" required></dd>
+          <dt>
+            <div class="message-comments">メッセージ</div>
+          </dt>
+          <dd><textarea name="message" class="message"></textarea></dd>
+        </dl>
+        <button type="submit" class="btn">送信</button>
+      </form>
+    </div>
+
+    <!-- お問い合わせここまで -->
+
+    <!-- サービス詳細ここから -->
+    <div class="service-wrapper">
+      <div class="section-heading">
+        <a id="service"></a>
+        <h2 class="heading-primary">サービス詳細</h2>
+      </div>
+      <div class="service-content">
+        <div class="service-li">
+          <div class="service-left service-list">
+            <p>ユーザー登録機能</p>
+            <p>ログイン機能</p>
+            <p>パートナー登録機能</p>
+            <p>カテゴリー登録機能</p>
+            <p>予算登録機能</p>
+            <p>出費登録機能</p>
+            <p>電卓機能</p>
+            <p>収入登録機能</p>
+          </div>
+          <div class="service-right service-list">
+            <p>収支バランス自動計算機能</p>
+            <p>出費分析機能</p>
+            <p>二人の貯金登録機能</p>
+            <p>手渡し料金登録機能</p>
+            <p>精算金額計算機能</p>
+            <p>繰り返し出費登録機能</p>
+            <p>通知機能</p>
+            <p>パートナーレコード閲覧モード</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- サービス詳細ここまで -->
+  </div>
+</main>
+<div id="page_top"><a href="#"></a></div>
+<footer>
+  <div class="inner-header">
+    <p class="copyright">
+      <strong>Copyright &copy; 2019 <a href="#" id="company-name"><%= Settings.site_name %></a>.</strong> All rights reserved.
+    </p>
+
+  </div>
+</footer>
+
+<%= content_for :other_javascript do %>
+  <%= javascript_include_tag 'home' %>
 <% end %>
-
