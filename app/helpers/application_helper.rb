@@ -1,5 +1,9 @@
 module ApplicationHelper
 
+  def is_env_needed_ga?
+    Rails.env.production? || Rails.env.demo?
+  end
+
   def render_react_component(*args, &block)
     content_for :webpacker_assets do
       assets = []
@@ -34,12 +38,12 @@ module ApplicationHelper
   end
 
   def demo_btn
-    if Rails.env.production?
-      link_to 'デモアプリを試す', Settings.demo_url, class: "btn btn-orange btn-block", target:'_blank'
-    elsif Rails.env.demo?
-      link_to 'デモアプリを試す', demo_path, method: :post, class: "btn btn-orange btn-block", id: 'demo-btn', style: 'background-color: #cc7a3f; border-color: #cc7a3f;'
-    else
-      link_to 'デモアプリを試す', demo_path, method: :post, class: "btn btn-orange btn-block"
+    link_to  demo_path, method: :post, class: 'btn btn-orange btn-block disabled', id: 'demo-btn' do
+      simple_format(
+        'デモアプリを起動しています' + tag.i(class: 'fa fa-spinner fa-spin'),
+        {},
+        wrapper_tag: 'span'
+      )
     end
   end
 

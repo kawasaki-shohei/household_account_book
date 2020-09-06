@@ -1,3 +1,530 @@
-.home-box-body {
-  font-size: 1.2em;
+@charset "utf-8";
+
+/*----------------------------
+* 共通部分
+*----------------------------*/
+html {
+  font-size: 100%;
 }
+
+body {
+  font-family: "Hiragino Kaku Gothic ProN", "Hiragino Kaku Gothic Pro", "游ゴシック", "YuGothic", "ＭＳ ゴシック", sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  vertical-align: middle;
+  border-style: none;
+}
+
+.heading-primary {
+  padding: 30px;
+
+}
+
+.section-heading {
+  text-align: center;
+}
+
+/*----------------------------
+* ヘッダー
+*----------------------------*/
+＃header {
+  width: 100%;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  background-color: #00983F;
+}
+
+.main-nav {
+  display: flex;
+  font-size: 1rem;
+  margin-top: 10px;
+  list-style: none;
+  align-items: center;
+}
+
+.main-nav li {
+  margin-left: 36px;
+}
+
+.main-nav-list {
+  color: #fff;
+}
+
+.logo {
+  width: 130px;
+  margin: 5px;
+  display: flex;
+}
+
+.wrapper {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 4%;
+}
+
+.btn-top {
+  background: #F0B35F;
+  color: #464141;
+  border-radius: 5px;
+  padding: 0.5rem;
+}
+
+/*  こんな方にピッタリ */
+.recommend-content {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 0 5% 5%;
+}
+
+.recommend-left,
+.recommend-right {
+  border: 1px solid #d9d9d9;
+  width: 300px;
+  height: auto;
+  padding: 0 0 16px;
+  background-color: #00983F;
+  text-align: center;
+  margin-bottom: 20px;
+  padding: 3%;
+  margin: 5%;
+}
+
+.recommend-left-img,
+.recommend-right-img {
+  width: 40%;
+  height: auto;
+  margin: 0 16px;
+}
+
+.recommend-inner {
+  border: 2px solid #fffeea;
+  padding: 3%;
+  overflow: hidden;
+}
+
+/* こんなお悩み */
+.worries {
+  background-color: #FAFBE4;
+}
+
+.worries-wrap {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  list-style: none;
+  align-items: center;
+  margin: 0 20% 30px 20%;
+  padding-bottom: 30px;
+  justify-content: center;
+}
+
+.check-img,
+.point-img {
+  max-width: 30%;
+}
+
+.check-comments {
+  display: flex;
+  margin: 10px;
+}
+
+.check-sentence {
+  margin-left: 10px;
+}
+
+.check-comments i {
+  font-size: 1.5rem;
+}
+
+/* できることここから */
+h3 {
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 1.4;
+}
+
+.can-list {
+  width: 300px;
+  padding: 0 0 16px;
+  border: 2px solid #00983F;
+  box-shadow: 0 0 0 4px #7bcdce;
+  text-align: center;
+  margin: 20px auto;
+}
+
+.can-list p {
+  width: 258px;
+  margin: 14px auto 0;
+  font-size: 13px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.icon {
+  padding: 5px;
+  font-size: 2.5rem;
+}
+
+.can-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 0 5% 5% 5%;
+}
+
+/* ここがポイント */
+.point-wrap {
+  max-width: 900px;
+  display: flex;
+  list-style: none;
+  align-items: center;
+  justify-content: center;
+  margin: 0 15%;
+}
+
+.point-content {
+  margin-left: 20px;
+}
+
+.point-content li {
+  list-style: decimal;
+  margin-bottom: 15px;
+}
+
+/* ジャンプボタンここから */
+.button-page {
+  justify-content: center;
+  display: flex;
+  margin-top: 10%;
+}
+
+.button-right,
+.button-left {
+  background: #F0B35F;
+  color: #464141;
+  border-radius: 10px;
+  font-size: 1.375rem;
+  padding: 0.5rem 1rem;
+}
+
+.button-right,
+.button-left {
+  margin: 0 10% 5% 10%;
+}
+
+/* お問い合わせ */
+form {
+  margin-bottom: 14px;
+  align-items: center;
+  justify-content: center;
+  margin: 0 30%;
+  margin-bottom: 30px;
+}
+
+.required {
+  font-size: 1rem;
+  margin-top: 10px;
+  display: block;
+}
+
+.message-comments {
+  margin-top: 10px;
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #d9d9d9;
+  box-shadow: inset 0px 2px 5px 0px rgba(0, 0, 0, 0.1);
+  margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="email"] {
+  width: 100%;
+  max-width: 240px;
+}
+
+textarea {
+  width: 100%;
+  max-width: 400px;
+  height: 6rem;
+}
+
+input[type="submit"] {
+  cursor: pointer;
+  line-height: 1;
+}
+
+.btn {
+  font-size: 1rem;
+  color: #fff;
+  background: #00983F;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin-top: 10px;
+}
+
+dl {
+  justify-content: center;
+}
+
+/* サービスここから */
+.service-wrapper {
+  background-color: #FAFBE4;
+  padding-bottom: 5%;
+}
+
+.service-content {
+  margin-bottom: 10%;
+}
+
+.service-li {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0 0 5% 0;
+}
+
+.service-list {
+  margin: 0 5%;
+}
+
+/* フッター */
+footer {
+  background-color: #464141;
+}
+
+.copyright {
+  font-size: 10px;
+  text-align: center;
+  vertical-align: middle;
+  color: #fff;
+}
+
+.inner {
+  max-width: 1320px;
+  margin: 0 auto;
+}
+
+.inner-header {
+  padding: 30px 0;
+}
+
+/*  ハンバーガーメニュー */
+.menu-btn {
+  margin-top: 5px;
+  margin-right: 8px;
+  z-index: 2;
+  width: 35px;
+  height: 35px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #00983F;
+  color: #fff;
+  transform: translateY(-100%);
+}
+
+.menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+}
+
+.menu_item {
+  width: 80%;
+  height: auto;
+  padding: .5em 1em;
+  text-align: center;
+  color: #00983F;
+  font-size: 1.2rem;
+  box-sizing: border-box;
+}
+
+.fa fa-bars {
+  display: none;
+}
+
+/*----------------------------
+* アニメーション部分
+*----------------------------*/
+
+/* アニメーション前のメニューの状態 */
+.menu {
+  transform: translateX(100vw);
+  transition: all .3s linear;
+}
+
+/* アニメーション後のメニューの状態 */
+.menu.is-active {
+  transform: translateX(0);
+}
+
+/*************ページトップここから*****************
+*********************************** */
+
+#page_top {
+  width: 50px;
+  height: 50px;
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+  background: #00983F;
+  opacity: 0.6;
+  border-radius: 50%;
+}
+
+#page_top a {
+  position: relative;
+  display: block;
+  width: 50px;
+  height: 50px;
+  text-decoration: none;
+}
+
+#page_top a::before {
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  content: '\f106';
+  font-size: 25px;
+  color: #fff;
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  top: -5px;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  margin: auto;
+  text-align: center;
+}
+
+#company-name {
+  color: #00983F;
+}
+
+/*************ページトップここまで*****************
+*********************************** */
+
+/*************モバイル版ここから*****************
+*********************************** */
+@media (max-width: 890px) {
+  .main-nav {
+    display: none;
+  }
+
+  .menu-btn {
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 600px) {
+  body {
+    font-size: 3.5vw;
+  }
+
+  .page-title {
+    font-size: 2.5rem;
+  }
+
+  .nmain-nav {
+    font-size: 1rem;
+  }
+
+  /* お悩みここから */
+  .worries-wrap {
+    display: block;
+    margin: 0 auto;
+    width: 80%;
+    justify-content: center;
+  }
+
+  .check-comments {
+    width: 80%;
+    margin: 0 auto;
+  }
+
+  .check-img {
+    text-align: center;
+    margin: 0 30%;
+  }
+
+  .check-sentence {
+    margin-bottom: 5px;
+  }
+
+  .fa-check-square {
+    vertical-align: middle;
+  }
+
+  .check-comments i {
+    font-size: 1rem;
+  }
+
+  /* お悩みここまで */
+  .point-wrap {
+    display: block;
+    margin: 0 auto;
+    width: 80%;
+    justify-content: center;
+  }
+
+  .point-img {
+    margin: 0 30% 5% 30%;
+
+  }
+
+  /* ジャンプボタンここから */
+  .button-right,
+  .button-left {
+    margin: 5%
+  }
+
+  .button-right,
+  .button-left {
+    background: #F0B35F;
+    color: #464141;
+    border-radius: 10px;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .service-li {
+    display: block;
+    margin: 0 20% 0;
+  }
+
+  /* お問い合わせここから */
+  .required {
+    font-size: 13px;
+  }
+
+
+}
+
+/*************モバイル版ここまで*****************
+*********************************** */
