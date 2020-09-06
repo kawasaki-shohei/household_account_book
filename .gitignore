@@ -7,20 +7,22 @@
 # Ignore bundler config.
 /.bundle
 
+# IntelliJ
+.idea
+*.iml
+
 # Ignore all logfiles and tempfiles.
 /log/*
 /tmp/*
 !/log/.keep
 !/tmp/.keep
 
+# Ignore coverage files
+/coverage/*
+!/coverage/.keep
+
 # Ignore design files under doc
 doc/design/*
-
-# Ignore node modules files
-/node_modules/*
-
-# Ignore yarn error log
-/yarn-error.log
 
 .byebug_history
 /doc/*
@@ -28,18 +30,16 @@ doc/design/*
 /db/csv/*
 /db/migrate/.DS_Store
 
-# IntelliJ
-.idea
-*.iml
+# assets
+/public/assets
+/public/packs
+/public/packs-test
+/node_modules
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity
 
 # others
 .DS_Store
 # Ignore master key for decrypting credentials and more.
 /config/master.key
-
-# /public/packs
-# /public/packs-test
-/node_modules
-/yarn-error.log
-yarn-debug.log*
-.yarn-integrity
