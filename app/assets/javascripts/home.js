@@ -21,4 +21,7 @@ $(function () {
   $('.menu-btn').on('click', function () {
     $('.menu').toggleClass('is-active');
   });
+  $('.menu_item').on('click', function () {
+    $('.menu').toggleClass('is-active');
+  })
 });
