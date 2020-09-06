@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <% if is_env_needed_ga? %>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=<%= Settings.ga_tracking_id %>"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '<%= Settings.ga_tracking_id %>');
+    </script>
+  <% end %>
+
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <title><%= content_for?(:html_title) ? yield(:html_title) : Settings.site_name %></title>
+  <%= favicon_link_tag('favicon.ico') %>
+  <%= stylesheet_link_tag 'admin-lte/dist/css/skins/skin-red.min' %>
+  <%= stylesheet_link_tag 'application' %>
+  <%= stylesheet_link_tag 'overwrite_admin_lte' %>
+  <%= stylesheet_link_tag 'login' %>
+</head>
+
+<body class="hold-transition login-page">
+<div class="wrapper">
+
+  <!-- Main Header -->
+  <header class="before-login-header">
+    <a href=<%= root_url_according_to_environment %> class="logo"><b><%= Settings.site_name %></b></a>
+  </header>
+
+  <%= yield %>
+
+</div><!-- ./wrapper -->
+
+<%= javascript_include_tag 'application' %>
+<%= yield(:other_javascript) %>
+</body>
+</html>

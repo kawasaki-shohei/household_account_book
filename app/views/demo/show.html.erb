@@ -1,0 +1,25 @@
+<div class="home-box">
+  <div class="home-logo">
+    <div><small>Welcome to</small></div>
+    <%= image_tag 'logo_only_letters.gif', class: "logo" %>
+  </div><!--/.home-logo -->
+
+
+  <div class="home-box-body text-center">
+    <p class="text-redpepper"><%= alert %></p>
+    <%= demo_btn %>
+
+    <div><b>PairMoney</b>は夫婦またはカップル専用の</div>
+    <div>家計簿webアプリケーションです。</div>
+    <br />
+    <div>簡単な収入や出費の入力で</div>
+    <div>複雑な二人の出費を管理できます。</div>
+    <br />
+  </div><!-- /.home-box-body -->
+
+</div><!-- /.home-box -->
+
+<%= content_for :other_javascript do %>
+  <%= javascript_include_tag 'demo' %>
+<% end %>
+
