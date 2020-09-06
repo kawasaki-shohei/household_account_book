@@ -4,6 +4,9 @@
   height: 50px;
   vertical-align: center;
 }
+.logo{
+  max-width: 80%;
+}
 .before-login-header .logo {
   color: white;
   font-weight: 300;
@@ -30,9 +33,6 @@
 
 .home-box-body {
   font-size: 1.2em;
-}
-.logo{
-  max-width: 80%;
 }
 #demo-btn{
   font-size: 1.1em;
