@@ -59,9 +59,7 @@
 - Google Chrome for Android
 
 ## Licence
-
-[MIT](https://github.com/tcnksm/tool/blob/master/LICENCE)
+[MIT](https://github.com/shoooohei/household_account_book/blob/master/LICENSE)
 
 ## Author
-
 [shoooohei](https://github.com/shoooohei)
