@@ -3,6 +3,13 @@ Rails.application.routes.draw do
   get 'home/index'
   root to: 'home#index'
 
+  namespace :api do
+    namespace :v1 do
+      resources :categories, only: [:index]
+      resources :expenses, only: [:create]
+    end
+  end
+
   resource :user, except: [:new, :create, :show, :destroy]
   get 'signup', to: 'users#new'
   post 'signup', to: 'users#create'

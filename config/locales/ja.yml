@@ -117,6 +117,8 @@ ja:
           pay_two_thirds: ３分の２
           pay_nothing: 相手100%
     attributes:
+      expense:
+        amount: 支払い金額
       user:
         name: 名前
         email: メールアドレス
