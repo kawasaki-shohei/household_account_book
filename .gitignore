@@ -7,10 +7,6 @@
 # Ignore bundler config.
 /.bundle
 
-# IntelliJ
-.idea
-*.iml
-
 # Ignore all logfiles and tempfiles.
 /log/*
 /tmp/*
@@ -39,7 +35,5 @@ doc/design/*
 yarn-debug.log*
 .yarn-integrity
 
-# others
-.DS_Store
 # Ignore master key for decrypting credentials and more.
 /config/master.key
