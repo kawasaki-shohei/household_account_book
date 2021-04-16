@@ -48,9 +48,9 @@
 
 FactoryBot.define do
   factory :repeat_expense do
-    amount { Faker::Number.number(6) }
-    start_date { Faker::Date.between(3.months.ago, 2.months.ago) }
-    end_date { Faker::Date.between(3.months.since, 2.months.since) }
+    amount { Faker::Number.number(digits: 6) }
+    start_date { Faker::Date.between(from: 3.months.ago, to: 2.months.ago) }
+    end_date { Faker::Date.between(from: 3.months.since, to: 2.months.since) }
     repeat_day { [*1..28].sample }
     memo { Faker::Lorem.word }
     is_for_both { false }

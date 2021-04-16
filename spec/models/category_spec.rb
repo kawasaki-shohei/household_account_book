@@ -66,15 +66,15 @@ RSpec.describe Category, type: :model do
     it "is valid with 15 letters name" do
       category = Category.new(
         user: @user,
-        name: Faker::Lorem.characters(15)
-        )
+        name: Faker::Lorem.characters(number: 15)
+      )
       expect(category).to be_valid
     end
 
     it "is invalid with 16 letters name" do
       category = Category.new(
         user: @user,
-        name: Faker::Lorem.characters(16)
+        name: Faker::Lorem.characters(number: 16)
       )
       expect(category).to be_invalid
       expect(category.errors.full_messages.size).to eq(1)

@@ -1,6 +1,6 @@
 FROM centos:centos7
 
-ENV RUBY_VERSION 2.6.3
+ENV RUBY_VERSION 2.6.7
 ENV BUNDLER_VERSION 1.17.3
 ENV LANG C.UTF-8
 ENV APP_ROOT /usr/src/household_account_book
@@ -81,7 +81,7 @@ RUN rbenv rehash
 RUN rbenv global ${RUBY_VERSION}
 
 # bundlerをインストール
-RUN gem install bundler -v $BUNDLER_VERSION -N
+RUN gem install bundler -v ${BUNDLER_VERSION} -N
 
 # bundle install
 WORKDIR ${APP_ROOT}
