@@ -24,7 +24,7 @@
   - React 16.8.6 (電卓機能のみ)
   - React Redux 7.0.3 (電卓機能のみ)
 - サーバーサイド
-  - Ruby 2.6.3
+  - Ruby 2.6.7
   - Ruby on Rails 5.2.2.1
 - データベース
   - PostgreSQL 11.5
