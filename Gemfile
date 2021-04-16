@@ -7,7 +7,7 @@ end
 
 ruby '2.6.7'
 
-gem 'rails', '6.0.3.6'
+gem 'rails', '6.1.3.1'
 gem 'puma'
 
 #Database
