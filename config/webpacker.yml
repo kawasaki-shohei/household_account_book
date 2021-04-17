@@ -11,7 +11,10 @@ default: &default
 
   # Additional paths webpack should lookup modules
   # ['app/assets', 'engine/foo/app/assets']
-  resolved_paths: []
+  # Renamed resolved_paths -> additional_paths because failed to assets precompile in staging
+  # see this https://github.com/rails/webpacker/issues/2699#issuecomment-674756401
+  additional_paths: []
+
 
   # Reload manifest.json on all requests so we reload latest compiled packs
   cache_manifest: false
