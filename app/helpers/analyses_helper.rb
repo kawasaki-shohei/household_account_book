@@ -52,12 +52,6 @@ module AnalysesHelper
     @categories.map{ |c| c.own_expenses_sum(@expenses, user)}.sum
   end
 
-  # 全ての出費の合計
-  # @return Integer
-  def total_expenditures
-    @expenses.sum(&:amount)
-  end
-
   # 前月の分析ページへ遷移するボタン
   def to_analyses_last_month_btn
     icon = tag.i(class: "fa fa-lg fa-angle-double-left")
