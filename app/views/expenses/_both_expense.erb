@@ -9,7 +9,15 @@
     <% end %>
 
     <h3 class="timeline-header no-border">
-      <strong><i class="fa fa-cny"></i><%= expense.amount.to_s(:delimited) %></strong><small class="space-left"><%= expense.show_percent %></small>
+      <strong>
+        <i class="fa fa-cny"></i><%= expense.amount.to_s(:delimited) %>
+      </strong>
+      <small class="space-left">
+        <%= expense.payment_method_i18n %>
+      </small>
+      <small class="space-left">
+        <%= expense.show_percent %>
+      </small>
     </h3>
 
     <div class="other-expense-details">

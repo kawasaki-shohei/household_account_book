@@ -103,6 +103,8 @@ GEM
     debase-ruby_core_source (0.10.12)
     debug_inspector (1.1.0)
     diff-lcs (1.4.4)
+    enum_help (0.0.17)
+      activesupport (>= 3.0.0)
     erubi (1.10.0)
     erubis (2.7.0)
     execjs (2.7.0)
@@ -346,6 +348,7 @@ DEPENDENCIES
   byebug
   capybara
   debase
+  enum_help
   factory_bot_rails
   faker
   font-awesome-rails

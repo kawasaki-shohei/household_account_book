@@ -1,0 +1,7 @@
+ja:
+  enums:
+    expense:
+      payment_method:
+        cash: 現金
+        credit_card: クレジットカード
+        account_transfer: 口座振替

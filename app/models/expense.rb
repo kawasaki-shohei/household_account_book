@@ -36,6 +36,7 @@ class Expense < ApplicationRecord
   include PercentCalculator
 
   enum percent: { manual_amount: -1, pay_all: 0, pay_half: 1, pay_one_third: 2, pay_two_thirds: 3, pay_nothing: 4 }
+  enum payment_method: { cash: 0, credit_card: 1, account_transfer: 2 }
 
   attr_accessor :is_new, :is_destroyed, :differences, :skip_calculate_balance
   alias_method :is_new?, :is_new
@@ -54,7 +55,6 @@ class Expense < ApplicationRecord
 
   # 引数はString。 例: "2019-01"
   scope :one_month, -> (period) {where('date >= ? AND date <= ?', period.to_beginning_of_month, period.to_end_of_month)}
-  scope :except_repeat_ones, -> {where.not()}
   scope :category, -> (category_id){unscope(:order).where(category_id: category_id).order(date: :desc, created_at: :desc)}
   scope :both_f, -> {where(is_for_both: false)}
   scope :both_t, -> {where(is_for_both: true)}
@@ -118,15 +118,19 @@ class Expense < ApplicationRecord
   end
 
   # @return [Array]
-  def self.necessary_attributes_from_repeat_exepnses
-    %w(amount memo category_id user_id is_for_both mypay partnerpay percent)
+  def self.necessary_attributes_from_repeat_expenses
+    %w(amount memo payment_method category_id user_id is_for_both mypay partnerpay percent)
   end
 
   # 新しく繰り返し出費が登録されたときに、expensesテーブルに該当する出費をインサートしていくメソッド
   # @param [RepeatExpense] repeat_expense
   def self.creat_repeat_expenses!(repeat_expense)
     expense_attributes = {}
-    repeat_expense.attributes.each{ |k, v| expense_attributes["#{k}"] = v if Expense.necessary_attributes_from_repeat_exepnses.include?(k) }
+    repeat_expense.attributes.each do |k, v|
+      if Expense.necessary_attributes_from_repeat_expenses.include?(k)
+        expense_attributes["#{k}"] = v
+      end
+    end
     start_date = repeat_expense.updated_only_future? ? Date.current : repeat_expense.start_date
     end_date = repeat_expense.end_date
     repeat_day = repeat_expense.repeat_day

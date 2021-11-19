@@ -7,15 +7,20 @@
     <% end %>
 
     <h3 class="timeline-header no-border">
-      <strong><i class="fa fa-cny"></i><%= expense.amount.to_s(:delimited) %></strong>
+      <strong>
+        <i class="fa fa-cny"></i><%= expense.amount.to_s(:delimited) %>
+      </strong>
+      <small class="space-left">
+        <%= expense.payment_method_i18n %>
+      </small>
     </h3>
     <div class="other-expense-details">
-                  <span class="space-right">
-                    <%= expense.category.name %>
-                  </span>
       <span class="space-right">
-                    <%= expense.memo %>
-                  </span>
+        <%= expense.category.name %>
+      </span>
+      <span class="space-right">
+        <%= expense.memo %>
+      </span>
     </div>
   </div><!-- /div.timeline item -->
 </li>

@@ -20,7 +20,7 @@ end
 # 全てのテーブル
 # tables = [Category, Budget, Balance, RepeatExpense, Expense, Pay, Income, Deposit, NotificationMessage, Notification]
 puts "starting - #{__FILE__}"
-tables = [Category, Budget, Balance, RepeatExpense, Expense, Pay, Income, Deposit, Notification]
+tables = [Category, Budget, Balance, RepeatExpense, Expense, Pay, Income, Deposit]
 
 # 全テーブルの全てのレコードを削除し、プライマリーキーのシーケンスをリセットする。
 ActiveRecord::Base.transaction do

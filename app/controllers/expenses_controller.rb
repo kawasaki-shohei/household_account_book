@@ -58,8 +58,18 @@ class ExpensesController < ApplicationController
   end
 
   private
+
   def expense_params
-    params.require(:expense).permit(:amount, :category_id, :date, :memo, :is_for_both, :mypay, :partnerpay).merge(percent: params[:expense][:percent].to_i)
+    params.require(:expense).permit(
+      :amount,
+      :category_id,
+      :date,
+      :memo,
+      :payment_method,
+      :is_for_both,
+      :mypay,
+      :partnerpay,
+    ).merge(percent: params[:expense][:percent].to_i)
   end
 
 end

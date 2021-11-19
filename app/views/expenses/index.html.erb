@@ -21,26 +21,38 @@
         <%= back_btn_to_analyses_page %>
         <div class="box box-brown">
           <div class="box-body">
-            <div>
+
+            <div class="clearfix">
               <h4 class="pull-left"><%= @period.to_japanese_period + 'の出費合計' %></h4>
               <h4 class="pull-right">
                 <i class="fa fa-cny space-right"></i>
                 <%= one_total_expenditures(@current_user).to_s(:delimited) %>
               </h4>
             </div>
-            <br/><br/>
+
             <div class="inside-space-left">
-              <h5 class="pull-left">二人の出費の合計</h5>
-              <h5 class="pull-right">
-                <i class="fa fa-cny space-right"></i><%= one_total_both_expenditures(@current_user).to_s(:delimited) %>
-              </h5>
-            </div>
-            <br/><br/>
-            <div class="inside-space-left">
-              <h5 class="pull-left  no-margin-top">自分の出費の合計</h5>
-              <h5 class="pull-right  no-margin-top">
-                <i class="fa fa-cny space-right"></i><%= one_total_own_expenditures(@current_user).to_s(:delimited) %>
-              </h5>
+              <div class="clearfix">
+                <h5 class="pull-left">二人の出費の合計</h5>
+                <h5 class="pull-right">
+                  <i class="fa fa-cny space-right"></i><%= one_total_both_expenditures(@current_user).to_s(:delimited) %>
+                </h5>
+              </div>
+
+              <div class="clearfix">
+                <h5 class="pull-left no-margin-top">自分の出費の合計</h5>
+                <h5 class="pull-right no-margin-top">
+                  <i class="fa fa-cny space-right"></i><%= one_total_own_expenditures(@current_user).to_s(:delimited) %>
+                </h5>
+              </div>
+
+              <% Expense.payment_methods_i18n.each do |payment_method, translated_payment_method| %>
+                <div class="clearfix">
+                  <h5 class="pull-left no-margin-top"><%= translated_payment_method %>の合計</h5>
+                  <h5 class="pull-right no-margin-top">
+                    <i class="fa fa-cny space-right"></i><%= expenses_sum_of_one_payment_method(payment_method).to_s(:delimited) %>
+                  </h5>
+                </div>
+              <% end %>
             </div>
           </div><!-- /.box-body -->
         </div><!-- /.box box-brown -->
