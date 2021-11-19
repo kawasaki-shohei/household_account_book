@@ -52,6 +52,7 @@ class RepeatExpense < ApplicationRecord
   include RepeatExpensesListsDisplayer
 
   enum percent: { manual_amount: -1, pay_all: 0, pay_half: 1, pay_one_third: 2, pay_two_thirds: 3, pay_nothing: 4 }
+  enum payment_method: { cash: 0, credit_card: 1, account_transfer: 2 }
   enum updated_period: { first_item: 0, updated_all: 1, updated_only_future: 2 }
 
   belongs_to :category

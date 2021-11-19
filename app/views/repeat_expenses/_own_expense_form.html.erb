@@ -37,6 +37,13 @@
   </div>
 
   <div class="form-group">
+    <%= f.label :payment_method, value: '支払い方法' %>
+    <div>
+      <%= f.select :payment_method, Expense.payment_methods_i18n.invert, {}, class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group">
     <%= f.label :date, value: 'メモ' %>
     <div>
       <%= f.text_field :memo, maxlength: 100, class: "form-control" %>

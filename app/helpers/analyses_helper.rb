@@ -52,6 +52,12 @@ module AnalysesHelper
     @categories.map{ |c| c.own_expenses_sum(@expenses, user)}.sum
   end
 
+  # 特定の支払い方法の合計額
+  # @return Integer
+  def expenses_sum_of_one_payment_method(payment_method)
+    @expenses.where(user: current_user).find_all { |e| e.send("#{payment_method}?") }.sum(&:amount)
+  end
+
   # 前月の分析ページへ遷移するボタン
   def to_analyses_last_month_btn
     icon = tag.i(class: "fa fa-lg fa-angle-double-left")
