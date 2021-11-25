@@ -52,10 +52,31 @@ module AnalysesHelper
     @categories.map{ |c| c.own_expenses_sum(@expenses, user)}.sum
   end
 
+  # ログインユーザが払った出費
+  # FIXME: これは一時的なもの。本来はpartnerの出費も必要なはず。
+  def expenses_current_user_paid
+    @expenses_current_user_paid ||= @expenses.where(user: current_user)
+  end
+
+  # 必須出費の合計
+  # FIXME: partnerの出費のpartnerpayが加算されていない
+  # @return Integer
+  def essential_expenses_sum
+    @essential_expenses_sum ||= expenses_current_user_paid.find_all(&:is_essential?).sum(&:amount)
+  end
+
+  # 任意出費の合計
+  # FIXME: partnerの出費のpartnerpayが加算されていない
+  # @return Integer
+  def optional_expenses_sum
+    expenses_current_user_paid.sum(:amount) - essential_expenses_sum
+  end
+
   # 特定の支払い方法の合計額
+  # FIXME: partnerの出費のpartnerpayが加算されていない
   # @return Integer
   def expenses_sum_of_one_payment_method(payment_method)
-    @expenses.where(user: current_user).find_all { |e| e.send("#{payment_method}?") }.sum(&:amount)
+    expenses_current_user_paid.find_all { |e| e.send("#{payment_method}?") }.sum(&:amount)
   end
 
   # 前月の分析ページへ遷移するボタン

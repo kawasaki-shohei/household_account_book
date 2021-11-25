@@ -64,6 +64,23 @@
   </div>
 
   <div class="form-group">
+    <%= f.label :payment_method, value: '支払い方法' %>
+    <div>
+      <%= f.select :payment_method, Expense.payment_methods_i18n.invert, {}, class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="checkbox">
+      <label>
+        <%= f.hidden_field :is_essential, value: false, id: 'hidden_is_essential' %>
+        <%= f.check_box :is_essential, {}, true, false %>
+        必須出費
+      </label>
+    </div>
+  </div>
+
+  <div class="form-group">
     <%= f.label :date, value: 'メモ' %>
     <div>
       <%= f.text_field :memo,  maxlength: 100, class: "form-control" %>

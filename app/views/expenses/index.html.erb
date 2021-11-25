@@ -45,6 +45,20 @@
                 </h5>
               </div>
 
+              <div class="clearfix">
+                <h5 class="pull-left no-margin-top">任意出費の合計</h5>
+                <h5 class="pull-right no-margin-top">
+                  <i class="fa fa-cny space-right"></i><%= optional_expenses_sum.to_s(:delimited) %>
+                </h5>
+              </div>
+
+              <div class="clearfix">
+                <h5 class="pull-left no-margin-top">必須出費の合計</h5>
+                <h5 class="pull-right no-margin-top">
+                  <i class="fa fa-cny space-right"></i><%= essential_expenses_sum.to_s(:delimited) %>
+                </h5>
+              </div>
+
               <% Expense.payment_methods_i18n.each do |payment_method, translated_payment_method| %>
                 <div class="clearfix">
                   <h5 class="pull-left no-margin-top"><%= translated_payment_method %>の合計</h5>
