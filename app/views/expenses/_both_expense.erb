@@ -31,6 +31,11 @@
     </div>
 
     <div class="other-expense-details">
+      <% if expense.is_essential? %>
+        <span class="space-right">
+          <i class="fa fa-asterisk text-orange"></i>
+        </span>
+      <% end %>
       <span class="space-right"><%= expense.category.name %></span>
       <span class="space-right"><%= expense.memo %></span>
     </div>

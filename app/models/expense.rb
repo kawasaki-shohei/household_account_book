@@ -119,7 +119,7 @@ class Expense < ApplicationRecord
 
   # @return [Array]
   def self.necessary_attributes_from_repeat_expenses
-    %w(amount memo payment_method category_id user_id is_for_both mypay partnerpay percent)
+    %w(amount memo payment_method is_essential category_id user_id is_for_both mypay partnerpay percent)
   end
 
   # 新しく繰り返し出費が登録されたときに、expensesテーブルに該当する出費をインサートしていくメソッド
