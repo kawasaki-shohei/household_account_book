@@ -58,22 +58,15 @@ module AnalysesHelper
     @expenses_current_user_paid ||= @expenses.where(user: current_user)
   end
 
-  # 必須出費の合計
-  # FIXME: partnerの出費のpartnerpayが加算されていない
+  # 特定出費の合計
+  # FIXME: mypayやpartnerpayが考慮できていない
   # @return Integer
-  def essential_expenses_sum
-    @essential_expenses_sum ||= expenses_current_user_paid.find_all(&:is_essential?).sum(&:amount)
-  end
-
-  # 任意出費の合計
-  # FIXME: partnerの出費のpartnerpayが加算されていない
-  # @return Integer
-  def optional_expenses_sum
-    expenses_current_user_paid.sum(:amount) - essential_expenses_sum
+  def specified_expenses_sum
+    expenses_current_user_paid.find_all(&:is_specified_to_total?).sum(&:amount)
   end
 
   # 特定の支払い方法の合計額
-  # FIXME: partnerの出費のpartnerpayが加算されていない
+  # FIXME: mypayやpartnerpayが考慮できていない
   # @return Integer
   def expenses_sum_of_one_payment_method(payment_method)
     expenses_current_user_paid.find_all { |e| e.send("#{payment_method}?") }.sum(&:amount)
