@@ -121,7 +121,7 @@ class RepeatExpensesController < ApplicationController
       :repeat_day,
       :memo,
       :payment_method,
-      :is_essential,
+      :is_specified_to_total,
       :is_for_both,
       :mypay,
       :partnerpay,

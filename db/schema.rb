@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_25_042346) do
+ActiveRecord::Schema.define(version: 2021_11_26_090542) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -96,7 +96,7 @@ ActiveRecord::Schema.define(version: 2021_11_25_042346) do
     t.integer "percent", limit: 2, default: 0, null: false
     t.bigint "repeat_expense_id"
     t.integer "payment_method", limit: 2, default: 0, null: false
-    t.boolean "is_essential", default: false, null: false, comment: "必須出費フラグ"
+    t.boolean "is_specified_to_total", default: false, null: false, comment: "特定出費フラグ"
     t.index ["repeat_expense_id"], name: "index_expenses_on_repeat_expense_id"
   end
 
@@ -158,7 +158,7 @@ ActiveRecord::Schema.define(version: 2021_11_25_042346) do
     t.integer "updated_period", limit: 2, default: 0, null: false
     t.datetime "deleted_at"
     t.integer "payment_method", limit: 2, default: 0, null: false
-    t.boolean "is_essential", default: false, null: false, comment: "必須出費フラグ"
+    t.boolean "is_specified_to_total", default: false, null: false, comment: "特定出費フラグ"
     t.index ["category_id"], name: "index_repeat_expenses_on_category_id"
     t.index ["deleted_at"], name: "index_repeat_expenses_on_deleted_at"
     t.index ["user_id", "item_id", "item_sub_id"], name: "index_repeat_expenses_on_user_id_and_item_id_and_item_sub_id", unique: true

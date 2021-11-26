@@ -31,9 +31,9 @@
     </div>
 
     <div class="other-expense-details">
-      <% if expense.is_essential? %>
+      <% if expense.is_specified_to_total? %>
         <span class="space-right">
-          <i class="fa fa-asterisk text-orange"></i>
+          <i class="fa fa-circle text-orange"></i>
         </span>
       <% end %>
       <span class="space-right"><%= expense.category.name %></span>
