@@ -293,4 +293,39 @@ RSpec.describe Expense, type: :model do
     end
   end
 
+  describe "Discard functionality" do
+    before do
+      @user = create(:user)
+      @category = create(:category, user: @user)
+    end
+
+    it "discards an expense" do
+      expense = Expense.create(
+        user: @user,
+        category: @category,
+        amount: 1000,
+        date: Time.zone.today
+      )
+      expense.discard
+      expect(expense).to be_discarded
+    end
+
+    it "does not include discarded expenses in the default scope" do
+      expense1 = Expense.create(
+        user: @user,
+        category: @category,
+        amount: 1000,
+        date: Time.zone.today
+      )
+      expense2 = Expense.create(
+        user: @user,
+        category: @category,
+        amount: 2000,
+        date: Time.zone.today
+      )
+      expense1.discard
+      expect(Expense.kept).not_to include(expense1)
+      expect(Expense.kept).to include(expense2)
+    end
+  end
 end

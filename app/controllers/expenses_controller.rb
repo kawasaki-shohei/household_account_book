@@ -52,7 +52,7 @@ class ExpensesController < ApplicationController
 
   def destroy
     @expense = Expense.find(params[:id])
-    @expense.destroy
+    @expense.discard
     create_notification(@expense)
     redirect_to expenses_path(period: @expense.date.to_s_as_period), notice: "出費を削除しました"
   end
