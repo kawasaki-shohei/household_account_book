@@ -88,15 +88,15 @@ class RepeatExpensesController < ApplicationController
     ActiveRecord::Base.transaction do
       begin
         if params[:updated_period] == "updated_all"
-          target_expenses.each(&:destroy)
-          target_repeat_expenses.each(&:destroy)
+          target_expenses.each(&:discard)
+          target_repeat_expenses.each(&:discard)
         elsif params[:updated_period] == "updated_only_future"
           target_expenses.each do |expense|
             if expense.date >= Date.current
-              expense.destroy
+              expense.discard
             end
           end
-          target_repeat_expenses.each(&:destroy)
+          target_repeat_expenses.each(&:discard)
         end
       rescue
         flash[:error] = ["繰り返し出費の削除に失敗しました。"]

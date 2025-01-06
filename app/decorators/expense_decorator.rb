@@ -2,7 +2,7 @@ module ExpenseDecorator
   include CommonDecorator
   def show_date(expenses, current_user, index)
     if index == 0 || date != expenses[index - 1].date
-      expenses_of_the_date = expenses.select{ |e| e.date == date }
+      expenses_of_the_date = expenses.select{ |e| e.date == date && !e.discarded? }
       number_of_category = expenses_of_the_date.map(&:category_id).uniq.size
       if number_of_category == 1
         sum_of_the_date = category.expenses_sum(expenses_of_the_date, current_user)

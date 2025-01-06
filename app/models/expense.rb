@@ -34,6 +34,7 @@
 class Expense < ApplicationRecord
   include BalanceHelper
   include PercentCalculator
+  include Discard::Model
 
   enum percent: { manual_amount: -1, pay_all: 0, pay_half: 1, pay_one_third: 2, pay_two_thirds: 3, pay_nothing: 4 }
   enum payment_method: { cash: 0, credit_card: 1, account_transfer: 2 }
@@ -59,6 +60,7 @@ class Expense < ApplicationRecord
   scope :both_f, -> {where(is_for_both: false)}
   scope :both_t, -> {where(is_for_both: true)}
   scope :newer, -> {order(date: :desc, created_at: :desc)}
+  scope :kept, -> { undiscarded }
 
   after_initialize { self.is_new = true unless self.id }
   before_save :set_differences
@@ -75,7 +77,7 @@ class Expense < ApplicationRecord
   # @return [Expense]
   def self.all_for_one_month(user, period)
     partner = user.partner
-    self.includes(:user, :category).references(:users, :categories).where(users: {id: [user, partner]}).one_month(period).order(date: :desc, created_at: :desc)
+    self.kept.includes(:user, :category).references(:users, :categories).where(users: {id: [user, partner]}).one_month(period).order(date: :desc, created_at: :desc)
   end
 
   # @note 該当月と引数のカテゴリの出費でユーザーの全ての出費とパートナーの二人の出費を取得
@@ -85,7 +87,7 @@ class Expense < ApplicationRecord
   # @return [Expense]
   def self.specified_category_for_one_month(user, category, period)
     partner = user.partner
-    self.includes(:user, :category).references(:users, :categories).where(categories: {id: category}).one_month(period).where("users.id = ? OR (users.id = ? AND is_for_both = ?)", user.id, partner.id, true).order(date: :desc, created_at: :desc)
+    self.kept.includes(:user, :category).references(:users, :categories).where(categories: {id: category}).one_month(period).where("users.id = ? OR (users.id = ? AND is_for_both = ?)", user.id, partner.id, true).order(date: :desc, created_at: :desc)
   end
 
   # その月の支出合計額を算出
@@ -93,8 +95,8 @@ class Expense < ApplicationRecord
   # @param [String] period"2019-01"
   # @return Integer 支出合計額
   def self.one_month_total_expenditures(user, period)
-    user_expenses = user.expenses.one_month(period)
-    user_expenses.both_f.sum(:amount) + user_expenses.both_t.sum(:mypay) + user.partner.expenses.one_month(period).both_t.sum(:partnerpay)
+    user_expenses = user.expenses.kept.one_month(period)
+    user_expenses.both_f.sum(:amount) + user_expenses.both_t.sum(:mypay) + user.partner.expenses.kept.one_month(period).both_t.sum(:partnerpay)
   end
 
   # @param [User] user
@@ -102,7 +104,7 @@ class Expense < ApplicationRecord
   # @param [String] period"2019-01"
   # @return [Expense::ActiveRecord_AssociationRelation] expenses
   def self.both_expenses_until_one_month(user, partner, period=Date.current.to_s_as_period)
-    eager_load(:user).where(users: {id: [user, partner]}).both_t.where('date <= ?', period.to_end_of_month)
+    eager_load(:user).where(users: {id: [user, partner]}).kept.both_t.where('date <= ?', period.to_end_of_month)
   end
 
   # @param [User] user
@@ -147,7 +149,7 @@ class Expense < ApplicationRecord
   # @return [Integer]
   def self.own_payment_for_one_month(user, period)
     partner = user.partner
-    expenses = self.eager_load(:user).where(users: {id: [user, partner]}).one_month(period).both_t
+    expenses = self.eager_load(:user).where(users: {id: [user, partner]}).kept.one_month(period).both_t
     user_expenses, partner_expenses = filtered_expenses_by_user(user, partner, expenses)
     user_expenses.sum(&:mypay) + partner_expenses.sum(&:partnerpay) - user_expenses.sum(&:amount)
   end
